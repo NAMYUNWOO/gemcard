@@ -1,31 +1,53 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HexColorPicker } from 'react-colorful';
 import { GemScene } from '../components/GemScene';
 import { useCardStore } from '../stores/cardStore';
-import { DEFAULT_GEM_PARAMS, SHAPE_OPTIONS, COLOR_OPTIONS, type GemShape } from '../types/card';
+import { DEFAULT_GEM_PARAMS, COLOR_OPTIONS, getRandomShape, getCutName, type GemShape } from '../types/card';
 import styles from './Create.module.css';
 
 export function Create() {
   const navigate = useNavigate();
   const { createCard } = useCardStore();
 
-  const [shape, setShape] = useState<GemShape>(DEFAULT_GEM_PARAMS.shape);
-  const [color, setColor] = useState(DEFAULT_GEM_PARAMS.color);
-  const [turbidity, setTurbidity] = useState(DEFAULT_GEM_PARAMS.turbidity);
-  const [detailLevel, setDetailLevel] = useState(DEFAULT_GEM_PARAMS.detailLevel);
-  const [contrast, setContrast] = useState(0.5);
+  // 랜덤 초기값 생성
+  const getRandomColor = () => COLOR_OPTIONS[Math.floor(Math.random() * COLOR_OPTIONS.length)];
+  const getRandomTurbidity = () => Math.random(); // 0 ~ 1
+  const getRandomContrast = () => 0.5 + Math.random() * 0.5; // 0.5 ~ 1
+
+  const [shape, setShape] = useState<GemShape | null>(null);
+  const [cutName, setCutName] = useState<string>('');
+  const [color, setColor] = useState(getRandomColor);
+  const [turbidity, setTurbidity] = useState(getRandomTurbidity);
+  const [contrast, setContrast] = useState(getRandomContrast);
   const [message, setMessage] = useState('');
   const [senderName, setSenderName] = useState('');
   const [showMessagePanel, setShowMessagePanel] = useState(false);
-  const [activeTab, setActiveTab] = useState<'shape' | 'color' | 'detail' | 'turbidity' | 'contrast'>('shape');
+  const [activeTab, setActiveTab] = useState<'shape' | 'color' | 'turbidity' | 'contrast'>('shape');
   const [colorPickerOpen, setColorPickerOpen] = useState(false);
+
+  // 초기 shape를 랜덤으로 설정
+  useEffect(() => {
+    getRandomShape().then(setShape);
+  }, []);
+
+  // shape 변경 시 컷 이름 로드
+  useEffect(() => {
+    if (shape) {
+      getCutName(shape).then(setCutName);
+    }
+  }, [shape]);
+
+  // shape 로딩 전에는 렌더링하지 않음
+  if (!shape) {
+    return <div className={styles.fullscreen} style={{ background: '#1a1a2e' }} />;
+  }
 
   const gemParams = {
     shape,
     color,
     turbidity,
-    detailLevel,
+    detailLevel: DEFAULT_GEM_PARAMS.detailLevel,
     dispersion: DEFAULT_GEM_PARAMS.dispersion,
     thickness: DEFAULT_GEM_PARAMS.thickness,
   };
@@ -58,6 +80,11 @@ export function Create() {
         ← 뒤로
       </button>
 
+      {/* Cut Name Display */}
+      {cutName && (
+        <div className={styles.cutName}>{cutName}</div>
+      )}
+
       {/* Bottom Editor Area */}
       <div className={styles.bottomEditor}>
         {!showMessagePanel ? (
@@ -65,17 +92,13 @@ export function Create() {
             {/* Active Control Slider/Options */}
             <div className={styles.controlArea}>
               {activeTab === 'shape' && (
-                <div className={styles.shapeOptions}>
-                  {SHAPE_OPTIONS.map((option) => (
-                    <button
-                      key={option.value}
-                      className={`${styles.shapeBtn} ${shape === option.value ? styles.active : ''}`}
-                      onClick={() => setShape(option.value)}
-                    >
-                      <span className={styles.shapeEmoji}>{option.emoji}</span>
-                      <span className={styles.shapeLabel}>{option.label}</span>
-                    </button>
-                  ))}
+                <div className={styles.shapeControl}>
+                  <button
+                    className={styles.changeShapeBtn}
+                    onClick={() => getRandomShape().then(setShape)}
+                  >
+                    🔄 다른 모양으로 변경
+                  </button>
                 </div>
               )}
 
@@ -119,24 +142,9 @@ export function Create() {
                 </div>
               )}
 
-              {activeTab === 'detail' && (
-                <div className={styles.sliderControl}>
-                  <span className={styles.sliderLabel}>세공 정교함</span>
-                  <input
-                    type="range"
-                    className={styles.slider}
-                    min="-3"
-                    max="6"
-                    step="1"
-                    value={detailLevel}
-                    onChange={(e) => setDetailLevel(parseInt(e.target.value))}
-                  />
-                </div>
-              )}
-
               {activeTab === 'turbidity' && (
                 <div className={styles.sliderControl}>
-                  <span className={styles.sliderLabel}>탁도</span>
+                  <span className={styles.sliderLabel}>불투명도</span>
                   <input
                     type="range"
                     className={styles.slider}
@@ -155,7 +163,7 @@ export function Create() {
                   <input
                     type="range"
                     className={styles.slider}
-                    min="0"
+                    min="0.5"
                     max="1"
                     step="0.05"
                     value={contrast}
@@ -182,18 +190,11 @@ export function Create() {
                 <span className={styles.tabLabel}>색상</span>
               </button>
               <button
-                className={`${styles.tabBtn} ${activeTab === 'detail' ? styles.active : ''}`}
-                onClick={() => setActiveTab('detail')}
-              >
-                <span className={styles.tabIcon}>✨</span>
-                <span className={styles.tabLabel}>세공</span>
-              </button>
-              <button
                 className={`${styles.tabBtn} ${activeTab === 'turbidity' ? styles.active : ''}`}
                 onClick={() => setActiveTab('turbidity')}
               >
-                <span className={styles.tabIcon}>💨</span>
-                <span className={styles.tabLabel}>탁도</span>
+                <span className={styles.tabIcon}>🔮</span>
+                <span className={styles.tabLabel}>불투명도</span>
               </button>
               <button
                 className={`${styles.tabBtn} ${activeTab === 'contrast' ? styles.active : ''}`}

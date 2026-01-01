@@ -37,13 +37,7 @@ export function Home() {
                   />
                 </div>
                 <div className={styles.cardInfo}>
-                  <span className={styles.cardShape}>
-                    {card.gem.shape === 'brilliant' && '💎'}
-                    {card.gem.shape === 'emerald' && '💚'}
-                    {card.gem.shape === 'princess' && '👑'}
-                    {card.gem.shape === 'pear' && '💧'}
-                    {card.gem.shape === 'oval' && '🔮'}
-                  </span>
+                  <span className={styles.cardShape}>💎</span>
                   {card.message.senderName && (
                     <span className={styles.sender}>From: {card.message.senderName}</span>
                   )}

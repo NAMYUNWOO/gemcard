@@ -28,7 +28,22 @@ export function parseGemCad(content: string): GemCadData {
     facets: []
   };
 
+  // 줄 연속 처리를 위해 전체 내용을 먼저 정리
+  let combinedContent = '';
   for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+    // 줄이 공백으로 시작하면 이전 줄에 연결 (연속된 인덱스)
+    if (line.startsWith(' ') || line.startsWith('\t')) {
+      combinedContent += ' ' + trimmed;
+    } else {
+      combinedContent += '\n' + trimmed;
+    }
+  }
+
+  const processedLines = combinedContent.split('\n').filter(l => l.trim());
+
+  for (const line of processedLines) {
     const trimmed = line.trim();
     if (!trimmed) continue;
 
@@ -47,26 +62,42 @@ export function parseGemCad(content: string): GemCadData {
         break;
       case 'H':
         if (!data.name || data.name === 'Unknown') {
-          data.name = parts.slice(1).join(' ');
+          // H 라인에서 코드(예: PC 01.006, PC 08.087D) 이후의 컷 이름만 추출
+          const fullText = parts.slice(1).join(' ');
+          // PC XX.XXXD 패턴도 처리 (숫자 뒤에 문자 포함)
+          const match = fullText.match(/^[A-Z]{2}\s*[\d.]+[A-Z]?\s+(.+)$/);
+          if (match) {
+            data.name = match[1].trim();
+          } else {
+            data.name = fullText;
+          }
         }
         break;
-      case 'a':
-        // a angle distance index n name [indices...]
+      case 'a': {
+        // 두 가지 형식 지원:
+        // 1. a angle distance baseIndex n name [indices...]
+        // 2. a angle distance index1 index2 index3 ... (n 없는 형식)
         const angle = parseFloat(parts[1]);
         const distance = parseFloat(parts[2]);
-        const baseIndex = parseInt(parts[3]);
-        // Find 'n' separator
+
         const nIndex = parts.indexOf('n');
         if (nIndex !== -1) {
+          // 형식 1: n 구분자가 있는 경우
+          const baseIndex = parseInt(parts[3]);
           const name = parts[nIndex + 1] || '';
           const indices = parts.slice(nIndex + 2).map(s => parseInt(s)).filter(n => !isNaN(n));
-          // If no indices listed, use baseIndex
           if (indices.length === 0) {
             indices.push(baseIndex);
           }
           data.facets.push({ angle, distance, baseIndex, name, indices });
+        } else {
+          // 형식 2: n 없이 인덱스가 바로 나열된 경우
+          const indices = parts.slice(3).map(s => parseInt(s)).filter(n => !isNaN(n));
+          const baseIndex = indices[0] || 0;
+          data.facets.push({ angle, distance, baseIndex, name: '', indices });
         }
         break;
+      }
     }
   }
 
@@ -160,10 +191,52 @@ export function generateGemGeometry(gemcadData: GemCadData, scale: number = 1): 
   }
 
   // Convert Brush back to BufferGeometry
-  const geometry = result.geometry.clone();
-  geometry.computeVertexNormals();
+  let geometry = result.geometry.clone();
+  if (geometry.index !== null) {
+    geometry = geometry.toNonIndexed();
+  }
+
+  // Flat normals 계산 (각 face별로 동일한 normal)
+  computeFlatNormals(geometry);
 
   return geometry;
+}
+
+// 각 삼각형 face에 대해 flat normal 계산
+function computeFlatNormals(geometry: THREE.BufferGeometry): void {
+  const positionAttribute = geometry.getAttribute('position') as THREE.BufferAttribute;
+  const normalArray = new Float32Array(positionAttribute.count * 3);
+
+  const vA = new THREE.Vector3();
+  const vB = new THREE.Vector3();
+  const vC = new THREE.Vector3();
+  const ab = new THREE.Vector3();
+  const ac = new THREE.Vector3();
+  const normal = new THREE.Vector3();
+
+  for (let i = 0; i < positionAttribute.count; i += 3) {
+    vA.fromBufferAttribute(positionAttribute, i);
+    vB.fromBufferAttribute(positionAttribute, i + 1);
+    vC.fromBufferAttribute(positionAttribute, i + 2);
+
+    ab.subVectors(vB, vA);
+    ac.subVectors(vC, vA);
+    normal.crossVectors(ab, ac).normalize();
+
+    normalArray[i * 3] = normal.x;
+    normalArray[i * 3 + 1] = normal.y;
+    normalArray[i * 3 + 2] = normal.z;
+
+    normalArray[(i + 1) * 3] = normal.x;
+    normalArray[(i + 1) * 3 + 1] = normal.y;
+    normalArray[(i + 1) * 3 + 2] = normal.z;
+
+    normalArray[(i + 2) * 3] = normal.x;
+    normalArray[(i + 2) * 3 + 1] = normal.y;
+    normalArray[(i + 2) * 3 + 2] = normal.z;
+  }
+
+  geometry.setAttribute('normal', new THREE.BufferAttribute(normalArray, 3));
 }
 
 // Pre-parsed Standard Brilliant data

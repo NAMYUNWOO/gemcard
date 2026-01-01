@@ -1,9 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import { Brush, Evaluator, SUBTRACTION } from 'three-bvh-csg';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import { SUBTRACTION, Evaluator, Brush } from 'three-bvh-csg';
 import type { GemParams, GemShape } from '../types/card';
+import { loadGemCadList } from '../types/card';
+import { generateGemGeometry, parseGemCad } from '../utils/gemcadParser';
 import { GemBackground, type GemBackgroundHandle } from './GemBackground';
+
+// GemCad geometry 캐시
+const gemCadCache = new Map<string, THREE.BufferGeometry>();
 
 interface GemSceneProps {
   params: Omit<GemParams, 'id'>;
@@ -67,19 +72,21 @@ const FRAGMENT_SHADER = `
     float g = texture2D(tBackground, uv + refractOffset).g;
     float b = texture2D(tBackground, uv + refractOffset * (1.0 - uDispersion)).b;
 
-    vec3 baseColor = vec3(r, g, b) * uColor * 1.1;
+    // 배경 굴절 색상 (투명 부분)
+    vec3 refractedColor = vec3(r, g, b) * uColor * 1.1;
+    // 보석 자체 색상 (불투명 부분) - 원색 유지
+    vec3 solidColor = uColor * 0.9;
+    // uTurbidity로 불투명도 조절: 0=투명, 1=불투명
+    vec3 baseColor = mix(refractedColor, solidColor, uTurbidity);
 
-    vec3 milkyTone = vec3(0.92, 0.92, 0.95);
-    baseColor = mix(baseColor, milkyTone, uTurbidity * 0.7);
-
-    // === FACET LIGHTING (강한 명암 대비) ===
+    // === FACET LIGHTING ===
 
     // 메인 라이트 (상단 우측)
     vec3 lightDir1 = normalize(uLightPos);
     vec3 halfDir1 = normalize(lightDir1 - vEye);
     float NdotL1 = dot(vNormal, lightDir1);
 
-    // 보조 라이트 (하단 좌측) - 입체감 강화
+    // 보조 라이트 (하단 좌측)
     vec3 lightDir2 = normalize(vec3(-3.0, -2.0, 4.0));
     float NdotL2 = dot(vNormal, lightDir2);
 
@@ -90,14 +97,14 @@ const FRAGMENT_SHADER = `
     // 보조 라이트로 입체감 (대비에 따라 강도 조절)
     baseColor *= (1.0 + max(NdotL2, 0.0) * mix(0.05, 0.2, uContrast));
 
-    // 날카로운 스펙큘러 (면마다 다르게 반짝임)
-    float spec1 = pow(max(dot(vNormal, halfDir1), 0.0), 256.0);
-    baseColor = mix(baseColor, vec3(1.3), spec1 * 0.7);
+    // 스펙큘러 (면마다 다르게 반짝임) - 날카롭게 집중
+    float spec1 = pow(max(dot(vNormal, halfDir1), 0.0), 512.0);
+    baseColor = mix(baseColor, vec3(1.3), spec1 * 0.8);
 
     // 보조 스펙큘러 (반대편 하이라이트)
     vec3 halfDir2 = normalize(lightDir2 - vEye);
-    float spec2 = pow(max(dot(vNormal, halfDir2), 0.0), 128.0);
-    baseColor = mix(baseColor, vec3(1.1), spec2 * 0.3);
+    float spec2 = pow(max(dot(vNormal, halfDir2), 0.0), 512.0);
+    baseColor = mix(baseColor, vec3(1.1), spec2 * 0.4);
 
     // 프레넬 (테두리 강조)
     float fresnel = pow(1.0 - max(dot(vNormal, -vEye), 0.0), 3.0);
@@ -187,17 +194,90 @@ function createBrilliantCSG(): THREE.BufferGeometry {
     }
   }
 
-  const geometry = result.geometry.clone();
+  let geometry = result.geometry.clone();
   if (geometry.index !== null) {
-    const nonIndexed = geometry.toNonIndexed();
-    nonIndexed.computeVertexNormals();
-    return nonIndexed;
+    geometry = geometry.toNonIndexed();
   }
-  geometry.computeVertexNormals();
+
+  // 명시적으로 flat normals 계산 (각 face별로 동일한 normal)
+  computeFlatNormals(geometry);
   return geometry;
 }
 
-function createGemGeometry(shape: GemShape, detail: number): THREE.BufferGeometry {
+// 각 삼각형 face에 대해 flat normal 계산
+function computeFlatNormals(geometry: THREE.BufferGeometry): void {
+  const positionAttribute = geometry.getAttribute('position') as THREE.BufferAttribute;
+  const normalArray = new Float32Array(positionAttribute.count * 3);
+
+  const vA = new THREE.Vector3();
+  const vB = new THREE.Vector3();
+  const vC = new THREE.Vector3();
+  const ab = new THREE.Vector3();
+  const ac = new THREE.Vector3();
+  const normal = new THREE.Vector3();
+
+  // 각 삼각형(3개 vertex)마다 face normal 계산
+  for (let i = 0; i < positionAttribute.count; i += 3) {
+    vA.fromBufferAttribute(positionAttribute, i);
+    vB.fromBufferAttribute(positionAttribute, i + 1);
+    vC.fromBufferAttribute(positionAttribute, i + 2);
+
+    ab.subVectors(vB, vA);
+    ac.subVectors(vC, vA);
+    normal.crossVectors(ab, ac).normalize();
+
+    // 같은 face의 세 vertex에 동일한 normal 적용
+    normalArray[i * 3] = normal.x;
+    normalArray[i * 3 + 1] = normal.y;
+    normalArray[i * 3 + 2] = normal.z;
+
+    normalArray[(i + 1) * 3] = normal.x;
+    normalArray[(i + 1) * 3 + 1] = normal.y;
+    normalArray[(i + 1) * 3 + 2] = normal.z;
+
+    normalArray[(i + 2) * 3] = normal.x;
+    normalArray[(i + 2) * 3 + 1] = normal.y;
+    normalArray[(i + 2) * 3 + 2] = normal.z;
+  }
+
+  geometry.setAttribute('normal', new THREE.BufferAttribute(normalArray, 3));
+}
+
+// .asc 파일에서 geometry 로드 (비동기)
+async function loadGemCadGeometry(shapeId: string): Promise<THREE.BufferGeometry> {
+  // 캐시 확인
+  if (gemCadCache.has(shapeId)) {
+    return gemCadCache.get(shapeId)!.clone();
+  }
+
+  // .asc 파일 로드
+  const fileName = shapeId.endsWith('.asc') ? shapeId : `${shapeId}.asc`;
+  const response = await fetch(`/gem_cads/${fileName}`);
+  if (!response.ok) {
+    throw new Error(`Failed to load ${fileName}`);
+  }
+
+  const content = await response.text();
+  const gemcadData = parseGemCad(content);
+  const geometry = generateGemGeometry(gemcadData, 1.0);
+
+  // 캐시에 저장
+  gemCadCache.set(shapeId, geometry);
+
+  return geometry.clone();
+}
+
+// 이제 모든 shape가 GemCad 파일
+function isGemCadShape(_shape: string): boolean {
+  return true; // 모든 shape를 gem_cad로 처리
+}
+
+function createGemGeometry(shape: GemShape, detail: number): THREE.BufferGeometry | null {
+  // GemCad 파일인 경우 null 반환 (비동기 로드 필요)
+  if (isGemCadShape(shape)) {
+    return null;
+  }
+
   let geometry: THREE.BufferGeometry;
   const h = 1.6;
   const cH = h * 0.33;
@@ -307,7 +387,8 @@ function createGemGeometry(shape: GemShape, detail: number): THREE.BufferGeometr
   if (geometry.index !== null) {
     geometry = geometry.toNonIndexed();
   }
-  geometry.computeVertexNormals();
+  // Flat normals로 facet 구분 명확하게
+  computeFlatNormals(geometry);
   return geometry;
 }
 
@@ -317,6 +398,11 @@ export function GemScene({ params, contrast = 0.5, autoRotate = true, className,
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const disableDragRef = useRef(disableDrag);
   disableDragRef.current = disableDrag;
+
+  // GemCad 목록 미리 로드
+  useEffect(() => {
+    loadGemCadList();
+  }, []);
 
   // 컨테이너 크기 측정
   useEffect(() => {
@@ -512,10 +598,13 @@ export function GemScene({ params, contrast = 0.5, autoRotate = true, className,
 
         const material = gemstone.material as THREE.ShaderMaterial;
         material.uniforms.uTime.value = time;
+        // 진자 운동처럼 넓은 범위로 좌우 스윙
+        const swingAngle = Math.sin(time * 1.5) * 1.5;  // -1.5 ~ 1.5 라디안 (약 ±86도)
+        const lightDist = 6;
         material.uniforms.uLightPos.value.set(
-          Math.sin(time * 2) * 5,
-          5,
-          Math.cos(time * 2) * 5
+          Math.sin(swingAngle) * lightDist,  // 좌우 넓게
+          0,                                  // 보석과 수평
+          Math.cos(swingAngle) * lightDist   // 정면 유지하며 각도 변화
         );
       }
 
@@ -575,15 +664,17 @@ export function GemScene({ params, contrast = 0.5, autoRotate = true, className,
     }
   }, [contrast]);
 
-  function createGemMesh(p: Omit<GemParams, 'id'>) {
+  async function createGemMesh(p: Omit<GemParams, 'id'>) {
     if (!sceneRef.current) return;
 
     const { scene, gemstone: oldGem } = sceneRef.current;
 
+    // 기존 gem 완전히 제거
     if (oldGem) {
       scene.remove(oldGem);
       oldGem.geometry.dispose();
       (oldGem.material as THREE.Material).dispose();
+      sceneRef.current.gemstone = null;
     }
 
     // Get texture from background component
@@ -606,7 +697,29 @@ export function GemScene({ params, contrast = 0.5, autoRotate = true, className,
       texture.magFilter = THREE.LinearFilter;
     }
 
-    const geometry = createGemGeometry(p.shape, p.detailLevel);
+    // Geometry 로드 (동기 또는 비동기)
+    let geometry: THREE.BufferGeometry;
+    if (isGemCadShape(p.shape)) {
+      try {
+        geometry = await loadGemCadGeometry(p.shape);
+      } catch (e) {
+        console.error('Failed to load GemCad geometry:', e);
+        geometry = createBrilliantCSG(); // fallback
+      }
+    } else {
+      geometry = createGemGeometry(p.shape, p.detailLevel) || createBrilliantCSG();
+    }
+
+    // 비동기 로드 후 sceneRef가 여전히 유효한지 확인
+    if (!sceneRef.current) return;
+
+    // 이미 다른 gem이 로드되었다면 (빠른 연속 클릭 대응), 새로 로드하지 않음
+    if (sceneRef.current.gemstone) {
+      scene.remove(sceneRef.current.gemstone);
+      sceneRef.current.gemstone.geometry.dispose();
+      (sceneRef.current.gemstone.material as THREE.Material).dispose();
+    }
+
     const material = new THREE.ShaderMaterial({
       uniforms: {
         tBackground: { value: texture },
@@ -625,7 +738,7 @@ export function GemScene({ params, contrast = 0.5, autoRotate = true, className,
     });
 
     const mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
+    sceneRef.current.scene.add(mesh);
     sceneRef.current.gemstone = mesh;
   }
 
