@@ -1,0 +1,79 @@
+/* StarField - Animated Background */
+
+.starfield {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle var(--twinkle-duration, 3s) ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+    box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+  }
+}
+
+.shootingStar {
+  position: absolute;
+  width: 150px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, white);
+  border-radius: 50%;
+  opacity: 0;
+  transform: rotate(45deg);
+  animation: shoot 4s ease-out infinite;
+  animation-delay: var(--shoot-delay, 0s);
+}
+
+.shootingStar::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 10px white, 0 0 20px white;
+}
+
+@keyframes shoot {
+  0% {
+    transform: translateX(0) translateY(0) rotate(45deg);
+    opacity: 0;
+  }
+  2% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 1;
+  }
+  30% {
+    transform: translateX(calc(100vw + 200px)) translateY(calc(100vh + 200px)) rotate(45deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(calc(100vw + 200px)) translateY(calc(100vh + 200px)) rotate(45deg);
+    opacity: 0;
+  }
+}

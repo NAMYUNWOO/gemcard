@@ -1,0 +1,286 @@
+/* =============================================================================
+   ARCANE GEMS - Keyframe Animations
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   Twinkle - Star sparkle effect
+   ----------------------------------------------------------------------------- */
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Shooting Star - Meteor effect
+   ----------------------------------------------------------------------------- */
+@keyframes shoot {
+  0% {
+    transform: translateX(-100px) translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100vw) translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Gem Reveal - Summoning effect
+   ----------------------------------------------------------------------------- */
+@keyframes gem-reveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(-10deg);
+    filter: blur(20px);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1) rotate(5deg);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+    filter: blur(0);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Light Burst - Explosion effect
+   ----------------------------------------------------------------------------- */
+@keyframes light-burst {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Magic Circle - Rotation
+   ----------------------------------------------------------------------------- */
+@keyframes magic-circle-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes magic-circle-spin-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Magic Circle - Pulse
+   ----------------------------------------------------------------------------- */
+@keyframes magic-circle-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Pulse - Epic rarity glow
+   ----------------------------------------------------------------------------- */
+@keyframes pulse-epic {
+  0%, 100% {
+    box-shadow: 0 0 var(--glow-size, 25px) var(--glow-color, rgba(168, 85, 247, 0.6));
+  }
+  50% {
+    box-shadow: 0 0 calc(var(--glow-size, 25px) * 1.5) var(--glow-color, rgba(168, 85, 247, 0.6));
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Shimmer - Legendary rarity glow
+   ----------------------------------------------------------------------------- */
+@keyframes shimmer-legendary {
+  0%, 100% {
+    box-shadow:
+      0 0 30px rgba(255, 215, 0, 0.7),
+      0 0 60px rgba(255, 165, 0, 0.4),
+      inset 0 0 20px rgba(255, 215, 0, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 50px rgba(255, 215, 0, 0.9),
+      0 0 100px rgba(255, 165, 0, 0.6),
+      inset 0 0 30px rgba(255, 215, 0, 0.2);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Fade In Up - Page entrance
+   ----------------------------------------------------------------------------- */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Fade In - Simple fade
+   ----------------------------------------------------------------------------- */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Scale In - Pop effect
+   ----------------------------------------------------------------------------- */
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Float - Gentle up and down
+   ----------------------------------------------------------------------------- */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Glow Pulse - Soft glow animation
+   ----------------------------------------------------------------------------- */
+@keyframes glow-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px var(--glow-color, rgba(139, 92, 246, 0.5)));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px var(--glow-color, rgba(139, 92, 246, 0.7)));
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Rune Glow - Text glow for runes
+   ----------------------------------------------------------------------------- */
+@keyframes rune-glow {
+  0%, 100% {
+    text-shadow: 0 0 10px var(--gold), 0 0 20px var(--gold-dim);
+    opacity: 0.6;
+  }
+  50% {
+    text-shadow: 0 0 20px var(--gold), 0 0 40px var(--gold-dim);
+    opacity: 1;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Shimmer Sweep - Button hover effect
+   ----------------------------------------------------------------------------- */
+@keyframes shimmer-sweep {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Spin - Loading spinner
+   ----------------------------------------------------------------------------- */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Bounce - Attention grabber
+   ----------------------------------------------------------------------------- */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* =============================================================================
+   Utility Classes for Animations
+   ============================================================================= */
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease forwards;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s ease forwards;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-pulse-epic {
+  animation: pulse-epic 2s ease-in-out infinite;
+}
+
+.animate-shimmer-legendary {
+  animation: shimmer-legendary 3s ease-in-out infinite;
+}

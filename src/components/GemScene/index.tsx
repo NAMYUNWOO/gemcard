@@ -31,6 +31,7 @@ interface SceneState {
   renderer: THREE.WebGLRenderer;
   gemstone: THREE.Mesh | null;
   animationId: number;
+  gemVersion: number; // Track async gem creation to prevent race conditions
 }
 
 // ============================================================================
@@ -42,12 +43,16 @@ function createFallbackTexture(): THREE.Texture {
   canvas.width = 512;
   canvas.height = 512;
   const ctx = canvas.getContext('2d')!;
-  const grad = ctx.createLinearGradient(0, 0, 512, 512);
-  grad.addColorStop(0, '#667eea');
-  grad.addColorStop(0.5, '#764ba2');
-  grad.addColorStop(1, '#f093fb');
-  ctx.fillStyle = grad;
+
+  // 밝은 방사형 그라데이션 (폴백용)
+  const gradient = ctx.createRadialGradient(256, 256, 0, 256, 256, 360);
+  gradient.addColorStop(0, '#FFFFFF');
+  gradient.addColorStop(0.4, '#FFF8F0');
+  gradient.addColorStop(0.7, '#F0E6FF');
+  gradient.addColorStop(1, '#E8E0F0');
+  ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, 512, 512);
+
   const texture = new THREE.CanvasTexture(canvas);
   texture.minFilter = THREE.LinearFilter;
   texture.magFilter = THREE.LinearFilter;
@@ -136,13 +141,15 @@ export function GemScene({
     async (p: Omit<GemParams, 'id'>) => {
       if (!sceneRef.current) return;
 
-      const { scene, gemstone: oldGem } = sceneRef.current;
+      // Increment version to invalidate any pending async operations
+      sceneRef.current.gemVersion++;
+      const currentVersion = sceneRef.current.gemVersion;
 
       // Remove existing gem
-      if (oldGem) {
-        scene.remove(oldGem);
-        oldGem.geometry.dispose();
-        (oldGem.material as THREE.Material).dispose();
+      if (sceneRef.current.gemstone) {
+        sceneRef.current.scene.remove(sceneRef.current.gemstone);
+        sceneRef.current.gemstone.geometry.dispose();
+        (sceneRef.current.gemstone.material as THREE.Material).dispose();
         sceneRef.current.gemstone = null;
       }
 
@@ -158,20 +165,26 @@ export function GemScene({
         geometry = createFallbackBrilliantGeometry();
       }
 
-      // Verify scene is still valid after async operation
-      if (!sceneRef.current) return;
+      // Verify scene is still valid and version hasn't changed after async operation
+      const currentState = sceneRef.current;
+      if (!currentState || currentState.gemVersion !== currentVersion) {
+        // A newer gem creation was started, discard this one
+        geometry.dispose();
+        return;
+      }
 
-      // Handle race condition from rapid shape changes
-      if (sceneRef.current.gemstone) {
-        scene.remove(sceneRef.current.gemstone);
-        sceneRef.current.gemstone.geometry.dispose();
-        (sceneRef.current.gemstone.material as THREE.Material).dispose();
+      // Double check and remove any gem that might have been added by a race condition
+      const existingGem = currentState.gemstone;
+      if (existingGem) {
+        currentState.scene.remove(existingGem);
+        existingGem.geometry.dispose();
+        (existingGem.material as THREE.Material).dispose();
       }
 
       const material = createGemMaterial(texture, p.color, p.turbidity, contrast);
       const mesh = new THREE.Mesh(geometry, material);
-      sceneRef.current.scene.add(mesh);
-      sceneRef.current.gemstone = mesh;
+      currentState.scene.add(mesh);
+      currentState.gemstone = mesh;
     },
     [contrast]
   );
@@ -215,13 +228,18 @@ export function GemScene({
       renderer,
       gemstone: null,
       animationId: 0,
+      gemVersion: 0,
     };
 
     // Attach drag rotation handlers
     const cleanupDrag = dragRotation.attachTo(renderer.domElement);
 
-    // Create initial gem mesh after short delay for background texture
-    setTimeout(() => createGemMesh(params), 100);
+    // Create initial gem after a short delay to ensure background texture is ready
+    const initTimeout = setTimeout(() => {
+      if (sceneRef.current && !sceneRef.current.gemstone) {
+        createGemMesh(params);
+      }
+    }, 150);
 
     // Animation loop
     const animate = () => {
@@ -290,26 +308,41 @@ export function GemScene({
 
     // Cleanup
     return () => {
+      clearTimeout(initTimeout);
       cleanupDrag();
       window.removeEventListener('resize', handleResize);
 
       if (sceneRef.current) {
         cancelAnimationFrame(sceneRef.current.animationId);
-        sceneRef.current.renderer.dispose();
+        // Invalidate any pending async gem creation
+        sceneRef.current.gemVersion++;
+        // Remove and dispose gem properly
         if (sceneRef.current.gemstone) {
+          sceneRef.current.scene.remove(sceneRef.current.gemstone);
           sceneRef.current.gemstone.geometry.dispose();
           (sceneRef.current.gemstone.material as THREE.Material).dispose();
+          sceneRef.current.gemstone = null;
         }
+        sceneRef.current.renderer.dispose();
       }
 
       if (renderer.domElement.parentNode) {
         renderer.domElement.parentNode.removeChild(renderer.domElement);
       }
     };
+    // Note: params is intentionally not in deps - initial creation uses captured value,
+    // subsequent changes are handled by the params useEffect
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dynamicBackground, backgroundImage, cardMessage, senderName, createGemMesh, dragRotation]);
 
-  // Update gem when params change
+  // Update gem when params change (after initial creation)
+  const isInitialMount = useRef(true);
   useEffect(() => {
+    // Skip on initial mount - let the setTimeout in main effect handle it
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
     if (sceneRef.current) {
       createGemMesh(params);
     }
@@ -323,24 +356,26 @@ export function GemScene({
     }
   }, [contrast]);
 
+  // Use minimum dimensions to ensure background is always ready
+  const bgWidth = Math.max(dimensions.width, 350);
+  const bgHeight = Math.max(dimensions.height, 350);
+
   return (
     <div
       ref={containerRef}
       className={className}
       style={{ width: '100%', height: '100%', position: 'relative' }}
     >
-      {dimensions.width > 0 && dimensions.height > 0 && (
-        <GemBackground
-          ref={backgroundRef}
-          width={dimensions.width}
-          height={dimensions.height}
-          dynamicBackground={dynamicBackground}
-          backgroundImage={backgroundImage}
-          cardMessage={cardMessage}
-          senderName={senderName}
-          maxChars={maxChars}
-        />
-      )}
+      <GemBackground
+        ref={backgroundRef}
+        width={bgWidth}
+        height={bgHeight}
+        dynamicBackground={dynamicBackground}
+        backgroundImage={backgroundImage}
+        cardMessage={cardMessage}
+        senderName={senderName}
+        maxChars={maxChars}
+      />
     </div>
   );
 }

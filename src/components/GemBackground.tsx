@@ -1,6 +1,62 @@
 import { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import * as THREE from 'three';
 
+interface FloatingChar {
+  char: string;
+  x: number;
+  y: number;
+  dx: number;
+  dy: number;
+  rotation: number;
+  rotationSpeed: number;
+  fontSize: number;
+  opacity: number;
+  glowPhase: number;
+  glowSpeed: number;
+  trail: { x: number; y: number; alpha: number }[];
+}
+
+interface EnergyParticle {
+  x: number;
+  y: number;
+  angle: number;
+  radius: number;
+  speed: number;
+  size: number;
+  alpha: number;
+  hue: number;
+}
+
+interface EnergyRing {
+  radius: number;
+  maxRadius: number;
+  alpha: number;
+  speed: number;
+  thickness: number;
+}
+
+interface GeometricSigil {
+  x: number;
+  y: number;
+  size: number;
+  rotation: number;
+  rotationSpeed: number;
+  type: 'hexagon' | 'triangle' | 'pentagram' | 'square' | 'circle';
+  drawProgress: number; // 0-1 그려지는 진행도
+  lifePhase: 'drawing' | 'glowing' | 'fading';
+  alpha: number;
+  maxAlpha: number;
+  lifetime: number;
+  age: number;
+}
+
+// 신성한 룬 문자
+const RUNE_CHARS = [
+  'ᚠ', 'ᚢ', 'ᚦ', 'ᚨ', 'ᚱ', 'ᚲ', 'ᚷ', 'ᚹ', 'ᚺ', 'ᚾ',
+  'ᛁ', 'ᛃ', 'ᛇ', 'ᛈ', 'ᛉ', 'ᛊ', 'ᛏ', 'ᛒ', 'ᛖ', 'ᛗ',
+  '✧', '⟡', '◈', '✴', '❋'
+];
+
 interface GemBackgroundProps {
   width: number;
   height: number;
@@ -11,76 +67,9 @@ interface GemBackgroundProps {
   maxChars?: number;
 }
 
-interface FloatingChar {
-  char: string;
-  x: number;
-  y: number;
-  dx: number;
-  dy: number;
-  rotation: number;
-  rotationSpeed: number;
-  fontSize: number;
-}
-
 export interface GemBackgroundHandle {
   getTexture: () => THREE.Texture | null;
   update: () => void;
-}
-
-// 편지 메시지 42개
-const LETTER_MESSAGES = [
-  "보석과 함께 소중한 분에게 편지를..",
-  "어머니에게 사랑하고 고맙다는 말씀을..",
-  "아버지에게 존경하고 든든하다는 말씀을..",
-  "아내에게 사랑하고 평생 행복하자는 말을..",
-  "남편에게 사랑하고 평생 행복하자는 말을..",
-  "친구에게 고맙고 앞으로도 잘 부탁한다는 말을..",
-  "이모에게 항상 챙겨주셔서 감사하다는 말을..",
-  "삼촌에게 어릴 때 잘 놀아주셔서 고맙다는 말을..",
-  "은사님에게 가르침에 감사드린다는 말을..",
-  "후배에게 응원하고 믿는다는 말을..",
-  "선배에게 존경하고 배우고 싶다는 말을..",
-  "할머니에게 오래오래 건강하시라는 말을..",
-  "할아버지에게 보고 싶고 사랑한다는 말을..",
-  "동생에게 항상 곁에 있어줘서 고맙다는 말을..",
-  "형에게 듬직해서 좋다는 말을..",
-  "오빠에게 항상 챙겨줘서 고맙다는 말을..",
-  "누나에게 다정해서 좋다는 말을..",
-  "언니에게 롤모델이라는 말을..",
-  "조카에게 사랑하고 응원한다는 말을..",
-  "사촌에게 어릴 때 추억이 좋았다는 말을..",
-  "직장 동료에게 함께해서 힘이 된다는 말을..",
-  "첫사랑에게 그때 행복했다는 말을..",
-  "나 자신에게 수고했고 사랑한다는 말을..",
-  "사장님에게 많이 배우고 있다는 말을..",
-  "대표님에게 존경하고 따르겠다는 말을..",
-  "팀장님에게 이끌어주셔서 감사하다는 말을..",
-  "직원분에게 함께해서 든든하다는 말을..",
-  "남자친구에게 만나서 행복하다는 말을..",
-  "여자친구에게 세상에서 제일 예쁘다는 말을..",
-  "전남친에게 좋은 추억 고맙다는 말을..",
-  "전여친에게 덕분에 성장했다는 말을..",
-  "짝사랑에게 용기내서 고백한다는 말을..",
-  "소꿉친구에게 오래 알아서 편하다는 말을..",
-  "룸메이트에게 같이 살아서 좋다는 말을..",
-  "담임선생님에게 잘 가르쳐주셔서 감사하다는 말을..",
-  "교수님에게 지도해주셔서 감사하다는 말을..",
-  "고마운 이웃에게 늘 인사해주셔서 좋다는 말을..",
-  "주치의 선생님에게 건강 챙겨주셔서 감사하다는 말을..",
-  "오랜 단골 사장님에게 맛있는 음식 감사하다는 말을..",
-  "군대 전우에게 같이 고생해서 고맙다는 말을..",
-  "반려동물에게 곁에 있어줘서 고맙다는 말을..",
-  "하늘에 계신 분에게 보고 싶고 사랑한다는 말을..",
-];
-
-// Fisher-Yates 셔플
-function shuffleArray<T>(array: T[]): T[] {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
 }
 
 export const GemBackground = forwardRef<GemBackgroundHandle, GemBackgroundProps>(
@@ -89,85 +78,14 @@ export const GemBackground = forwardRef<GemBackgroundHandle, GemBackgroundProps>
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const textureRef = useRef<THREE.CanvasTexture | THREE.Texture | null>(null);
     const animationDataRef = useRef<{
-      messages: string[];
-      scrollY: number;
-      lineHeight: number;
       floatingChars: FloatingChar[];
-    }>({ messages: [], scrollY: 0, lineHeight: 60, floatingChars: [] });
-
-    // 편지지 배경 초기화
-    const initLetterBackground = (w: number, h: number) => {
-      const canvas = document.createElement('canvas');
-      const dpr = window.devicePixelRatio;
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      canvasRef.current = canvas;
-
-      // 메시지 셔플
-      animationDataRef.current.messages = shuffleArray(LETTER_MESSAGES);
-      animationDataRef.current.scrollY = 0;
-      animationDataRef.current.lineHeight = 50 * dpr;
-
-      // 텍스처 생성
-      const texture = new THREE.CanvasTexture(canvas);
-      texture.minFilter = THREE.LinearFilter;
-      texture.magFilter = THREE.LinearFilter;
-      textureRef.current = texture;
-
-      return canvas;
-    };
-
-    // 편지지 배경 업데이트 (스크롤 애니메이션)
-    const updateLetterBackground = () => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-
-      const dpr = window.devicePixelRatio;
-      const { messages, lineHeight } = animationDataRef.current;
-
-      // 1. 크림색 배경
-      ctx.fillStyle = '#FDF8E8';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // 2. 손글씨 스타일 텍스트
-      const fontSize = 24 * dpr;
-      ctx.font = `${fontSize}px 'Nanum Pen Script', cursive`;
-      ctx.fillStyle = '#4A4A4A';
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'bottom';
-
-      const padding = 30 * dpr;
-      const totalTextHeight = messages.length * lineHeight;
-
-      // 스크롤 위치 계산
-      let startY = -animationDataRef.current.scrollY;
-
-      // 메시지 두 번 반복해서 무한 스크롤 효과
-      const allMessages = [...messages, ...messages];
-
-      allMessages.forEach((msg, index) => {
-        const y = startY + (index * lineHeight) + lineHeight - 10 * dpr;
-        if (y > -lineHeight && y < canvas.height + lineHeight) {
-          ctx.fillText(msg, padding, y);
-        }
-      });
-
-      // 스크롤 속도
-      animationDataRef.current.scrollY += 0.8 * dpr;
-
-      // 첫 번째 세트가 완전히 지나가면 리셋
-      if (animationDataRef.current.scrollY >= totalTextHeight) {
-        animationDataRef.current.scrollY = 0;
-      }
-
-      // 텍스처 업데이트
-      if (textureRef.current instanceof THREE.CanvasTexture) {
-        textureRef.current.needsUpdate = true;
-      }
-    };
+      particles: EnergyParticle[];
+      rings: EnergyRing[];
+      sigils: GeometricSigil[];
+      time: number;
+      centerPulse: number;
+      nextSigilTime: number;
+    }>({ floatingChars: [], particles: [], rings: [], sigils: [], time: 0, centerPulse: 0, nextSigilTime: 2 });
 
     // 카드 메시지 플로팅 배경 초기화
     const initFloatingMessage = (w: number, h: number, message: string, sender?: string) => {
@@ -195,10 +113,22 @@ export const GemBackground = forwardRef<GemBackgroundHandle, GemBackgroundProps>
           rotation: (Math.random() - 0.5) * 30, // -15 ~ +15도
           rotationSpeed: (Math.random() - 0.5) * 0.5,
           fontSize: (24 + Math.random() * 8) * dpr, // 24-32px
+          opacity: 0.6 + Math.random() * 0.3,
+          glowPhase: Math.random() * Math.PI * 2,
+          glowSpeed: 0.02,
+          trail: [],
         });
       }
 
-      animationDataRef.current.floatingChars = chars;
+      animationDataRef.current = {
+        floatingChars: chars,
+        particles: [],
+        rings: [],
+        sigils: [],
+        time: 0,
+        centerPulse: 0,
+        nextSigilTime: 0,
+      };
 
       // 텍스처 생성
       const texture = new THREE.CanvasTexture(canvas);
@@ -259,11 +189,283 @@ export const GemBackground = forwardRef<GemBackgroundHandle, GemBackgroundProps>
       }
     };
 
+    // 동적 마법 배경 업데이트 - The Arcane Inscription
+    const updateDynamicRunes = () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      const data = animationDataRef.current;
+      const w = canvas.width;
+      const h = canvas.height;
+      const cx = w / 2;
+      const cy = h / 2;
+      const maxRadius = Math.min(w, h) * 0.48;
+
+      data.time += 0.008;
+      data.centerPulse += 0.015;
+
+      // === 1. 밝은 아이보리-라벤더 그라데이션 배경 ===
+      const bgGradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, w * 0.8);
+      bgGradient.addColorStop(0, '#FDFCFA');
+      bgGradient.addColorStop(0.3, '#FAF8F5');
+      bgGradient.addColorStop(0.6, '#F4F1EC');
+      bgGradient.addColorStop(1, '#EBE7F0');
+      ctx.fillStyle = bgGradient;
+      ctx.fillRect(0, 0, w, h);
+
+      // === 2. 거대한 마법진 (The Grand Circle) - 배경 전체 ===
+      const drawProgress = Math.min(1, data.time * 0.8); // 빠르게 그려짐
+      const baseRotation = data.time * 0.25; // 훨씬 빠른 회전
+      const pulseGlow = 0.85 + 0.15 * Math.sin(data.centerPulse);
+
+      ctx.save();
+      ctx.translate(cx, cy);
+
+      // 마법진 선 스타일 - 매우 진한 인디고 with 강한 글로우
+      const setMagicLineStyle = (alpha: number, glowIntensity: number = 1) => {
+        ctx.strokeStyle = `rgba(35, 30, 65, ${Math.min(1, alpha * 2.2 * pulseGlow)})`; // 훨씬 더 진하게
+        ctx.shadowColor = `rgba(60, 40, 110, ${Math.min(1, 1.0 * glowIntensity * pulseGlow)})`;
+        ctx.shadowBlur = 15 * glowIntensity;
+        ctx.lineWidth = 1.5; // 얇게
+      };
+
+      // --- 외곽 원 3개 (동심원) ---
+      if (drawProgress > 0) {
+        const outerProgress = Math.min(1, drawProgress * 4);
+        setMagicLineStyle(0.5, 1.2);
+
+        // 가장 바깥 원
+        ctx.beginPath();
+        ctx.arc(0, 0, maxRadius, 0, Math.PI * 2 * outerProgress);
+        ctx.stroke();
+
+        // 두 번째 원
+        if (outerProgress > 0.3) {
+          ctx.beginPath();
+          ctx.arc(0, 0, maxRadius * 0.92, 0, Math.PI * 2 * Math.min(1, (outerProgress - 0.3) / 0.7));
+          ctx.stroke();
+        }
+
+        // 세 번째 원 (장식 점선)
+        if (outerProgress > 0.5) {
+          ctx.setLineDash([8, 12]);
+          ctx.beginPath();
+          ctx.arc(0, 0, maxRadius * 0.85, 0, Math.PI * 2 * Math.min(1, (outerProgress - 0.5) / 0.5));
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+      }
+
+      // --- 육각형 (Hexagram) ---
+      if (drawProgress > 0.15) {
+        const hexProgress = Math.min(1, (drawProgress - 0.15) * 3);
+        setMagicLineStyle(0.6, 1.3);
+        ctx.save();
+        ctx.rotate(baseRotation);
+
+        const hexRadius = maxRadius * 0.7;
+
+        // 첫 번째 삼각형 (위로 향함)
+        ctx.beginPath();
+        for (let i = 0; i <= 3; i++) {
+          const segProg = hexProgress * 3;
+          if (i > segProg) break;
+          const angle = (i / 3) * Math.PI * 2 - Math.PI / 2;
+          const x = Math.cos(angle) * hexRadius;
+          const y = Math.sin(angle) * hexRadius;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        // 두 번째 삼각형 (아래로 향함)
+        if (hexProgress > 0.5) {
+          const tri2Prog = (hexProgress - 0.5) * 2;
+          ctx.beginPath();
+          for (let i = 0; i <= 3; i++) {
+            const segProg = tri2Prog * 3;
+            if (i > segProg) break;
+            const angle = (i / 3) * Math.PI * 2 + Math.PI / 6;
+            const x = Math.cos(angle) * hexRadius;
+            const y = Math.sin(angle) * hexRadius;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      // --- 오각별 (Pentagram) - 반대 방향 회전 ---
+      if (drawProgress > 0.3) {
+        const pentProgress = Math.min(1, (drawProgress - 0.3) * 2.5);
+        setMagicLineStyle(0.55, 1.2);
+        ctx.save();
+        ctx.rotate(-baseRotation * 1.5);
+
+        const pentRadius = maxRadius * 0.5;
+        ctx.beginPath();
+        for (let i = 0; i <= 5; i++) {
+          const segProg = pentProgress * 5;
+          if (i > segProg) break;
+          const angle = ((i * 2) % 5) / 5 * Math.PI * 2 - Math.PI / 2;
+          const x = Math.cos(angle) * pentRadius;
+          const y = Math.sin(angle) * pentRadius;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        // 내부 오각형
+        if (pentProgress > 0.7) {
+          const innerProg = (pentProgress - 0.7) / 0.3;
+          ctx.beginPath();
+          for (let i = 0; i <= 5; i++) {
+            if (i > innerProg * 5) break;
+            const angle = (i / 5) * Math.PI * 2 - Math.PI / 2;
+            const x = Math.cos(angle) * pentRadius * 0.4;
+            const y = Math.sin(angle) * pentRadius * 0.4;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      // --- 중앙 원과 방사선 ---
+      if (drawProgress > 0.5) {
+        const centerProgress = Math.min(1, (drawProgress - 0.5) * 3);
+        setMagicLineStyle(0.65, 1.4);
+
+        // 중앙 원
+        ctx.beginPath();
+        ctx.arc(0, 0, maxRadius * 0.15, 0, Math.PI * 2 * centerProgress);
+        ctx.stroke();
+
+        // 방사선 (12개)
+        if (centerProgress > 0.3) {
+          const rayProgress = (centerProgress - 0.3) / 0.7;
+          setMagicLineStyle(0.45, 1.0);
+          for (let i = 0; i < 12; i++) {
+            if (i / 12 > rayProgress) break;
+            const angle = (i / 12) * Math.PI * 2;
+            ctx.beginPath();
+            ctx.moveTo(Math.cos(angle) * maxRadius * 0.2, Math.sin(angle) * maxRadius * 0.2);
+            ctx.lineTo(Math.cos(angle) * maxRadius * 0.82, Math.sin(angle) * maxRadius * 0.82);
+            ctx.stroke();
+          }
+        }
+
+        // 교차점 작은 원들
+        if (centerProgress > 0.6) {
+          setMagicLineStyle(0.55, 1.1);
+          const dotProgress = (centerProgress - 0.6) / 0.4;
+          for (let i = 0; i < 6; i++) {
+            if (i / 6 > dotProgress) break;
+            const angle = (i / 6) * Math.PI * 2;
+            const r = maxRadius * 0.7;
+            ctx.beginPath();
+            ctx.arc(Math.cos(angle) * r, Math.sin(angle) * r, 6, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+        }
+      }
+
+      ctx.restore();
+
+      // === 3. 룬 문자 - 작게, 배경 전체에 퍼져서 ===
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      const runeCount = data.floatingChars.length;
+      for (let i = 0; i < runeCount; i++) {
+        const rune = data.floatingChars[i];
+
+        // 그리드 기반 위치 + 부드러운 움직임
+        const gridX = (i % 5) / 4;
+        const gridY = Math.floor(i / 5) / 2;
+        const baseX = w * 0.1 + gridX * w * 0.8;
+        const baseY = h * 0.1 + gridY * h * 0.8;
+
+        // 부드러운 부유 움직임
+        const floatX = Math.sin(data.time * 0.3 + i * 1.2) * 15;
+        const floatY = Math.cos(data.time * 0.25 + i * 0.9) * 12;
+
+        rune.x = baseX + floatX;
+        rune.y = baseY + floatY;
+
+        // 천천히 회전
+        rune.rotation += 0.1;
+        rune.glowPhase += rune.glowSpeed;
+
+        // 페이드 인/아웃 효과
+        const fadePhase = Math.sin(data.time * 0.4 + i * 0.7);
+        const runeAlpha = 0.12 + 0.08 * fadePhase;
+
+        // 룬 렌더링 (작고 은은하게)
+        ctx.save();
+        ctx.translate(rune.x, rune.y);
+        ctx.rotate((rune.rotation * Math.PI) / 180);
+        ctx.globalAlpha = runeAlpha;
+
+        ctx.shadowColor = 'rgba(100, 90, 140, 0.3)';
+        ctx.shadowBlur = 4;
+
+        ctx.fillStyle = '#8B85A0';
+        ctx.font = `${14}px serif`; // 작은 크기
+        ctx.fillText(rune.char, 0, 0);
+        ctx.restore();
+      }
+
+      // === 4. 중앙 미스틱 코어 글로우 ===
+      const coreAlpha = 0.15 + 0.1 * Math.sin(data.centerPulse);
+      const coreGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxRadius * 0.2);
+      coreGlow.addColorStop(0, `rgba(255, 255, 255, ${coreAlpha})`);
+      coreGlow.addColorStop(0.5, `rgba(230, 220, 245, ${coreAlpha * 0.5})`);
+      coreGlow.addColorStop(1, 'rgba(200, 190, 220, 0)');
+      ctx.fillStyle = coreGlow;
+      ctx.beginPath();
+      ctx.arc(cx, cy, maxRadius * 0.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // === 5. 미세 파티클 (마법진 위에 떠다니는 빛) ===
+      ctx.globalAlpha = 1;
+      for (const p of data.particles) {
+        p.angle += p.speed * 0.3;
+        const pRadius = maxRadius * (0.2 + (p.radius / 200) * 0.7);
+        p.x = cx + Math.cos(p.angle) * pRadius;
+        p.y = cy + Math.sin(p.angle) * pRadius;
+
+        const pAlpha = 0.3 + 0.2 * Math.sin(data.time * 2 + p.angle);
+
+        ctx.fillStyle = `rgba(180, 170, 210, ${pAlpha})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // === 6. 부드러운 비네트 ===
+      const vignette = ctx.createRadialGradient(cx, cy, w * 0.3, cx, cy, w * 0.75);
+      vignette.addColorStop(0, 'rgba(0, 0, 0, 0)');
+      vignette.addColorStop(1, 'rgba(70, 60, 90, 0.04)');
+      ctx.fillStyle = vignette;
+      ctx.fillRect(0, 0, w, h);
+
+      // 텍스처 업데이트
+      if (textureRef.current instanceof THREE.CanvasTexture) {
+        textureRef.current.needsUpdate = true;
+      }
+    };
+
     // 부모에게 메서드 노출
     useImperativeHandle(ref, () => ({
       getTexture: () => textureRef.current,
-      update: cardMessage ? updateFloatingMessage : updateLetterBackground,
-    }), [cardMessage]);
+      update: cardMessage ? updateFloatingMessage : (dynamicBackground ? updateDynamicRunes : () => {}),
+    }), [cardMessage, dynamicBackground]);
 
     useEffect(() => {
       if (!containerRef.current) return;
@@ -314,14 +516,87 @@ export const GemBackground = forwardRef<GemBackgroundHandle, GemBackgroundProps>
           canvasRef.current = null;
         };
       } else if (dynamicBackground) {
-        // 편지지 배경 (기본)
-        const canvas = initLetterBackground(width, height);
+        // === Arcane Sanctum 마법 배경 초기화 ===
+        const canvas = document.createElement('canvas');
+        const dpr = window.devicePixelRatio;
+        canvas.width = Math.max(width * dpr, 512);
+        canvas.height = Math.max(height * dpr, 512);
+        canvasRef.current = canvas;
+
+        const w = canvas.width;
+        const h = canvas.height;
+        const cx = w / 2;
+        const cy = h / 2;
+
+        // 룬 문자 초기화 (15개 - 글로우 & 트레일 포함)
+        const runes: FloatingChar[] = [];
+        for (let i = 0; i < 15; i++) {
+          const angle = (i / 15) * Math.PI * 2;
+          const radius = 100 + Math.random() * 200;
+          runes.push({
+            char: RUNE_CHARS[Math.floor(Math.random() * RUNE_CHARS.length)],
+            x: cx + Math.cos(angle) * radius,
+            y: cy + Math.sin(angle) * radius,
+            dx: (Math.random() - 0.5) * 1.0 * dpr,
+            dy: (Math.random() - 0.5) * 1.0 * dpr,
+            rotation: Math.random() * 360,
+            rotationSpeed: (Math.random() - 0.5) * 1.5,
+            fontSize: (24 + Math.random() * 20) * dpr,
+            opacity: 0.6 + Math.random() * 0.3,
+            glowPhase: Math.random() * Math.PI * 2,
+            glowSpeed: 0.02 + Math.random() * 0.03,
+            trail: [],
+          });
+        }
+
+        // 에너지 파티클 초기화 (20개 - 중심 주위 공전)
+        const particles: EnergyParticle[] = [];
+        for (let i = 0; i < 20; i++) {
+          particles.push({
+            x: cx,
+            y: cy,
+            angle: (i / 20) * Math.PI * 2,
+            radius: 60 + Math.random() * 150,
+            speed: 0.005 + Math.random() * 0.015,
+            size: (3 + Math.random() * 4) * dpr,
+            alpha: 0.4 + Math.random() * 0.4,
+            hue: Math.random() * 40,
+          });
+        }
+
+        // 에너지 링 초기화 (3개 - 확장하는 마법진)
+        const rings: EnergyRing[] = [];
+        for (let i = 0; i < 3; i++) {
+          rings.push({
+            radius: i * 100,
+            maxRadius: Math.min(w, h) * 0.45,
+            alpha: 0.5,
+            speed: 0.8 + i * 0.3,
+            thickness: (2 + i) * dpr,
+          });
+        }
+
+        animationDataRef.current = {
+          floatingChars: runes,
+          particles,
+          rings,
+          sigils: [],
+          time: 0,
+          centerPulse: 0,
+          nextSigilTime: 1.5,
+        };
+
         canvas.style.position = 'absolute';
         canvas.style.top = '0';
         canvas.style.left = '0';
         canvas.style.width = '100%';
         canvas.style.height = '100%';
         container.appendChild(canvas);
+
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.minFilter = THREE.LinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+        textureRef.current = texture;
 
         return () => {
           container.innerHTML = '';
@@ -375,6 +650,11 @@ export const GemBackground = forwardRef<GemBackgroundHandle, GemBackgroundProps>
       canvasRef.current.height = height * dpr;
     }, [width, height, dynamicBackground, cardMessage, backgroundImage]);
 
+    // dynamicBackground용 The Arcane Inscription 배경
+    const bgStyle = dynamicBackground && !backgroundImage && !cardMessage
+      ? 'radial-gradient(circle at center, #FDFCFA 0%, #FAF8F5 30%, #F4F1EC 60%, #EBE7F0 100%)'
+      : undefined;
+
     return (
       <div
         ref={containerRef}
@@ -385,6 +665,7 @@ export const GemBackground = forwardRef<GemBackgroundHandle, GemBackgroundProps>
           width: '100%',
           height: '100%',
           zIndex: 0,
+          background: bgStyle,
         }}
       />
     );

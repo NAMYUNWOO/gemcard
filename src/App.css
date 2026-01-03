@@ -1,3 +1,13 @@
+/* =============================================================================
+   ARCANE GEMS - Global Styles
+   ============================================================================= */
+
+@import './styles/variables.css';
+@import './styles/animations.css';
+
+/* -----------------------------------------------------------------------------
+   Reset & Base
+   ----------------------------------------------------------------------------- */
 * {
   margin: 0;
   padding: 0;
@@ -7,27 +17,99 @@
 html, body, #root {
   width: 100%;
   min-height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  min-height: 100dvh;
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #f8f9fa;
+  background: var(--void-black);
+  color: var(--text-bright);
 }
 
+body {
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+}
+
+/* -----------------------------------------------------------------------------
+   Typography Base
+   ----------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--text-bright);
+}
+
+p {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+
+/* -----------------------------------------------------------------------------
+   Interactive Elements
+   ----------------------------------------------------------------------------- */
 button {
   font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 input, textarea {
   font-family: inherit;
+  background: transparent;
+  border: none;
+  color: var(--text-bright);
 }
 
-/* Hide scrollbar but keep functionality */
+input:focus, textarea:focus, button:focus {
+  outline: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* -----------------------------------------------------------------------------
+   Scrollbar
+   ----------------------------------------------------------------------------- */
 ::-webkit-scrollbar {
-  width: 0;
-  height: 0;
+  width: 6px;
+  height: 6px;
 }
 
-/* Safe area for mobile */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* -----------------------------------------------------------------------------
+   Selection
+   ----------------------------------------------------------------------------- */
+::selection {
+  background: var(--mystic-purple);
+  color: var(--text-bright);
+}
+
+/* -----------------------------------------------------------------------------
+   Safe Area (Mobile)
+   ----------------------------------------------------------------------------- */
 @supports (padding-top: env(safe-area-inset-top)) {
   .safe-area-top {
     padding-top: env(safe-area-inset-top);
@@ -36,4 +118,102 @@ input, textarea {
   .safe-area-bottom {
     padding-bottom: env(safe-area-inset-bottom);
   }
+}
+
+/* =============================================================================
+   Utility Classes
+   ============================================================================= */
+
+/* Typography */
+.title-display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-bright);
+  text-shadow: 0 0 40px var(--glow-purple);
+}
+
+.text-magic {
+  font-family: var(--font-magic);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--text-dim);
+}
+
+.gem-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--gold);
+}
+
+/* Glass Panel */
+.glass-panel {
+  background: var(--glass-gradient);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-3xl);
+  box-shadow:
+    var(--shadow-lg),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Dividers */
+.divider-gold {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold-dim),
+    transparent
+  );
+  margin: var(--space-4) 0;
+}
+
+/* Screen Reader Only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Flex Utilities */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Full Screen Container */
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* Page Container */
+.page-container {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: var(--space-4);
+  padding-top: calc(var(--space-4) + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
 }

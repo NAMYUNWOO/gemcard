@@ -1,0 +1,282 @@
+/* GemDetail Page - Detailed Gem View */
+
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* =============================================================================
+   Header
+   ============================================================================= */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4);
+  padding-top: calc(var(--space-4) + env(safe-area-inset-top, 0px));
+  background: linear-gradient(to bottom, var(--void-black), transparent);
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--text-dim);
+  transition: color 0.2s ease;
+}
+
+.backBtn:hover {
+  color: var(--text-bright);
+}
+
+.backIcon {
+  font-size: 18px;
+}
+
+.shareBtn {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  color: var(--gold-dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--gold-dim);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.shareBtn:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+/* =============================================================================
+   Main Content
+   ============================================================================= */
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-4);
+  padding-bottom: calc(var(--space-8) + env(safe-area-inset-bottom, 0px));
+  gap: var(--space-4);
+  position: relative;
+  z-index: 5;
+}
+
+/* Gem Display */
+.gemDisplay {
+  width: 280px;
+  height: 280px;
+  border-radius: var(--radius-3xl);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+
+.gemDisplay:global(.rarity-common) {
+  box-shadow: 0 0 30px rgba(156, 163, 175, 0.3);
+}
+
+.gemDisplay:global(.rarity-uncommon) {
+  box-shadow: 0 0 40px rgba(34, 197, 94, 0.4);
+}
+
+.gemDisplay:global(.rarity-rare) {
+  box-shadow: 0 0 50px rgba(59, 130, 246, 0.4);
+}
+
+.gemDisplay:global(.rarity-epic) {
+  box-shadow: 0 0 60px rgba(168, 85, 247, 0.5);
+}
+
+.gemDisplay:global(.rarity-legendary) {
+  box-shadow: 0 0 80px rgba(255, 215, 0, 0.6);
+  animation: legendary-glow 3s ease-in-out infinite;
+}
+
+@keyframes legendary-glow {
+  0%, 100% {
+    box-shadow: 0 0 60px rgba(255, 215, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 100px rgba(255, 215, 0, 0.7);
+  }
+}
+
+/* =============================================================================
+   Info Section
+   ============================================================================= */
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  gap: var(--space-2);
+}
+
+.gemName {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  margin-top: var(--space-3);
+}
+
+.divider {
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold-dim),
+    transparent
+  );
+  margin: var(--space-2) 0;
+}
+
+.cutName {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* Power Card */
+.powerCard {
+  margin-top: var(--space-4);
+  padding: var(--space-5);
+  background: var(--glass-gradient);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  width: 100%;
+}
+
+.powerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.element {
+  font-size: 28px;
+}
+
+.powerTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: var(--ethereal-cyan);
+  letter-spacing: 0.05em;
+}
+
+.powerDesc {
+  font-family: var(--font-magic);
+  font-style: italic;
+  font-size: var(--text-lg);
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: var(--space-3);
+}
+
+.elementLabel {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Metadata */
+.metadata {
+  display: flex;
+  gap: var(--space-6);
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.metaLabel {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.metaValue {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--text-bright);
+}
+
+/* =============================================================================
+   Actions
+   ============================================================================= */
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 300px;
+  margin-top: var(--space-6);
+}
+
+/* =============================================================================
+   Not Found State
+   ============================================================================= */
+
+.notFound {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  text-align: center;
+  padding: var(--space-4);
+  position: relative;
+  z-index: 5;
+}
+
+.notFound h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  color: var(--text-bright);
+}
+
+.notFound p {
+  font-family: var(--font-magic);
+  font-style: italic;
+  color: var(--text-dim);
+}

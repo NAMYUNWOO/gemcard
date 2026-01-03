@@ -1,18 +1,22 @@
+/**
+ * Arcane Gems - Main Application
+ */
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Home } from './pages/Home';
-import { Create } from './pages/Create';
-import { Card } from './pages/Card';
-import { Receive } from './pages/Receive';
+import { Collection } from './pages/Collection';
+import { Gacha } from './pages/Gacha';
+import { GemDetail } from './pages/GemDetail';
 import './App.css';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/create" element={<Create />} />
-        <Route path="/card/:id" element={<Card />} />
-        <Route path="/receive/:data" element={<Receive />} />
+        <Route path="/" element={<Collection />} />
+        <Route path="/gacha" element={<Gacha />} />
+        <Route path="/gem/:id" element={<GemDetail />} />
+        {/* Legacy routes - redirect to new structure */}
+        <Route path="/create" element={<Gacha />} />
       </Routes>
     </BrowserRouter>
   );

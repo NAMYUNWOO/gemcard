@@ -1,0 +1,219 @@
+/* Gacha Page - Gem Summoning Experience */
+
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* =============================================================================
+   Header
+   ============================================================================= */
+
+.header {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4);
+  padding-top: calc(var(--space-4) + env(safe-area-inset-top, 0px));
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--text-dim);
+  transition: color 0.2s ease;
+}
+
+.backBtn:hover {
+  color: var(--text-bright);
+}
+
+.backIcon {
+  font-size: 18px;
+}
+
+.gemCount {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  color: var(--gold-dim);
+  letter-spacing: 0.1em;
+}
+
+/* =============================================================================
+   Main Content
+   ============================================================================= */
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  gap: var(--space-6);
+  position: relative;
+  z-index: 5;
+}
+
+/* Summoning Circle Wrapper */
+.circleWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Flavor Text */
+.flavorText {
+  font-family: var(--font-magic);
+  font-style: italic;
+  font-size: var(--text-lg);
+  color: var(--text-dim);
+  text-align: center;
+  max-width: 300px;
+}
+
+.summoningText {
+  font-family: var(--font-magic);
+  font-style: italic;
+  font-size: var(--text-xl);
+  color: var(--gold);
+  text-align: center;
+  animation: pulse-text 1s ease-in-out infinite;
+}
+
+@keyframes pulse-text {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Summon Button */
+.summonBtn {
+  min-width: 200px;
+}
+
+/* =============================================================================
+   Reveal State
+   ============================================================================= */
+
+.revealContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 400px;
+  animation: reveal-in 0.8s ease forwards;
+}
+
+@keyframes reveal-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Gem Display */
+.gemDisplay {
+  width: 350px;
+  height: 350px;
+  border-radius: var(--radius-3xl);
+  overflow: hidden;
+  box-shadow: 0 0 60px var(--glow-color, rgba(139, 92, 246, 0.4));
+}
+
+/* Global rarity classes for glow */
+.revealContainer:global(.rarity-legendary) .gemDisplay {
+  box-shadow: 0 0 80px rgba(255, 215, 0, 0.6);
+}
+
+.revealContainer:global(.rarity-epic) .gemDisplay {
+  box-shadow: 0 0 60px rgba(168, 85, 247, 0.5);
+}
+
+/* Gem Info */
+.gemInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+  padding: 0 var(--space-4);
+}
+
+.gemName {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  margin-top: var(--space-2);
+}
+
+.cutName {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* Magic Power Section */
+.magicPower {
+  margin-top: var(--space-3);
+  padding: var(--space-4);
+  background: var(--glass-gradient);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-xl);
+  max-width: 320px;
+}
+
+.element {
+  font-size: 24px;
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+.powerTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--ethereal-cyan);
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-2);
+}
+
+.powerDesc {
+  font-family: var(--font-magic);
+  font-style: italic;
+  font-size: var(--text-base);
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* Action Buttons */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 280px;
+  margin-top: var(--space-4);
+}
