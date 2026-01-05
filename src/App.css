@@ -14,20 +14,27 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
+html {
+  width: 100%;
+  height: auto;
+}
+
+body {
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--void-black);
-  color: var(--text-bright);
-}
-
-body {
   background: var(--bg-gradient);
   background-attachment: fixed;
+  color: var(--text-bright);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
 }
 
 /* -----------------------------------------------------------------------------

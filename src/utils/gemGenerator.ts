@@ -4,9 +4,9 @@
  * Utilities for generating random magic gems.
  */
 
-import type { MagicGem, Rarity, GemOrigin } from '../types/gem';
-import { RARITY_CHANCES, RARITY_ORDER } from '../types/gem';
-import { SAMPLE_GEM_TEMPLATES, getElementColor } from '../data/sampleGems';
+import type { MagicGem, Rarity, GemOrigin, UserInfo } from '../types/gem';
+import { RARITY_CHANCES, RARITY_ORDER, getRandomMagicCircle } from '../types/gem';
+import { SAMPLE_GEM_TEMPLATES } from '../data/sampleGems';
 import { loadGemCadList, getCutName, type GemShape } from '../types/card';
 
 /**
@@ -14,6 +14,33 @@ import { loadGemCadList, getCutName, type GemShape } from '../types/card';
  */
 function generateId(): string {
   return `gem_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+}
+
+/**
+ * Convert HSL to Hex color
+ */
+function hslToHex(h: number, s: number, l: number): string {
+  s /= 100;
+  l /= 100;
+  const a = s * Math.min(l, 1 - l);
+  const f = (n: number) => {
+    const k = (n + h / 30) % 12;
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * color).toString(16).padStart(2, '0');
+  };
+  return `#${f(0)}${f(8)}${f(4)}`.toUpperCase();
+}
+
+/**
+ * Generate a random hex color with good saturation and brightness for gems
+ * Uses HSL color space for better color distribution
+ */
+function generateRandomHexColor(): string {
+  const hue = Math.floor(Math.random() * 360);           // 0-359 (full spectrum)
+  const saturation = 60 + Math.floor(Math.random() * 40); // 60-100% (vibrant)
+  const lightness = 35 + Math.floor(Math.random() * 30);  // 35-65% (not too dark/light)
+
+  return hslToHex(hue, saturation, lightness);
 }
 
 /**
@@ -86,9 +113,12 @@ async function generateVisualParams(): Promise<{
 
 /**
  * Generate a new magic gem
+ * @param origin - How the gem was obtained
+ * @param userInfo - Optional user information to store with the gem
  */
 export async function generateMagicGem(
-  origin: GemOrigin = 'gacha'
+  origin: GemOrigin = 'gacha',
+  userInfo?: UserInfo
 ): Promise<MagicGem> {
   // Roll for rarity
   const rarity = rollRarity();
@@ -99,8 +129,11 @@ export async function generateMagicGem(
   // Generate visual params
   const visual = await generateVisualParams();
 
-  // Set color based on element
-  const color = getElementColor(template.magicPower.element);
+  // Generate random hex color (huge variety!)
+  const color = generateRandomHexColor();
+
+  // Select random magic circle
+  const magicCircle = getRandomMagicCircle();
 
   return {
     id: generateId(),
@@ -113,7 +146,10 @@ export async function generateMagicGem(
     // Magic
     name: template.name,
     magicPower: { ...template.magicPower },
-    rarity: template.rarity, // Use template's actual rarity
+    rarity: template.rarity,
+    magicCircle,
+    // User info (stored, doesn't affect generation)
+    userInfo,
     // Metadata
     obtainedAt: Date.now(),
     origin,
@@ -125,11 +161,13 @@ export async function generateMagicGem(
  */
 export async function generateMagicGemWithRarity(
   rarity: Rarity,
-  origin: GemOrigin = 'gacha'
+  origin: GemOrigin = 'gacha',
+  userInfo?: UserInfo
 ): Promise<MagicGem> {
   const template = getTemplateByRarity(rarity);
   const visual = await generateVisualParams();
-  const color = getElementColor(template.magicPower.element);
+  const color = generateRandomHexColor();
+  const magicCircle = getRandomMagicCircle();
 
   return {
     id: generateId(),
@@ -141,6 +179,8 @@ export async function generateMagicGemWithRarity(
     name: template.name,
     magicPower: { ...template.magicPower },
     rarity: template.rarity,
+    magicCircle,
+    userInfo,
     obtainedAt: Date.now(),
     origin,
   };

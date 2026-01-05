@@ -1,9 +1,11 @@
 /**
  * Arcane Gems - Main Application
+ *
+ * Single-gem system: User can only own one gem at a time.
  */
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Collection } from './pages/Collection';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Home } from './pages/Home';
 import { Gacha } from './pages/Gacha';
 import { GemDetail } from './pages/GemDetail';
 import './App.css';
@@ -12,11 +14,15 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Collection />} />
-        <Route path="/gacha" element={<Gacha />} />
+        {/* Main Routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/summon" element={<Gacha />} />
         <Route path="/gem/:id" element={<GemDetail />} />
-        {/* Legacy routes - redirect to new structure */}
-        <Route path="/create" element={<Gacha />} />
+
+        {/* Legacy Routes - Redirect to new structure */}
+        <Route path="/gacha" element={<Navigate to="/summon" replace />} />
+        <Route path="/collection" element={<Navigate to="/" replace />} />
+        <Route path="/create" element={<Navigate to="/summon" replace />} />
       </Routes>
     </BrowserRouter>
   );

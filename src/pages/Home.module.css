@@ -1,119 +1,278 @@
+/* Home Page - Single Gem Display */
+
 .container {
-  min-height: 100vh;
-  background: #f8f9fa;
-  padding: 20px;
-  padding-top: 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-.header {
+/* =============================================================================
+   Empty State (No Gem)
+   ============================================================================= */
+
+.emptyState {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
   text-align: center;
-  margin-bottom: 32px;
+  gap: var(--space-4);
+  position: relative;
+  z-index: 5;
 }
 
 .title {
-  font-size: 32px;
-  font-weight: 900;
-  color: #1a1a2e;
-  margin: 0;
-  letter-spacing: 2px;
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: 600;
+  color: var(--text-bright);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-shadow: 0 0 40px var(--glow-purple);
+}
+
+.divider {
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold-dim),
+    transparent
+  );
 }
 
 .subtitle {
-  font-size: 14px;
-  color: #666;
-  margin-top: 8px;
+  font-family: var(--font-magic);
+  font-style: italic;
+  font-size: var(--text-xl);
+  color: var(--gold);
+  max-width: 300px;
 }
 
-.createButton {
-  display: block;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto 32px;
-  padding: 18px;
-  background: #1a1a2e;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  font-size: 18px;
-  font-weight: 700;
-  border-radius: 16px;
-  transition: transform 0.2s, box-shadow 0.2s;
+.description {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--text-dim);
+  line-height: 1.8;
+  max-width: 280px;
 }
 
-.createButton:active {
-  transform: scale(0.98);
-}
+/* =============================================================================
+   Header (Has Gem)
+   ============================================================================= */
 
-.cardsSection {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.sectionTitle {
-  font-size: 14px;
-  font-weight: 700;
-  color: #333;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 16px;
-}
-
-.cardGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-}
-
-.cardItem {
-  text-decoration: none;
-  background: white;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.cardItem:active {
-  transform: scale(0.98);
-}
-
-.cardPreview {
-  width: 100%;
-  aspect-ratio: 1;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-}
-
-.cardInfo {
-  padding: 12px;
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  padding: var(--space-4);
+  padding-top: calc(var(--space-4) + env(safe-area-inset-top, 0px));
+  background: linear-gradient(to bottom, var(--void-black), transparent);
 }
 
-.cardShape {
-  font-size: 20px;
+.headerTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
-.sender {
-  font-size: 12px;
-  color: #666;
+/* =============================================================================
+   Main Content (Has Gem)
+   ============================================================================= */
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-4);
+  padding-bottom: calc(var(--space-8) + env(safe-area-inset-bottom, 0px));
+  gap: var(--space-4);
+  position: relative;
+  z-index: 5;
+}
+
+/* Gem Display */
+.gemDisplay {
+  width: 280px;
+  height: 280px;
+  border-radius: var(--radius-3xl);
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  transition: box-shadow 0.3s ease;
 }
 
-.emptyState {
+.gemDisplay:global(.rarity-common) {
+  box-shadow: 0 0 30px rgba(156, 163, 175, 0.3);
+}
+
+.gemDisplay:global(.rarity-uncommon) {
+  box-shadow: 0 0 40px rgba(34, 197, 94, 0.4);
+}
+
+.gemDisplay:global(.rarity-rare) {
+  box-shadow: 0 0 50px rgba(59, 130, 246, 0.4);
+}
+
+.gemDisplay:global(.rarity-epic) {
+  box-shadow: 0 0 60px rgba(168, 85, 247, 0.5);
+}
+
+.gemDisplay:global(.rarity-legendary) {
+  box-shadow: 0 0 80px rgba(255, 215, 0, 0.6);
+  animation: legendary-glow 3s ease-in-out infinite;
+}
+
+@keyframes legendary-glow {
+  0%, 100% {
+    box-shadow: 0 0 60px rgba(255, 215, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 100px rgba(255, 215, 0, 0.7);
+  }
+}
+
+/* =============================================================================
+   Info Section
+   ============================================================================= */
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  padding: 60px 20px;
+  width: 100%;
+  max-width: 400px;
+  gap: var(--space-2);
 }
 
-.emptyText {
-  font-size: 18px;
-  color: #333;
-  margin-bottom: 8px;
+.gemName {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  margin-top: var(--space-2);
 }
 
-.emptyHint {
-  font-size: 14px;
-  color: #999;
+.infoDivider {
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold-dim),
+    transparent
+  );
+  margin: var(--space-2) 0;
+}
+
+.cutName {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* Power Card */
+.powerCard {
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  background: var(--glass-gradient);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  width: 100%;
+}
+
+.powerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.element {
+  font-size: 24px;
+}
+
+.powerTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--ethereal-cyan);
+  letter-spacing: 0.05em;
+}
+
+.powerDesc {
+  font-family: var(--font-magic);
+  font-style: italic;
+  font-size: var(--text-base);
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: var(--space-2);
+}
+
+.elementLabel {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Bonded To */
+.bondedTo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.bondedLabel {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.bondedName {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--spirit-violet);
+}
+
+/* =============================================================================
+   Actions
+   ============================================================================= */
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 300px;
+  margin-top: var(--space-4);
 }

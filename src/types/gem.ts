@@ -3,6 +3,47 @@
  */
 
 // =============================================================================
+// Magic Circle System
+// =============================================================================
+
+export interface MagicCircle {
+  id: number;           // 17-20
+  name: string;         // Circle name
+  meaning: string;      // Circle meaning/description
+}
+
+export const MAGIC_CIRCLES: MagicCircle[] = [
+  {
+    id: 17,
+    name: 'Sigil of the Eternal Flame',
+    meaning: 'An ancient seal that channels the primordial fire of creation',
+  },
+  {
+    id: 18,
+    name: 'Seal of the Celestial Veil',
+    meaning: 'A sacred pattern woven from starlight and moonbeams',
+  },
+  {
+    id: 19,
+    name: 'Glyph of the Abyssal Deep',
+    meaning: 'A mysterious sigil drawn from the depths of forgotten waters',
+  },
+  {
+    id: 20,
+    name: 'Rune of the Worldtree',
+    meaning: 'The mark of Yggdrasil, binding all realms together',
+  },
+];
+
+export function getRandomMagicCircle(): MagicCircle {
+  return MAGIC_CIRCLES[Math.floor(Math.random() * MAGIC_CIRCLES.length)];
+}
+
+export function getMagicCircleById(id: number): MagicCircle | undefined {
+  return MAGIC_CIRCLES.find(c => c.id === id);
+}
+
+// =============================================================================
 // Rarity System
 // =============================================================================
 
@@ -65,6 +106,43 @@ export interface MagicPower {
 }
 
 // =============================================================================
+// User Info
+// =============================================================================
+
+export type Gender = 'male' | 'female' | 'other' | 'prefer-not-to-say';
+
+export interface BirthDateTime {
+  date: string;      // YYYY-MM-DD format
+  hour?: number;     // 0-23
+  minute?: number;   // 0-59
+  second?: number;   // 0-59
+}
+
+export interface UserInfo {
+  name?: string;
+  gender?: Gender;
+  birthdate?: BirthDateTime;
+}
+
+/**
+ * Validates that at least one field in UserInfo is filled
+ */
+export function isValidUserInfo(info: UserInfo): boolean {
+  return !!(
+    info.name?.trim() ||
+    info.gender ||
+    info.birthdate?.date
+  );
+}
+
+export const GENDER_LABELS: Record<Gender, string> = {
+  'male': 'Male',
+  'female': 'Female',
+  'other': 'Other',
+  'prefer-not-to-say': 'Prefer not to say',
+};
+
+// =============================================================================
 // Magic Gem
 // =============================================================================
 
@@ -84,6 +162,10 @@ export interface MagicGem {
   name: string;           // Gem name (e.g., "Tear of the Moon Goddess")
   magicPower: MagicPower;
   rarity: Rarity;
+  magicCircle: MagicCircle;  // Associated magic circle
+
+  // User info (stored with gem, doesn't affect generation)
+  userInfo?: UserInfo;
 
   // Metadata
   obtainedAt: number;  // Timestamp

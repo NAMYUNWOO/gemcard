@@ -47,6 +47,7 @@ export const GemCard = memo(function GemCard({
             contrast={gem.contrast}
             autoRotate
             dynamicBackground
+            magicCircle={gem.magicCircle?.id ?? 17}
           />
         </div>
 

@@ -2,6 +2,7 @@
  * GemDetail Page
  *
  * Detailed view of a magic gem with its properties and powers.
+ * In single-gem system, this shows the user's only gem.
  */
 
 import { useParams, useNavigate } from 'react-router-dom';
@@ -10,15 +11,22 @@ import { GemScene } from '../components/GemScene';
 import { RarityBadge } from '../components/RarityBadge';
 import { MagicButton } from '../components/MagicButton';
 import { useGemStore } from '../stores/gemStore';
-import { ELEMENT_ICONS, ELEMENT_LABELS, type Element } from '../types/gem';
+import {
+  ELEMENT_ICONS,
+  ELEMENT_LABELS,
+  GENDER_LABELS,
+  type Element,
+} from '../types/gem';
 import styles from './GemDetail.module.css';
 
 export function GemDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { getGem } = useGemStore();
+  const { currentGem } = useGemStore();
 
-  const gem = id ? getGem(id) : undefined;
+  // In single-gem system, we show the current gem
+  // The id param is kept for URL compatibility
+  const gem = currentGem && currentGem.id === id ? currentGem : null;
 
   if (!gem) {
     return (
@@ -28,7 +36,7 @@ export function GemDetail() {
           <h2>Gem Not Found</h2>
           <p>This gem has vanished into the void...</p>
           <MagicButton onClick={() => navigate('/')}>
-            Return to Collection
+            Return Home
           </MagicButton>
         </div>
       </div>
@@ -52,6 +60,21 @@ export function GemDetail() {
 
   const element: Element | undefined = gem.magicPower.element;
 
+  // Format birth time if available
+  const formatBirthTime = () => {
+    const bd = gem.userInfo?.birthdate;
+    if (!bd) return null;
+
+    const parts: string[] = [];
+    if (bd.hour !== undefined) parts.push(String(bd.hour).padStart(2, '0'));
+    if (bd.minute !== undefined) parts.push(String(bd.minute).padStart(2, '0'));
+    if (bd.second !== undefined) parts.push(String(bd.second).padStart(2, '0'));
+
+    return parts.length > 0 ? parts.join(':') : null;
+  };
+
+  const birthTime = formatBirthTime();
+
   return (
     <div className={styles.container}>
       <StarField starCount={40} />
@@ -60,7 +83,7 @@ export function GemDetail() {
       <header className={styles.header}>
         <button className={styles.backBtn} onClick={() => navigate('/')}>
           <span className={styles.backIcon}>{'<'}</span>
-          <span>Back</span>
+          <span>Home</span>
         </button>
 
         <button className={styles.shareBtn} onClick={() => {/* TODO: Share */}}>
@@ -77,6 +100,7 @@ export function GemDetail() {
             contrast={gem.contrast}
             autoRotate
             dynamicBackground
+            magicCircle={gem.magicCircle?.id ?? 17}
           />
         </div>
 
@@ -116,6 +140,41 @@ export function GemDetail() {
             )}
           </div>
 
+          {/* Magic Circle Info */}
+          {gem.magicCircle && (
+            <div className={styles.circleInfo}>
+              <span className={styles.circleLabel}>Sealed by</span>
+              <span className={styles.circleName}>{gem.magicCircle.name}</span>
+              <span className={styles.circleMeaning}>{gem.magicCircle.meaning}</span>
+            </div>
+          )}
+
+          {/* User Info Section */}
+          {gem.userInfo && (gem.userInfo.name || gem.userInfo.gender || gem.userInfo.birthdate) && (
+            <div className={styles.userInfo}>
+              <span className={styles.userInfoLabel}>Bonded To</span>
+
+              {gem.userInfo.name && (
+                <span className={styles.userName}>{gem.userInfo.name}</span>
+              )}
+
+              <div className={styles.userDetails}>
+                {gem.userInfo.gender && (
+                  <span className={styles.userDetail}>
+                    {GENDER_LABELS[gem.userInfo.gender]}
+                  </span>
+                )}
+
+                {gem.userInfo.birthdate?.date && (
+                  <span className={styles.userDetail}>
+                    Born: {gem.userInfo.birthdate.date}
+                    {birthTime && ` at ${birthTime}`}
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Metadata */}
           <div className={styles.metadata}>
             <div className={styles.metaItem}>
@@ -136,17 +195,10 @@ export function GemDetail() {
         {/* Actions */}
         <div className={styles.actions}>
           <MagicButton
-            variant="secondary"
             size="md"
-            onClick={() => {/* TODO: Exchange */}}
+            onClick={() => navigate('/summon')}
           >
-            Propose Exchange
-          </MagicButton>
-          <MagicButton
-            size="md"
-            onClick={() => navigate('/gacha')}
-          >
-            Summon Another
+            Summon New Gem
           </MagicButton>
         </div>
       </main>

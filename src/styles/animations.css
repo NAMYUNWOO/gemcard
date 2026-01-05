@@ -277,6 +277,10 @@
   animation: spin 1s linear infinite;
 }
 
+.animate-spin-slow {
+  animation: spin 60s linear infinite;
+}
+
 .animate-pulse-epic {
   animation: pulse-epic 2s ease-in-out infinite;
 }

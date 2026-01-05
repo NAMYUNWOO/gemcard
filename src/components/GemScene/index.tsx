@@ -23,6 +23,7 @@ export interface GemSceneProps {
   cardMessage?: string;
   senderName?: string;
   maxChars?: number;
+  magicCircle?: number; // 1-16 for magic circle SVG
 }
 
 interface SceneState {
@@ -98,11 +99,14 @@ export function GemScene({
   cardMessage,
   senderName,
   maxChars,
+  magicCircle,
 }: GemSceneProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const backgroundRef = useRef<GemBackgroundHandle>(null);
   const sceneRef = useRef<SceneState | null>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const zoomRef = useRef<number>(GEM_CONSTANTS.CAMERA_Z);
+  const pinchRef = useRef<{ initialDistance: number; initialZoom: number } | null>(null);
 
   // Drag rotation hook
   const dragRotation = useDragRotation({
@@ -234,6 +238,53 @@ export function GemScene({
     // Attach drag rotation handlers
     const cleanupDrag = dragRotation.attachTo(renderer.domElement);
 
+    // Zoom handlers (Ctrl/Cmd + wheel to zoom)
+    const handleWheel = (e: WheelEvent) => {
+      if (!e.ctrlKey && !e.metaKey) return; // Allow normal scroll
+      const delta = e.deltaY * GEM_CONSTANTS.ZOOM_SENSITIVITY;
+      zoomRef.current = Math.max(
+        GEM_CONSTANTS.CAMERA_Z_MIN,
+        Math.min(GEM_CONSTANTS.CAMERA_Z_MAX, zoomRef.current + delta)
+      );
+    };
+
+    const getTouchDistance = (touches: TouchList) => {
+      if (touches.length < 2) return 0;
+      const dx = touches[0].clientX - touches[1].clientX;
+      const dy = touches[0].clientY - touches[1].clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 2) {
+        pinchRef.current = {
+          initialDistance: getTouchDistance(e.touches),
+          initialZoom: zoomRef.current,
+        };
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 2 && pinchRef.current) {
+        e.preventDefault();
+        const currentDistance = getTouchDistance(e.touches);
+        const scale = pinchRef.current.initialDistance / currentDistance;
+        zoomRef.current = Math.max(
+          GEM_CONSTANTS.CAMERA_Z_MIN,
+          Math.min(GEM_CONSTANTS.CAMERA_Z_MAX, pinchRef.current.initialZoom * scale)
+        );
+      }
+    };
+
+    const handleTouchEnd = () => {
+      pinchRef.current = null;
+    };
+
+    renderer.domElement.addEventListener('wheel', handleWheel);
+    renderer.domElement.addEventListener('touchstart', handleTouchStart);
+    renderer.domElement.addEventListener('touchmove', handleTouchMove, { passive: false });
+    renderer.domElement.addEventListener('touchend', handleTouchEnd);
+
     // Create initial gem after a short delay to ensure background texture is ready
     const initTimeout = setTimeout(() => {
       if (sceneRef.current && !sceneRef.current.gemstone) {
@@ -288,6 +339,9 @@ export function GemScene({
         );
       }
 
+      // Update camera zoom
+      camera.position.z = zoomRef.current;
+
       renderer.render(scene, camera);
       sceneRef.current.animationId = requestAnimationFrame(animate);
     };
@@ -311,6 +365,10 @@ export function GemScene({
       clearTimeout(initTimeout);
       cleanupDrag();
       window.removeEventListener('resize', handleResize);
+      renderer.domElement.removeEventListener('wheel', handleWheel);
+      renderer.domElement.removeEventListener('touchstart', handleTouchStart);
+      renderer.domElement.removeEventListener('touchmove', handleTouchMove);
+      renderer.domElement.removeEventListener('touchend', handleTouchEnd);
 
       if (sceneRef.current) {
         cancelAnimationFrame(sceneRef.current.animationId);
@@ -364,7 +422,7 @@ export function GemScene({
     <div
       ref={containerRef}
       className={className}
-      style={{ width: '100%', height: '100%', position: 'relative' }}
+      style={{ width: '100%', height: '100%', minHeight: '100%', position: 'relative' }}
     >
       <GemBackground
         ref={backgroundRef}
@@ -375,6 +433,7 @@ export function GemScene({
         cardMessage={cardMessage}
         senderName={senderName}
         maxChars={maxChars}
+        magicCircle={magicCircle}
       />
     </div>
   );

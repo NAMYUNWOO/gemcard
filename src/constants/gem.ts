@@ -10,6 +10,9 @@ export const GEM_CONSTANTS = {
   CAMERA_NEAR: 0.1,
   CAMERA_FAR: 100,
   CAMERA_Z: 7,
+  CAMERA_Z_MIN: 3,    // Closest zoom
+  CAMERA_Z_MAX: 12,   // Farthest zoom
+  ZOOM_SENSITIVITY: 0.002,
 
   // Animation
   DAMPING: 0.96,

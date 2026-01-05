@@ -65,6 +65,7 @@ interface GemBackgroundProps {
   cardMessage?: string;
   senderName?: string;
   maxChars?: number;
+  magicCircle?: number; // 1-20 for circle SVG
 }
 
 export interface GemBackgroundHandle {
@@ -73,10 +74,11 @@ export interface GemBackgroundHandle {
 }
 
 export const GemBackground = forwardRef<GemBackgroundHandle, GemBackgroundProps>(
-  ({ width, height, dynamicBackground = false, backgroundImage, cardMessage, senderName, maxChars = 30 }, ref) => {
+  ({ width, height, dynamicBackground = false, backgroundImage, cardMessage, senderName, maxChars = 30, magicCircle }, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const textureRef = useRef<THREE.CanvasTexture | THREE.Texture | null>(null);
+    const magicCircleImgRef = useRef<HTMLImageElement | null>(null);
     const animationDataRef = useRef<{
       floatingChars: FloatingChar[];
       particles: EnergyParticle[];
@@ -216,168 +218,22 @@ export const GemBackground = forwardRef<GemBackgroundHandle, GemBackgroundProps>
       ctx.fillStyle = bgGradient;
       ctx.fillRect(0, 0, w, h);
 
-      // === 2. 거대한 마법진 (The Grand Circle) - 배경 전체 ===
-      const drawProgress = Math.min(1, data.time * 0.8); // 빠르게 그려짐
-      const baseRotation = data.time * 0.25; // 훨씬 빠른 회전
-      const pulseGlow = 0.85 + 0.15 * Math.sin(data.centerPulse);
+      // === 1.5 마법진 SVG 그리기 (회전 애니메이션) ===
+      if (magicCircleImgRef.current) {
+        const img = magicCircleImgRef.current;
+        const circleSize = Math.min(w, h) * 0.9;
+        const rotation = data.time * 0.1; // 천천히 회전
 
-      ctx.save();
-      ctx.translate(cx, cy);
-
-      // 마법진 선 스타일 - 매우 진한 인디고 with 강한 글로우
-      const setMagicLineStyle = (alpha: number, glowIntensity: number = 1) => {
-        ctx.strokeStyle = `rgba(35, 30, 65, ${Math.min(1, alpha * 2.2 * pulseGlow)})`; // 훨씬 더 진하게
-        ctx.shadowColor = `rgba(60, 40, 110, ${Math.min(1, 1.0 * glowIntensity * pulseGlow)})`;
-        ctx.shadowBlur = 15 * glowIntensity;
-        ctx.lineWidth = 1.5; // 얇게
-      };
-
-      // --- 외곽 원 3개 (동심원) ---
-      if (drawProgress > 0) {
-        const outerProgress = Math.min(1, drawProgress * 4);
-        setMagicLineStyle(0.5, 1.2);
-
-        // 가장 바깥 원
-        ctx.beginPath();
-        ctx.arc(0, 0, maxRadius, 0, Math.PI * 2 * outerProgress);
-        ctx.stroke();
-
-        // 두 번째 원
-        if (outerProgress > 0.3) {
-          ctx.beginPath();
-          ctx.arc(0, 0, maxRadius * 0.92, 0, Math.PI * 2 * Math.min(1, (outerProgress - 0.3) / 0.7));
-          ctx.stroke();
-        }
-
-        // 세 번째 원 (장식 점선)
-        if (outerProgress > 0.5) {
-          ctx.setLineDash([8, 12]);
-          ctx.beginPath();
-          ctx.arc(0, 0, maxRadius * 0.85, 0, Math.PI * 2 * Math.min(1, (outerProgress - 0.5) / 0.5));
-          ctx.stroke();
-          ctx.setLineDash([]);
-        }
-      }
-
-      // --- 육각형 (Hexagram) ---
-      if (drawProgress > 0.15) {
-        const hexProgress = Math.min(1, (drawProgress - 0.15) * 3);
-        setMagicLineStyle(0.6, 1.3);
         ctx.save();
-        ctx.rotate(baseRotation);
-
-        const hexRadius = maxRadius * 0.7;
-
-        // 첫 번째 삼각형 (위로 향함)
-        ctx.beginPath();
-        for (let i = 0; i <= 3; i++) {
-          const segProg = hexProgress * 3;
-          if (i > segProg) break;
-          const angle = (i / 3) * Math.PI * 2 - Math.PI / 2;
-          const x = Math.cos(angle) * hexRadius;
-          const y = Math.sin(angle) * hexRadius;
-          if (i === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-
-        // 두 번째 삼각형 (아래로 향함)
-        if (hexProgress > 0.5) {
-          const tri2Prog = (hexProgress - 0.5) * 2;
-          ctx.beginPath();
-          for (let i = 0; i <= 3; i++) {
-            const segProg = tri2Prog * 3;
-            if (i > segProg) break;
-            const angle = (i / 3) * Math.PI * 2 + Math.PI / 6;
-            const x = Math.cos(angle) * hexRadius;
-            const y = Math.sin(angle) * hexRadius;
-            if (i === 0) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
-          }
-          ctx.stroke();
-        }
+        ctx.translate(cx, cy);
+        ctx.rotate(rotation);
+        ctx.globalAlpha = 0.4;
+        // 색상 반전 효과를 위한 globalCompositeOperation
+        ctx.drawImage(img, -circleSize / 2, -circleSize / 2, circleSize, circleSize);
         ctx.restore();
       }
 
-      // --- 오각별 (Pentagram) - 반대 방향 회전 ---
-      if (drawProgress > 0.3) {
-        const pentProgress = Math.min(1, (drawProgress - 0.3) * 2.5);
-        setMagicLineStyle(0.55, 1.2);
-        ctx.save();
-        ctx.rotate(-baseRotation * 1.5);
-
-        const pentRadius = maxRadius * 0.5;
-        ctx.beginPath();
-        for (let i = 0; i <= 5; i++) {
-          const segProg = pentProgress * 5;
-          if (i > segProg) break;
-          const angle = ((i * 2) % 5) / 5 * Math.PI * 2 - Math.PI / 2;
-          const x = Math.cos(angle) * pentRadius;
-          const y = Math.sin(angle) * pentRadius;
-          if (i === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-
-        // 내부 오각형
-        if (pentProgress > 0.7) {
-          const innerProg = (pentProgress - 0.7) / 0.3;
-          ctx.beginPath();
-          for (let i = 0; i <= 5; i++) {
-            if (i > innerProg * 5) break;
-            const angle = (i / 5) * Math.PI * 2 - Math.PI / 2;
-            const x = Math.cos(angle) * pentRadius * 0.4;
-            const y = Math.sin(angle) * pentRadius * 0.4;
-            if (i === 0) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
-          }
-          ctx.stroke();
-        }
-        ctx.restore();
-      }
-
-      // --- 중앙 원과 방사선 ---
-      if (drawProgress > 0.5) {
-        const centerProgress = Math.min(1, (drawProgress - 0.5) * 3);
-        setMagicLineStyle(0.65, 1.4);
-
-        // 중앙 원
-        ctx.beginPath();
-        ctx.arc(0, 0, maxRadius * 0.15, 0, Math.PI * 2 * centerProgress);
-        ctx.stroke();
-
-        // 방사선 (12개)
-        if (centerProgress > 0.3) {
-          const rayProgress = (centerProgress - 0.3) / 0.7;
-          setMagicLineStyle(0.45, 1.0);
-          for (let i = 0; i < 12; i++) {
-            if (i / 12 > rayProgress) break;
-            const angle = (i / 12) * Math.PI * 2;
-            ctx.beginPath();
-            ctx.moveTo(Math.cos(angle) * maxRadius * 0.2, Math.sin(angle) * maxRadius * 0.2);
-            ctx.lineTo(Math.cos(angle) * maxRadius * 0.82, Math.sin(angle) * maxRadius * 0.82);
-            ctx.stroke();
-          }
-        }
-
-        // 교차점 작은 원들
-        if (centerProgress > 0.6) {
-          setMagicLineStyle(0.55, 1.1);
-          const dotProgress = (centerProgress - 0.6) / 0.4;
-          for (let i = 0; i < 6; i++) {
-            if (i / 6 > dotProgress) break;
-            const angle = (i / 6) * Math.PI * 2;
-            const r = maxRadius * 0.7;
-            ctx.beginPath();
-            ctx.arc(Math.cos(angle) * r, Math.sin(angle) * r, 6, 0, Math.PI * 2);
-            ctx.stroke();
-          }
-        }
-      }
-
-      ctx.restore();
-
-      // === 3. 룬 문자 - 작게, 배경 전체에 퍼져서 ===
+      // === 2. 룬 문자 - 작게, 배경 전체에 퍼져서 ===
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
 
@@ -467,6 +323,24 @@ export const GemBackground = forwardRef<GemBackgroundHandle, GemBackgroundProps>
       update: cardMessage ? updateFloatingMessage : (dynamicBackground ? updateDynamicRunes : () => {}),
     }), [cardMessage, dynamicBackground]);
 
+    // 마법진 SVG 이미지 로드
+    useEffect(() => {
+      if (!magicCircle) {
+        magicCircleImgRef.current = null;
+        return;
+      }
+
+      const img = new Image();
+      img.src = `/magiccircle/circles/circle-${String(magicCircle).padStart(2, '0')}.svg`;
+      img.onload = () => {
+        magicCircleImgRef.current = img;
+      };
+
+      return () => {
+        magicCircleImgRef.current = null;
+      };
+    }, [magicCircle]);
+
     useEffect(() => {
       if (!containerRef.current) return;
       const container = containerRef.current;
@@ -505,6 +379,7 @@ export const GemBackground = forwardRef<GemBackgroundHandle, GemBackgroundProps>
         canvas.style.left = '0';
         canvas.style.width = '100%';
         canvas.style.height = '100%';
+        canvas.style.zIndex = '0';
         container.appendChild(canvas);
 
         return () => {
@@ -591,6 +466,7 @@ export const GemBackground = forwardRef<GemBackgroundHandle, GemBackgroundProps>
         canvas.style.left = '0';
         canvas.style.width = '100%';
         canvas.style.height = '100%';
+        canvas.style.zIndex = '0';
         container.appendChild(canvas);
 
         const texture = new THREE.CanvasTexture(canvas);
