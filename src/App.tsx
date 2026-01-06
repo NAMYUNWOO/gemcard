@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { Gacha } from './pages/Gacha';
 import { GemDetail } from './pages/GemDetail';
+import { SharedGem } from './pages/SharedGem';
 import './App.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/summon" element={<Gacha />} />
         <Route path="/gem/:id" element={<GemDetail />} />
+        <Route path="/share/:data" element={<SharedGem />} />
 
         {/* Legacy Routes - Redirect to new structure */}
         <Route path="/gacha" element={<Navigate to="/summon" replace />} />

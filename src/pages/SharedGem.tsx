@@ -1,55 +1,47 @@
 /**
- * GemDetail Page
+ * SharedGem Page
  *
- * Detailed view of a magic gem with its properties and powers.
- * In single-gem system, this shows the user's only gem.
+ * Displays a gem from a shared URL.
+ * Decodes the compressed data and renders the gem.
  */
 
-import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useMemo } from 'react';
 import { StarField } from '../components/StarField';
 import { GemScene } from '../components/GemScene';
 import { RarityBadge } from '../components/RarityBadge';
 import { MagicButton } from '../components/MagicButton';
-import { useGemStore } from '../stores/gemStore';
-import { copyShareUrl } from '../utils/gemShare';
+import { decodeGemFromUrl } from '../utils/gemShare';
 import {
   ELEMENT_ICONS,
   ELEMENT_LABELS,
   GENDER_LABELS,
   type Element,
 } from '../types/gem';
-import styles from './GemDetail.module.css';
+import styles from './SharedGem.module.css';
 
-export function GemDetail() {
-  const { id } = useParams<{ id: string }>();
+export function SharedGem() {
+  const { data } = useParams<{ data: string }>();
   const navigate = useNavigate();
-  const { currentGem } = useGemStore();
-  const [copied, setCopied] = useState(false);
 
-  const handleShare = async () => {
-    if (!currentGem) return;
+  // Decode gem from URL
+  const gem = useMemo(() => {
+    if (!data) return null;
+    return decodeGemFromUrl(data);
+  }, [data]);
 
-    const success = await copyShareUrl(currentGem);
-    if (success) {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
-
-  // In single-gem system, we show the current gem
-  // The id param is kept for URL compatibility
-  const gem = currentGem && currentGem.id === id ? currentGem : null;
-
+  // Error state
   if (!gem) {
     return (
       <div className={styles.container}>
         <StarField starCount={30} />
-        <div className={styles.notFound}>
-          <h2>Gem Not Found</h2>
-          <p>This gem has vanished into the void...</p>
+        <div className={styles.errorState}>
+          <h2 className={styles.errorTitle}>Invalid Link</h2>
+          <p className={styles.errorText}>
+            This gem link is invalid or corrupted.
+          </p>
           <MagicButton onClick={() => navigate('/')}>
-            Return Home
+            Go Home
           </MagicButton>
         </div>
       </div>
@@ -57,21 +49,15 @@ export function GemDetail() {
   }
 
   const gemParams = {
-    shape: gem.shape,
-    color: gem.color,
-    turbidity: gem.turbidity,
+    shape: gem.shape!,
+    color: gem.color!,
+    turbidity: gem.turbidity!,
     dispersion: 0.05,
     thickness: 1.5,
     detailLevel: 5,
   };
 
-  const obtainedDate = new Date(gem.obtainedAt).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-
-  const element: Element | undefined = gem.magicPower.element;
+  const element: Element | undefined = gem.magicPower?.element;
 
   // Format birth time if available
   const formatBirthTime = () => {
@@ -94,14 +80,7 @@ export function GemDetail() {
 
       {/* Header */}
       <header className={styles.header}>
-        <button className={styles.backBtn} onClick={() => navigate('/')}>
-          <span className={styles.backIcon}>{'<'}</span>
-          <span>Home</span>
-        </button>
-
-        <button className={styles.shareBtn} onClick={handleShare}>
-          {copied ? 'Copied!' : 'Share'}
-        </button>
+        <span className={styles.sharedLabel}>Shared Gem</span>
       </header>
 
       {/* Main Content */}
@@ -110,7 +89,7 @@ export function GemDetail() {
         <div className={`${styles.gemDisplay} rarity-${gem.rarity}`}>
           <GemScene
             params={gemParams}
-            contrast={gem.contrast}
+            contrast={gem.contrast ?? 0.8}
             autoRotate
             dynamicBackground
             magicCircle={gem.magicCircle?.id ?? 17}
@@ -120,7 +99,7 @@ export function GemDetail() {
         {/* Gem Info */}
         <div className={styles.info}>
           {/* Rarity */}
-          <RarityBadge rarity={gem.rarity} size="md" />
+          {gem.rarity && <RarityBadge rarity={gem.rarity} size="md" />}
 
           {/* Name */}
           <h1 className={styles.gemName}>{gem.name}</h1>
@@ -128,37 +107,35 @@ export function GemDetail() {
           {/* Divider */}
           <div className={styles.divider} />
 
-          {/* Cut Name */}
-          <p className={styles.cutName}>{gem.cutName}</p>
-
           {/* Magic Power Card */}
-          <div className={styles.powerCard}>
-            <div className={styles.powerHeader}>
+          {gem.magicPower && (
+            <div className={styles.powerCard}>
+              <div className={styles.powerHeader}>
+                {element && (
+                  <span className={styles.element}>
+                    {ELEMENT_ICONS[element]}
+                  </span>
+                )}
+                <h2 className={styles.powerTitle}>{gem.magicPower.title}</h2>
+              </div>
+
+              <p className={styles.powerDesc}>
+                "{gem.magicPower.description}"
+              </p>
+
               {element && (
-                <span className={styles.element}>
-                  {ELEMENT_ICONS[element]}
+                <span className={styles.elementLabel}>
+                  Element: {ELEMENT_LABELS[element]}
                 </span>
               )}
-              <h2 className={styles.powerTitle}>{gem.magicPower.title}</h2>
             </div>
-
-            <p className={styles.powerDesc}>
-              "{gem.magicPower.description}"
-            </p>
-
-            {element && (
-              <span className={styles.elementLabel}>
-                Element: {ELEMENT_LABELS[element]}
-              </span>
-            )}
-          </div>
+          )}
 
           {/* Magic Circle Info */}
           {gem.magicCircle && (
             <div className={styles.circleInfo}>
               <span className={styles.circleLabel}>Sealed by</span>
               <span className={styles.circleName}>{gem.magicCircle.name}</span>
-              <span className={styles.circleMeaning}>{gem.magicCircle.meaning}</span>
             </div>
           )}
 
@@ -187,31 +164,12 @@ export function GemDetail() {
               </div>
             </div>
           )}
-
-          {/* Metadata */}
-          <div className={styles.metadata}>
-            <div className={styles.metaItem}>
-              <span className={styles.metaLabel}>Obtained</span>
-              <span className={styles.metaValue}>{obtainedDate}</span>
-            </div>
-            <div className={styles.metaItem}>
-              <span className={styles.metaLabel}>Origin</span>
-              <span className={styles.metaValue}>
-                {gem.origin === 'gacha' && 'Summoned'}
-                {gem.origin === 'exchange' && 'Exchanged'}
-                {gem.origin === 'gift' && 'Gifted'}
-              </span>
-            </div>
-          </div>
         </div>
 
         {/* Actions */}
         <div className={styles.actions}>
-          <MagicButton
-            size="md"
-            onClick={() => navigate('/summon')}
-          >
-            Summon New Gem
+          <MagicButton onClick={() => navigate('/')} size="md">
+            Summon Your Own Gem
           </MagicButton>
         </div>
       </main>

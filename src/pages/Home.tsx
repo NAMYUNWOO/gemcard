@@ -14,6 +14,16 @@ import { useGemStore } from '../stores/gemStore';
 import { ELEMENT_ICONS, ELEMENT_LABELS, type Element } from '../types/gem';
 import styles from './Home.module.css';
 
+// Preview gem for empty state - enticing users to summon
+const PREVIEW_GEM_PARAMS = {
+  shape: 'pc01006',  // Classic brilliant cut
+  color: '#D4A5FF',  // Light mystical purple
+  turbidity: 0.0,    // Fully transparent
+  dispersion: 0.01,  // Minimal dispersion
+  thickness: 0.5,    // Thin for more transparency
+  detailLevel: 5,
+};
+
 export function Home() {
   const navigate = useNavigate();
   const { currentGem } = useGemStore();
@@ -34,6 +44,18 @@ export function Home() {
             <br />
             Each soul may possess only one gem at a time.
           </p>
+
+          {/* Preview Gem */}
+          <div className={styles.previewGem}>
+            <GemScene
+              params={PREVIEW_GEM_PARAMS}
+              contrast={0.8}
+              autoRotate
+              dynamicBackground
+              magicCircle={20}
+            />
+          </div>
+
           <MagicButton onClick={() => navigate('/summon')} size="lg">
             Summon Your Gem
           </MagicButton>

@@ -33,12 +33,14 @@
 /* Rune rings */
 .runeRingOuter {
   animation: spin 60s linear infinite;
-  transform-origin: 200px 200px;
+  transform-origin: 50% 50%;
+  transform-box: view-box;
 }
 
 .runeRingInner {
   animation: spin-reverse 45s linear infinite;
-  transform-origin: 200px 200px;
+  transform-origin: 50% 50%;
+  transform-box: view-box;
 }
 
 .runeText {
