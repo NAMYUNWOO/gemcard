@@ -2,6 +2,25 @@
    ARCANE GEMS - Design System Variables
    ============================================================================= */
 
+/* -------------------------------------------------------------------------
+   Custom Font Faces - Korean Support
+   ------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'NEXON Warhaven';
+  src: url('/fonts/NEXON_Warhaven/TTF/NEXON_Warhaven_Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NEXON Warhaven';
+  src: url('/fonts/NEXON_Warhaven/TTF/NEXON_Warhaven_Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* -------------------------------------------------------------------------
      Core Palette - Deep Space & Mysticism
@@ -55,11 +74,11 @@
   --glass-gradient: linear-gradient(135deg, rgba(45, 27, 105, 0.3) 0%, rgba(26, 26, 78, 0.2) 100%);
 
   /* -------------------------------------------------------------------------
-     Font Families
+     Font Families (with Korean fallback)
      ------------------------------------------------------------------------- */
-  --font-display: 'Cinzel', serif;
-  --font-magic: 'Cormorant Garamond', serif;
-  --font-body: 'DM Sans', sans-serif;
+  --font-display: 'Cinzel', 'NEXON Warhaven', serif;
+  --font-magic: 'Cormorant Garamond', 'NEXON Warhaven', serif;
+  --font-body: 'DM Sans', 'NEXON Warhaven', sans-serif;
 
   /* -------------------------------------------------------------------------
      Font Sizes

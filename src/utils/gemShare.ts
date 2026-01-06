@@ -2,13 +2,13 @@
  * Gem Share Utilities
  *
  * Compress and encode gem data for URL sharing.
- * Uses lz-string for compression and URL-safe Base64 encoding.
+ * Uses Unishox2 for compression (optimized for short strings).
  */
 
 import {
-  compressToEncodedURIComponent,
-  decompressFromEncodedURIComponent,
-} from 'lz-string';
+  unishox2_compress_simple,
+  unishox2_decompress_simple,
+} from 'unishox2.siara.cc';
 import type { MagicGem, Rarity, Element, Gender } from '../types/gem';
 import { getMagicCircleById, MAGIC_CIRCLES } from '../types/gem';
 
@@ -75,6 +75,47 @@ const INDEX_TO_ELEMENT: Element[] = [
 ];
 
 // =============================================================================
+// URL-safe Base64 Helpers
+// =============================================================================
+
+/**
+ * Convert Uint8Array to URL-safe Base64 string
+ */
+function uint8ArrayToUrlSafeBase64(bytes: Uint8Array, length: number): string {
+  let binary = '';
+  for (let i = 0; i < length; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  // Standard Base64 → URL-safe Base64
+  return btoa(binary)
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/, '');
+}
+
+/**
+ * Convert URL-safe Base64 string to Uint8Array
+ */
+function urlSafeBase64ToUint8Array(base64: string): Uint8Array {
+  // URL-safe Base64 → Standard Base64
+  let standardBase64 = base64
+    .replace(/-/g, '+')
+    .replace(/_/g, '/');
+
+  // Add padding if needed
+  while (standardBase64.length % 4) {
+    standardBase64 += '=';
+  }
+
+  const binary = atob(standardBase64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return bytes;
+}
+
+// =============================================================================
 // Encode
 // =============================================================================
 
@@ -126,7 +167,13 @@ export function encodeGemToUrl(gem: MagicGem): string {
   }
 
   const json = JSON.stringify(compact);
-  return compressToEncodedURIComponent(json);
+
+  // Compress with Unishox2
+  const outBuf = new Uint8Array(json.length * 2); // Buffer for compressed data
+  const compressedLen = unishox2_compress_simple(json, json.length, outBuf);
+
+  // Convert to URL-safe Base64
+  return uint8ArrayToUrlSafeBase64(outBuf, compressedLen);
 }
 
 // =============================================================================
@@ -139,7 +186,11 @@ export function encodeGemToUrl(gem: MagicGem): string {
  */
 export function decodeGemFromUrl(encoded: string): Partial<MagicGem> | null {
   try {
-    const json = decompressFromEncodedURIComponent(encoded);
+    // Decode from URL-safe Base64
+    const compressedBytes = urlSafeBase64ToUint8Array(encoded);
+
+    // Decompress with Unishox2
+    const json = unishox2_decompress_simple(compressedBytes, compressedBytes.length);
     if (!json) return null;
 
     const compact: CompactGemData = JSON.parse(json);

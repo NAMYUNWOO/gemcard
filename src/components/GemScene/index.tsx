@@ -285,12 +285,12 @@ export function GemScene({
     renderer.domElement.addEventListener('touchmove', handleTouchMove, { passive: false });
     renderer.domElement.addEventListener('touchend', handleTouchEnd);
 
-    // Create initial gem after a short delay to ensure background texture is ready
+    // Create initial gem immediately with fallback texture if needed
     const initTimeout = setTimeout(() => {
       if (sceneRef.current && !sceneRef.current.gemstone) {
         createGemMesh(params);
       }
-    }, 150);
+    }, 50);
 
     // Animation loop
     const animate = () => {

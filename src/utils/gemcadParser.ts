@@ -74,28 +74,45 @@ export function parseGemCad(content: string): GemCadData {
         }
         break;
       case 'a': {
-        // 두 가지 형식 지원:
-        // 1. a angle distance baseIndex n name [indices...]
-        // 2. a angle distance index1 index2 index3 ... (n 없는 형식)
+        // GemCad 'a' line format:
+        // a angle distance index1 [index2...] [n name [index...]] [G comment]
+        // All numeric values from position 3 onwards are indices to cut
+        // 'n' is followed by a facet name/tier, 'G' starts a comment
         const angle = parseFloat(parts[1]);
         const distance = parseFloat(parts[2]);
 
-        const nIndex = parts.indexOf('n');
-        if (nIndex !== -1) {
-          // 형식 1: n 구분자가 있는 경우
-          const baseIndex = parseInt(parts[3]);
-          const name = parts[nIndex + 1] || '';
-          const indices = parts.slice(nIndex + 2).map(s => parseInt(s)).filter(n => !isNaN(n));
-          if (indices.length === 0) {
-            indices.push(baseIndex);
-          }
-          data.facets.push({ angle, distance, baseIndex, name, indices });
-        } else {
-          // 형식 2: n 없이 인덱스가 바로 나열된 경우
-          const indices = parts.slice(3).map(s => parseInt(s)).filter(n => !isNaN(n));
-          const baseIndex = indices[0] || 0;
-          data.facets.push({ angle, distance, baseIndex, name: '', indices });
+        // Find where comment starts (G marker)
+        let endIndex = parts.length;
+        const gIndex = parts.indexOf('G');
+        if (gIndex !== -1) {
+          endIndex = gIndex;
         }
+
+        // Collect all indices from position 3 to comment start
+        // Skip 'n' markers and the name that follows each 'n'
+        const indices: number[] = [];
+        let name = '';
+        let skipNext = false;
+
+        for (let i = 3; i < endIndex; i++) {
+          if (skipNext) {
+            // This is a name after 'n', capture first one
+            if (!name) name = parts[i];
+            skipNext = false;
+            continue;
+          }
+          if (parts[i] === 'n') {
+            skipNext = true;
+            continue;
+          }
+          const num = parseInt(parts[i]);
+          if (!isNaN(num)) {
+            indices.push(num);
+          }
+        }
+
+        const baseIndex = indices[0] || 0;
+        data.facets.push({ angle, distance, baseIndex, name, indices });
         break;
       }
     }

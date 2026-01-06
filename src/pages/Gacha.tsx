@@ -30,19 +30,39 @@ export function Gacha() {
   // Form state
   const [name, setName] = useState('');
   const [gender, setGender] = useState<Gender | ''>('');
-  const [birthDate, setBirthDate] = useState('');
+  const [birthDate, setBirthDate] = useState(''); // YYYY-MM-DD format
   const [birthHour, setBirthHour] = useState<string>('');
   const [birthMinute, setBirthMinute] = useState<string>('');
   const [birthSecond, setBirthSecond] = useState<string>('');
   const [formError, setFormError] = useState('');
+
+  // Separate state for UI inputs (no padding while typing)
+  const [birthYear, setBirthYear] = useState('');
+  const [birthMonth, setBirthMonth] = useState('');
+  const [birthDay, setBirthDay] = useState('');
+
+  // Sync birthDate when year/month/day change (with padding for storage)
+  useEffect(() => {
+    if (birthYear && birthMonth && birthDay) {
+      const y = birthYear.padStart(4, '0');
+      const m = birthMonth.padStart(2, '0');
+      const d = birthDay.padStart(2, '0');
+      setBirthDate(`${y}-${m}-${d}`);
+    } else {
+      setBirthDate('');
+    }
+  }, [birthYear, birthMonth, birthDay]);
 
   // Pre-fill form with last user info
   useEffect(() => {
     if (lastUserInfo) {
       if (lastUserInfo.name) setName(lastUserInfo.name);
       if (lastUserInfo.gender) setGender(lastUserInfo.gender);
-      if (lastUserInfo.birthdate) {
-        setBirthDate(lastUserInfo.birthdate.date || '');
+      if (lastUserInfo.birthdate?.date) {
+        const [y, m, d] = lastUserInfo.birthdate.date.split('-');
+        setBirthYear(y || '');
+        setBirthMonth(m ? String(parseInt(m, 10)) : ''); // Remove leading zeros
+        setBirthDay(d ? String(parseInt(d, 10)) : '');   // Remove leading zeros
         if (lastUserInfo.birthdate.hour !== undefined) {
           setBirthHour(String(lastUserInfo.birthdate.hour));
         }
@@ -102,11 +122,6 @@ export function Gacha() {
     setState('form');
   }, []);
 
-  // Confirm replacement
-  const handleConfirmReplace = useCallback(() => {
-    startSummoning();
-  }, []);
-
   // Start the summoning process
   const startSummoning = useCallback(async () => {
     setState('summoning');
@@ -125,6 +140,11 @@ export function Gacha() {
     setSummonedGem(gem);
     setState('revealed');
   }, [buildUserInfo, setLastUserInfo]);
+
+  // Confirm replacement
+  const handleConfirmReplace = useCallback(() => {
+    startSummoning();
+  }, [startSummoning]);
 
   // Accept the gem and go home
   const handleAccept = useCallback(() => {
@@ -208,15 +228,40 @@ export function Gacha() {
                 </select>
               </div>
 
-              {/* Birth Date */}
+              {/* Birth Date (Year / Month / Day) */}
               <div className={styles.formGroup}>
                 <label className={styles.label}>Birth Date</label>
-                <input
-                  type="date"
-                  className={styles.input}
-                  value={birthDate}
-                  onChange={(e) => setBirthDate(e.target.value)}
-                />
+                <div className={styles.dateInputs}>
+                  <input
+                    type="number"
+                    className={styles.dateInput}
+                    value={birthYear}
+                    onChange={(e) => setBirthYear(e.target.value.slice(0, 4))}
+                    placeholder="Year"
+                    min="1900"
+                    max="2100"
+                  />
+                  <span className={styles.dateSeparator}>/</span>
+                  <input
+                    type="number"
+                    className={styles.dateInputSmall}
+                    value={birthMonth}
+                    onChange={(e) => setBirthMonth(e.target.value.slice(0, 2))}
+                    placeholder="MM"
+                    min="1"
+                    max="12"
+                  />
+                  <span className={styles.dateSeparator}>/</span>
+                  <input
+                    type="number"
+                    className={styles.dateInputSmall}
+                    value={birthDay}
+                    onChange={(e) => setBirthDay(e.target.value.slice(0, 2))}
+                    placeholder="DD"
+                    min="1"
+                    max="31"
+                  />
+                </div>
               </div>
 
               {/* Time (Hour, Minute, Second) */}

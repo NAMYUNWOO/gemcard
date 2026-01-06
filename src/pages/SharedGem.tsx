@@ -80,7 +80,9 @@ export function SharedGem() {
 
       {/* Header */}
       <header className={styles.header}>
-        <span className={styles.sharedLabel}>Shared Gem</span>
+        <span className={styles.sharedLabel}>
+          {gem.userInfo?.name ? `${gem.userInfo.name}'s Gem` : 'Shared Gem'}
+        </span>
       </header>
 
       {/* Main Content */}

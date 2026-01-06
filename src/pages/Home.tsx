@@ -5,12 +5,14 @@
  * In the single-gem system, users can only have one gem at a time.
  */
 
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { StarField } from '../components/StarField';
 import { GemScene } from '../components/GemScene';
 import { RarityBadge } from '../components/RarityBadge';
 import { MagicButton } from '../components/MagicButton';
 import { useGemStore } from '../stores/gemStore';
+import { copyShareUrl } from '../utils/gemShare';
 import { ELEMENT_ICONS, ELEMENT_LABELS, type Element } from '../types/gem';
 import styles from './Home.module.css';
 
@@ -27,12 +29,41 @@ const PREVIEW_GEM_PARAMS = {
 export function Home() {
   const navigate = useNavigate();
   const { currentGem } = useGemStore();
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = async () => {
+    try {
+      if (currentGem) {
+        // Share gem URL
+        const success = await copyShareUrl(currentGem);
+        if (success) {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        }
+      } else {
+        // Share service URL
+        await navigator.clipboard.writeText(window.location.origin);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }
+    } catch {
+      // Clipboard failed
+    }
+  };
 
   // If no gem exists, show empty state with summon prompt
   if (!currentGem) {
     return (
       <div className={styles.container}>
         <StarField starCount={50} />
+
+        {/* Share Button */}
+        <header className={styles.emptyHeader}>
+          <button className={styles.shareBtn} onClick={handleShare}>
+            {copied ? 'Copied!' : 'Share'}
+          </button>
+        </header>
+
         <main className={styles.emptyState}>
           <h1 className={styles.title}>Arcane Gems</h1>
           <div className={styles.divider} />
@@ -83,6 +114,9 @@ export function Home() {
       {/* Header */}
       <header className={styles.header}>
         <h1 className={styles.headerTitle}>Your Gem</h1>
+        <button className={styles.shareBtn} onClick={handleShare}>
+          {copied ? 'Copied!' : 'Share'}
+        </button>
       </header>
 
       {/* Main Content */}
