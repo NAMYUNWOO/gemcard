@@ -16,13 +16,16 @@ import {
   ELEMENT_ICONS,
   ELEMENT_LABELS,
   GENDER_LABELS,
+  getLocalizedDescription,
   type Element,
 } from '../types/gem';
+import { useLocale } from '../hooks';
 import styles from './SharedGem.module.css';
 
 export function SharedGem() {
   const { data } = useParams<{ data: string }>();
   const navigate = useNavigate();
+  const locale = useLocale();
 
   // Decode gem from URL
   const gem = useMemo(() => {
@@ -122,7 +125,7 @@ export function SharedGem() {
               </div>
 
               <p className={styles.powerDesc}>
-                "{gem.magicPower.description}"
+                "{getLocalizedDescription(gem.magicPower, locale)}"
               </p>
 
               {element && (

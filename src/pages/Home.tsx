@@ -13,7 +13,8 @@ import { RarityBadge } from '../components/RarityBadge';
 import { MagicButton } from '../components/MagicButton';
 import { useGemStore } from '../stores/gemStore';
 import { copyShareUrl } from '../utils/gemShare';
-import { ELEMENT_ICONS, ELEMENT_LABELS, type Element } from '../types/gem';
+import { ELEMENT_ICONS, ELEMENT_LABELS, getLocalizedDescription, type Element } from '../types/gem';
+import { useLocale } from '../hooks';
 import styles from './Home.module.css';
 
 // Preview gem for empty state - enticing users to summon
@@ -30,6 +31,7 @@ export function Home() {
   const navigate = useNavigate();
   const { currentGem } = useGemStore();
   const [copied, setCopied] = useState(false);
+  const locale = useLocale();
 
   const handleShare = async () => {
     try {
@@ -158,7 +160,7 @@ export function Home() {
             </div>
 
             <p className={styles.powerDesc}>
-              "{currentGem.magicPower.description}"
+              "{getLocalizedDescription(currentGem.magicPower, locale)}"
             </p>
 
             {element && (

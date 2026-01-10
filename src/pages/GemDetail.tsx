@@ -17,8 +17,10 @@ import {
   ELEMENT_ICONS,
   ELEMENT_LABELS,
   GENDER_LABELS,
+  getLocalizedDescription,
   type Element,
 } from '../types/gem';
+import { useLocale } from '../hooks';
 import styles from './GemDetail.module.css';
 
 export function GemDetail() {
@@ -26,6 +28,7 @@ export function GemDetail() {
   const navigate = useNavigate();
   const { currentGem } = useGemStore();
   const [copied, setCopied] = useState(false);
+  const locale = useLocale();
 
   const handleShare = async () => {
     if (!currentGem) return;
@@ -143,7 +146,7 @@ export function GemDetail() {
             </div>
 
             <p className={styles.powerDesc}>
-              "{gem.magicPower.description}"
+              "{getLocalizedDescription(gem.magicPower, locale)}"
             </p>
 
             {element && (

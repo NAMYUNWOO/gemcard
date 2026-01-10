@@ -15,7 +15,8 @@ import { RarityBadge } from '../components/RarityBadge';
 import { generateMagicGem } from '../utils/gemGenerator';
 import { useGemStore } from '../stores/gemStore';
 import type { MagicGem, UserInfo, Gender, BirthDateTime } from '../types/gem';
-import { ELEMENT_ICONS, GENDER_LABELS, isValidUserInfo } from '../types/gem';
+import { ELEMENT_ICONS, GENDER_LABELS, isValidUserInfo, getLocalizedDescription } from '../types/gem';
+import { useLocale } from '../hooks';
 import styles from './Gacha.module.css';
 
 type GachaState = 'form' | 'confirm-replace' | 'summoning' | 'revealed';
@@ -23,6 +24,7 @@ type GachaState = 'form' | 'confirm-replace' | 'summoning' | 'revealed';
 export function Gacha() {
   const navigate = useNavigate();
   const { currentGem, setGem, lastUserInfo, setLastUserInfo } = useGemStore();
+  const locale = useLocale();
 
   const [state, setState] = useState<GachaState>('form');
   const [summonedGem, setSummonedGem] = useState<MagicGem | null>(null);
@@ -395,7 +397,7 @@ export function Gacha() {
                   {summonedGem.magicPower.title}
                 </h3>
                 <p className={styles.powerDesc}>
-                  "{summonedGem.magicPower.description}"
+                  "{getLocalizedDescription(summonedGem.magicPower, locale)}"
                 </p>
               </div>
             </div>

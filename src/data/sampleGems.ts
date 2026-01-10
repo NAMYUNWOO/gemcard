@@ -4,1069 +4,1720 @@
  * These templates are used for gem generation.
  * Each template contains the magical properties (name, power, rarity).
  * Visual properties (shape, color, etc.) are randomly generated.
+ *
+ * AUTO-GENERATED from SAMPLE_GEM_TEMPLATES_new.csv
+ * Do not edit manually - run scripts/convert-csv-to-ts.py instead
  */
 
 import type { Element, SampleGemTemplate } from '../types/gem';
 
 export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
   {
-    name: 'Veil of Forgotten Memories',
+    name: 'Ignis of Execution',
     magicPower: {
-      title: 'Memory Shroud',
-      description:
-        'Holding this gem allows one to revisit a single forgotten memory, though it fades again once released.',
-      element: 'mind' as Element,
+      title: 'First Strike',
+      description: '미루고 싶은 심리를 완전히 태워버리고, 생각한 즉시 몸이 움직이게 만드는 강제 집행력을 부여하여 하루의 생산성을 물리적으로 2배 이상 끌어올립니다.',
+      descriptions: {
+        ko: '미루고 싶은 심리를 완전히 태워버리고, 생각한 즉시 몸이 움직이게 만드는 강제 집행력을 부여하여 하루의 생산성을 물리적으로 2배 이상 끌어올립니다.',
+        en: 'Completely burns away the urge to procrastinate and grants the power of immediate action, physically doubling your daily productivity.',
+        zh: '彻底消除拖延心理，赋予立刻行动的执行力，使每日生产力物理性提高两倍以上。',
+        ja: '先延ばしにしたい心理を完全に焼き払い、考えた瞬間に体が動く強制執行力を与え、一日の生産性を物理的に2倍以上に引き上げます。',
+        es: 'Elimina por completo el deseo de procrastinar y otorga el poder de la acción inmediata, duplicando físicamente tu productividad diaria.',
+      },
+      element: 'fire' as Element,
+    },
+    rarity: 'common',
+  },
+  {
+    name: 'Embers of Social Warmth',
+    magicPower: {
+      title: 'Networking Spark',
+      description: '처음 만난 차가운 분위기의 상대라도 소지자에게 호감을 느끼게 하는 따뜻한 아우라를 방출하며, 어색한 대화를 화기애애한 비즈니스 기회로 전환합니다.',
+      descriptions: {
+        ko: '처음 만난 차가운 분위기의 상대라도 소지자에게 호감을 느끼게 하는 따뜻한 아우라를 방출하며, 어색한 대화를 화기애애한 비즈니스 기회로 전환합니다.',
+        en: 'Releases a warm aura that makes even a cold stranger feel favor toward the holder, turning awkward conversations into friendly business opportunities.',
+        zh: '即使是初次见面的冷淡之人，也会散发出让对方产生好感的温暖气息，将尴尬的对话转变为愉快的商务机会。',
+        ja: '初めて会った冷ややかな雰囲気の相手でも、持ち主に好感を感じさせる温かいオーラを放出し、ぎこちない会話を和やかなビジネスチャンスへと転換します。',
+        es: 'Libera un aura cálida que hace que incluso un extraño frío sienta simpatía por el poseedor, convirtiendo conversaciones incómodas en oportunidades de negocio amigables.',
+      },
+      element: 'fire' as Element,
+    },
+    rarity: 'common',
+  },
+  {
+    name: 'Flicker of Daily Focus',
+    magicPower: {
+      title: 'Brief Intensity',
+      description: '30분이라는 짧은 시간 동안 뇌를 풀가동시켜 고난도의 작업을 완수하게 돕습니다. 집중력이 흩어질 때마다 심장을 자극해 몰입의 상태로 되돌립니다.',
+      descriptions: {
+        ko: '30분이라는 짧은 시간 동안 뇌를 풀가동시켜 고난도의 작업을 완수하게 돕습니다. 집중력이 흩어질 때마다 심장을 자극해 몰입의 상태로 되돌립니다.',
+        en: 'Fully activates the brain for a short 30-minute burst to complete high-difficulty tasks, stimulating the heart to return to flow state whenever focus wavers.',
+        zh: '在30分钟的短时间内全速运转大脑以完成高难度任务，每当注意力分散时便刺激心脏，使其回到沉浸状态。',
+        ja: '30分という短い時間、脳をフル稼働させて高難易度の作業を完遂するのを助けます。集中力が切れるたびに心臓を刺激し、没頭の状態へと戻します。',
+        es: 'Activa completamente el cerebro durante un corto período de 30 minutos para completar tareas de alta dificultad, estimulando el corazón para volver al estado de flujo cada vez que la concentración decae.',
+      },
+      element: 'fire' as Element,
+    },
+    rarity: 'common',
+  },
+  {
+    name: 'Blaze of Trendsetting',
+    magicPower: {
+      title: 'Viral Ignition',
+      description: '소지자가 제안하는 아이디어나 기획이 유행의 불씨가 되어 시장에 번져나가게 합니다. 대중의 욕망을 정확히 타격하여 소수의 지지를 거대한 팬덤으로 확장합니다.',
+      descriptions: {
+        ko: '소지자가 제안하는 아이디어나 기획이 유행의 불씨가 되어 시장에 번져나가게 합니다. 대중의 욕망을 정확히 타격하여 소수의 지지를 거대한 팬덤으로 확장합니다.',
+        en: 'Turns the holder\'s ideas or plans into a trend that spreads through the market, targeting public desire to expand small support into a massive fandom.',
+        zh: '持有者提出的创意或策划将成为流行的火种并传遍市场，精准打击大众欲望，将少数支持扩展为巨大的粉丝群。',
+        ja: '持ち主が提案するアイデアや企画が流行の火種となり、市場に広がっていきます。大衆の欲望を正確に射抜き、少数の支持を巨大なファンダムへと拡張します。',
+        es: 'Convierte las ideas o planes del poseedor en la chispa de una tendencia que se extiende por el mercado, apuntando con precisión al deseo del público para expandir un pequeño apoyo en un fandom masivo.',
+      },
+      element: 'fire' as Element,
+    },
+    rarity: 'uncommon',
+  },
+  {
+    name: 'Scarlet Decision Stone',
+    magicPower: {
+      title: 'Iron Will',
+      description: '수만 가지 선택지 앞에서도 망설임 없이 가장 이익이 큰 길을 선택할 확신을 줍니다. 우유부단함으로 인해 발생하는 시간 낭비와 기회비용을 0으로 만듭니다.',
+      descriptions: {
+        ko: '수만 가지 선택지 앞에서도 망설임 없이 가장 이익이 큰 길을 선택할 확신을 줍니다. 우유부단함으로 인해 발생하는 시간 낭비와 기회비용을 0으로 만듭니다.',
+        en: 'Gives the confidence to choose the most profitable path without hesitation among tens of thousands of options, reducing time waste to zero.',
+        zh: '在成千上万个选项面前，也能毫不犹豫地选择利益最大的道路，将因优柔寡断导致的时间浪费和机会成本降为零。',
+        ja: '数万もの選択肢の前でも迷わず最も利益の大きい道を選ぶ確信を与えます。優柔不断さによって発生する時間の浪費と機会費用をゼロにします。',
+        es: 'Otorga la confianza necesaria para elegir el camino más rentable sin vacilación, incluso ante decenas de miles de opciones, reduciendo a cero el desperdicio de tiempo.',
+      },
+      element: 'fire' as Element,
+    },
+    rarity: 'uncommon',
+  },
+  {
+    name: 'Heat of Peak Vigor',
+    magicPower: {
+      title: 'Stamina Surge',
+      description: '밤샘 작업이나 극한의 체력 소모 상황에서도 몸이 타오르는 듯한 에너지를 공급받습니다. 카페인 없이도 24시간 동안 최상의 컨디션을 유지하며 경쟁자를 압도합니다.',
+      descriptions: {
+        ko: '밤샘 작업이나 극한의 체력 소모 상황에서도 몸이 타오르는 듯한 에너지를 공급받습니다. 카페인 없이도 24시간 동안 최상의 컨디션을 유지하며 경쟁자를 압도합니다.',
+        en: 'Supplies burning energy even during overnight work or extreme physical exhaustion, maintaining peak condition for 24 hours without caffeine.',
+        zh: '即使在熬夜工作或体力消耗极大的情况下，也能获得如同燃烧般的能量，无需咖啡因即可24小时保持最佳状态。',
+        ja: '徹夜作業や極限の体力消耗時でも、体が燃え上がるようなエネルギーを供給されます。カフェインなしでも24時間最高のコンディションを維持し、競争相手を圧倒します。',
+        es: 'Suministra una energía ardiente incluso durante trabajos nocturnos o agotamiento físico extremo, manteniendo una condición óptima durante 24 horas sin cafeína.',
+      },
+      element: 'fire' as Element,
+    },
+    rarity: 'uncommon',
+  },
+  {
+    name: 'Pyre of Persuasion',
+    magicPower: {
+      title: 'Orator’s Soul',
+      description: '소지자의 목소리에 청중의 이성을 마비시키는 열정을 담습니다. 불가능해 보였던 투자 유치나 반대파의 설득을 한 번의 연설로 완벽하게 해결하는 권능을 줍니다.',
+      descriptions: {
+        ko: '소지자의 목소리에 청중의 이성을 마비시키는 열정을 담습니다. 불가능해 보였던 투자 유치나 반대파의 설득을 한 번의 연설로 완벽하게 해결하는 권능을 줍니다.',
+        en: 'Infuses the holder\'s voice with a passion that paralyzes the audience\'s logic, resolving impossible investment pitches or opposition with a single speech.',
+        zh: '持有者的声音中蕴含着麻痹听众理性的热情，通过一次演讲完美解决看似不可能的投资引进或说服工作。',
+        ja: '持ち主の声に聴衆の理性を麻痺させる情熱を込め、不可能に見えた投資誘致や反対派の説得を、一度の演説で完璧に解決します。',
+        es: 'Infunde la voz del poseedor con una pasión que paraliza la lógica de la audiencia, resolviendo presentaciones de inversión o persuasión de oponentes con un solo discurso.',
+      },
+      element: 'fire' as Element,
     },
     rarity: 'rare',
   },
   {
-    name: 'Ember of the First Flame',
+    name: 'Lava-Glass of Ambition',
     magicPower: {
-      title: 'Primordial Spark',
-      description:
-        "A fragment of the universe's first fire. It never extinguishes and warms the soul in the coldest despair.",
+      title: 'Visionary Flare',
+      description: '현실에 안주하려는 나약함을 태우고, 더 높은 지위와 권력을 향한 끝없는 갈망을 현실적인 전략으로 변모시켜 소지자를 조직의 최정점으로 이끕니다.',
+      descriptions: {
+        ko: '현실에 안주하려는 나약함을 태우고, 더 높은 지위와 권력을 향한 끝없는 갈망을 현실적인 전략으로 변모시켜 소지자를 조직의 최정점으로 이끕니다.',
+        en: 'Burns away the weakness of settling for reality and transforms the endless thirst for higher status and power into realistic strategies for growth.',
+        zh: '燃烧掉安于现状的软弱，将对更高地位和权力的无尽渴望转化为现实的增长战略。',
+        ja: '現実に安住しようとする弱さを焼き、より高い地位と権力への終わりのない渇望を現実的な成長戦略へと変えます。',
+        es: 'Quema la debilidad de conformarse con la realidad y transforma la sed infinita de mayor estatus y poder en estrategias realistas de crecimiento.',
+      },
+      element: 'fire' as Element,
+    },
+    rarity: 'rare',
+  },
+  {
+    name: 'Volcano of Creativity',
+    magicPower: {
+      title: 'Idea Eruption',
+      description: '뇌 속에 막혀 있던 창의적 회로를 폭발시켜, 기존에 없던 혁신적인 비즈니스 모델이나 예술적 영감을 매일 수십 개씩 쏟아내게 하는 창조의 원천이 됩니다.',
+      descriptions: {
+        ko: '뇌 속에 막혀 있던 창의적 회로를 폭발시켜, 기존에 없던 혁신적인 비즈니스 모델이나 예술적 영감을 매일 수십 개씩 쏟아내게 하는 창조의 원천이 됩니다.',
+        en: 'Explodes the creative circuits in the brain, allowing the holder to design innovative business models or artistic masterpieces that never existed before.',
+        zh: '引爆大脑中堵塞的创意回路，设计出以往不存在的创新商业模式或艺术杰作。',
+        ja: '脳内で詰まっていた創造的な回路を爆発させ、これまでにない革新的なビジネスモデルや芸術的傑作を設計させます。',
+        es: 'Explota los circuitos creativos bloqueados en el cerebro, permitiendo al poseedor diseñar modelos de negocio innovadores u obras maestras artísticas.',
+      },
+      element: 'fire' as Element,
+    },
+    rarity: 'rare',
+  },
+  {
+    name: 'Inferno of Executive Power',
+    magicPower: {
+      title: 'Absolute Command',
+      description: '조직 내에서 그 누구도 소지자의 명령에 토를 달지 못하게 만드는 지배자의 위엄을 부여합니다. 카리스마만으로 수만 명의 인원을 일사불란하게 통제합니다.',
+      descriptions: {
+        ko: '조직 내에서 그 누구도 소지자의 명령에 토를 달지 못하게 만드는 지배자의 위엄을 부여합니다. 카리스마만으로 수만 명의 인원을 일사불란하게 통제합니다.',
+        en: 'Grants the dignity of a ruler that prevents anyone from questioning the holder\'s commands, establishing a hierarchy where everyone follows voluntarily.',
+        zh: '赋予统治者的威严，使组织内无人敢质疑持有者的命令，建立起所有人自发追随的等级制度。',
+        ja: '組織内で誰一人として持ち主の命令に異を唱えられない支配者の威厳を付与します。誰もが自発的に従う階級秩序を確立します。',
+        es: 'Otorga la dignidad de un gobernante que impide que alguien cuestione las órdenes del poseedor, estableciendo una jerarquía de seguimiento voluntario.',
+      },
+      element: 'fire' as Element,
+    },
+    rarity: 'epic',
+  },
+  {
+    name: 'Sunlight of Market Dominance',
+    magicPower: {
+      title: 'Monopoly Heat',
+      description: '소지자가 속한 업계의 모든 자본과 관심을 블랙홀처럼 빨아들입니다. 경쟁사를 고사시키고 오직 자신만이 시장의 중심에서 빛나는 독점적 행운을 선사합니다.',
+      descriptions: {
+        ko: '소지자가 속한 업계의 모든 자본과 관심을 블랙홀처럼 빨아들입니다. 경쟁사를 고사시키고 오직 자신만이 시장의 중심에서 빛나는 독점적 행운을 선사합니다.',
+        en: 'Absorbs all capital and interest in the industry like a black hole, making the holder\'s brand an absolute monopoly while competitors wither.',
+        zh: '像黑洞一样吸干行业内所有的资本和关注，使竞争对手枯竭，唯独让持有者的品牌成为绝对的垄断。',
+        ja: '業界内のあらゆる資本と関心をブラックホールのように吸い込み、競合他社を枯渇させ、持ち主のブランドだけを絶対的な独占状態にします。',
+        es: 'Absorbe todo el capital e interés de la industria como un agujero negro, convirtiendo la marca del poseedor en un monopolio absoluto.',
+      },
+      element: 'fire' as Element,
+    },
+    rarity: 'epic',
+  },
+  {
+    name: 'Phoenix Heart of Rebirth',
+    magicPower: {
+      title: 'Infinite Resurgence',
+      description: '완전히 파산하거나 사회적 지위가 바닥으로 추락해도, 그 실패를 자양분 삼아 이전보다 100배 거대한 제국을 재건할 수 있는 신적인 회복력과 역전의 기회를 강제로 만듭니다.',
+      descriptions: {
+        ko: '완전히 파산하거나 사회적 지위가 바닥으로 추락해도, 그 실패를 자양분 삼아 이전보다 100배 거대한 제국을 재건할 수 있는 신적인 회복력과 역전의 기회를 강제로 만듭니다.',
+        en: 'Even if completely bankrupt or fallen to the bottom, uses failure as nourishment to achieve a comeback 100 times greater than before.',
+        zh: '即使完全破产或社会地位跌至谷底，也会将失败作为养分，实现比以前强大100倍的‘大逆转’。',
+        ja: '完全に破産したり社会的地位が底に落ちたりしても、その失敗を糧にして以前より100倍強力な「大逆転」を成し遂げさせます。',
+        es: 'Incluso en la bancarrota total, utiliza el fracaso como alimento para lograr un regreso 100 veces más poderoso que antes.',
+      },
       element: 'fire' as Element,
     },
     rarity: 'legendary',
   },
   {
-    name: 'Tear of the Moon Goddess',
+    name: 'Primeval Nova Core',
     magicPower: {
-      title: 'Lunar Blessing',
-      description:
-        'Shed in sorrow for a mortal lover, this gem glows softly at night and grants peaceful dreams.',
-      element: 'light' as Element,
-    },
-    rarity: 'epic',
-  },
-  {
-    name: 'Whisper of the Abyss',
-    magicPower: {
-      title: 'Abyssal Echo',
-      description:
-        'Those who listen closely hear secrets from the deep—truths better left unknown.',
-      element: 'darkness' as Element,
-    },
-    rarity: 'epic',
-  },
-  {
-    name: 'Seed of the World Tree',
-    magicPower: {
-      title: "Life's Origin",
-      description:
-        'A crystallized seed from Yggdrasil. Plants flourish in its presence, and wounds heal faster nearby.',
-      element: 'earth' as Element,
-    },
-    rarity: 'rare',
-  },
-  {
-    name: 'Frozen Sigh of Winter',
-    magicPower: {
-      title: 'Eternal Frost',
-      description:
-        'The last breath of a dying winter spirit. It preserves anything it touches in perfect, timeless ice.',
-      element: 'water' as Element,
-    },
-    rarity: 'uncommon',
-  },
-  {
-    name: 'Heartstone of the Golem King',
-    magicPower: {
-      title: 'Unyielding Will',
-      description:
-        'Grants the bearer unshakable determination. No mind control or fear can break their resolve.',
-      element: 'earth' as Element,
-    },
-    rarity: 'rare',
-  },
-  {
-    name: 'Compass of Lost Souls',
-    magicPower: {
-      title: 'Spirit Guide',
-      description:
-        'Points toward those who have passed on, helping the living find closure—or the dead find rest.',
-      element: 'spirit' as Element,
-    },
-    rarity: 'uncommon',
-  },
-  {
-    name: 'Shard of the Shattered Sun',
-    magicPower: {
-      title: 'Solar Fragment',
-      description:
-        'A piece of a sun that exploded eons ago. It radiates warmth and reveals hidden truths in its light.',
-      element: 'light' as Element,
-    },
-    rarity: 'common',
-  },
-  {
-    name: 'Echo of the Storm Titan',
-    magicPower: {
-      title: "Thunder's Voice",
-      description:
-        'When struck, it releases a thunderclap that can be heard across realms, summoning aid from allies.',
-      element: 'wind' as Element,
-    },
-    rarity: 'common',
-  },
-  // --- FIRE: 내면의 불꽃과 의지의 연금술 ---
-  {
-    name: 'Cinder Heart',
-    magicPower: {
-      title: 'Dormant Ember',
-      description: 'The stone pulses with a faint heat, keeping the fire of hope alive when all other lights go out.',
-      element: 'fire' as Element,
-    },
-    rarity: 'common',
-  },
-  {
-    name: 'Magma Tear',
-    magicPower: {
-      title: 'Molten Resolve',
-      description: 'Touch this gem to transmute your hesitation into a burning, unstoppable flow of pure action.',
-      element: 'fire' as Element,
-    },
-    rarity: 'uncommon',
-  },
-  {
-    name: 'Phoenix Eye',
-    magicPower: {
-      title: 'Ashen Rebirth',
-      description: 'Staring into its core allows you to incinerate a failure of the past and rise from its charcoal.',
-      element: 'fire' as Element,
-    },
-    rarity: 'rare',
-  },
-  {
-    name: 'Sun Core Shard',
-    magicPower: {
-      title: 'Solar Radiance',
-      description: 'It grants the bearer an aura of a central star; others instinctively orbit around your brilliance.',
-      element: 'fire' as Element,
-    },
-    rarity: 'epic',
-  },
-  {
-    name: 'Efreet Soul',
-    magicPower: {
-      title: 'Infernal Engine',
-      description: 'The gem burns away the need for sleep, fueling your body with the restless energy of a desert storm.',
+      title: 'Reality Ignition',
+      description: '상상하는 것만으로 현실의 물리적 흐름을 바꿉니다. 안 될 일도 되게 만들며, 소지자가 걷는 길을 가로막는 모든 사회적, 법적 장애물을 태워 없애고 승리만을 남깁니다.',
+      descriptions: {
+        ko: '상상하는 것만으로 현실의 물리적 흐름을 바꿉니다. 안 될 일도 되게 만들며, 소지자가 걷는 길을 가로막는 모든 사회적, 법적 장애물을 태워 없애고 승리만을 남깁니다.',
+        en: 'Changes the physical flow of reality just by imagining it, making the impossible possible and turning every path into a shortcut to success.',
+        zh: '仅靠想象就能改变现实的物理流向，变不可能为可能，使持有者走过的每一条路都成为‘成功的捷径’。',
+        ja: '想像するだけで現実の物理的な流れを変えます。不可能なことも可能にし、持ち主が歩むすべての道を「成功への近道」に変えます。',
+        es: 'Cambia el flujo físico de la realidad con solo imaginarlo, haciendo posible lo imposible y convirtiendo cada camino en un atajo al éxito.',
+      },
       element: 'fire' as Element,
     },
     rarity: 'legendary',
   },
   {
-    name: 'Ruby Ember',
+    name: 'Dewdrop of Calm',
     magicPower: {
-      title: 'Sanguine Warmth',
-      description: 'It thaws the frozen hearts of strangers, turning cold indifference into a welcoming, vivid flame.',
-      element: 'fire' as Element,
+      title: 'Anxiety Wash',
+      description: '가슴을 조여오는 면접이나 중요한 미팅 전, 모든 긴장감을 씻어내고 깊은 호수처럼 평온한 상태를 유지하여 평소 실력의 120%를 발휘하게 합니다.',
+      descriptions: {
+        ko: '가슴을 조여오는 면접이나 중요한 미팅 전, 모든 긴장감을 씻어내고 깊은 호수처럼 평온한 상태를 유지하여 평소 실력의 120%를 발휘하게 합니다.',
+        en: 'Washes away all tension before an interview or important meeting, bringing a state of calmness as deep as a serene lake.',
+        zh: '在令人紧张的面试或重要会议前，洗净所有紧张感，进入如深湖般宁静的状态。',
+        ja: '緊張する面接や重要なミーティングの直前、すべての緊張感を洗い流し、深い湖のような平穏な状態を作ります。',
+        es: 'Elimina toda la tensión antes de una entrevista o reunión importante, brindando un estado de calma tan profundo como un lago sereno.',
+      },
+      element: 'water' as Element,
     },
     rarity: 'common',
   },
   {
-    name: 'Volcano Tooth',
+    name: 'Mist of Subtle Favor',
     magicPower: {
-      title: 'Eruption Point',
-      description: 'When held during a speech, your words carry the weight of falling ash and the heat of flowing lava.',
-      element: 'fire' as Element,
+      title: 'Fluid Charm',
+      description: '물안개처럼 자연스럽게 주변에 스며들어 비호감이었던 인상조차 긍정적으로 바꿉니다. 사람들이 자신도 모르게 소지자의 편을 들게 만드는 부드러운 유인력을 가집니다.',
+      descriptions: {
+        ko: '물안개처럼 자연스럽게 주변에 스며들어 비호감이었던 인상조차 긍정적으로 바꿉니다. 사람들이 자신도 모르게 소지자의 편을 들게 만드는 부드러운 유인력을 가집니다.',
+        en: 'Naturally permeates surroundings like mist, changing unfavorable impressions into positive ones, making people want to stay by your side.',
+        zh: '像水雾一样自然地融入周围，即使是负面印象也能转化为正面评价，让人想长久地留在持有者身边。',
+        ja: '霧のように自然に周囲に染み込み、悪い印象さえもポジティブに変えます。人々が持ち主のそばに長く留まりたがるようになります.',
+        es: 'Se infiltra naturalmente en el entorno como la niebla, cambiando impresiones desfavorables por positivas y atrayendo a las personas.',
+      },
+      element: 'water' as Element,
+    },
+    rarity: 'common',
+  },
+  {
+    name: 'Ripple of Intuition',
+    magicPower: {
+      title: 'Gut Feeling',
+      description: '주식 차트나 계약서의 미세한 위화감을 파동으로 느껴 사전에 피해를 막아줍니다. 논리적인 이유를 알기 전에도 몸이 먼저 위험을 감지해 소지자를 보호합니다.',
+      descriptions: {
+        ko: '주식 차트나 계약서의 미세한 위화감을 파동으로 느껴 사전에 피해를 막아줍니다. 논리적인 이유를 알기 전에도 몸이 먼저 위험을 감지해 소지자를 보호합니다.',
+        en: 'Allows the holder to feel subtle anomalies in charts or contracts as vibrations, preventing losses through intuition beyond logic.',
+        zh: '通过波动感受股票图表或合同中的细微违和感，通过超越逻辑推理的直觉预先防止损失。',
+        ja: '株価チャートや契約書の微細な違和感を波動として感じ取り、事前に被害を防ぎます。論理的な推論を超えた直感で損失を避けます。',
+        es: 'Permite sentir anomalías sutiles en gráficos o contratos como vibraciones, previniendo pérdidas mediante una intuición más allá de la lógica.',
+      },
+      element: 'water' as Element,
+    },
+    rarity: 'common',
+  },
+  {
+    name: 'Stream of Eloquence',
+    magicPower: {
+      title: 'Silver Tongue',
+      description: '막힌 대화를 물 흐르듯 유연하게 풀어냅니다. 어떤 까다로운 질문에도 재치 있게 응대하며, 상대방의 기분을 거스르지 않으면서 자신이 원하는 결론으로 유도합니다.',
+      descriptions: {
+        ko: '막힌 대화를 물 흐르듯 유연하게 풀어냅니다. 어떤 까다로운 질문에도 재치 있게 응대하며, 상대방의 기분을 거스르지 않으면서 자신이 원하는 결론으로 유도합니다.',
+        en: 'Unravels blocked conversations as smoothly as flowing water, responding to difficult questions with wit and capturing hearts with humor.',
+        zh: '像流水一样顺畅地化解受阻的对话，机智地应对任何刁钻的问题，用幽默感俘获对方的心。',
+        ja: '滞った会話を水が流れるようにしなやかに解きほぐします。どんな気難しい質問にも機転を利かせて応対し、ユーモアで相手の心を掴みます。',
+        es: 'Desenreda conversaciones bloqueadas con fluidez, respondiendo a preguntas difíciles con ingenio y capturando corazones con humor.',
+      },
+      element: 'water' as Element,
     },
     rarity: 'uncommon',
   },
   {
-    name: 'Blaze Petal',
+    name: 'Aquamarine Clarity',
     magicPower: {
-      title: 'Dancing Spark',
-      description: 'It ignites the stagnant air of a room, filling the silence with the crackling electricity of creation.',
-      element: 'fire' as Element,
+      title: 'Logic Filter',
+      description: '복잡하게 꼬인 감정 덩어리에서 이성적인 팩트만을 걸러내어 보여줍니다. 연인 관계나 비즈니스 갈등에서 감정 소모 없이 가장 합리적인 해결책을 도출하게 합니다.',
+      descriptions: {
+        ko: '복잡하게 꼬인 감정 덩어리에서 이성적인 팩트만을 걸러내어 보여줍니다. 연인 관계나 비즈니스 갈등에서 감정 소모 없이 가장 합리적인 해결책을 도출하게 합니다.',
+        en: 'Filters out only rational facts from complex emotions, providing cold and accurate solutions to relationships or business conflicts.',
+        zh: '从错综复杂的情感纠结中筛选出理性的事实，为恋人关系或商务冲突提供冷静而准确的解决方案。',
+        ja: '複雑に絡まった感情の塊から理性的な事実だけを濾し取って見せます。ビジネスや対人関係の葛藤において、冷徹で正確な解決策を提示します。',
+        es: 'Filtra solo los hechos racionales de emociones complejas, proporcionando soluciones precisas para conflictos de pareja o negocios.',
+      },
+      element: 'water' as Element,
+    },
+    rarity: 'uncommon',
+  },
+  {
+    name: 'Rain of Productivity',
+    magicPower: {
+      title: 'Task Flow',
+      description: '쏟아지는 업무들을 하나씩 순차적으로 처리하는 최적의 리듬을 부여합니다. 마치 비가 내리듯 자연스럽게 할 일을 마무리지어 퇴근 시간을 2시간 이상 앞당깁니다.',
+      descriptions: {
+        ko: '쏟아지는 업무들을 하나씩 순차적으로 처리하는 최적의 리듬을 부여합니다. 마치 비가 내리듯 자연스럽게 할 일을 마무리지어 퇴근 시간을 2시간 이상 앞당깁니다.',
+        en: 'Grants an optimal rhythm to handle pouring tasks one by one, allowing work to be completed quickly and perfectly like falling rain.',
+        zh: '赋予按顺序处理繁杂任务的最佳节奏，使工作像降雨一样迅速而完美地完成。',
+        ja: '押し寄せる業務を一つずつ順次処理する最適なリズムを与えます。まるで雨が降るように、迅速かつ完璧に仕事が片付いていきます。',
+        es: 'Otorga un ritmo óptimo para manejar tareas una por una, permitiendo que el trabajo se complete rápida y perfectamente.',
+      },
+      element: 'water' as Element,
+    },
+    rarity: 'uncommon',
+  },
+  {
+    name: 'Glacier of Self-Control',
+    magicPower: {
+      title: 'Stoic Aegis',
+      description: '지름신, 폭식, 게임 중독 등 순간적인 충동을 얼음처럼 얼려버립니다. 철저한 자기 객관화를 통해 자신의 삶을 완벽하게 통제하는 냉철한 관리자로 거듭나게 합니다.',
+      descriptions: {
+        ko: '지름신, 폭식, 게임 중독 등 순간적인 충동을 얼음처럼 얼려버립니다. 철저한 자기 객관화를 통해 자신의 삶을 완벽하게 통제하는 냉철한 관리자로 거듭나게 합니다.',
+        en: 'Freezes momentary impulses like shopping sprees or addictions like ice, maintaining iron-willed self-control through self-objectification.',
+        zh: '将购物冲动、暴饮暴食、游戏成瘾等瞬间冲动像冰块一样冻结，通过彻底的自我客体化维持钢铁般的自我控制。',
+        ja: '衝動買い、暴食、ゲーム依存などの瞬間的な衝動を氷のように凍らせます。徹底した自己客観化を通じて、鉄のような自己コントロール力を維持します。',
+        es: 'Congela impulsos momentáneos como compras compulsivas o adicciones, manteniendo un autocontrol de hierro mediante la auto-objetivación.',
+      },
+      element: 'water' as Element,
     },
     rarity: 'rare',
   },
   {
-    name: 'Drake Breath',
+    name: 'Tidal Shift Crystal',
     magicPower: {
-      title: 'Searing Truth',
-      description: 'Its glow intensifies when a lie is spoken, burning a small mark of heat onto the palm of the deceiver.',
-      element: 'fire' as Element,
+      title: 'Trend Surfing',
+      description: '시대의 흐름이 어디로 바뀌는지 남들보다 반 박자 빠르게 파악하게 합니다. 거대한 변화의 파도에 휩쓸리는 대신 그 위에 올라타 부와 명성을 독식하게 돕니다.',
+      descriptions: {
+        ko: '시대의 흐름이 어디로 바뀌는지 남들보다 반 박자 빠르게 파악하게 합니다. 거대한 변화의 파도에 휩쓸리는 대신 그 위에 올라타 부와 명성을 독식하게 돕니다.',
+        en: 'Enables the holder to grasp the direction of the era\'s trends half a beat faster than others, riding the giant wave of change.',
+        zh: '比他人领先半拍掌握时代潮流的走向，搭乘巨大的变化浪潮，获得先发优势的利润。',
+        ja: '時代の流れがどこへ変わるのか、他人より半歩早く把握させます。巨大な変化の波に乗り、先行者利益を独占する洞察力を与えます。',
+        es: 'Permite captar la dirección de las tendencias de la época medio paso más rápido que los demás, cabalgando la gran ola del cambio.',
+      },
+      element: 'water' as Element,
+    },
+    rarity: 'rare',
+  },
+  {
+    name: 'Source of Vitality',
+    magicPower: {
+      title: 'Cellular Cleansing',
+      description: '몸속의 독소와 피로 물질을 매일 밤 완벽히 정화합니다. 4시간만 자도 8시간을 잔 듯한 최상의 세포 상태를 유지하며 피부 노화를 획기적으로 늦추는 효과가 있습니다.',
+      descriptions: {
+        ko: '몸속의 독소와 피로 물질을 매일 밤 완벽히 정화합니다. 4시간만 자도 8시간을 잔 듯한 최상의 세포 상태를 유지하며 피부 노화를 획기적으로 늦추는 효과가 있습니다.',
+        en: 'Completely purifies toxins and fatigue substances from the body every night, providing peak condition as if 8 hours were slept in just 4.',
+        zh: '每晚完美净化体内的毒素和疲劳物质，即使只睡4小时也能获得如同睡了8小时般的巅峰状态。',
+        ja: '体内の毒素と疲労物質を毎晩完璧に浄化します。4時間眠るだけでも8時間眠ったような最高のコンディションを提供します。',
+        es: 'Purifica las toxinas y el cansancio del cuerpo cada noche, brindando una condición física máxima como si se hubiera dormido 8 horas en solo 4.',
+      },
+      element: 'water' as Element,
+    },
+    rarity: 'rare',
+  },
+  {
+    name: 'Deep Sea of Secrets',
+    magicPower: {
+      title: 'Information Abyss',
+      description: '자신에게 불리한 정보나 치부를 심해 속으로 영원히 가라앉힙니다. 어떠한 뒷조사나 폭로에도 소지자의 비밀은 절대 수면 위로 떠오르지 않는 철저한 방어력을 부여합니다.',
+      descriptions: {
+        ko: '자신에게 불리한 정보나 치부를 심해 속으로 영원히 가라앉힙니다. 어떠한 뒷조사나 폭로에도 소지자의 비밀은 절대 수면 위로 떠오르지 않는 철저한 방어력을 부여합니다.',
+        en: 'Sinks disadvantageous information or personal flaws into the deep sea forever, protecting the holder with perfect confidentiality.',
+        zh: '将对自己不利的信息或短处永远沉入深海，在任何背景调查或曝光面前保持完美的保密性。',
+        ja: '自分に不利な情報や恥部を深海の中へ永遠に沈めます。いかなる身辺調査や暴露にも揺るがない完璧な秘匿性を維持します。',
+        es: 'Hunde la información desventajosa o los defectos personales en el mar profundo para siempre, protegiendo al poseedor con una confidencialidad perfecta.',
+      },
+      element: 'water' as Element,
     },
     rarity: 'epic',
   },
   {
-    name: 'Star Forge',
+    name: 'Vortex of Wealth Flow',
     magicPower: {
-      title: 'Cosmic Ignition',
-      description: 'A fragment of the first spark. It allows you to forge your own destiny from the raw iron of fate.',
-      element: 'fire' as Element,
-    },
-    rarity: 'legendary',
-  },
-  {
-    name: 'Coal Spark',
-    magicPower: {
-      title: 'Humble Glow',
-      description: 'A modest stone that radiates a sense of security, acting as a lighthouse in your private storms.',
-      element: 'fire' as Element,
-    },
-    rarity: 'common',
-  },
-  {
-    name: 'Lava Rose',
-    magicPower: {
-      title: 'Petrified Love',
-      description: 'Its warmth never fades, serving as an eternal bridge to the passion of a moment long since passed.',
-      element: 'fire' as Element,
-    },
-    rarity: 'uncommon',
-  },
-  {
-    name: 'Ifrit’s Claw',
-    magicPower: {
-      title: 'Scorched Path',
-      description: 'It burns away the obstacles in your path, leaving only the blackened truth of the road ahead.',
-      element: 'fire' as Element,
-    },
-    rarity: 'rare',
-  },
-
-  // --- WATER: 흐르는 시간과 기억의 정화 ---
-  {
-    name: 'Dew Drop',
-    magicPower: {
-      title: 'Liquid Clarity',
-      description: 'Peer through this drop to see the world without the dust of bias, fresh as a morning forest.',
-      element: 'water' as Element,
-    },
-    rarity: 'common',
-  },
-  {
-    name: 'Ocean Eye',
-    magicPower: {
-      title: 'Abyssal Calm',
-      description: 'Holding it sinks your anxiety into the crushing depths, leaving only a vast, silent peace.',
-      element: 'water' as Element,
-    },
-    rarity: 'uncommon',
-  },
-  {
-    name: 'Coral Heart',
-    magicPower: {
-      title: 'Memory Tide',
-      description: 'Like a shell, it echoes with the voices of everyone you have ever loved and lost to the sea of time.',
-      element: 'water' as Element,
-    },
-    rarity: 'rare',
-  },
-  {
-    name: 'Kraken Ink',
-    magicPower: {
-      title: 'Void Dissolution',
-      description: 'It can dissolve a single sorrow into a cloud of ink, hiding the pain until it eventually vanishes.',
+      title: 'Cash Magnet',
+      description: '정체된 자산 흐름을 소지자를 중심으로 회전시킵니다. 전 세계의 돈이 소지자의 계좌로 흘러들어오는 통로를 개척하며, 쓰면 쓸수록 더 큰 돈이 들어오는 풍요의 소용돌이를 만듭니다.',
+      descriptions: {
+        ko: '정체된 자산 흐름을 소지자를 중심으로 회전시킵니다. 전 세계의 돈이 소지자의 계좌로 흘러들어오는 통로를 개척하며, 쓰면 쓸수록 더 큰 돈이 들어오는 풍요의 소용돌이를 만듭니다.',
+        en: 'Rotates stagnant asset flows around the holder, causing the world\'s money to flow naturally into the holder\'s account as if drawn by a magnet.',
+        zh: '让停滞的资产流以持有者为中心旋转，使全世界的金钱像被磁铁吸引一样自然地流入持有者的账户。',
+        ja: '停滞した資産の流れを持ち主を中心に回転させます。全世界のお金が磁石に吸い寄せられるように、自然と持ち主の口座へ流れ込みます。',
+        es: 'Hace girar los flujos de activos estancados alrededor del poseedor, atrayendo el dinero del mundo hacia su cuenta como un imán.',
+      },
       element: 'water' as Element,
     },
     rarity: 'epic',
   },
   {
-    name: 'Neptune Core',
+    name: 'Oceanic Consciousness',
     magicPower: {
-      title: 'Tidal Sovereignty',
-      description: 'You become the moon to your own life, commanding the rise and fall of every emotional wave.',
+      title: 'World Wisdom',
+      description: '전 인류의 지식 체계를 바다처럼 수용하고 이해하는 통찰력을 줍니다. 세상 모든 이치에 통달하여 어떤 난제에도 해답을 내놓는, 살아있는 현자로서 추앙받게 만듭니다.',
+      descriptions: {
+        ko: '전 인류의 지식 체계를 바다처럼 수용하고 이해하는 통찰력을 줍니다. 세상 모든 이치에 통달하여 어떤 난제에도 해답을 내놓는, 살아있는 현자로서 추앙받게 만듭니다.',
+        en: 'Gives the insight to understand the entire human knowledge system like an ocean, allowing the holder to master all laws of the world.',
+        zh: '赋予像大海一样吸收和理解全人类知识体系的洞察力，通晓世间万理，成为贤明的领导者。',
+        ja: '全人類の知識体系を海のように受容し理解する洞찰력을を与え、世界のあらゆる理に通じた指導者へと変貌させます。',
+        es: 'Brinda la perspicacia para comprender todo el sistema de conocimiento humano como un océano, permitiendo dominar todas las leyes del mundo.',
+      },
       element: 'water' as Element,
     },
     rarity: 'legendary',
   },
   {
-    name: 'River Pebble',
+    name: 'Primordial Life Source',
     magicPower: {
-      title: 'Fluent Motion',
-      description: 'It smooths the jagged edges of your daily routine, letting you flow through life like a mountain stream.',
-      element: 'water' as Element,
-    },
-    rarity: 'common',
-  },
-  {
-    name: 'Mist Pearl',
-    magicPower: {
-      title: 'Veil of Fog',
-      description: 'It wraps your presence in a gentle mist, making you invisible to those who seek you with ill intent.',
-      element: 'water' as Element,
-    },
-    rarity: 'uncommon',
-  },
-  {
-    name: 'Glacier Bone',
-    magicPower: {
-      title: 'Stilled Instant',
-      description: 'The gem freezes a single perfect moment in time, allowing you to dwell within it whenever you wish.',
-      element: 'water' as Element,
-    },
-    rarity: 'rare',
-  },
-  {
-    name: 'Siren Scale',
-    magicPower: {
-      title: 'Echoing Song',
-      description: 'It captures the melody of the spheres, granting you a voice that can charm the very wind to listen.',
-      element: 'water' as Element,
-    },
-    rarity: 'epic',
-  },
-  {
-    name: 'Tsunami Soul',
-    magicPower: {
-      title: 'Crushing Weight',
-      description: 'Unleashes a surge of overwhelming presence that sweeps away the arguments of your enemies.',
+      title: 'Eternal Youth',
+      description: '신체의 생체 시계를 거꾸로 돌립니다. 장기는 가장 건강했던 시절로 회귀하고 육체는 질병으로부터 완전 격리되며, 수백 년을 살아도 청년의 기상을 유지하는 신적 축복을 내립니다.',
+      descriptions: {
+        ko: '신체의 생체 시계를 거꾸로 돌립니다. 장기는 가장 건강했던 시절로 회귀하고 육체는 질병으로부터 완전 격리되며, 수백 년을 살아도 청년의 기상을 유지하는 신적 축복을 내립니다.',
+        en: 'Turns back the biological clock, returning organs to their healthiest state and making the body a \'super-body\' that resists aging.',
+        zh: '倒转身体的生物钟，使器官回归到最健康的时期，让身体成为不被疾病或衰老击倒的‘超级肉体’。',
+        ja: '身体の生物時計を逆回転させ、臓器を最も健康な時期へと回帰させます。病気や老化に負けない「スーパーボディ」を作り上げます。',
+        es: 'Retrocede el reloj biológico del cuerpo, devolviendo los órganos a su estado más saludable y creando un cuerpo resistente al envejecimiento.',
+      },
       element: 'water' as Element,
     },
     rarity: 'legendary',
   },
   {
-    name: 'Rain Stone',
+    name: 'Pebble of Patience',
     magicPower: {
-      title: 'Petrichor Soul',
-      description: 'The scent of rain follows you, washing away the urban grime from your spirit with every step.',
-      element: 'water' as Element,
-    },
-    rarity: 'common',
-  },
-  {
-    name: 'Frost Bit',
-    magicPower: {
-      title: 'Chilled Mirror',
-      description: 'A surface that reflects not your face, but the cold, objective truth of your current situation.',
-      element: 'water' as Element,
-    },
-    rarity: 'uncommon',
-  },
-  {
-    name: 'Whale Song',
-    magicPower: {
-      title: 'Deep Frequency',
-      description: 'Connects your heartbeat to the rhythm of the tides, granting a longevity born of the deep.',
-      element: 'water' as Element,
-    },
-    rarity: 'rare',
-  },
-
-  // --- EARTH: 존재의 뿌리와 대지의 축복 ---
-  {
-    name: 'Dust Grain',
-    magicPower: {
-      title: 'Grounded Path',
-      description: 'You can never truly be lost as long as you carry this grain; the earth always knows your home.',
+      title: 'Steady Step',
+      description: '반복되는 지루한 일상과 수련을 견디는 인내심을 줍니다. 작은 성과들이 쌓여 거대한 산이 될 때까지 포기하지 않는 끈기를 주어 반드시 목표에 도달하게 합니다.',
+      descriptions: {
+        ko: '반복되는 지루한 일상과 수련을 견디는 인내심을 줍니다. 작은 성과들이 쌓여 거대한 산이 될 때까지 포기하지 않는 끈기를 주어 반드시 목표에 도달하게 합니다.',
+        en: 'Grants the patience to endure repetitive routines and training, allowing small achievements to stack into a giant mountain of success.',
+        zh: '赋予忍受重复枯燥的日常生活和磨练的耐心，使微小的成果堆积成巨大的成功之山。',
+        ja: '繰り返される退屈な日常と修練に耐える忍耐力を与えます。小さな成果を積み上げ、巨大な成功の山へと変えます。',
+        es: 'Otorga la paciencia para soportar rutinas y entrenamientos repetitivos, permitiendo que los pequeños logros se conviertan en un éxito masivo.',
+      },
       element: 'earth' as Element,
     },
     rarity: 'common',
   },
   {
-    name: 'Root Knot',
+    name: 'Clay of Skill Absorption',
     magicPower: {
-      title: 'Ancestral Grip',
-      description: 'It channels the strength of ancient oaks into your bones, making you immovable in your beliefs.',
+      title: 'Fast Learning',
+      description: '새로운 소프트웨어나 도구 사용법을 마치 흙을 만지듯 쉽게 익히게 합니다. 복잡한 매뉴얼 없이도 본능적으로 기술의 핵심을 파악하여 실무에 즉각 적용하게 돕습니다.',
+      descriptions: {
+        ko: '새로운 소프트웨어나 도구 사용법을 마치 흙을 만지듯 쉽게 익히게 합니다. 복잡한 매뉴얼 없이도 본능적으로 기술의 핵심을 파악하여 실무에 즉각 적용하게 돕습니다.',
+        en: 'Makes learning new software or tools as easy as playing with clay, mastering technical skills in a short time without manuals.',
+        zh: '学习新的软件或工具使用方法就像玩泥巴一样简单，无需复杂的说明书即可在短时间内掌握技术技能。',
+        ja: '新しいソフトウェアやツールの使い方を、まるで泥遊びをするように簡単に習得させ、短時間で技術的スキルをマスターさせます。',
+        es: 'Hace que aprender nuevos programas o herramientas sea tan fácil como jugar con barro, dominando habilidades técnicas en poco tiempo.',
+      },
+      element: 'earth' as Element,
+    },
+    rarity: 'common',
+  },
+  {
+    name: 'Sand of Saving',
+    magicPower: {
+      title: 'Frugal Mind',
+      description: '불필요한 지출 욕구를 억제하고 자산이 조금씩 쌓이는 재미를 극대화합니다. 티끌 모아 태산이라는 말처럼 사소한 이득들이 모여 탄탄한 종잣돈이 되도록 상황을 유도합니다.',
+      descriptions: {
+        ko: '불필요한 지출 욕구를 억제하고 자산이 조금씩 쌓이는 재미를 극대화합니다. 티끌 모아 태산이라는 말처럼 사소한 이득들이 모여 탄탄한 종잣돈이 되도록 상황을 유도합니다.',
+        en: 'Suppresses unnecessary spending desires and maximizes the fun of accumulating assets, instilling the habit of saving.',
+        zh: '抑制不必要的支出欲望，使资产逐渐积累的乐趣最大化，养成聚沙成塔的理财习惯。',
+        ja: '不必要な支出欲求を抑制し、資産が貯まる楽しさを最大化します。塵も積もれば山となる習慣を骨の髄まで叩き込みます。',
+        es: 'Suprime los deseos de gastos innecesarios y maximiza la diversión de acumular activos, inculcando el hábito del ahorro constante.',
+      },
+      element: 'earth' as Element,
+    },
+    rarity: 'common',
+  },
+  {
+    name: 'Quartz of Reliability',
+    magicPower: {
+      title: 'Solid Trust',
+      description: '소지자에게 말 한마디의 무게를 더해줍니다. 주변 사람들이 소지자를 \'믿을 수 있는 사람\'으로 인식하게 하여 중요한 업무나 고액의 투자를 전적으로 맡기게 하는 신뢰의 운입니다.',
+      descriptions: {
+        ko: '소지자에게 말 한마디의 무게를 더해줍니다. 주변 사람들이 소지자를 \'믿을 수 있는 사람\'으로 인식하게 하여 중요한 업무나 고액의 투자를 전적으로 맡기게 하는 신뢰의 운입니다.',
+        en: 'Adds weight to every word spoken, causing others to regard the holder as a \'trustworthy person\' with the power of a contract.',
+        zh: '为持有者的每一句话增添重量，使周围人将持有者视为‘值得信赖的人’，赋予言语以合同般的效力。',
+        ja: '持ち主の言葉一つひとつに重みを加え、周囲の人々に「信頼できる人」という認識を植え付け、言葉に契約のような効力を持たせます。',
+        es: 'Agrega peso a cada palabra dicha, haciendo que los demás vean al poseedor como una persona de confianza con el poder de un contrato.',
+      },
       element: 'earth' as Element,
     },
     rarity: 'uncommon',
   },
   {
-    name: 'Iron Vein',
+    name: 'Granite Professionalism',
     magicPower: {
-      title: 'Metallic Hum',
-      description: 'The gem vibrates when treasure is near—not just gold, but anything that enriches the soul.',
+      title: 'Unshakable Base',
+      description: '외부의 비난이나 압박에도 흔들리지 않는 작업 태도를 완성합니다. 개인적인 슬픔이나 기쁨에 상관없이 항상 일정한 퀄리티의 결과물을 내놓는 프로 중의 프로가 되게 합니다.',
+      descriptions: {
+        ko: '외부의 비난이나 압박에도 흔들리지 않는 작업 태도를 완성합니다. 개인적인 슬픔이나 기쁨에 상관없이 항상 일정한 퀄리티의 결과물을 내놓는 프로 중의 프로가 되게 합니다.',
+        en: 'Completes a work attitude unshaken by external criticism, maintaining professional focus regardless of personal emotions.',
+        zh: '完成不被外部指责或压力所动摇的工作态度，无论个人情感如何都能保持专业的专注状态。',
+        ja: '外部の非難や圧力にも揺るがない作業態度を完成させます。個人的な感情に左右されず、プロフェッショナルな集中を維持します。',
+        es: 'Completa una actitud de trabajo inquebrantable ante críticas externas, manteniendo el enfoque profesional sin importar las emociones.',
+      },
+      element: 'earth' as Element,
+    },
+    rarity: 'uncommon',
+  },
+  {
+    name: 'Root of Networking',
+    magicPower: {
+      title: 'Deep Connection',
+      description: '가벼운 인맥이 아니라, 소지자가 위기에 처했을 때 발 벗고 나설 진정한 조력자들을 땅속의 뿌리처럼 깊게 연결합니다. 시간이 갈수록 견고해지는 강력한 인적 인프라를 구축합니다.',
+      descriptions: {
+        ko: '가벼운 인맥이 아니라, 소지자가 위기에 처했을 때 발 벗고 나설 진정한 조력자들을 땅속의 뿌리처럼 깊게 연결합니다. 시간이 갈수록 견고해지는 강력한 인적 인프라를 구축합니다.',
+        en: 'Connects the holder to true supporters who will help during a crisis, like finding gold veins in the ground.',
+        zh: '与那些在持有者面临危机时会挺身相助的真正支持者建立联系，如同在地下发现金脉。',
+        ja: '軽い人脈ではなく、危機に際して率先して助けてくれる真の助力者たちを、地中の金脈のように引き寄せ、繋ぎ合わせます。',
+        es: 'Conecta al poseedor con verdaderos colaboradores que lo ayudarán en una crisis, como encontrar vetas de oro en la tierra.',
+      },
+      element: 'earth' as Element,
+    },
+    rarity: 'uncommon',
+  },
+  {
+    name: 'Basalt of Physical Immunity',
+    magicPower: {
+      title: 'Iron Body',
+      description: '현대인의 고질병인 거북목, 허리 통증, 만성 피로로부터 척추와 근육을 강철처럼 보호합니다. 사고 시에도 뼈가 부러지지 않는 기적적인 방어력을 발휘하여 일생의 건강을 보장합니다.',
+      descriptions: {
+        ko: '현대인의 고질병인 거북목, 허리 통증, 만성 피로로부터 척추와 근육을 강철처럼 보호합니다. 사고 시에도 뼈가 부러지지 않는 기적적인 방어력을 발휘하여 일생의 건강을 보장합니다.',
+        en: 'Protects the spine and muscles like steel from modern chronic illnesses, ensuring a healthy physical foundation.',
+        zh: '像钢铁一样保护脊椎和肌肉，免受乌龟颈、腰痛、慢性疲劳等现代慢性病的侵害。',
+        ja: '現代人の持病である腰痛や慢性疲労から、脊椎と筋肉を鋼のように保護し、健康な身体的基盤を保証します。',
+        es: 'Protege la columna y los músculos como el acero de las enfermedades crónicas modernas, garantizando una base física saludable.',
+      },
       element: 'earth' as Element,
     },
     rarity: 'rare',
   },
   {
-    name: 'Mountain Peak',
+    name: 'Emerald of Land Luck',
     magicPower: {
-      title: 'Seismic Silence',
-      description: 'It absorbs the tremors of a chaotic world, leaving the bearer in a state of tectonic stillness.',
+      title: 'Real Estate Eye',
+      description: '가치가 폭등할 땅과 건물을 직관적으로 알아봅니다. 소지자가 구매하는 모든 부동산은 지각 변동 수준의 개발 호재를 맞이하게 되며, 평생 주거 걱정 없는 부의 기반을 마련해줍니다.',
+      descriptions: {
+        ko: '가치가 폭등할 땅과 건물을 직관적으로 알아봅니다. 소지자가 구매하는 모든 부동산은 지각 변동 수준의 개발 호재를 맞이하게 되며, 평생 주거 걱정 없는 부의 기반을 마련해줍니다.',
+        en: 'Intuitively recognizes land and buildings whose value will skyrocket, turning real estate purchases into legendary successes.',
+        zh: '直觉地识别出价值将暴涨的土地和建筑，使持有者购买的所有房地产都成为传奇般的投资成功。',
+        ja: '価値が急騰する土地や建物を直感的に見抜き、購入するすべての不動産を伝説的な投資成功へと導きます。',
+        es: 'Reconoce intuitivamente terrenos y edificios cuyo valor se disparará, convirtiendo las compras inmobiliarias en éxitos legendarios.',
+      },
+      element: 'earth' as Element,
+    },
+    rarity: 'rare',
+  },
+  {
+    name: 'Topaz of Generosity',
+    magicPower: {
+      title: 'Grateful Return',
+      description: '베푼 것 이상의 보답이 반드시 돌아오는 카르마의 땅을 만듭니다. 작은 호의가 나중에 거대한 사업적 계약이나 목숨을 구하는 도움으로 되돌아오는 선순환의 고리를 완성합니다.',
+      descriptions: {
+        ko: '베푼 것 이상의 보답이 반드시 돌아오는 카르마의 땅을 만듭니다. 작은 호의가 나중에 거대한 사업적 계약이나 목숨을 구하는 도움으로 되돌아오는 선순환의 고리를 완성합니다.',
+        en: 'Creates a \'Land of Karma\' where small favors returned are multiplied, eventually returning as massive opportunities.',
+        zh: '创造一片‘因果之地’，任何施予的小恩惠都会得到数倍的回报，最终转化为巨大的商务机会。',
+        ja: '施した以上の報いが必ず返ってくる「カルマの地」を作り、小さな親切を巨大なチャンスとして戻します。',
+        es: 'Crea una \'Tierra de Karma\' donde los pequeños favores otorgados se multiplican, regresando como grandes oportunidades.',
+      },
+      element: 'earth' as Element,
+    },
+    rarity: 'rare',
+  },
+  {
+    name: 'Heart of the Continent',
+    magicPower: {
+      title: 'Sovereign Wealth',
+      description: '전 세계 시장이 흔들려도 소지자의 자산만은 요지부동입니다. 금보다 안전하고 부동산보다 견고한 경제적 요새를 구축하여, 대공황이 와도 가문 전체가 풍족하게 살 수 있는 기반을 다집니다.',
+      descriptions: {
+        ko: '전 세계 시장이 흔들려도 소지자의 자산만은 요지부동입니다. 금보다 안전하고 부동산보다 견고한 경제적 요새를 구축하여, 대공황이 와도 가문 전체가 풍족하게 살 수 있는 기반을 다집니다.',
+        en: 'Keeps assets immovable even if the global market shakes, creating an absolute defensive wall safer than gold.',
+        zh: '即使全球市场动荡，持有者的资产也稳如泰山，拥有比黄金更安全、更坚固的绝对防御墙。',
+        ja: '全世界の市場が揺れても、持ち主の資産だけは揺るぎません。金より安全で堅固な、絶対的な防衛壁を構築します。',
+        es: 'Mantiene los activos inamovibles incluso si el mercado global tiembla, creando una barrera defensiva más segura que el oro.',
+      },
       element: 'earth' as Element,
     },
     rarity: 'epic',
   },
   {
-    name: 'Gaia’s Heart',
+    name: 'Ironwood Contract',
     magicPower: {
-      title: 'World Pulse',
-      description: 'Listen to the stone to hear the heartbeat of the planet, granting you the wisdom of the eons.',
-      element: 'earth' as Element,
-    },
-    rarity: 'legendary',
-  },
-  {
-    name: 'Sand Shard',
-    magicPower: {
-      title: 'Desert Mirage',
-      description: 'It can craft a small illusion of a place you once loved, briefly manifesting its scent and air.',
-      element: 'earth' as Element,
-    },
-    rarity: 'common',
-  },
-  {
-    name: 'Slate Slab',
-    magicPower: {
-      title: 'Etched Pact',
-      description: 'A promise whispered into this stone can never be broken by time, tide, or mortal frailty.',
-      element: 'earth' as Element,
-    },
-    rarity: 'uncommon',
-  },
-  {
-    name: 'Obsidian Claw',
-    magicPower: {
-      title: 'Glass Reflection',
-      description: 'A dark mirror that shows you the version of yourself that has conquered every fear.',
-      element: 'earth' as Element,
-    },
-    rarity: 'rare',
-  },
-  {
-    name: 'Gem Mine Soul',
-    magicPower: {
-      title: 'Crystal Growth',
-      description: 'It allows your hidden potential to crystallize into a tangible skill with supernatural speed.',
+      title: 'Absolute Bond',
+      description: '소지자가 맺는 모든 계약과 약속을 파기 불가능한 운명으로 묶습니다. 상대방의 배신을 물리적으로 봉쇄하며, 소지자에게 유리한 조건이 영구히 지속되도록 현실을 고착화합니다.',
+      descriptions: {
+        ko: '소지자가 맺는 모든 계약과 약속을 파기 불가능한 운명으로 묶습니다. 상대방의 배신을 물리적으로 봉쇄하며, 소지자에게 유리한 조건이 영구히 지속되도록 현실을 고착화합니다.',
+        en: 'Binds every contract and promise as an unbreakable destiny, physically and psychologically blocking any betrayal.',
+        zh: '将持有者签订的所有合同和约定捆绑为不可撤销的命运，从物理和心理上封锁对方的背叛。',
+        ja: '持ち主が結ぶすべての契約と約束を破棄不可能な運命として結びつけ、相手の裏切りを物理的・心理的に封鎖します。',
+        es: 'Vincula cada contrato y promesa como un destino inquebrantable, bloqueando física y psicológicamente cualquier traición.',
+      },
       element: 'earth' as Element,
     },
     rarity: 'epic',
   },
   {
-    name: 'Titan Spine',
+    name: 'Adamantine Foundation',
     magicPower: {
-      title: 'Colossal Weight',
-      description: 'Grants you the gravity of a titan; when you enter a room, the world tilts in your direction.',
+      title: 'Indestructible Life',
+      description: '사회적, 경제적, 신체적 어떤 측면에서도 \'무너짐\'이 없는 존재가 됩니다. 어떠한 공격이나 재앙도 소지자의 삶이라는 거대한 성벽을 뚫지 못하며, 절대적인 안전지대를 창조합니다.',
+      descriptions: {
+        ko: '사회적, 경제적, 신체적 어떤 측면에서도 \'무너짐\'이 없는 존재가 됩니다. 어떠한 공격이나 재앙도 소지자의 삶이라는 거대한 성벽을 뚫지 못하며, 절대적인 안전지대를 창조합니다.',
+        en: 'Ensures the holder never \'collapses\' in social or economic aspects, bouncing back with 10 times the force after any attack.',
+        zh: '确保在社会、经济、身体的任何方面都不会‘倒下’，在任何攻击后都能以10倍的力量反弹。',
+        ja: '社会的、経済的にいかなる側面においても「崩れ」のない存在となり、攻撃を受けても10倍の力で跳ね返します。',
+        es: 'Asegura que el poseedor nunca se desmorone en aspectos sociales o económicos, recuperándose con 10 veces más fuerza tras un ataque.',
+      },
       element: 'earth' as Element,
     },
     rarity: 'legendary',
   },
   {
-    name: 'Mud Marble',
+    name: 'Gaia’s Core Jewel',
     magicPower: {
-      title: 'Formless clay',
-      description: 'It allows you to reshape your own personality slightly, adapting to any social mold required.',
+      title: 'World Architect',
+      description: '세상의 물리적 법칙과 경제적 시스템을 자신의 입맛에 맞게 재설계합니다. 무에서 유를 창조하는 기업가적 능력을 넘어, 새로운 가치 체계를 세우고 인류의 삶의 방식을 결정하는 지배자가 됩니다.',
+      descriptions: {
+        ko: '세상의 물리적 법칙과 경제적 시스템을 자신의 입맛에 맞게 재설계합니다. 무에서 유를 창조하는 기업가적 능력을 넘어, 새로운 가치 체계를 세우고 인류의 삶의 방식을 결정하는 지배자가 됩니다.',
+        en: 'Redesigns the physical laws and economic systems of the world to the holder\'s taste, creating something out of nothing.',
+        zh: '根据自己的口味重新设计世界的物理定律和经济体系，赋予从无到有创造万物的神力。',
+        ja: '世界の物理法則と経済システムを自分の好みに再設計し、無から有を創造する神のごとき権能を具現化します。',
+        es: 'Rediseña las leyes físicas y los sistemas económicos del mundo al gusto del poseedor, creando algo de la nada.',
+      },
       element: 'earth' as Element,
     },
-    rarity: 'common',
+    rarity: 'legendary',
   },
   {
-    name: 'Amber Sap',
+    name: 'Feather of Light Travel',
     magicPower: {
-      title: 'Eternal Amber',
-      description: 'It captures the essence of your youth, preserving your vitality in a golden, timeless stasis.',
-      element: 'earth' as Element,
-    },
-    rarity: 'uncommon',
-  },
-  {
-    name: 'Quartz Peak',
-    magicPower: {
-      title: 'Prism Vision',
-      description: 'Splits a single problem into its seven base elements, making the solution clear as crystal.',
-      element: 'earth' as Element,
-    },
-    rarity: 'rare',
-  },
-
-  // --- WIND: 보이지 않는 실과 자유의 노래 ---
-  {
-    name: 'Breeze Wing',
-    magicPower: {
-      title: 'Whisper Catch',
-      description: 'It catches the words meant for you from across the world, delivering them as a soft breeze.',
+      title: 'Commute Ease',
+      description: '출퇴근길의 모든 교통 체증을 바람처럼 피해 갑니다. 소지자가 도착하는 곳마다 신호가 바뀌고 대기 시간이 사라져, 하루에 버려지는 이동 시간을 혁신적으로 단축합니다.',
+      descriptions: {
+        ko: '출퇴근길의 모든 교통 체증을 바람처럼 피해 갑니다. 소지자가 도착하는 곳마다 신호가 바뀌고 대기 시간이 사라져, 하루에 버려지는 이동 시간을 혁신적으로 단축합니다.',
+        en: 'Avoids all traffic congestion like the wind, causing traffic lights to change as the holder arrives.',
+        zh: '像风一样避开上下班路上的所有交通拥堵，每当持有者到达时信号灯就会变换，确保永不迟到。',
+        ja: '通勤途中のあらゆる交通渋滞を風のように避け、持ち主が到着する場所の信号を操り、決して遅刻させません。',
+        es: 'Evita todos los atascos de tráfico como el viento, haciendo que los semáforos cambien al llegar el poseedor.',
+      },
       element: 'wind' as Element,
     },
     rarity: 'common',
   },
   {
-    name: 'Cloud Tuft',
+    name: 'Zephyr of Inspiration',
     magicPower: {
-      title: 'Weightless Soul',
-      description: 'The gem strips away the gravity of your worries, allowing your spirit to float above the fray.',
+      title: 'Idea Breeze',
+      description: '산책 중이나 샤워 중에 뇌를 자극하는 신선한 아이디어를 배달해 줍니다. 막혔던 기획안의 실마리가 바람을 타듯 가볍게 떠올라 창조적인 스트레스를 말끔히 해소해 줍니다.',
+      descriptions: {
+        ko: '산책 중이나 샤워 중에 뇌를 자극하는 신선한 아이디어를 배달해 줍니다. 막혔던 기획안의 실마리가 바람을 타듯 가볍게 떠올라 창조적인 스트레스를 말끔히 해소해 줍니다.',
+        en: 'Delivers fresh ideas that stimulate the brain during walks or showers, revealing solutions like a flash of lightning.',
+        zh: '在散步或洗澡时送达刺激大脑的新鲜创意，像闪电般揭开陷入僵局的策划或创作的谜底。',
+        ja: '散歩中やシャワー中に脳を刺激するアイデアを届け、行き詰まっていた解決策を雷のように閃かせます。',
+        es: 'Entrega ideas frescas que estimulan el cerebro durante paseos o duchas, revelando soluciones como un rayo de luz.',
+      },
+      element: 'wind' as Element,
+    },
+    rarity: 'common',
+  },
+  {
+    name: 'Whisper of Social Context',
+    magicPower: {
+      title: 'Atmosphere Reader',
+      description: '모임의 분위기와 사람들의 속마음을 바람의 흐름처럼 읽어냅니다. 지금 내가 무슨 말을 해야 환영받을지, 혹은 입을 다물어야 할지 정확히 판단하게 하여 사교의 달인이 되게 합니다.',
+      descriptions: {
+        ko: '모임의 분위기와 사람들의 속마음을 바람의 흐름처럼 읽어냅니다. 지금 내가 무슨 말을 해야 환영받을지, 혹은 입을 다물어야 할지 정확히 판단하게 하여 사교의 달인이 되게 합니다.',
+        en: 'Reads the atmosphere of a gathering and people\'s inner thoughts like the wind, instinctively knowing what to say.',
+        zh: '像风的流动一样读取聚会的气氛和人们的内心，本能地知道该说什么来成为主角。',
+        ja: '集まりの雰囲気と人々の本音を風の流れのように読み取り、今何を言うべきか本能的に察知させます。',
+        es: 'Lee la atmósfera de una reunión y los pensamientos de las personas como el viento, sabiendo instintivamente qué decir.',
+      },
+      element: 'wind' as Element,
+    },
+    rarity: 'common',
+  },
+  {
+    name: 'Gale of Rapid Working',
+    magicPower: {
+      title: 'Windspeed Tasker',
+      description: '타이핑 속도와 사고 회로를 3배 이상 가속합니다. 남들이 하루 종일 걸릴 분량의 리포트나 코딩을 단 몇 시간 만에 끝내게 하며, 여유로운 오후를 보낼 수 있는 자유를 선사합니다.',
+      descriptions: {
+        ko: '타이핑 속도와 사고 회로를 3배 이상 가속합니다. 남들이 하루 종일 걸릴 분량의 리포트나 코딩을 단 몇 시간 만에 끝내게 하며, 여유로운 오후를 보낼 수 있는 자유를 선사합니다.',
+        en: 'Accelerates typing speed and thought processes by more than 3 times, completing a whole day\'s work in one hour.',
+        zh: '将打字速度和思维回路加速3倍以上，使他人需要一整天处理的报告或文件在1小时内完成。',
+        ja: 'タイピング速度と思考回路を3倍以上加速させ、他人が一日かかる文書を一時間以内に完遂させます。',
+        es: 'Acelera la velocidad de escritura y los procesos de pensamiento más de 3 veces, completando el trabajo de un día en una hora.',
+      },
       element: 'wind' as Element,
     },
     rarity: 'uncommon',
   },
   {
-    name: 'Storm Eye',
+    name: 'Aether Link of Language',
     magicPower: {
-      title: 'Lightning Focus',
-      description: 'It gathers the chaotic static of your mind and strikes down with a single, brilliant realization.',
+      title: 'Global Tongue',
+      description: '낯선 외국어나 전문 용어를 습득하는 속도가 비약적으로 상승합니다. 원어민의 뉘앙스를 바람처럼 부드럽게 캐치하여 소통의 장벽을 허물고 전 세계 어디서든 당당히 대화하게 돕습니다.',
+      descriptions: {
+        ko: '낯선 외국어나 전문 용어를 습득하는 속도가 비약적으로 상승합니다. 원어민의 뉘앙스를 바람처럼 부드럽게 캐치하여 소통의 장벽을 허물고 전 세계 어디서든 당당히 대화하게 돕습니다.',
+        en: 'Vastly increases the speed of acquiring foreign languages or technical terms, grasping native nuances like the wind.',
+        zh: '飞跃式提高学习陌生外语或专业术语的速度，像风一样掌握母语者的语感。',
+        ja: '見知らぬ外国語や専門用語を習得する速度を飛躍的に高め、ネイティブのニュアンスを風のように掴み取ります。',
+        es: 'Aumenta enormemente la velocidad de aprendizaje de idiomas o términos técnicos, captando matices nativos como el viento.',
+      },
+      element: 'wind' as Element,
+    },
+    rarity: 'uncommon',
+  },
+  {
+    name: 'Draft of Market Agility',
+    magicPower: {
+      title: 'Pivot Master',
+      description: '상황 변화에 맞춰 사업이나 투자 방향을 즉각적으로 전환하는 유연함을 줍니다. 고집 부리다 망하는 대신, 바람의 방향을 타고 가장 이익이 되는 곳으로 빠르게 옮겨가는 민첩성을 부여합니다.',
+      descriptions: {
+        ko: '상황 변화에 맞춰 사업이나 투자 방향을 즉각적으로 전환하는 유연함을 줍니다. 고집 부리다 망하는 대신, 바람의 방향을 타고 가장 이익이 되는 곳으로 빠르게 옮겨가는 민첩성을 부여합니다.',
+        en: 'Provides the flexibility to switch business or investment directions according to changes in the environment.',
+        zh: '赋予根据环境变化立即切换业务或投资方向的灵活性，防止因固执造成的损失。',
+        ja: '状況の変化に合わせて事業や投資の方向を即座に転換する柔軟性を与え、損を避けて利益の道へと乗り換えさせます。',
+        es: 'Proporciona la flexibilidad para cambiar las direcciones de negocio o inversión según los cambios en el entorno.',
+      },
+      element: 'wind' as Element,
+    },
+    rarity: 'uncommon',
+  },
+  {
+    name: 'Cyclone of Viral Fame',
+    magicPower: {
+      title: 'Digital Tempest',
+      description: 'SNS에 올린 작은 게시물이 태풍처럼 전 세계로 퍼져나갑니다. 마케팅 비용 없이도 수백만 명의 관심을 사로잡으며, 하룻밤 사이에 글로벌 인플루언서나 명사로 등극하게 만드는 전파력을 줍니다.',
+      descriptions: {
+        ko: 'SNS에 올린 작은 게시물이 태풍처럼 전 세계로 퍼져나갑니다. 마케팅 비용 없이도 수백만 명의 관심을 사로잡으며, 하룻밤 사이에 글로벌 인플루언서나 명사로 등극하게 만드는 전파력을 줍니다.',
+        en: 'Causes a small post on social media to spread across the world like a typhoon, creating viral effects without marketing costs.',
+        zh: '在社交媒体上发布的小帖子像台风一样传遍全球，无需营销费用即可创造数百万的点击量和病毒效应。',
+        ja: 'SNSに投稿した小さな投稿が台風のように全世界へ広がり、広告費なしで数百万のアクセスと爆발적인 바이럴 효과를 일으킵니다. (수정: 爆発的な拡散を引き起こします)',
+        es: 'Hace que una pequeña publicación en las redes sociales se extienda por el mundo como un tifón, creando efectos virales masivos.',
+      },
       element: 'wind' as Element,
     },
     rarity: 'rare',
   },
   {
-    name: 'Gale Force',
+    name: 'Sky-Gate Opal',
     magicPower: {
-      title: 'Zephyr Command',
-      description: 'You become the conductor of the unseen air, directing the flow of conversation and intent.',
+      title: 'Logistics Overlord',
+      description: '물류, 유통, 무역 분야에서 압도적인 효율성을 발휘합니다. 전 세계의 자원이 소지자가 원하는 곳으로 가장 저렴하고 빠르게 이동하며, 보이지 않는 공급망을 지배하는 유통의 제왕이 되게 합니다.',
+      descriptions: {
+        ko: '물류, 유통, 무역 분야에서 압도적인 효율성을 발휘합니다. 전 세계의 자원이 소지자가 원하는 곳으로 가장 저렴하고 빠르게 이동하며, 보이지 않는 공급망을 지배하는 유통의 제왕이 되게 합니다.',
+        en: 'Exhibits overwhelming efficiency in logistics and trade, causing global resources to move precisely as the holder desires.',
+        zh: '在物流、配送、贸易领域发挥压倒性的效率，使全球资源按照持有者的意愿快速准确地移动。',
+        ja: '物流、流通、貿易の分野で圧倒的な効率性を発揮し、全世界のリソースを持ち主が望む場所へ迅速かつ正確に移動させます。',
+        es: 'Exhibe una eficiencia abrumadora en logística y comercio, haciendo que los recursos globales se muevan según el deseo del poseedor.',
+      },
+      element: 'wind' as Element,
+    },
+    rarity: 'rare',
+  },
+  {
+    name: 'Echo of Reputational Bloom',
+    magicPower: {
+      title: 'Fragrant Name',
+      description: '소지자의 평판이 좋은 소문을 타고 멀리 퍼져나갑니다. 직접 만나지 않은 사람들도 소지자의 이름을 경외하며, 미팅 전부터 이미 유리한 조건을 제시받게 하는 보이지 않는 힘을 발휘합니다.',
+      descriptions: {
+        ko: '소지자의 평판이 좋은 소문을 타고 멀리 퍼져나갑니다. 직접 만나지 않은 사람들도 소지자의 이름을 경외하며, 미팅 전부터 이미 유리한 조건을 제시받게 하는 보이지 않는 힘을 발휘합니다.',
+        en: 'Spreads the holder\'s reputation far through positive rumors, making people trust the name and value before even meeting.',
+        zh: '持有者的名声随着好评传遍四方，使人们在见到持有者之前就信任其名字和价值。',
+        ja: '持ち主の評判が良い噂に乗って遠くまで広がり、直接会う前の人々でさえ、その名前と価値を先に信頼するようになります。',
+        es: 'Difunde la reputación del poseedor a través de rumores positivos, logrando que la gente confíe en su valor antes de conocerlo.',
+      },
+      element: 'wind' as Element,
+    },
+    rarity: 'rare',
+  },
+  {
+    name: 'Eye of the Storm Sanctuary',
+    magicPower: {
+      title: 'Chaos Shield',
+      description: '전쟁이나 금융 위기 같은 대격변의 시기에도 소지자가 속한 영역은 기적적으로 평온을 유지합니다. 주변이 모두 무너질 때 혼자만 최고의 수익률을 올리며 위기를 기회로 바꾸는 기적을 행합니다.',
+      descriptions: {
+        ko: '전쟁이나 금융 위기 같은 대격변의 시기에도 소지자가 속한 영역은 기적적으로 평온을 유지합니다. 주변이 모두 무너질 때 혼자만 최고의 수익률을 올리며 위기를 기회로 바꾸는 기적을 행합니다.',
+        en: 'Maintains miraculous tranquility in the holder\'s domain even during upheavals like war, keeping assets and safety protected.',
+        zh: '即使在战争或金融危机等大剧变时期，持有者所属的领域也能奇迹般地保持平静，保护资产和安全。',
+        ja: '戦争や金融危機のような大激変の時期でも、持ち主が属する領域は奇跡的に平穏を維持し、資産と安全を完璧に守り抜きます。',
+        es: 'Mantiene una tranquilidad milagrosa incluso en tiempos de agitación, manteniendo los activos y la seguridad bajo protección total.',
+      },
       element: 'wind' as Element,
     },
     rarity: 'epic',
   },
   {
-    name: 'Aeolus Breath',
+    name: 'Whirlwind of Opportunity',
     magicPower: {
-      title: 'Skyborn Path',
-      description: 'The wind itself acts as your guide, clearing the clouds of confusion from your life’s horizon.',
-      element: 'wind' as Element,
-    },
-    rarity: 'legendary',
-  },
-  {
-    name: 'Whistle Stone',
-    magicPower: {
-      title: 'Call of Birds',
-      description: 'Allows you to speak in the language of the sky, summoning the freedom of the winged ones.',
-      element: 'wind' as Element,
-    },
-    rarity: 'common',
-  },
-  {
-    name: 'Sky Glass',
-    magicPower: {
-      title: 'Invisible Sight',
-      description: 'Reveals the hidden strings of fate that connect people, shivering in the wind of coincidence.',
-      element: 'wind' as Element,
-    },
-    rarity: 'uncommon',
-  },
-  {
-    name: 'Zephyr Tail',
-    magicPower: {
-      title: 'Swift Echo',
-      description: 'It accelerates your thoughts to the speed of a storm, leaving the slow world far behind.',
-      element: 'wind' as Element,
-    },
-    rarity: 'rare',
-  },
-  {
-    name: 'Thunder Clap',
-    magicPower: {
-      title: 'Sonic Decree',
-      description: 'Your voice carries a resonance that can shatter the mental barriers of the most stubborn.',
+      title: 'Infinite Chance',
+      description: '사방에서 기회의 바람이 불어옵니다. 가만히 있어도 좋은 제안, 투자 기회, 인연이 끊임없이 찾아오며 인생에서 \'운이 없다\'는 말이 소지자의 사전에서 영원히 사라지게 만듭니다.',
+      descriptions: {
+        ko: '사방에서 기회의 바람이 불어옵니다. 가만히 있어도 좋은 제안, 투자 기회, 인연이 끊임없이 찾아오며 인생에서 \'운이 없다\'는 말이 소지자의 사전에서 영원히 사라지게 만듭니다.',
+        en: 'Brings winds of opportunity from all directions, ensuring proposals and connections constantly arrive even if staying still.',
+        zh: '来自四面八方的机会之风吹来，即使坐着不动，好的提议、投资机会和人脉也会不断涌现。',
+        ja: '四方からチャンスの風が吹き込み、じっとしていても、良い提案や投資機会、縁が絶え間なく押し寄せるようになります。',
+        es: 'Atrae vientos de oportunidad de todas las direcciones, asegurando que las propuestas y conexiones lleguen constantemente.',
+      },
       element: 'wind' as Element,
     },
     rarity: 'epic',
   },
   {
-    name: 'Vortex Soul',
+    name: 'Breath of the World Spirit',
     magicPower: {
-      title: 'Eternal Spiral',
-      description: 'A core that draws all opportunities toward you, creating a whirlwind of fortunate events.',
+      title: 'Omnipresent Mind',
+      description: '전 세계의 정보를 실시간으로 호흡하듯 파악합니다. 어떤 사건이 일어나기도 전에 그 징조를 느끼며, 지구 반대편의 기회조차 내 손 안의 일처럼 다루는 초국가적 지배력을 선사합니다.',
+      descriptions: {
+        ko: '전 세계의 정보를 실시간으로 호흡하듯 파악합니다. 어떤 사건이 일어나기도 전에 그 징조를 느끼며, 지구 반대편의 기회조차 내 손 안의 일처럼 다루는 초국가적 지배력을 선사합니다.',
+        en: 'Grasps global information in real-time as if breathing, detecting signs of events before they happen to stay ahead.',
+        zh: '像呼吸一样实时掌握全球信息，在事件发生前察觉征兆，始终领先一步。',
+        ja: '全世界の情報をリアルタイムで呼吸するように把握し、事件が起こる前にその兆候を察知して、常に一歩先を行かせます。',
+        es: 'Capta la información global en tiempo real como si respirara, detectando signos de eventos antes de que sucedan para ir siempre un paso adelante.',
+      },
       element: 'wind' as Element,
     },
     rarity: 'legendary',
   },
   {
-    name: 'Leaf Flute',
+    name: 'Infinite Gale of Freedom',
     magicPower: {
-      title: 'Rustling Secret',
-      description: 'Place it against a tree to hear the whispered history of the earth carried by the wind.',
+      title: 'Cosmic Traveler',
+      description: '모든 사회적 굴레와 물리적 한계에서 벗어납니다. 돈, 시간, 공간에 얽매이지 않고 자신이 원하는 삶을 즉각적으로 실현하며, 누구에게도 구속받지 않는 완전한 자유의 존재가 됩니다.',
+      descriptions: {
+        ko: '모든 사회적 굴레와 물리적 한계에서 벗어납니다. 돈, 시간, 공간에 얽매이지 않고 자신이 원하는 삶을 즉각적으로 실현하며, 누구에게도 구속받지 않는 완전한 자유의 존재가 됩니다.',
+        en: 'Frees the holder from all social constraints and physical limits, allowing a life defined solely by one\'s own will.',
+        zh: '摆脱所有社会束缚和物理限制，不受金钱、时间、空间的束缚，过上由自己意志定义的生活。',
+        ja: 'あらゆる社会的束縛と物理的限界から解放し、金、時間、空間に縛られず、自分の意志だけで定義される人生を歩ませます。',
+        es: 'Libera al poseedor de todas las limitaciones sociales y físicas, permitiendo una vida definida únicamente por su propia voluntad.',
+      },
       element: 'wind' as Element,
     },
-    rarity: 'common',
-  },
-  {
-    name: 'Feather Gem',
-    magicPower: {
-      title: 'Plume Grace',
-      description: 'It grants you the elegance of a falling feather, ensuring you always land on your feet.',
-      element: 'wind' as Element,
-    },
-    rarity: 'uncommon',
-  },
-  {
-    name: 'Echo Crystal',
-    magicPower: {
-      title: 'Sound Shiver',
-      description: 'It traps the sound of your favorite laugh, replaying it in your heart whenever needed.',
-      element: 'wind' as Element,
-    },
-    rarity: 'rare',
-  },
-
-  // --- LIGHT: 신성한 빛과 진실의 계시 ---
-  {
-    name: 'Glow Worm',
-    magicPower: {
-      title: 'Tiny Beacon',
-      description: 'A companion that glows brighter the closer you get to your true purpose in life.',
-      element: 'light' as Element,
-    },
-    rarity: 'common',
-  },
-  {
-    name: 'Prism Cube',
-    magicPower: {
-      title: 'Rainbow Bridge',
-      description: 'It harmonizes your conflicting emotions into a single, beautiful spectrum of peace.',
-      element: 'light' as Element,
-    },
-    rarity: 'uncommon',
-  },
-  {
-    name: 'Halo Ring',
-    magicPower: {
-      title: 'Sanctified Aura',
-      description: 'It creates a circle of light around your soul that no darkness or malice can cross.',
-      element: 'light' as Element,
-    },
-    rarity: 'rare',
-  },
-  {
-    name: 'Sun Flare',
-    magicPower: {
-      title: 'Daylight Reveal',
-      description: 'Forces all shadows to flee, exposing the hidden beauty in even the ugliest situations.',
-      element: 'light' as Element,
-    },
-    rarity: 'epic',
-  },
-  {
-    name: 'Seraph Core',
-    magicPower: {
-      title: 'Angelic Witness',
-      description: 'You become a vessel for divine light, capable of healing others with a single glance.',
-      element: 'light' as Element,
-    },
     rarity: 'legendary',
   },
   {
-    name: 'Star Spark',
+    name: 'Glow of Confidence',
     magicPower: {
-      title: 'Night Guide',
-      description: 'Projects the constellation of your future onto the ceiling while you dream.',
+      title: 'Aura Glow',
+      description: '면접이나 첫 만남에서 소지자의 인상을 빛나게 만듭니다. 특별한 말을 하지 않아도 긍정적이고 정직한 사람이라는 확신을 주어 상대의 경계심을 즉각 해제하는 빛의 장막을 형성합니다.',
+      descriptions: {
+        ko: '면접이나 첫 만남에서 소지자의 인상을 빛나게 만듭니다. 특별한 말을 하지 않아도 긍정적이고 정직한 사람이라는 확신을 주어 상대의 경계심을 즉각 해제하는 빛의 장막을 형성합니다.',
+        en: 'Makes the holder\'s impression shine during meetings, creating a positive image that makes others want to work together.',
+        zh: '在面试或初次见面中使持有者的印象闪闪发光，营造积极好感的形象，使对方产生强烈的合作欲望。',
+        ja: '面接や初対面で持ち主の印象を輝かせ、特別な言葉がなくてもポジティブで好感の持てるイメージを植え付けます。',
+        es: 'Hace que la impresión del poseedor brille en las reuniones, creando una imagen positiva que atrae a los demás a colaborar.',
+      },
       element: 'light' as Element,
     },
     rarity: 'common',
   },
   {
-    name: 'Candle Gem',
+    name: 'Prism of Clarity',
     magicPower: {
-      title: 'Flicker Hope',
-      description: 'A light that cannot be blown out by the winds of despair; it burns on sheer will alone.',
-      element: 'light' as Element,
-    },
-    rarity: 'uncommon',
-  },
-  {
-    name: 'Aurora Flake',
-    magicPower: {
-      title: 'Dancing Veil',
-      description: 'It paints your life with the colors of the northern lights, making every day a miracle.',
-      element: 'light' as Element,
-    },
-    rarity: 'rare',
-  },
-  {
-    name: 'Dawn Bringer',
-    magicPower: {
-      title: 'First Light',
-      description: 'Ends the longest night of the soul, bringing the sun to your heart before it hits the sky.',
-      element: 'light' as Element,
-    },
-    rarity: 'epic',
-  },
-  {
-    name: 'Lucent Soul',
-    magicPower: {
-      title: 'Absolute Truth',
-      description: 'The gem resonates with the frequency of reality, making any falsehood physically painful.',
-      element: 'light' as Element,
-    },
-    rarity: 'legendary',
-  },
-  {
-    name: 'Lamp Stone',
-    magicPower: {
-      title: 'Insight Ray',
-      description: 'It illuminates the path not taken, allowing you to see where it would have led.',
+      title: 'Data Shined',
+      description: '복잡한 엑셀 시트나 난해한 보고서 속에서 핵심적인 수치와 문제점을 빛으로 비추듯 강조해 보여줍니다. 정보의 홍수 속에서 길을 잃지 않고 최선의 전략을 수립하게 돕습니다.',
+      descriptions: {
+        ko: '복잡한 엑셀 시트나 난해한 보고서 속에서 핵심적인 수치와 문제점을 빛으로 비추듯 강조해 보여줍니다. 정보의 홍수 속에서 길을 잃지 않고 최선의 전략을 수립하게 돕습니다.',
+        en: 'Highlights key figures and problems in complex reports as if illuminating them with light, allowing for accurate decisions.',
+        zh: '在复杂的表格或艰涩的报告中，像用光照射一样突出核心数值和问题点，实现快速准确的决策。',
+        ja: '複雑な資料や難解な報告書の中から、核心的な数値と問題点を光で照らすように強調し、迅速で正確な意思決定を助けます。',
+        es: 'Resalta cifras y problemas clave en informes complejos como if los iluminara con luz, permitiendo decisiones rápidas y precisas.',
+      },
       element: 'light' as Element,
     },
     rarity: 'common',
   },
   {
-    name: 'Mirror Shard',
+    name: 'Flicker of Hope',
     magicPower: {
-      title: 'Divine Image',
-      description: 'It reflects the godhood within you, showing a face you have forgotten you possess.',
+      title: 'Depression Burner',
+      description: '마음속에 스며드는 우울함과 무력감을 순식간에 태워버립니다. 매일 아침 태양을 본 듯한 긍정적인 에너지를 주입하여 다시 일어서서 나아갈 수 있는 내면의 빛을 유지합니다.',
+      descriptions: {
+        ko: '마음속에 스며드는 우울함과 무력감을 순식간에 태워버립니다. 매일 아침 태양을 본 듯한 긍정적인 에너지를 주입하여 다시 일어서서 나아갈 수 있는 내면의 빛을 유지합니다.',
+        en: 'Instantly burns away depression and helplessness, maintaining a positive and energetic mind as if seeing the sun every morning.',
+        zh: '瞬间烧掉渗入内心的忧郁和无力感，每天早晨保持如同见到太阳般积极充满活力的心态。',
+        ja: '心に忍び込む憂鬱感や無力感を瞬時に焼き払い、毎朝太陽を見たようなポジティブで活力に満ちたマインドを維持させます。',
+        es: 'Quema instantáneamente la depresión y la impotencia, manteniendo una mente positiva y enérgica como si viera el sol cada mañana.',
+      },
       element: 'light' as Element,
     },
-    rarity: 'uncommon',
-  },
-  {
-    name: 'Sparkle Dust',
-    magicPower: {
-      title: 'Glimmer Trail',
-      description: 'Leaves a trail of stardust in your wake, ensuring you never truly leave a place behind.',
-      element: 'light' as Element,
-    },
-    rarity: 'rare',
-  },
-
-  // --- DARKNESS: 심연의 지혜와 침묵의 권능 ---
-  {
-    name: 'Coal Eye',
-    magicPower: {
-      title: 'Shadow Insight',
-      description: 'It allows you to see the true intentions of those who hide in the shadows of society.',
-      element: 'darkness' as Element,
-    },
     rarity: 'common',
   },
   {
-    name: 'Shadow Silk',
-    magicPower: {
-      title: 'Silent Cloak',
-      description: 'It muffles the scream of your ego, allowing your true self to walk in perfect silence.',
-      element: 'darkness' as Element,
-    },
-    rarity: 'uncommon',
-  },
-  {
-    name: 'Void Pebble',
-    magicPower: {
-      title: 'Light Swallower',
-      description: 'It drinks the chaos around you, leaving only the dark, fertile soil of potential.',
-      element: 'darkness' as Element,
-    },
-    rarity: 'rare',
-  },
-  {
-    name: 'Nightmare Oil',
-    magicPower: {
-      title: 'Terror Tamer',
-      description: 'It feeds on your nightmares, turning your greatest fears into your most loyal guardians.',
-      element: 'darkness' as Element,
-    },
-    rarity: 'epic',
-  },
-  {
-    name: 'Eclipse Heart',
-    magicPower: {
-      title: 'Total Obscurity',
-      description: 'It hides your life from the gaze of fate itself, making you a wild card in the cosmic deck.',
-      element: 'darkness' as Element,
-    },
-    rarity: 'legendary',
-  },
-  {
-    name: 'Ink Drop',
-    magicPower: {
-      title: 'Deep Writing',
-      description: 'It allows you to rewrite a single dark chapter of your life into something meaningful.',
-      element: 'darkness' as Element,
-    },
-    rarity: 'common',
-  },
-  {
-    name: 'Grave Soil',
-    magicPower: {
-      title: 'Eternal Rest',
-      description: 'Grant yourself the peace of a thousand years in a single hour of deep, dark meditation.',
-      element: 'darkness' as Element,
-    },
-    rarity: 'uncommon',
-  },
-  {
-    name: 'Onyx Dagger',
-    magicPower: {
-      title: 'Severing Edge',
-      description: 'It can cut the umbilical cord of a toxic attachment, freeing your soul with one stroke.',
-      element: 'darkness' as Element,
-    },
-    rarity: 'rare',
-  },
-  {
-    name: 'Abyss Maw',
-    magicPower: {
-      title: 'Infinite Storage',
-      description: 'A pocket of the void where you can store all the words you were too afraid to say.',
-      element: 'darkness' as Element,
-    },
-    rarity: 'epic',
-  },
-  {
-    name: 'Null Core',
-    magicPower: {
-      title: 'Absolute Zero',
-      description: 'The power to unmake an enemy’s influence by simply choosing to forget they exist.',
-      element: 'darkness' as Element,
-    },
-    rarity: 'legendary',
-  },
-  {
-    name: 'Dusk Bead',
-    magicPower: {
-      title: 'Twilight Calm',
-      description: 'It holds the moment between day and night, where all contradictions are resolved.',
-      element: 'darkness' as Element,
-    },
-    rarity: 'common',
-  },
-  {
-    name: 'Raven Feather',
-    magicPower: {
-      title: 'Omen Flight',
-      description: 'A messenger from the darkness that warns you when the light is becoming a blinding trap.',
-      element: 'darkness' as Element,
-    },
-    rarity: 'uncommon',
-  },
-  {
-    name: 'Obscure Lens',
-    magicPower: {
-      title: 'Dark Revelation',
-      description: 'Reveals the hidden beauty in the things the world has discarded and called ugly.',
-      element: 'darkness' as Element,
-    },
-    rarity: 'rare',
-  },
-
-  // --- SPIRIT: 영혼의 공명과 초월적 인연 ---
-  {
-    name: 'Ghost Bell',
-    magicPower: {
-      title: 'Spectral Ring',
-      description: 'It rings whenever a kindred soul is near, even if you haven’t met them in this life.',
-      element: 'spirit' as Element,
-    },
-    rarity: 'common',
-  },
-  {
-    name: 'Ecto Fragment',
-    magicPower: {
-      title: 'Soul Shiver',
-      description: 'Allows you to briefly feel the heartbeat of another person as if it were your own.',
-      element: 'spirit' as Element,
-    },
-    rarity: 'uncommon',
-  },
-  {
-    name: 'Ancestry Bone',
-    magicPower: {
-      title: 'Blood Echo',
-      description: 'It carries the combined wisdom and mistakes of all who came before you in your line.',
-      element: 'spirit' as Element,
-    },
-    rarity: 'rare',
-  },
-  {
-    name: 'Soul Lantern',
+    name: 'Beacon of Leadership',
     magicPower: {
       title: 'Guiding Light',
-      description: 'It illuminates the "Third Way" when you think you only have two impossible choices.',
-      element: 'spirit' as Element,
+      description: '어두운 상황에서도 팀원들이 믿고 따를 수 있는 명확한 방향성을 제시합니다. 소지자의 말은 곧 신념이 되며, 혼란에 빠진 조직을 승리로 이끄는 고귀한 리더의 품격을 부여합니다.',
+      descriptions: {
+        ko: '어두운 상황에서도 팀원들이 믿고 따를 수 있는 명확한 방향성을 제시합니다. 소지자의 말은 곧 신념이 되며, 혼란에 빠진 조직을 승리로 이끄는 고귀한 리더의 품격을 부여합니다.',
+        en: 'Provides a clear direction for team members even in dark situations, making the holder\'s words a lighthouse for the organization.',
+        zh: '即使在黑暗的情况下，也为团队成员提供可以信任并追随的明确方向，使持有者的言论成为整个组织的灯塔。',
+        ja: '暗い状況でもチームメンバーが信じて従える明確な方向性を提示し、持ち主の言葉を組織全体の灯台へと変えます。',
+        es: 'Proporciona una dirección clara para el equipo incluso en situaciones oscuras, convirtiendo las palabras del poseedor en un faro.',
+      },
+      element: 'light' as Element,
+    },
+    rarity: 'uncommon',
+  },
+  {
+    name: 'Ray of Aesthetics',
+    magicPower: {
+      title: 'Golden Ratio',
+      description: '디자인, 패션, 예술 등 모든 미적인 분야에서 신적인 감각을 일깨웁니다. 소지자가 손대는 모든 결과물은 대중이 가장 아름답다고 느끼는 황금 비율을 갖추게 되어 명품의 반열에 오릅니다.',
+      descriptions: {
+        ko: '디자인, 패션, 예술 등 모든 미적인 분야에서 신적인 감각을 일깨웁니다. 소지자가 손대는 모든 결과물은 대중이 가장 아름답다고 느끼는 황금 비율을 갖추게 되어 명품의 반열에 오릅니다.',
+        en: 'Awakens a divine sense in all aesthetic fields, making everything the holder touches a luxury and a work of art.',
+        zh: '在设计、时尚、艺术等所有审美领域觉醒神一般的感官，使持有者接触的一切都成为奢侈品和艺术品。',
+        ja: 'デザイン、ファッション、アートなどの美的分野で神がかった感覚を呼び覚まし、手がけるものすべてを芸術作品へと変えます。',
+        es: 'Despierta un sentido divino en todos los campos estéticos, convirtiendo todo lo que toca el poseedor en una obra de arte.',
+      },
+      element: 'light' as Element,
+    },
+    rarity: 'uncommon',
+  },
+  {
+    name: 'Halogen of Efficiency',
+    magicPower: {
+      title: 'Visual Memory',
+      description: '한 번 본 장면이나 문서를 사진 찍듯 머릿속에 밝게 저장합니다. 필요할 때마다 그 기억의 조명을 켜서 정확한 정보를 인출하게 하여 시험이나 미팅에서 완벽한 지적 능력을 뽐내게 합니다.',
+      descriptions: {
+        ko: '한 번 본 장면이나 문서를 사진 찍듯 머릿속에 밝게 저장합니다. 필요할 때마다 그 기억의 조명을 켜서 정확한 정보를 인출하게 하여 시험이나 미팅에서 완벽한 지적 능력을 뽐내게 합니다.',
+        en: 'Stores every scene or document seen once in the mind clearly like a photograph, retrieving information with 100% accuracy.',
+        zh: '像拍照一样将看过的场景或文档清晰地存储在脑海中，需要时以100%的准确度提取该记忆。',
+        ja: '一度見た場面や文書を写真に撮るように脳内へ鮮明に保存し、必要な時にいつでも100%正確に引き出せるようにします。',
+        es: 'Almacena cada escena o documento visto en la mente con la claridad de una fotografía, recuperando la información con total precisión.',
+      },
+      element: 'light' as Element,
+    },
+    rarity: 'uncommon',
+  },
+  {
+    name: 'Supernova of Stardom',
+    magicPower: {
+      title: 'Global Spotlight',
+      description: '무명 시절을 단숨에 끝내고 전 세계적인 스타덤에 오르게 합니다. 소지자의 일거수일투족이 뉴스가 되며, 대중의 사랑을 독차지하고 사회적 유행을 선도하는 신적인 셀러브리티가 됩니다.',
+      descriptions: {
+        ko: '무명 시절을 단숨에 끝내고 전 세계적인 스타덤에 오르게 합니다. 소지자의 일거수일투족이 뉴스가 되며, 대중의 사랑을 독차지하고 사회적 유행을 선도하는 신적인 셀러브리티가 됩니다.',
+        en: 'Ends anonymity in an instant and rises to global stardom, making every move a focus of world attention.',
+        zh: '瞬间结束无名时期并跃升为全球明星，使持有者的一举一动都成为新闻头条和世界关注的焦点。',
+        ja: '無名時代を一瞬で終わらせ、全世界的なスターダムに押し上げます。持ち主の一挙手一投足が世界の注目を浴びるようになります。',
+        es: 'Termina con el anonimato en un instante y eleva al poseedor al estrellato global, convirtiendo cada movimiento en el foco del mundo.',
+      },
+      element: 'light' as Element,
+    },
+    rarity: 'rare',
+  },
+  {
+    name: 'Verdict Radiance',
+    magicPower: {
+      title: 'Legal Aegis',
+      description: '법적인 분쟁이나 억울한 누명 속에서 진실의 빛을 밝힙니다. 결정적인 증거가 소지자에게 유리하게 발견되거나, 판관의 마음을 움직여 정의로운 승리를 쟁취하게 하는 무적의 보호막을 제공합니다.',
+      descriptions: {
+        ko: '법적인 분쟁이나 억울한 누명 속에서 진실의 빛을 밝힙니다. 결정적인 증거가 소지자에게 유리하게 발견되거나, 판관의 마음을 움직여 정의로운 승리를 쟁취하게 하는 무적의 보호막을 제공합니다.',
+        en: 'Illuminates the light of truth in legal disputes, causing decisive evidence to turn in the holder\'s favor to clear suspicions.',
+        zh: '在法律纠纷或冤屈的指责中照亮真理之光，使决定性的证据向有利于持有者的方向发展，洗清所有嫌疑。',
+        ja: '法的な紛争や冤罪の中で真実の光を照らし、決定的な証拠を持ち主に有利に働かせ、すべての疑いを晴らします。',
+        es: 'Ilumina la luz de la verdad en disputas legales, logrando que las pruebas decisivas favorezcan al poseedor para limpiar su nombre.',
+      },
+      element: 'light' as Element,
+    },
+    rarity: 'rare',
+  },
+  {
+    name: 'Flash of Pure Genius',
+    magicPower: {
+      title: 'Eureka Instant',
+      description: '수년간 고민해도 풀리지 않던 난제에 대해 찰나의 순간 완벽한 해답을 보여줍니다. 노벨상급의 학술적 발견이나 시장을 뒤흔들 발명품을 탄생시키는 결정적인 영감의 섬광을 내립니다.',
+      descriptions: {
+        ko: '수년간 고민해도 풀리지 않던 난제에 대해 찰나의 순간 완벽한 해답을 보여줍니다. 노벨상급의 학술적 발견이나 시장을 뒤흔들 발명품을 탄생시키는 결정적인 영감의 섬광을 내립니다.',
+        en: 'Shows the perfect answer in an instant for challenges unsolved for years, granting brilliance for Nobel-level breakthroughs.',
+        zh: '对数年无法解决的难题瞬间给出完美的答案，赋予实现诺贝尔奖级突破的才华。',
+        ja: '数年間悩んでも解けなかった難題に対し、刹那の瞬間に完璧な解答を見せ、ノーベル賞級のブレイクスルーを成し遂げさせます。',
+        es: 'Muestra la respuesta perfecta en un instante para desafíos de años, otorgando brillantez para avances de nivel Nobel.',
+      },
+      element: 'light' as Element,
+    },
+    rarity: 'rare',
+  },
+  {
+    name: 'Golden Ratio Diamond',
+    magicPower: {
+      title: 'Perfectionist Edge',
+      description: '소지자가 만드는 모든 제품이나 서비스가 업계의 표준(Standard)이 되게 합니다. 감히 넘볼 수 없는 완성도를 갖추게 하여 경쟁자들을 스스로 포기하게 만드는 압도적인 격의 차이를 만듭니다.',
+      descriptions: {
+        ko: '소지자가 만드는 모든 제품이나 서비스가 업계의 표준(Standard)이 되게 합니다. 감히 넘볼 수 없는 완성도를 갖추게 하여 경쟁자들을 스스로 포기하게 만드는 압도적인 격의 차이를 만듭니다.',
+        en: 'Ensures every product or service created becomes the industry standard, making competitors follow the paved path.',
+        zh: '使持有者制造的所有产品或服务成为行业标准，让竞争对手只能追随持有者开辟的道路。',
+        ja: '持ち主が作るすべての製品やサービスが業界の標準となり、競合他社は持ち主が作った道を追いかけるしかなくなります。',
+        es: 'Asegura que cada producto o servicio creado sea el estándar de la industria, obligando a los competidores a seguir su camino.',
+      },
+      element: 'light' as Element,
     },
     rarity: 'epic',
   },
   {
-    name: 'Reaper’s Coin',
+    name: 'Aureola of Influence',
     magicPower: {
-      title: 'Final Pact',
-      description: 'It allows you to trade a piece of your luck today for a miracle tomorrow.',
-      element: 'spirit' as Element,
+      title: 'Savior’s Charisma',
+      description: '소지자의 존재 자체가 사람들에게 구원이자 희망이 됩니다. 소지자의 신념을 따르는 거대 종교나 사상적 집단이 형성되며, 세상을 선한 방향으로 개혁하는 신성한 권력을 소유하게 됩니다.',
+      descriptions: {
+        ko: '소지자의 존재 자체가 사람들에게 구원이자 희망이 됩니다. 소지자의 신념을 따르는 거대 종교나 사상적 집단이 형성되며, 세상을 선한 방향으로 개혁하는 신성한 권력을 소유하게 됩니다.',
+        en: 'Makes the holder\'s existence a source of salvation and hope, gathering a massive following that respects their beliefs.',
+        zh: '使持有者的存在本身成为人们的救赎和希望，聚集起追随持有者信念的庞大信众和尊敬。',
+        ja: '持ち主の存在自体が人々にとって救いであり希望になります。その信念に従う巨大な支持と尊敬を集めるようになります。',
+        es: 'Hace que la existencia misma del poseedor sea una fuente de salvación, reuniendo un seguimiento masivo que respeta sus creencias.',
+      },
+      element: 'light' as Element,
+    },
+    rarity: 'epic',
+  },
+  {
+    name: 'Nova of Enlightenment',
+    magicPower: {
+      title: 'Absolute Awareness',
+      description: '인간의 지각 한계를 넘어 우주와 세상의 모든 비밀을 빛으로 꿰뚫어 봅니다. 죽음의 공포조차 초월한 완전한 깨달음에 도달하며, 고통 없는 영원한 정신적 평안과 지혜를 누립니다.',
+      descriptions: {
+        ko: '인간의 지각 한계를 넘어 우주와 세상의 모든 비밀을 빛으로 꿰뚫어 봅니다. 죽음의 공포조차 초월한 완전한 깨달음에 도달하며, 고통 없는 영원한 정신적 평안과 지혜를 누립니다.',
+        en: 'Pierces through all secrets of the universe with light, reaching a state of enlightenment where fear of death vanishes.',
+        zh: '用光穿透并洞察超越人类感知极限的宇宙和世间所有秘密，达到连死亡恐惧都消失的开悟状态。',
+        ja: '人間の知覚の限界を超え、宇宙と世界のあらゆる秘密を光で貫き見通します。死の恐怖さえも消える悟りの境地へと導きます.',
+        es: 'Atraviesa todos los secretos del universo con luz, alcanzando un estado de iluminación donde el miedo a la muerte desaparece.',
+      },
+      element: 'light' as Element,
     },
     rarity: 'legendary',
   },
   {
-    name: 'Whisper Leaf',
+    name: 'Solaris Core',
     magicPower: {
-      title: 'Spirit Talk',
-      description: 'Allows you to hear the advice of your future self, whispering through the veil.',
+      title: 'Creator’s Will',
+      description: '소지자의 의지 자체가 곧 법과 진리가 됩니다. 빛이 세상을 창조하듯 소지자가 말하는 대로 새로운 질서가 세워지며, 인류 역사를 자신의 손으로 직접 써 내려가는 신적인 권능을 행사합니다.',
+      descriptions: {
+        ko: '소지자의 의지 자체가 곧 법과 진리가 됩니다. 빛이 세상을 창조하듯 소지자가 말하는 대로 새로운 질서가 세워지며, 인류 역사를 자신의 손으로 직접 써 내려가는 신적인 권능을 행사합니다.',
+        en: 'Makes the holder\'s will itself the law and truth, granting the power to make things happen exactly as spoken.',
+        zh: '使持有者的意志本身成为法律和真理，赋予言出法随的力量，如同光创造世界一般。',
+        ja: '持ち主の意志自体が法であり真理となります。光が世界を創造したように、持ち主が言う通りに事が成る権能を与えます。',
+        es: 'Hace que la voluntad del poseedor sea la ley y la verdad, otorgando el poder de que las cosas sucedan tal como se dicen.',
+      },
+      element: 'light' as Element,
+    },
+    rarity: 'legendary',
+  },
+  {
+    name: 'Shadow Wrap',
+    magicPower: {
+      title: 'Privacy Shield',
+      description: '온라인과 오프라인에서 자신의 개인정보와 사생활을 완벽하게 은닉합니다. 해커나 스토커의 추적을 물리적으로 차단하며, 소지자가 원치 않는 정보는 세상 그 누구도 찾아낼 수 없게 감춥니다.',
+      descriptions: {
+        ko: '온라인과 오프라인에서 자신의 개인정보와 사생활을 완벽하게 은닉합니다. 해커나 스토커의 추적을 물리적으로 차단하며, 소지자가 원치 않는 정보는 세상 그 누구도 찾아낼 수 없게 감춥니다.',
+        en: 'Completely conceals personal information and privacy online and offline, erasing digital footprints from trackers.',
+        zh: '在网络和现实中完美隐藏个人信息和隐私，使黑客或跟踪者无法追踪持有者的数字足迹。',
+        ja: 'オンラインとオフラインで自分の個人情報とプライバシーを完璧に隠匿し、追跡者からデジタル足跡を完全に消去します。',
+        es: 'Oculta la información personal y la privacidad en línea y fuera de línea, borrando las huellas digitales de cualquier rastreador.',
+      },
+      element: 'darkness' as Element,
+    },
+    rarity: 'common',
+  },
+  {
+    name: 'Ink-Spot Onyx',
+    magicPower: {
+      title: 'Strategic Silence',
+      description: '불필요한 말을 아끼고 상대를 관찰하는 침착함을 줍니다. 적절한 타이밍에 침묵함으로써 상대방이 스스로 패를 드러내게 만들고, 협상에서 우위를 점하는 그림자의 지혜를 선사합니다.',
+      descriptions: {
+        ko: '불필요한 말을 아끼고 상대를 관찰하는 침착함을 줍니다. 적절한 타이밍에 침묵함으로써 상대방이 스스로 패를 드러내게 만들고, 협상에서 우위를 점하는 그림자의 지혜를 선사합니다.',
+        en: 'Grants the calmness to observe the opponent, dominating the atmosphere by remaining silent at the right timing.',
+        zh: '赋予省去不必要的言语并观察对方的冷静，通过在适当的时机保持沉默来支配现场氛围。',
+        ja: '不必要な言葉を控え、相手を観察する冷静さを与えます。適切なタイミングで沈黙することで、その場の空気を支配させます。',
+        es: 'Otorga la calma para observar al oponente, dominando la atmósfera al permanecer en silencio en el momento adecuado.',
+      },
+      element: 'darkness' as Element,
+    },
+    rarity: 'common',
+  },
+  {
+    name: 'Velvet Night',
+    magicPower: {
+      title: 'Instant Hibernation',
+      description: '단 10분만 눈을 붙여도 5시간을 잔 듯한 깊은 숙면 효과를 줍니다. 소음과 빛을 완벽히 차단하는 정신적 장막을 형성하여 언제 어디서든 뇌를 완벽히 충전할 수 있게 합니다.',
+      descriptions: {
+        ko: '단 10분만 눈을 붙여도 5시간을 잔 듯한 깊은 숙면 효과를 줍니다. 소음과 빛을 완벽히 차단하는 정신적 장막을 형성하여 언제 어디서든 뇌를 완벽히 충전할 수 있게 합니다.',
+        en: 'Provides the effect of a deep 5-hour sleep in just 10 minutes, maintaining peak condition regardless of noise or light.',
+        zh: '仅闭眼10分钟就能获得如同深度睡眠5小时的效果，无论噪音或光线如何都能维持巅峰体能。',
+        ja: 'わずか10分目を閉じるだけで、5時間眠ったような深い熟眠効果を与え、最高の体調を維持させます。',
+        es: 'Brinda el efecto de un sueño profundo de 5 horas en solo 10 minutos, manteniendo la condición física óptima.',
+      },
+      element: 'darkness' as Element,
+    },
+    rarity: 'common',
+  },
+  {
+    name: 'Obsidian of Introspection',
+    magicPower: {
+      title: 'Trauma Burner',
+      description: '내면의 어두운 상처와 트라우마를 심연 속으로 집어삼켜 없애버립니다. 과거의 실수가 더 이상 발목을 잡지 못하게 하며, 강철 같은 멘탈로 무장하여 어떤 심리 공격에도 굴하지 않게 합니다.',
+      descriptions: {
+        ko: '내면의 어두운 상처와 트라우마를 심연 속으로 집어삼켜 없애버립니다. 과거의 실수가 더 이상 발목을 잡지 못하게 하며, 강철 같은 멘탈로 무장하여 어떤 심리 공격에도 굴하지 않게 합니다.',
+        en: 'Swallows and eliminates inner wounds and traumas into the abyss, ensuring past mistakes no longer hinder the future.',
+        zh: '将内心的阴暗伤口和创伤吞噬进深渊并消除，确保过去的错误不再阻碍持有者的现在或未来。',
+        ja: '内面の暗い傷やトラウマを深淵の中へ飲み込み、消し去ります。過去の過ちが、現在や未来を邪魔しないようにします。',
+        es: 'Traga y elimina las heridas y traumas internos en el abismo, asegurando que el pasado no obstaculice el futuro.',
+      },
+      element: 'darkness' as Element,
+    },
+    rarity: 'uncommon',
+  },
+  {
+    name: 'Cloak of Subconscious Reading',
+    magicPower: {
+      title: 'Mind Shadow',
+      description: '대화 상대의 무의식적인 욕망과 두려움을 어둠 속에서 관찰하듯 명확히 읽어냅니다. 상대가 입으로 하는 말 뒤에 숨겨진 추악한 진실이나 간절한 소망을 파악하여 심리 전술을 펼칩니다.',
+      descriptions: {
+        ko: '대화 상대의 무의식적인 욕망과 두려움을 어둠 속에서 관찰하듯 명확히 읽어냅니다. 상대가 입으로 하는 말 뒤에 숨겨진 추악한 진실이나 간절한 소망을 파악하여 심리 전술을 펼칩니다.',
+        en: 'Clearly reads subconscious desires and fears of others as if in the dark, giving the power to lead their hearts.',
+        zh: '像在黑暗中观察一样清晰地读取对话方的潜意识欲望和恐惧，赋予持有者引导对方心灵的力量。',
+        ja: '会話相手の無意識的な欲望と恐怖を暗闇の中で観察するように明確に読み取り、その心をリードする力を与えます。',
+        es: 'Lee claramente los deseos y temores subconscientes de los demás, otorgando el poder de guiar sus corazones.',
+      },
+      element: 'darkness' as Element,
+    },
+    rarity: 'uncommon',
+  },
+  {
+    name: 'Mist of Anonymity',
+    magicPower: {
+      title: 'Unseen Hand',
+      description: '거대한 일을 성취하면서도 정작 자신의 정체는 드러나지 않게 합니다. \'보이지 않는 큰손\'으로 활동하며 배후에서 여론과 시장을 조종하고, 정작 자신은 안전한 어둠 속에서 과실만을 챙기게 합니다.',
+      descriptions: {
+        ko: '거대한 일을 성취하면서도 정작 자신의 정체는 드러나지 않게 합니다. \'보이지 않는 큰손\'으로 활동하며 배후에서 여론과 시장을 조종하고, 정작 자신은 안전한 어둠 속에서 과실만을 챙기게 합니다.',
+        en: 'Achieve greatness while keeping identity hidden, ruling the world from the shadows as an \'invisible big hand.\'',
+        zh: '使持有者在成就大事的同时不暴露身份，作为‘幕后大手’从阴影中统治世界。',
+        ja: '偉業を成し遂げながらも、自身の正体は明かされないようにします。「見えない大きな手」として、影から世界を統治させます。',
+        es: 'Logra grandes cosas manteniendo la identidad oculta, gobernando el mundo desde las sombras como una "gran mano invisible".',
+      },
+      element: 'darkness' as Element,
+    },
+    rarity: 'uncommon',
+  },
+  {
+    name: 'Void Ledger',
+    magicPower: {
+      title: 'Untraceable Wealth',
+      description: '국가나 권력기관이 절대 추적할 수 없는 완벽한 비밀 자산망을 구축합니다. 세금, 압류, 해킹의 위협이 전혀 없는 어둠의 경제 영토를 소유하게 하여 영원히 마르지 않는 자금줄을 보장합니다.',
+      descriptions: {
+        ko: '국가나 권력기관이 절대 추적할 수 없는 완벽한 비밀 자산망을 구축합니다. 세금, 압류, 해킹의 위협이 전혀 없는 어둠의 경제 영토를 소유하게 하여 영원히 마르지 않는 자금줄을 보장합니다.',
+        en: 'Establish a perfect secret asset network that no authority can track, protecting assets from taxes or seizures.',
+        zh: '构建任何国家或权力机构都绝对无法追踪的完美秘密资产网，确保免受税收、扣押或黑客攻击。',
+        ja: '国家や権力機関が決して追跡できない完璧な秘密資産網を構築し、税金、差し押さえ、ハッキングから資産を完璧に保護します。',
+        es: 'Establece una red secreta de activos perfecta que ninguna autoridad podrá rastrear, protegiendo bienes de impuestos o embargos.',
+      },
+      element: 'darkness' as Element,
+    },
+    rarity: 'rare',
+  },
+  {
+    name: 'Nightmare Weaver',
+    magicPower: {
+      title: 'Rival’s Phobia',
+      description: '자신을 해치려는 적들에게 극심한 공포와 환각을 심어줍니다. 적들이 스스로 무너져 내리게 하며, 소지자의 이름만 들어도 전의를 상실하게 만드는 강력한 심리적 저주를 반사적으로 발동합니다.',
+      descriptions: {
+        ko: '자신을 해치려는 적들에게 극심한 공포와 환각을 심어줍니다. 적들이 스스로 무너져 내리게 하며, 소지자의 이름만 들어도 전의를 상실하게 만드는 강력한 심리적 저주를 반사적으로 발동합니다.',
+        en: 'Plant extreme fear and hallucinations in enemies, causing them to collapse on their own and never approach again.',
+        zh: '在企图伤害自己的敌人心中种下极度的恐惧和幻觉，使敌人自行崩溃，不敢再次接近。',
+        ja: '自分を害そうとする敵たちに極度の恐怖と幻覚を植え付け、自ら崩れ落ちさせ、二度と近づけないようにします。',
+        es: 'Siembra un miedo extremo y alucinaciones en los enemigos, haciendo que colapsen por sí mismos y nunca se atrevan a acercarse.',
+      },
+      element: 'darkness' as Element,
+    },
+    rarity: 'rare',
+  },
+  {
+    name: 'Eclipse of Bad Luck',
+    magicPower: {
+      title: 'Fortune Devourer',
+      description: '자신에게 다가올 불운을 강제로 집어삼켜 무효화합니다. 사고가 날 운명이나 사기당할 운명을 어둠의 공간으로 격리하고, 대신 타인의 행운을 끌어당겨 자신의 것으로 흡수하는 냉혹한 운을 부여합니다.',
+      descriptions: {
+        ko: '자신에게 다가올 불운을 강제로 집어삼켜 무효화합니다. 사고가 날 운명이나 사기당할 운명을 어둠의 공간으로 격리하고, 대신 타인의 행운을 끌어당겨 자신의 것으로 흡수하는 냉혹한 운을 부여합니다.',
+        en: 'Forcibly swallow and nullify misfortune, changing the fate of accidents or scams into \'non-existent events.\'',
+        zh: '强制吞噬并消除向自己袭来的霉运，预先将发生事故或被诈骗的命运改变为‘从未发生过的事’。',
+        ja: '自分に降りかかる不運を強制的に飲み込み無効化します。事故や詐欺に遭う運命を、事前に「なかったこと」に変えてしまいます。',
+        es: 'Traga y anula por la fuerza la mala suerte, transformando el destino de accidentes o estafas en "eventos inexistentes".',
+      },
+      element: 'darkness' as Element,
+    },
+    rarity: 'rare',
+  },
+  {
+    name: 'Black Hole of Influence',
+    magicPower: {
+      title: 'Absolute Gravity',
+      description: '말 한마디 없이 존재감만으로 좌중을 압도하고 모든 시선을 빨아들입니다. 거부할 수 없는 강력한 매력과 신비주의를 통해 사람들이 스스로 소지자의 추종자가 되어 어둠의 군단을 형성하게 합니다.',
+      descriptions: {
+        ko: '말 한마디 없이 존재감만으로 좌중을 압도하고 모든 시선을 빨아들입니다. 거부할 수 없는 강력한 매력과 신비주의를 통해 사람들이 스스로 소지자의 추종자가 되어 어둠의 군단을 형성하게 합니다.',
+        en: 'Overwhelm the audience with presence alone without a word, granting a charisma that makes everyone submit.',
+        zh: '无需一言一语，仅凭存在感就压倒全场并吸引所有目光，赋予让人自发臣服的强大魅力。',
+        ja: '言葉一つ発さずとも、その圧倒的な存在感だけで座中を支配し、誰もが自発的に屈服する強力なカリスマを与えます。',
+        es: 'Abruma a la audiencia solo con su presencia sin decir una palabra, otorgando un carisma que hace que todos se sometan.',
+      },
+      element: 'darkness' as Element,
+    },
+    rarity: 'epic',
+  },
+  {
+    name: 'Phantom King’s Crown',
+    magicPower: {
+      title: 'Shadow Governance',
+      description: '전 세계의 지하 경제와 정보 조직을 지배하는 그림자의 황제가 됩니다. 공식적인 직함은 없으나 국가 원수들조차 소지자의 눈치를 보게 만들며, 보이지 않는 곳에서 인류의 향방을 결정합니다.',
+      descriptions: {
+        ko: '전 세계의 지하 경제와 정보 조직을 지배하는 그림자의 황제가 됩니다. 공식적인 직함은 없으나 국가 원수들조차 소지자의 눈치를 보게 만들며, 보이지 않는 곳에서 인류의 향방을 결정합니다.',
+        en: 'Become the shadow emperor ruling the world\'s underground economy and intelligence organizations from behind the scenes.',
+        zh: '成为统治全球地下经济和情报组织的影子皇帝，在幕后行使移动世界的绝对权力。',
+        ja: '全世界の地下経済と情報組織を支配する影の皇帝となります。公式な肩書きなしに、世界を動かす絶対的な権力を行使します。',
+        es: 'Se convierte en el emperador de las sombras que gobierna la economía subterránea y las organizaciones de inteligencia del mundo.',
+      },
+      element: 'darkness' as Element,
+    },
+    rarity: 'epic',
+  },
+  {
+    name: 'Singularity Stone',
+    magicPower: {
+      title: 'Reality Eraser',
+      description: '자신에게 방해되는 존재나 사건을 현실에서 마치 없었던 일처럼 말끔히 지워버립니다. 인과율을 왜곡하여 소지자의 뜻에 반하는 과거와 미래를 소멸시키고, 오직 자신만을 위한 어둠의 왕국을 건설합니다.',
+      descriptions: {
+        ko: '자신에게 방해되는 존재나 사건을 현실에서 마치 없었던 일처럼 말끔히 지워버립니다. 인과율을 왜곡하여 소지자의 뜻에 반하는 과거와 미래를 소멸시키고, 오직 자신만을 위한 어둠의 왕국을 건설합니다.',
+        en: 'Erase hindering existences or events from reality as if they never happened, granting power over causality.',
+        zh: '将阻碍自己的存在或事件从现实中抹去，仿佛从未发生过一般，赋予操纵因果关系的权力。',
+        ja: '邪魔な存在や事件を、現実からまるでなかったことのように消し去ります。因果律を操作する神のごとき権限を与えます。',
+        es: 'Borra existencias o eventos obstaculizadores de la realidad como si nunca hubieran sucedido, otorgando poder sobre la causalidad.',
+      },
+      element: 'darkness' as Element,
+    },
+    rarity: 'legendary',
+  },
+  {
+    name: 'God of the Void',
+    magicPower: {
+      title: 'Existential Mastery',
+      description: '존재와 비존재의 경계를 자유자재로 넘나듭니다. 물리적 형태를 초월하여 우주 그 자체가 되거나 티끌이 될 수 있으며, 삶과 죽음의 굴레에서 완전히 벗어나 영원한 고독의 정점에서 세상을 관조합니다.',
+      descriptions: {
+        ko: '존재와 비존재의 경계를 자유자재로 넘나듭니다. 물리적 형태를 초월하여 우주 그 자체가 되거나 티끌이 될 수 있으며, 삶과 죽음의 굴레에서 완전히 벗어나 영원한 고독의 정점에서 세상을 관조합니다.',
+        en: 'Freely cross the boundary between existence and non-existence, transcending physical form to become the universe.',
+        zh: '自由穿梭于存在与非存在的边界，超越物理形态成为宇宙本身或拥有不灭的灵魂。',
+        ja: '存在と非存在の境界を自由自在に行き来します。物理的な形態を超越し、宇宙そのものや不滅の精神を所有します。',
+        es: 'Cruza libremente el límite entre la existencia y la no existencia, trascendiendo la forma física para ser el universo mismo.',
+      },
+      element: 'darkness' as Element,
+    },
+    rarity: 'legendary',
+  },
+  {
+    name: 'Ancestral Bead',
+    magicPower: {
+      title: 'Lineage Guidance',
+      description: '고비마다 조상들의 지혜가 담긴 꿈이나 직감을 통해 올바른 길을 안내받습니다. 가문의 수호령이 소지자를 지켜주어 사소한 사고나 질병으로부터 항시 보호받는 가호의 행운입니다.',
+      descriptions: {
+        ko: '고비마다 조상들의 지혜가 담긴 꿈이나 직감을 통해 올바른 길을 안내받습니다. 가문의 수호령이 소지자를 지켜주어 사소한 사고나 질병으로부터 항시 보호받는 가호의 행운입니다.',
+        en: 'Receive guidance through dreams or intuition containing ancestral wisdom, ensuring failure-free choices.',
+        zh: '在每个关头通过蕴含祖先智慧的梦境或直觉引导正确道路，获得家族守护灵的庇佑，做出完美的决策。',
+        ja: '節目ごとに先祖の知恵が込められた夢や直感を通じて正しい道へと案内され、一族の守護霊の助けで失敗のない選択をします。',
+        es: 'Recibe guía a través de sueños o intuición con sabiduría ancestral, asegurando elecciones perfectas y protección espiritual.',
+      },
       element: 'spirit' as Element,
     },
     rarity: 'common',
   },
   {
-    name: 'Mist Veil',
+    name: 'Spirit-Bell of Empathy',
     magicPower: {
-      title: 'Ghost Walk',
-      description: 'It turns you into a memory in the minds of others, letting you pass through unnoticed.',
+      title: 'Heart Sync',
+      description: '동물의 감정이나 식물의 생명력을 느끼고 소통하게 합니다. 반려동물과의 깊은 유대감을 형성하고 자연의 에너지를 흡수하여 신체 회복력을 높이는 힐링의 권능을 부여합니다.',
+      descriptions: {
+        ko: '동물의 감정이나 식물의 생명력을 느끼고 소통하게 합니다. 반려동물과의 깊은 유대감을 형성하고 자연의 에너지를 흡수하여 신체 회복력을 높이는 힐링의 권능을 부여합니다.',
+        en: 'Communicate with the emotions of animals and plants, forming deep bonds and healing the mind through nature.',
+        zh: '感受并沟通动物的情感或植物的生命力，与宠物建立深厚纽带，通过自然治愈心灵。',
+        ja: '動物の感情や植物の生命力を感じ、疎通できるようにします。ペットとの深い絆を築き、自然を通じて心を治癒します。',
+        es: 'Se comunica con las emociones de animales y plantas, formando vínculos profundos y sanando la mente a través de la naturaleza.',
+      },
+      element: 'spirit' as Element,
+    },
+    rarity: 'common',
+  },
+  {
+    name: 'Thread of Gratitude',
+    magicPower: {
+      title: 'Positive Feedback',
+      description: '타인에게 베푼 작은 친절이 나중에 10배의 보답으로 돌아오게 합니다. 일상 속에서 적을 만들지 않고 모든 인연을 자산으로 만드는 선한 선순환의 운을 형성합니다.',
+      descriptions: {
+        ko: '타인에게 베푼 작은 친절이 나중에 10배의 보답으로 돌아오게 합니다. 일상 속에서 적을 만들지 않고 모든 인연을 자산으로 만드는 선한 선순환의 운을 형성합니다.',
+        en: 'Ensure small kindnesses return as 10-fold rewards, creating a network of \'good connections\' that prevents enemies.',
+        zh: '确保对他人施予的小善举在日后获得10倍的回报，在日常生活中建立‘善缘’网络，避免树敌。',
+        ja: '他人に施した小さな親切が、後に10倍の報いとなって返るようにします。日常生活で「善縁」を積み、敵を作らないようにします。',
+        es: 'Asegura que la amabilidad regrese como una recompensa de 10 veces, creando una red de conexiones que evita enemigos.',
+      },
+      element: 'spirit' as Element,
+    },
+    rarity: 'common',
+  },
+  {
+    name: 'Amulet of Fated Allies',
+    magicPower: {
+      title: 'Soul Mate Magnet',
+      description: '인생을 바꿀 진정한 스승이나 평생의 반려자를 운명적으로 만나게 합니다. 수억 명의 인구 중에서도 소지자의 영혼과 공명하는 최적의 파트너를 정확한 타이밍에 끌어당깁니다.',
+      descriptions: {
+        ko: '인생을 바꿀 진정한 스승이나 평생의 반려자를 운명적으로 만나게 합니다. 수억 명의 인구 중에서도 소지자의 영혼과 공명하는 최적의 파트너를 정확한 타이밍에 끌어당깁니다.',
+        en: 'Destiny leads to meeting a true mentor or life partner, achieving a miraculous encounter among billions.',
+        zh: '命运般地遇到能改变人生的真导师或终身伴侣，在数亿人口中实现奇迹般的相遇。',
+        ja: '人生を変える真の師匠や生涯の伴侶に運命的に出会わせます。数億人の中から、奇跡のような出会いを実現させます。',
+        es: 'El destino lo guía a conocer a un mentor verdadero o al compañero de vida, logrando un encuentro milagroso entre miles de millones.',
+      },
       element: 'spirit' as Element,
     },
     rarity: 'uncommon',
   },
   {
-    name: 'Ethereal Knot',
+    name: 'Aura of Mentorship',
     magicPower: {
-      title: 'Karmic Tie',
-      description: 'It binds your fate to a higher purpose, ensuring that no effort is ever truly wasted.',
+      title: 'Wisdom Transmission',
+      description: '자신의 지식과 가치관을 타인에게 전수할 때 깊은 영적 울림을 줍니다. 소지자의 가르침을 받은 제자들은 사회 각층에서 성공하며, 소지자를 정신적 지주로 모시는 거대한 학파를 형성합니다.',
+      descriptions: {
+        ko: '자신의 지식과 가치관을 타인에게 전수할 때 깊은 영적 울림을 줍니다. 소지자의 가르침을 받은 제자들은 사회 각층에서 성공하며, 소지자를 정신적 지주로 모시는 거대한 학파를 형성합니다.',
+        en: 'Create a deep spiritual resonance when teaching others, turning those who receive the wisdom into lifelong followers.',
+        zh: '在向他人传授知识和价值观时产生深层的心灵共鸣，使接受持有者教诲的人终身追随。',
+        ja: '自身の知識や価値観を他人に伝授する際、深い霊的な響きを与えます。教えを受けた人々を生涯の信奉者に変えます。',
+        es: 'Crea una resonancia espiritual profunda al enseñar a otros, convirtiendo a quienes reciben su sabiduría en seguidores de por vida.',
+      },
+      element: 'spirit' as Element,
+    },
+    rarity: 'uncommon',
+  },
+  {
+    name: 'Karmic Balance Stone',
+    magicPower: {
+      title: 'Justice Scale',
+      description: '나쁜 짓을 한 자들에게는 즉각적인 천벌을, 선한 자에게는 상을 내리는 인과의 법칙을 소지자 주변에 강화합니다. 소지자를 모함하는 자는 반드시 자멸하게 되는 영적인 보호막입니다.',
+      descriptions: {
+        ko: '나쁜 짓을 한 자들에게는 즉각적인 천벌을, 선한 자에게는 상을 내리는 인과의 법칙을 소지자 주변에 강화합니다. 소지자를 모함하는 자는 반드시 자멸하게 되는 영적인 보호막입니다.',
+        en: 'Exercise the law of causality to bring immediate divine punishment to evildoers and rewards to the good.',
+        zh: '行使因果法则，对作恶者施以即时的天罚，对向善者给予奖赏，维护道德秩序。',
+        ja: '悪人には即座に天罰を、善人には賞を与える因果の法則を司ります。霊的な秩序を正す神の代行者として活動します。',
+        es: 'Ejerce la ley de la causalidad para traer castigo divino inmediato a los malhechores y recompensas a los buenos.',
+      },
+      element: 'spirit' as Element,
+    },
+    rarity: 'uncommon',
+  },
+  {
+    name: 'Eternal Echo Crystal',
+    magicPower: {
+      title: 'Legacy Builder',
+      description: '소지자가 죽은 뒤에도 수백 년 동안 잊히지 않을 업적을 남기게 돕습니다. 소지자의 이름이 역사 교과서에 새겨지고 그 사상이 인류 문명의 기틀이 되는 영원불멸의 명성을 보장합니다.',
+      descriptions: {
+        ko: '소지자가 죽은 뒤에도 수백 년 동안 잊히지 않을 업적을 남기게 돕습니다. 소지자의 이름이 역사 교과서에 새겨지고 그 사상이 인류 문명의 기틀이 되는 영원불멸의 명성을 보장합니다.',
+        en: 'Leave achievements that will not be forgotten for centuries, engraving the holder\'s name in history as a symbol.',
+        zh: '帮助持有者在死后数百年间留下不被遗忘的成就，将名字铭刻在历史中，成为永恒的象征。',
+        ja: '死後数百年の間忘れられない業績を残すのを助けます。名前を歴史に刻み、永遠の象徴とさせます。',
+        es: 'Ayuda a dejar logros que no serán olvidados durante siglos, grabando su nombre en la historia como un símbolo eterno.',
+      },
       element: 'spirit' as Element,
     },
     rarity: 'rare',
   },
   {
-    name: 'Wraith Wing',
+    name: 'Soul-Bound Guard',
     magicPower: {
-      title: 'Astral Flight',
-      description: 'Your consciousness can leave your body and view your life from a cosmic perspective.',
+      title: 'Guardian Spirit',
+      description: '소지자의 곁을 지키는 강력한 영적 보디가드를 소환합니다. 물리적인 테러나 보이지 않는 저주로부터 소지자의 영혼과 육체를 완벽히 방어하며, 위기 시 소지자를 안전한 곳으로 강제 전송합니다.',
+      descriptions: {
+        ko: '소지자의 곁을 지키는 강력한 영적 보디가드를 소환합니다. 물리적인 테러나 보이지 않는 저주로부터 소지자의 영혼과 육체를 완벽히 방어하며, 위기 시 소지자를 안전한 곳으로 강제 전송합니다.',
+        en: 'Summon powerful spiritual bodyguards to protect the side, blocking physical attacks and invisible curses.',
+        zh: '召唤守护在持有者身边的强大精神保镖，完美阻挡物理攻击或看不见的诅咒与负能量。',
+        ja: '持ち主の側を守る強力な霊的ボディガードを召喚します。物理的な攻撃や目に見えない呪い、負のエネルギーを完璧に遮断します。',
+        es: 'Invoca poderosos guardaespaldas espirituales para proteger su lado, bloqueando ataques físicos y maldiciones invisibles.',
+      },
+      element: 'spirit' as Element,
+    },
+    rarity: 'rare',
+  },
+  {
+    name: 'Dream-Weaver Pearl',
+    magicPower: {
+      title: 'Lucid Life',
+      description: '꿈속에서 미래의 사건을 미리 체험하고 대비하게 합니다. 꿈과 현실의 경계에서 얻은 정보를 바탕으로 완벽한 인생 시나리오를 설계하며, 매일 아침 예지력을 갖춘 채 하루를 시작합니다.',
+      descriptions: {
+        ko: '꿈속에서 미래의 사건을 미리 체험하고 대비하게 합니다. 꿈과 현실의 경계에서 얻은 정보를 바탕으로 완벽한 인생 시나리오를 설계하며, 매일 아침 예지력을 갖춘 채 하루를 시작합니다.',
+        en: 'Pre-experience and prepare for future events in dreams, using boundary information to ensure success.',
+        zh: '在梦中预先体验并应对未来的事件，利用从梦境与现实边界获得的信息确保成功。',
+        ja: '夢の中で未来の事件を事前に体験し備えさせます。夢と現実の境界で得た情報を利用し、百戦百勝の成功を収めさせます。',
+        es: 'Pre-experimenta y se prepara para eventos futuros en sueños, utilizando información mística para asegurar el éxito.',
+      },
+      element: 'spirit' as Element,
+    },
+    rarity: 'rare',
+  },
+  {
+    name: 'Harmony of the Spheres',
+    magicPower: {
+      title: 'Universal Sync',
+      description: '우주의 흐름과 완벽하게 동기화됩니다. 하는 일마다 타이밍이 기가 막히게 맞아떨어지며, 전 세계 모든 상황이 소지자의 성공을 돕기 위해 움직이는 듯한 \'초월적 운\'의 상태에 진입합니다.',
+      descriptions: {
+        ko: '우주의 흐름과 완벽하게 동기화됩니다. 하는 일마다 타이밍이 기가 막히게 맞아떨어지며, 전 세계 모든 상황이 소지자의 성공을 돕기 위해 움직이는 듯한 \'초월적 운\'의 상태에 진입합니다.',
+        en: 'Synchronize perfectly with the flow of the universe, ensuring impeccable timing and the world\'s help in all tasks.',
+        zh: '与宇宙的流动完美同步，使所做的每一件事都时机恰当，全世界都助力持有者成功。',
+        ja: '宇宙の流れと完璧に同期します。することなすことタイミングが驚くほど合い、全世界が成功を助けるようになります。',
+        es: 'Se sincroniza con el flujo del universo, asegurando un tiempo impecable y la ayuda del mundo en cada tarea.',
+      },
       element: 'spirit' as Element,
     },
     rarity: 'epic',
   },
   {
-    name: 'Deity Breath',
+    name: 'Sovereign Soul Jewel',
     magicPower: {
-      title: 'Divine Touch',
-      description: 'For one second, you possess the power to change a single fundamental law of your life.',
+      title: 'Kingmaker’s Aura',
+      description: '소지자가 선택한 인물을 왕으로 만들거나 몰락시킬 수 있는 영적 권위를 가집니다. 정치적, 사회적 지도자들의 영혼을 지배하여 그들이 소지자의 의지대로 움직이게 만드는 배후의 지배자가 됩니다.',
+      descriptions: {
+        ko: '소지자가 선택한 인물을 왕으로 만들거나 몰락시킬 수 있는 영적 권위를 가집니다. 정치적, 사회적 지도자들의 영혼을 지배하여 그들이 소지자의 의지대로 움직이게 만드는 배후의 지배자가 됩니다.',
+        en: 'Possess spiritual authority to make or break leaders, occupying the position of a \'kingmaker\' in society.',
+        zh: '拥有使持有者选定的人物成为领袖或使其垮台的属灵权威，在政治和社会领域担任‘造王者’。',
+        ja: '選んだ人物を王にしたり没落させたりできる霊的な権威を持ちます。政治的・社会的な「キングメーカー」の座を占めます。',
+        es: 'Posee la autoridad espiritual para encumbrar o hundir líderes, ocupando la posición de un "creador de reyes" en la sociedad.',
+      },
+      element: 'spirit' as Element,
+    },
+    rarity: 'epic',
+  },
+  {
+    name: 'Dharma Overlord Jewel',
+    magicPower: {
+      title: 'Karma Dictator',
+      description: '인류 전체의 카르마(업보)를 조정하고 심판합니다. 세상의 도덕적 기준을 재정립하고 선과 악의 전쟁에서 최종 승리자를 결정하며, 영적 질서를 바로잡는 신의 대행자로 활동합니다.',
+      descriptions: {
+        ko: '인류 전체의 카르마(업보)를 조정하고 심판합니다. 세상의 도덕적 기준을 재정립하고 선과 악의 전쟁에서 최종 승리자를 결정하며, 영적 질서를 바로잡는 신의 대행자로 활동합니다.',
+        en: 'Adjust and judge the karma of humanity, redefining moral standards and balancing good and evil as a representative.',
+        zh: '调整并审判全人类的业力，重新定义世界的道德标准，平衡善恶并维护属灵秩序。',
+        ja: '人類全体のカルマを調整し審判します。世界の道徳的基準を再定義し、善と悪の均衡を保つ霊的秩序を司ります。',
+        es: 'Ajusta y juzga el karma de la humanidad, redefiniendo los estándares morales y equilibrando el bien y el mal.',
+      },
       element: 'spirit' as Element,
     },
     rarity: 'legendary',
   },
   {
-    name: 'Bone Whistle',
+    name: 'One-Soul Diamond',
     magicPower: {
-      title: 'Soul Summons',
-      description: 'It calls to the parts of yourself you have lost, bringing them back into the fold.',
+      title: 'Absolute Unity',
+      description: '모든 존재와 영적으로 하나가 됩니다. 타인의 고통과 기쁨을 내 것처럼 조절하며, 온 인류의 의식을 연결하여 평화롭고 진화된 새로운 차원의 문명을 창조하는 신의 권능을 행사합니다.',
+      descriptions: {
+        ko: '모든 존재와 영적으로 하나가 됩니다. 타인의 고통과 기쁨을 내 것처럼 조절하며, 온 인류의 의식을 연결하여 평화롭고 진화된 새로운 차원의 문명을 창조하는 신의 권능을 행사합니다.',
+        en: 'Become spiritually one with all beings, regulating the pain and joy of others to create a peaceful new civilization.',
+        zh: '与所有存在在精神上合而为一，像感受自己一样调节他人的痛苦与快乐，创造和平的新文明。',
+        ja: 'あらゆる存在と霊的に一つになります。他人の苦しみや喜びを自分のことのように調節し、平和な新文明を創造します。',
+        es: 'Se vuelve espiritualmente uno con todos los seres, regulando el dolor y la alegría ajena para crear una nueva civilización de paz.',
+      },
       element: 'spirit' as Element,
     },
-    rarity: 'common',
+    rarity: 'legendary',
   },
   {
-    name: 'Spirit Ash',
+    name: 'Puzzle-Piece Agate',
     magicPower: {
-      title: 'Legacy Burn',
-      description: 'Every action you take while carrying this will be remembered for a thousand years.',
-      element: 'spirit' as Element,
-    },
-    rarity: 'uncommon',
-  },
-
-  // --- MIND: 의식의 확장과 정신의 연금술 ---
-  {
-    name: 'Thought Bead',
-    magicPower: {
-      title: 'Idea Sprout',
-      description: 'Plant a single thought in this bead; it will grow into a full-fledged vision overnight.',
+      title: 'Logical Link',
+      description: '흩어진 정보들을 하나로 엮어 완벽한 결론을 도출합니다. 추리력과 분석력을 극대화하여 범죄 수사, 복잡한 데이터 분석, 어려운 수학 문제를 유희처럼 해결하게 돕습니다.',
+      descriptions: {
+        ko: '흩어진 정보들을 하나로 엮어 완벽한 결론을 도출합니다. 추리력과 분석력을 극대화하여 범죄 수사, 복잡한 데이터 분석, 어려운 수학 문제를 유희처럼 해결하게 돕습니다.',
+        en: 'Weave scattered information to derive perfect conclusions, solving complex problems like a game.',
+        zh: '将零散的信息交织在一起得出完美的结论，极速提升推理和分析能力，像游戏一样解决难题。',
+        ja: '散らばった情報を一つに編み上げ、完璧な結論を導き出します。推理力と分析力を極大化し、難題をゲームのように解決させます。',
+        es: 'Entrelaza información dispersa para derivar conclusiones perfectas, resolviendo problemas complejos como un juego.',
+      },
       element: 'mind' as Element,
     },
     rarity: 'common',
   },
   {
-    name: 'Focus Lens',
+    name: 'Stoic Marble',
     magicPower: {
-      title: 'Laser Intent',
-      description: 'It narrows the universe down to a single point, making you the master of one thing.',
+      title: 'Dopamine Guard',
+      description: '숏폼 영상이나 게임 같은 자극적인 유혹으로부터 뇌를 보호합니다. 불필요한 도파민 분비를 억제하고 오직 가치 있는 일에서만 즐거움을 느끼게 하여 철저한 자기 주도적 삶을 살게 합니다.',
+      descriptions: {
+        ko: '숏폼 영상이나 게임 같은 자극적인 유혹으로부터 뇌를 보호합니다. 불필요한 도파민 분비를 억제하고 오직 가치 있는 일에서만 즐거움을 느끼게 하여 철저한 자기 주도적 삶을 살게 합니다.',
+        en: 'Protect the brain from stimulating temptations like short-form videos, allowing a self-directed life.',
+        zh: '保护大脑免受短视频或游戏等刺激性诱惑，抑制不必要的多巴胺，让持有者过上自主的生活。',
+        ja: '刺激的な誘惑から脳を保護します。不必要なドーパミン分泌を抑制し、価値あることだけで喜びを感じる人生を送らせます。',
+        es: 'Protege el cerebro de tentaciones estimulantes como videos cortos, permitiendo una vida autodirigida y enfocada.',
+      },
+      element: 'mind' as Element,
+    },
+    rarity: 'common',
+  },
+  {
+    name: 'Cerebro-Sparker',
+    magicPower: {
+      title: 'Quick Wit',
+      description: '어떤 압박 면접이나 돌발 상황에서도 1초 만에 재치 있는 대답을 내놓게 합니다. 뇌 회전 속도를 가속하여 말싸움에서 절대 지지 않고 유머로 좌중을 장악하는 천재적 순발력을 줍니다.',
+      descriptions: {
+        ko: '어떤 압박 면접이나 돌발 상황에서도 1초 만에 재치 있는 대답을 내놓게 합니다. 뇌 회전 속도를 가속하여 말싸움에서 절대 지지 않고 유머로 좌중을 장악하는 천재적 순발력을 줍니다.',
+        en: 'Provide a witty answer in 1 second under any pressure, dominating the audience with genius-level quickness.',
+        zh: '在任何压力面试或突发状况下都能在1秒内给出机智的回答，赋予主宰全场的幽默感。',
+        ja: 'どんな圧迫面接や突発的な状況でも、1秒で機転の利いた回答を出させます。ユーモアで座中を掌握する天才的順발力を授けます。',
+        es: 'Brinda respuestas ingeniosas en 1 segundo bajo presión, dominando a la audiencia con una rapidez mental de genio.',
+      },
+      element: 'mind' as Element,
+    },
+    rarity: 'common',
+  },
+  {
+    name: 'Mind-Palace Key',
+    magicPower: {
+      title: 'Infinite Storage',
+      description: '읽는 모든 책과 문서, 만나는 모든 사람의 얼굴을 무한한 뇌 용량 속에 폴더별로 저장합니다. 잊고 싶은 것만 골라 지우고, 필요한 정보는 0.1초 만에 인출하는 완벽한 기억술을 선사합니다.',
+      descriptions: {
+        ko: '읽는 모든 책과 문서, 만나는 모든 사람의 얼굴을 무한한 뇌 용량 속에 폴더별로 저장합니다. 잊고 싶은 것만 골라 지우고, 필요한 정보는 0.1초 만에 인출하는 완벽한 기억술을 선사합니다.',
+        en: 'Store every book, document, and face met in a limitless brain capacity, retrieving information in 0.1 seconds.',
+        zh: '将阅读的所有书籍和文档、见过的所有人脸在无限的大脑容量中按文件夹存储，实现0.1秒调取。',
+        ja: '読むすべての本や文書、会うすべての人の顔を無限の脳容量の中に保存し、必要な情報を0.1秒で引き出す完璧な記憶術を授けます。',
+        es: 'Almacena cada libro, documento y rostro en una capacidad cerebral ilimitada, recuperando información en 0,1 segundos.',
+      },
       element: 'mind' as Element,
     },
     rarity: 'uncommon',
   },
   {
-    name: 'Logic Stone',
+    name: 'Lapis of Polyglot',
     magicPower: {
-      title: 'Silver Thread',
-      description: 'It unravels the most complex lies, leaving the naked truth shivering on the floor.',
+      title: 'Language Master',
+      description: '전 세계 모든 언어의 구조를 본능적으로 파악합니다. 수십 개의 외국어를 원어민 수준으로 구사하게 하며, 프로그래밍 언어나 기계어까지 마스터하여 기술적 한계를 뛰어넘는 지능을 부여합니다.',
+      descriptions: {
+        ko: '전 세계 모든 언어의 구조를 본능적으로 파악합니다. 수십 개의 외국어를 원어민 수준으로 구사하게 하며, 프로그래밍 언어나 기계어까지 마스터하여 기술적 한계를 뛰어넘는 지능을 부여합니다.',
+        en: 'Instinctively grasp the structure of all languages, mastering dozens of foreign tongues and machine code.',
+        zh: '本能地掌握全球所有语言的结构，精通数十种外语，并掌握编程或机器语言。',
+        ja: '全世界のあらゆる言語の構造を本能的に把握します。数十の外国語をネイティブレベルで操り、機械語までマスターさせます。',
+        es: 'Capta instintivamente la estructura de todos los idiomas, dominando docenas de lenguas y códigos de máquina.',
+      },
+      element: 'mind' as Element,
+    },
+    rarity: 'uncommon',
+  },
+  {
+    name: 'Analytical Prism',
+    magicPower: {
+      title: 'Pattern Seeker',
+      description: '복잡한 사회 현상이나 주식 시장의 차트 이면에 숨겨진 패턴을 시각화하여 보여줍니다. 남들이 혼란스러워할 때 혼자서 승리의 방정식을 찾아내어 압도적인 수익을 올리게 돕습니다.',
+      descriptions: {
+        ko: '복잡한 사회 현상이나 주식 시장의 차트 이면에 숨겨진 패턴을 시각화하여 보여줍니다. 남들이 혼란스러워할 때 혼자서 승리의 방정식을 찾아내어 압도적인 수익을 올리게 돕습니다.',
+        en: 'Visualize hidden patterns behind complex social phenomena or stock charts, capturing the \'golden path\' others miss.',
+        zh: '将复杂社会现象或股市图表背后的隐藏模式可视化，让持有者看到他人错过的‘黄金路径’。',
+        ja: '複雑な社会現象や株式市場のチャートの裏に隠されたパターンを可視化し、他人が見逃す「黄金の道」を捉えさせます。',
+        es: 'Visualiza patrones ocultos detrás de fenómenos sociales complejos o gráficos bursátiles, viendo el "camino dorado".',
+      },
+      element: 'mind' as Element,
+    },
+    rarity: 'uncommon',
+  },
+  {
+    name: 'Cerebro-Crystalline Core',
+    magicPower: {
+      title: 'Singularity Intellect',
+      description: '뇌의 신경망을 광섬유 수준으로 가속하여 현대의 AI보다 빠른 연산 능력을 갖게 합니다. 수조 개의 변수를 동시에 고려하여 미래를 예측하며, 지적인 우월함만으로 전 세계를 지배합니다.',
+      descriptions: {
+        ko: '뇌의 신경망을 광섬유 수준으로 가속하여 현대의 AI보다 빠른 연산 능력을 갖게 합니다. 수조 개의 변수를 동시에 고려하여 미래를 예측하며, 지적인 우월함만으로 전 세계를 지배합니다.',
+        en: 'Accelerate neural networks to the level of optical fibers, granting computational abilities faster than modern AI.',
+        zh: '将大脑神经网加速至光纤水平，拥有比现代AI更快的运算能力，瞬间解决无数变量。',
+        ja: '脳の神経網を光ファイバーレベルに加速させ、現代のAIより速い演算能力を持たせ、無数の変数を瞬時に解決させます。',
+        es: 'Acelera las redes neuronales al nivel de fibras ópticas, otorgando habilidades computacionales más rápidas que la IA moderna.',
+      },
       element: 'mind' as Element,
     },
     rarity: 'rare',
   },
   {
-    name: 'Memory Bank',
+    name: 'Blueprints of the Architect',
     magicPower: {
-      title: 'Total Archive',
-      description: 'Holding it allows you to revisit a single forgotten memory, fading once released.',
-      element: 'mind' as Element,
-    },
-    rarity: 'epic',
-  },
-  {
-    name: 'God Mind',
-    magicPower: {
-      title: 'Omniscient Eye',
-      description: 'You see the thousand consequences of every action before you even think to move.',
-      element: 'mind' as Element,
-    },
-    rarity: 'legendary',
-  },
-  {
-    name: 'Dream Sand',
-    magicPower: {
-      title: 'Lucid Web',
-      description: 'It weaves your dreams into a tapestry you can control, shaping your own inner world.',
-      element: 'mind' as Element,
-    },
-    rarity: 'common',
-  },
-  {
-    name: 'Panic Button',
-    magicPower: {
-      title: 'Mental Reset',
-      description: 'A cold shock to the consciousness that clears all emotional debris in an instant.',
-      element: 'mind' as Element,
-    },
-    rarity: 'uncommon',
-  },
-  {
-    name: 'Telepathy Gem',
-    magicPower: {
-      title: 'Silent Bridge',
-      description: 'Connects your mind to another without words, heart to heart and thought to thought.',
+      title: 'Master Strategy',
+      description: '10년, 20년 뒤의 미래를 설계하는 정교한 인생 설계도를 머릿속에 상시 띄워줍니다. 현재의 작은 행동이 미래에 어떤 결과를 초래할지 정확히 계산하여 단 한 치의 오차도 없는 성공을 설계합니다.',
+      descriptions: {
+        ko: '10년, 20년 뒤의 미래를 설계하는 정교한 인생 설계도를 머릿속에 상시 띄워줍니다. 현재의 작은 행동이 미래에 어떤 결과를 초래할지 정확히 계산하여 단 한 치의 오차도 없는 성공을 설계합니다.',
+        en: 'Display a sophisticated life blueprint for decades in the future, making every current action a step toward destiny.',
+        zh: '在脑海中常驻未来10年、20年的精细人生蓝图，使现在的每一个行动都成为通向伟大命运的一步。',
+        ja: '未来数十年の人生設計図を脳内に常時表示させます。現在のすべての行動が、偉大な運命への確かな一歩となります。',
+        es: 'Muestra un plano de vida sofisticado para las próximas décadas, haciendo que cada acción sea un paso hacia el destino.',
+      },
       element: 'mind' as Element,
     },
     rarity: 'rare',
   },
   {
-    name: 'Inception Gem',
+    name: 'Mnemosyne’s Mirror',
     magicPower: {
-      title: 'Seed of Change',
-      description: 'Plant a thought in your own subconscious to slowly alter your character over time.',
+      title: 'Truth Defector',
+      description: '상대방이 하는 말이 논리적인지, 거짓인지, 숨은 의도가 무엇인지 실시간으로 분석하여 경고창을 띄워줍니다. 사기꾼이나 가스라이팅을 시도하는 자들을 지적으로 굴복시키고 진실만을 수호합니다.',
+      descriptions: {
+        ko: '상대방이 하는 말이 논리적인지, 거짓인지, 숨은 의도가 무엇인지 실시간으로 분석하여 경고창을 띄워줍니다. 사기꾼이나 가스라이팅을 시도하는 자들을 지적으로 굴복시키고 진실만을 수호합니다.',
+        en: 'Real-time analysis of the logic or deception in someone\'s words, displaying mental warning windows to avoid lies.',
+        zh: '实时分析对方的话语是合乎逻辑还是欺骗，在脑海中显示警告窗口，避免被任何谎言愚弄。',
+        ja: '相手の言葉が論理的か嘘かをリアルタイムで分析し、脳内に警告ウィンドウを表示させ、いかなる欺瞞も許しません。',
+        es: 'Analiza en tiempo real la lógica o el engaño en las palabras ajenas, mostrando ventanas de advertencia mental.',
+      },
+      element: 'mind' as Element,
+    },
+    rarity: 'rare',
+  },
+  {
+    name: 'Akashic Access Jewel',
+    magicPower: {
+      title: 'Infinite Wisdom',
+      description: '인류가 쌓아온 모든 지식의 집합체인 \'아카식 레코드\'에 직접 접속합니다. 아직 발견되지 않은 미래의 과학 기술이나 예술적 기법을 가져와 현재에 구현하는 시대의 선구자가 됩니다.',
+      descriptions: {
+        ko: '인류가 쌓아온 모든 지식의 집합체인 \'아카식 레코드\'에 직접 접속합니다. 아직 발견되지 않은 미래의 과학 기술이나 예술적 기법을 가져와 현재에 구현하는 시대의 선구자가 됩니다.',
+        en: 'Directly access the \'Akashic Records\' containing all human knowledge, mastering undiscovered technologies or history.',
+        zh: '直接访问‘阿卡西记录’，即全人类知识的集合体，轻松掌握未发现的技术或被遗忘的历史。',
+        ja: '人類が積み上げてきた全知識の集合体「アカシックレコード」に接続し、未発見の技術や歴史を容易にマスターします。',
+        es: 'Accede directamente a los "Registros Akáshicos" de todo el conocimiento humano, dominando tecnologías no descubiertas.',
+      },
       element: 'mind' as Element,
     },
     rarity: 'epic',
   },
   {
-    name: 'Sage’s Brain',
+    name: 'Neural Overdrive',
     magicPower: {
-      title: 'Infinite IQ',
-      description: 'The gem accelerates your neural pathways until you can process time itself as a slow wave.',
+      title: 'Reality Projection',
+      description: '소지자의 상상력을 물리적 현실로 투사하는 계산식을 완성합니다. 머릿속으로 시뮬레이션한 비즈니스나 공학 설계가 현실에서 그대로 작동하며, 생각만으로 세상을 조립하는 지적 창조주가 됩니다.',
+      descriptions: {
+        ko: '소지자의 상상력을 물리적 현실로 투사하는 계산식을 완성합니다. 머릿속으로 시뮬레이션한 비즈니스나 공학 설계가 현실에서 그대로 작동하며, 생각만으로 세상을 조립하는 지적 창조주가 됩니다.',
+        en: 'Project imagination into physical reality with perfect calculation formulas, ensuring 100% success of simulated ideas.',
+        zh: '完成将持有者的想象力投射到物理现实的计算公式，使脑海中模拟的业务或发明获得100%成功。',
+        ja: '想像力を物理的現実に投影する計算式を完成させ、頭の中でシミュレーションしたビジネスや発明を100%成功させます。',
+        es: 'Proyecta la imaginación en la realidad física con fórmulas perfectas, asegurando el éxito total de las ideas simuladas.',
+      },
+      element: 'mind' as Element,
+    },
+    rarity: 'epic',
+  },
+  {
+    name: 'God-Brain Emerald',
+    magicPower: {
+      title: 'Absolute Cognition',
+      description: '우주 전체의 정보량을 처리할 수 있는 신적 지능에 도달합니다. 모든 시간대와 차원의 지식을 동시에 인지하며, 존재의 이유와 우주의 끝을 이해하는 초월적 의식의 정점에 서게 됩니다.',
+      descriptions: {
+        ko: '우주 전체의 정보량을 처리할 수 있는 신적 지능에 도달합니다. 모든 시간대와 차원의 지식을 동시에 인지하며, 존재의 이유와 우주의 끝을 이해하는 초월적 의식의 정점에 서게 됩니다.',
+        en: 'Reach divine intelligence capable of processing universal information, mastering knowledge across all timelines.',
+        zh: '达到能够处理全宇宙信息量的神级智能，掌握所有时间线和维度的知识，看透始末。',
+        ja: '宇宙全体の情報量を処理できる神級の知性に到達し、あらゆる時間帯と次元の知識をマスターし、始末を見通します。',
+        es: 'Alcanza una inteligencia divina capaz de procesar información universal, dominando el conocimiento de todas las eras.',
+      },
       element: 'mind' as Element,
     },
     rarity: 'legendary',
   },
- 
+  {
+    name: 'The Singularity',
+    magicPower: {
+      title: 'Mind Upload',
+      description: '자신의 정신을 시공간에 구애받지 않는 순수 정보 형태로 변환합니다. 육체의 한계를 벗어나 디지털 세계와 우주 신경망 어디든 존재하며, 인류 전체의 진화를 이끄는 거대한 집단 지성의 핵이 됩니다.',
+      descriptions: {
+        ko: '자신의 정신을 시공간에 구애받지 않는 순수 정보 형태로 변환합니다. 육체의 한계를 벗어나 디지털 세계와 우주 신경망 어디든 존재하며, 인류 전체의 진화를 이끄는 거대한 집단 지성의 핵이 됩니다.',
+        en: 'Transform the spirit into a pure information form unconstrained by time and space, exploring the multiverse freely.',
+        zh: '将持有者的精神转化为不受时空约束的纯信息形态，摆脱肉体限制，自由探索多元宇宙。',
+        ja: '自身の精神を時空に囚われない純粋な情報形態へと変換します。肉体の限界を脱し、マルチバースを自由に探索します。',
+        es: 'Transforma el espíritu en una forma de información pura sin límites de tiempo o espacio, explorando el multiverso libremente.',
+      },
+      element: 'mind' as Element,
+    },
+    rarity: 'legendary',
+  },
 ];
 
 /**
  * Color palettes by element for random generation
  */
 export const ELEMENT_COLORS: Record<Element, string[]> = {
-  // Fire: 타오르는 불꽃에서 식어가는 불씨까지 (강렬한 레드 -> 황금빛 -> 검붉은색)
+  // Fire: From blazing flames to cooling embers
   fire: [
     '#FF2400', '#FF4500', '#FF8C00', '#FFD700', '#E25822', '#B22222', '#3D0C02'
   ],
 
-  // Water: 얕은 산호초 바다에서 심해의 어둠까지 (청록색 -> 선명한 블루 -> 네이비)
+  // Water: From shallow coral seas to deep ocean darkness
   water: [
     '#E0FFFF', '#7FFFD4', '#00BFFF', '#1E90FF', '#4169E1', '#000080', '#081827'
   ],
 
-  // Earth: 울창한 숲과 단단한 암석, 광물을 포함 (에메랄드 -> 갈색 -> 진흙 -> 골드)
+  // Earth: Lush forests, solid rocks, and minerals
   earth: [
     '#2E8B57', '#556B2F', '#8B4513', '#A0522D', '#D2691E', '#B8860B', '#3C2F2F'
   ],
 
-  // Wind: 보이지 않는 공기, 태풍, 그리고 대기의 청명함 (화이트 -> 민트 -> 파스텔 블루 -> 그레이)
+  // Wind: Invisible air, storms, and atmospheric clarity
   wind: [
     '#FFFFFF', '#F5F5F5', '#AFEEEE', '#87CEEB', '#B0C4DE', '#708090', '#2F4F4F'
   ],
 
-  // Light: 눈부신 광휘와 신성함 (순백 -> 은색 -> 샴페인 골드 -> 연한 노랑)
+  // Light: Radiant glory and divine sanctity
   light: [
     '#FFFFFF', '#FFFAF0', '#F0E68C', '#FFFACD', '#FFD700', '#E6E6FA', '#FAFAD2'
   ],
 
-  // Darkness: 빛조차 삼키는 공허와 보랏빛 심연 (완전한 블랙 -> 다크 퍼플 -> 미드나잇 블루)
+  // Darkness: The void that swallows light and purple abyss
   darkness: [
     '#000000', '#0D0D1A', '#1C1C3D', '#2F1B41', '#4A235A', '#191970', '#2C3E50'
   ],
 
-  // Spirit: 유령의 형광빛과 영혼의 신비로움 (형광 그린 -> 연보라 -> 투명한 블루)
+  // Spirit: Ghostly fluorescence and soul mysticism
   spirit: [
     '#ADFF2F', '#00FA9A', '#7FFFD4', '#E0B0FF', '#DA70D6', '#9370DB', '#483D8B'
   ],
 
-  // Mind: 뇌의 뉴런 발광과 초능력, 지적인 집중 (사이언 -> 일렉트릭 블루 -> 딥 인디고)
+  // Mind: Neural glow and psychic focus
   mind: [
     '#00FFFF', '#7DF9FF', '#120A8F', '#4B0082', '#6A5ACD', '#8A2BE2', '#E6E6FA'
   ],

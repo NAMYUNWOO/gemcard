@@ -96,12 +96,37 @@ export const ELEMENT_LABELS: Record<Element, string> = {
 };
 
 // =============================================================================
+// Localization
+// =============================================================================
+
+export type SupportedLocale = 'ko' | 'en' | 'zh' | 'ja' | 'es';
+
+export interface LocalizedDescriptions {
+  ko: string;
+  en?: string;
+  zh?: string;
+  ja?: string;
+  es?: string;
+}
+
+/**
+ * Get localized description from MagicPower
+ */
+export function getLocalizedDescription(
+  magicPower: MagicPower,
+  locale: SupportedLocale = 'ko'
+): string {
+  return magicPower.descriptions?.[locale] ?? magicPower.description;
+}
+
+// =============================================================================
 // Magic Power
 // =============================================================================
 
 export interface MagicPower {
   title: string;
-  description: string;
+  description: string;  // Default (Korean)
+  descriptions?: LocalizedDescriptions;
   element?: Element;
 }
 

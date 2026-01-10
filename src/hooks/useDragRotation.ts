@@ -104,7 +104,7 @@ export function useDragRotation(options: UseDragRotationOptions = {}): UseDragRo
     window.addEventListener('blur', onBlur);
 
     element.style.cursor = 'grab';
-    element.style.touchAction = 'pan-y';
+    element.style.touchAction = 'none';
 
     // Return cleanup function
     return () => {
