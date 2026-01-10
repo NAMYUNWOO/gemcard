@@ -1,0 +1,152 @@
+/* ParticleSpoiler - Canvas-based spoiler effect */
+
+.container {
+  position: relative;
+  cursor: pointer;
+}
+
+.content {
+  transition: filter 0.5s ease, opacity 0.5s ease;
+}
+
+.hidden .content {
+  filter: blur(8px);
+  opacity: 0;
+  user-select: none;
+  pointer-events: none;
+}
+
+.revealed .content {
+  filter: none;
+  opacity: 1;
+}
+
+.revealed {
+  cursor: default;
+}
+
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* =============================================================================
+   Mystical Tap Hint Overlay
+   ============================================================================= */
+
+.hintOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.hintIcon {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tapIcon {
+  width: 24px;
+  height: 24px;
+  color: rgba(255, 215, 0, 0.9);
+  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.5));
+  animation: tapBounce 2s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes tapBounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+/* Ripple effects - mystical pulse rings */
+.ripple,
+.ripple2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: rippleExpand 2.5s ease-out infinite;
+}
+
+.ripple2 {
+  animation-delay: 1.25s;
+}
+
+@keyframes rippleExpand {
+  0% {
+    width: 20px;
+    height: 20px;
+    opacity: 0.6;
+    border-color: rgba(255, 215, 0, 0.5);
+  }
+  100% {
+    width: 50px;
+    height: 50px;
+    opacity: 0;
+    border-color: rgba(255, 215, 0, 0);
+  }
+}
+
+.hintText {
+  font-family: var(--font-body, system-ui, sans-serif);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 215, 0, 0.85);
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+  animation: textGlow 2s ease-in-out infinite;
+}
+
+@keyframes textGlow {
+  0%, 100% {
+    opacity: 0.7;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+  }
+}
+
+/* Hover state - intensify the glow */
+.hidden:hover .hintOverlay .tapIcon,
+.hidden:active .hintOverlay .tapIcon {
+  color: rgba(255, 215, 0, 1);
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+}
+
+.hidden:hover .hintOverlay .hintText,
+.hidden:active .hintOverlay .hintText {
+  color: rgba(255, 215, 0, 1);
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+}

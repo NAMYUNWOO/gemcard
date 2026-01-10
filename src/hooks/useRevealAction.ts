@@ -13,7 +13,7 @@ import { generateShareUrl } from '../utils/gemShare';
 // Types
 // =============================================================================
 
-type RevealActionType = 'share' | 'ad' | 'custom';
+type RevealActionType = 'none' | 'share' | 'ad' | 'custom';
 
 interface UseRevealActionOptions {
   gem: MagicGem | null;
@@ -70,11 +70,12 @@ async function executeShareAction(gem: MagicGem): Promise<boolean> {
 // Hook
 // =============================================================================
 
-// Configuration - change this to switch between reveal methods
-const CURRENT_ACTION_TYPE: RevealActionType = 'share';
+// Configuration - change this to switch reveal behavior
+const CURRENT_ACTION_TYPE: RevealActionType = 'none';
 
 // Labels for UI hints
 const ACTION_LABELS: Record<RevealActionType, string> = {
+  none: 'Tap to reveal',
   share: 'Tap to share and reveal',
   ad: 'Watch ad to reveal',
   custom: 'Complete action to reveal',
@@ -82,10 +83,10 @@ const ACTION_LABELS: Record<RevealActionType, string> = {
 
 // Action executors map
 const ACTION_EXECUTORS: Record<RevealActionType, (gem: MagicGem) => Promise<boolean>> = {
+  none: async () => true, // 즉시 reveal
   share: executeShareAction,
   ad: async () => {
     // TODO: Add ad logic
-    // return await executeAdAction();
     return false;
   },
   custom: async () => {

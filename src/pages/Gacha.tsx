@@ -7,13 +7,12 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Spoiler } from 'spoiled';
-import 'spoiled/style.css';
 import { StarField } from '../components/StarField';
 import { SummonCircle } from '../components/SummonCircle';
 import { MagicButton } from '../components/MagicButton';
 import { GemScene } from '../components/GemScene';
 import { RarityBadge } from '../components/RarityBadge';
+import { ParticleSpoiler } from '../components/ParticleSpoiler';
 import { generateMagicGem } from '../utils/gemGenerator';
 import { useGemStore } from '../stores/gemStore';
 import type { MagicGem, UserInfo, Gender, BirthDateTime } from '../types/gem';
@@ -32,7 +31,7 @@ export function Gacha() {
   const [summonedGem, setSummonedGem] = useState<MagicGem | null>(null);
 
   // Spoiler reveal action hook
-  const { executeAction: handleRevealClick, actionLabel } = useRevealAction({
+  const { executeAction: handleRevealClick } = useRevealAction({
     gem: summonedGem,
     onSuccess: () => setPowerDescRevealed(true),
   });
@@ -135,6 +134,7 @@ export function Gacha() {
   // Start the summoning process
   const startSummoning = useCallback(async () => {
     setState('summoning');
+    setPowerDescRevealed(false); // Reset spoiler state for new gem
 
     const userInfo = buildUserInfo();
 
@@ -149,7 +149,7 @@ export function Gacha() {
 
     setSummonedGem(gem);
     setState('revealed');
-  }, [buildUserInfo, setLastUserInfo]);
+  }, [buildUserInfo, setLastUserInfo, setPowerDescRevealed]);
 
   // Confirm replacement
   const handleConfirmReplace = useCallback(() => {
@@ -404,19 +404,15 @@ export function Gacha() {
                 <h3 className={styles.powerTitle}>
                   {summonedGem.magicPower.title}
                 </h3>
-                <Spoiler
+                <ParticleSpoiler
                   hidden={!powerDescRevealed}
                   onClick={handleRevealClick}
-                  theme="dark"
-                  tagName="div"
+                  particleColor="#aaaaaa"
                 >
                   <p className={styles.powerDesc}>
                     "{getLocalizedDescription(summonedGem.magicPower, locale)}"
                   </p>
-                </Spoiler>
-                {!powerDescRevealed && (
-                  <p className={styles.revealHint}>{actionLabel}</p>
-                )}
+                </ParticleSpoiler>
               </div>
             </div>
 
