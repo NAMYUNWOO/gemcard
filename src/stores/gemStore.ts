@@ -20,6 +20,9 @@ interface GemStoreState {
 
   // Cached user info for form pre-fill convenience
   lastUserInfo: UserInfo | null;
+
+  // Whether the power description spoiler has been revealed
+  powerDescRevealed: boolean;
 }
 
 interface GemStoreActions {
@@ -32,6 +35,9 @@ interface GemStoreActions {
   // User info persistence
   setLastUserInfo: (info: UserInfo) => void;
   getLastUserInfo: () => UserInfo | null;
+
+  // Spoiler reveal state
+  setPowerDescRevealed: (revealed: boolean) => void;
 }
 
 type GemStore = GemStoreState & GemStoreActions;
@@ -56,9 +62,10 @@ export const useGemStore = create<GemStore>()(
       // Initial State
       currentGem: null,
       lastUserInfo: null,
+      powerDescRevealed: false,
 
       // Actions
-      setGem: (gem) => set({ currentGem: gem }),
+      setGem: (gem) => set({ currentGem: gem, powerDescRevealed: false }),
 
       clearGem: () => set({ currentGem: null }),
 
@@ -69,6 +76,8 @@ export const useGemStore = create<GemStore>()(
       setLastUserInfo: (info) => set({ lastUserInfo: info }),
 
       getLastUserInfo: () => get().lastUserInfo,
+
+      setPowerDescRevealed: (revealed) => set({ powerDescRevealed: revealed }),
     }),
     {
       name: 'arcane-gems-collection',
@@ -86,6 +95,7 @@ export const useGemStore = create<GemStore>()(
           return {
             currentGem: firstGem,
             lastUserInfo: null,
+            powerDescRevealed: false,
           } as GemStoreState;
         }
         return persistedState as GemStoreState;

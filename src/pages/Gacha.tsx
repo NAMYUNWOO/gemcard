@@ -7,6 +7,8 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Spoiler } from 'spoiled';
+import 'spoiled/style.css';
 import { StarField } from '../components/StarField';
 import { SummonCircle } from '../components/SummonCircle';
 import { MagicButton } from '../components/MagicButton';
@@ -16,18 +18,24 @@ import { generateMagicGem } from '../utils/gemGenerator';
 import { useGemStore } from '../stores/gemStore';
 import type { MagicGem, UserInfo, Gender, BirthDateTime } from '../types/gem';
 import { ELEMENT_ICONS, GENDER_LABELS, isValidUserInfo, getLocalizedDescription } from '../types/gem';
-import { useLocale } from '../hooks';
+import { useLocale, useRevealAction } from '../hooks';
 import styles from './Gacha.module.css';
 
 type GachaState = 'form' | 'confirm-replace' | 'summoning' | 'revealed';
 
 export function Gacha() {
   const navigate = useNavigate();
-  const { currentGem, setGem, lastUserInfo, setLastUserInfo } = useGemStore();
+  const { currentGem, setGem, lastUserInfo, setLastUserInfo, powerDescRevealed, setPowerDescRevealed } = useGemStore();
   const locale = useLocale();
 
   const [state, setState] = useState<GachaState>('form');
   const [summonedGem, setSummonedGem] = useState<MagicGem | null>(null);
+
+  // Spoiler reveal action hook
+  const { executeAction: handleRevealClick, actionLabel } = useRevealAction({
+    gem: summonedGem,
+    onSuccess: () => setPowerDescRevealed(true),
+  });
 
   // Form state
   const [name, setName] = useState('');
@@ -396,9 +404,19 @@ export function Gacha() {
                 <h3 className={styles.powerTitle}>
                   {summonedGem.magicPower.title}
                 </h3>
-                <p className={styles.powerDesc}>
-                  "{getLocalizedDescription(summonedGem.magicPower, locale)}"
-                </p>
+                <Spoiler
+                  hidden={!powerDescRevealed}
+                  onClick={handleRevealClick}
+                  theme="dark"
+                  tagName="div"
+                >
+                  <p className={styles.powerDesc}>
+                    "{getLocalizedDescription(summonedGem.magicPower, locale)}"
+                  </p>
+                </Spoiler>
+                {!powerDescRevealed && (
+                  <p className={styles.revealHint}>{actionLabel}</p>
+                )}
               </div>
             </div>
 
