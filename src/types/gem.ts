@@ -15,23 +15,23 @@ export interface MagicCircle {
 export const MAGIC_CIRCLES: MagicCircle[] = [
   {
     id: 17,
-    name: 'Sigil of the Eternal Flame',
-    meaning: 'An ancient seal that channels the primordial fire of creation',
+    name: 'Seal of the Philosopher\'s Stone',
+    meaning: 'The sacred formula of transmutation, inscribed by the masters of alchemy',
   },
   {
     id: 18,
-    name: 'Seal of the Celestial Veil',
-    meaning: 'A sacred pattern woven from starlight and moonbeams',
+    name: 'Wheel of the Celestial Houses',
+    meaning: 'The zodiac wheel that binds the twelve constellations and seven wandering stars',
   },
   {
     id: 19,
-    name: 'Glyph of the Abyssal Deep',
-    meaning: 'A mysterious sigil drawn from the depths of forgotten waters',
+    name: 'Sigil of the Primordial Spiral',
+    meaning: 'An eastern seal channeling the flow of vital energy through ancient script',
   },
   {
     id: 20,
-    name: 'Rune of the Worldtree',
-    meaning: 'The mark of Yggdrasil, binding all realms together',
+    name: 'Circle of the Runic Weave',
+    meaning: 'Nordic runes bound by Celtic knots, bridging the wisdom of the northern realms',
   },
 ];
 
