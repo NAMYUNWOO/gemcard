@@ -2,7 +2,7 @@
  * Environment Detection Utilities
  *
  * Detects whether the app is running in App in Toss WebView or regular browser.
- * Used to determine storage strategy (Firestore vs localStorage).
+ * Uses @apps-in-toss/web-framework's isSupported API for reliable detection.
  */
 
 /**
@@ -13,13 +13,60 @@
 const TOSS_DOMAINS = ['.apps.tossmini.com', '.private-apps.tossmini.com'];
 
 /**
+ * Cached result of framework API support check
+ * - null: not yet checked
+ * - true/false: checked result
+ */
+let frameworkSupportedCache: boolean | null = null;
+
+/**
+ * Check if hostname matches Toss WebView domains
+ */
+function isDomainTossWebView(): boolean {
+  if (typeof window === 'undefined') return false;
+  const hostname = window.location.hostname;
+  return TOSS_DOMAINS.some((domain) => hostname.endsWith(domain));
+}
+
+/**
+ * Initialize environment detection using framework API
+ * Call this early in app lifecycle for accurate detection in test environments
+ *
+ * Uses GoogleAdMob.loadAdMobRewardedAd.isSupported() which is available
+ * in both production Toss WebView and test environments (QR scan)
+ */
+export async function initializeEnvironmentDetection(): Promise<void> {
+  if (frameworkSupportedCache !== null) return;
+
+  try {
+    const { GoogleAdMob } = await import('@apps-in-toss/web-framework');
+    // isSupported returns true when running in Toss WebView (including test via QR)
+    const isSupported = GoogleAdMob?.loadAdMobRewardedAd?.isSupported;
+    frameworkSupportedCache = typeof isSupported === 'function' && isSupported();
+    console.log('[Environment] Toss WebView detected:', frameworkSupportedCache);
+  } catch {
+    frameworkSupportedCache = false;
+    console.log('[Environment] Framework not available, using browser mode');
+  }
+}
+
+/**
  * Check if app is running inside App in Toss WebView
+ *
+ * Detection methods (in order):
+ * 1. Framework API isSupported check (works in test environment via QR)
+ * 2. Domain-based check (production fallback)
  */
 export function isInTossWebView(): boolean {
   if (typeof window === 'undefined') return false;
 
-  const hostname = window.location.hostname;
-  return TOSS_DOMAINS.some((domain) => hostname.endsWith(domain));
+  // If framework check completed, use that result
+  if (frameworkSupportedCache !== null) {
+    return frameworkSupportedCache;
+  }
+
+  // Fallback to domain check (for sync calls before init)
+  return isDomainTossWebView();
 }
 
 /**
