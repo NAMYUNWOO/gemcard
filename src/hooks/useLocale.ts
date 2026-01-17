@@ -4,10 +4,18 @@ import { getLocalizedDescription, getLocalizedTitle, getLocalizedName } from '..
 
 const DEFAULT_LOCALE: SupportedLocale = 'ko';
 
+// 앱인토스 환경에서는 항상 한국어 사용 (토스 앱 = 한국 서비스)
+const FORCE_KOREAN = true;
+
 /**
  * Detect browser locale and map to supported locale
  */
 function detectLocale(): SupportedLocale {
+  // 한국어 강제 설정 시 바로 반환
+  if (FORCE_KOREAN) {
+    return 'ko';
+  }
+
   const browserLang = navigator.language || (navigator as { userLanguage?: string }).userLanguage || '';
   const langCode = browserLang.split('-')[0].toLowerCase();
 

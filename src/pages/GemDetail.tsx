@@ -49,7 +49,7 @@ export function GemDetail() {
   const handleShare = async () => {
     if (!currentGem) return;
 
-    const success = await copyShareUrl(currentGem);
+    const success = await copyShareUrl(currentGem, locale);
     if (success) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
@@ -113,10 +113,12 @@ export function GemDetail() {
 
       {/* Header */}
       <header className={styles.header}>
+        {/* Back button disabled - Toss WebView provides native navigation
         <button className={styles.backBtn} onClick={() => navigate('/')}>
           <span className={styles.backIcon}>{'<'}</span>
           <span>{t.home}</span>
         </button>
+        */}
 
         <button className={styles.shareBtn} onClick={handleShare}>
           {copied ? t.copied : t.share}

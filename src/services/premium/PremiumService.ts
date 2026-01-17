@@ -55,24 +55,36 @@ export class PremiumService {
       // Dynamically import Toss IAP
       const { IAP } = await import('@apps-in-toss/web-framework');
 
-      const result = await IAP.createOneTimePurchaseOrder({
-        productId: SLOT_PACK_PRODUCT_ID,
+      return new Promise<boolean>((resolve, reject) => {
+        const cleanup = IAP.createOneTimePurchaseOrder({
+          options: {
+            sku: SLOT_PACK_PRODUCT_ID,
+            processProductGrant: async () => {
+              // Grant product (unlock slots)
+              await this.completePurchase(status);
+              return true;
+            },
+          },
+          onEvent: (event) => {
+            if (event.type === 'success') {
+              cleanup();
+              resolve(true);
+            }
+          },
+          onError: (error) => {
+            cleanup();
+            const err = error as { code?: string };
+            if (err.code === 'USER_CANCELED') {
+              console.log('[Premium] Purchase canceled by user');
+              resolve(false);
+            } else {
+              console.error('[Premium] Purchase failed:', error);
+              reject(error);
+            }
+          },
+        });
       });
-
-      if (result) {
-        await this.completePurchase(status);
-        return true;
-      }
-
-      return false;
     } catch (error: unknown) {
-      const err = error as { code?: string };
-
-      if (err.code === 'USER_CANCELED') {
-        console.log('[Premium] Purchase canceled by user');
-        return false;
-      }
-
       console.error('[Premium] Purchase failed:', error);
       throw error;
     }

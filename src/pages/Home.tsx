@@ -18,7 +18,6 @@ import { ELEMENT_ICONS, getElementLabel, getLocalizedDescription, getLocalizedNa
 import { useBackEvent, useLocale, usePremium } from '../hooks';
 import { useTranslation } from '../i18n';
 import { STORAGE_CONSTANTS } from '../services/storage/types';
-import { isInTossWebView } from '../utils/environment';
 import styles from './Home.module.css';
 
 // Preview gem for empty state - enticing users to summon
@@ -38,18 +37,6 @@ export function Home() {
 
   // Handle back button in apps-in-toss WebView
   useBackEvent();
-
-  // Close app handler (for Toss WebView)
-  const handleCloseApp = async () => {
-    if (isInTossWebView()) {
-      try {
-        const { closeView } = await import('@apps-in-toss/web-framework');
-        closeView();
-      } catch (e) {
-        console.error('Failed to close view:', e);
-      }
-    }
-  };
 
   const [showSummonModal, setShowSummonModal] = useState(false);
   const [isReplacing, setIsReplacing] = useState(false);
@@ -132,11 +119,9 @@ export function Home() {
       <div className={styles.container}>
         <StarField starCount={50} />
 
-        {/* Header */}
+        {/* Header - 앱인토스 네비게이션 바가 있으므로 X 버튼 제거 */}
         <header className={styles.header}>
-          <button className={styles.closeBtn} onClick={handleCloseApp}>
-            <span className={styles.closeIcon}>×</span>
-          </button>
+          <div className={styles.headerSpacer} />
           <h1 className={styles.headerTitle}>{t.homeTitle}</h1>
           <div className={styles.headerSpacer} />
         </header>
@@ -194,11 +179,9 @@ export function Home() {
     <div className={styles.container}>
       <StarField starCount={40} />
 
-      {/* Header */}
+      {/* Header - 앱인토스 네비게이션 바가 있으므로 X 버튼 제거 */}
       <header className={styles.header}>
-        <button className={styles.closeBtn} onClick={handleCloseApp}>
-          <span className={styles.closeIcon}>×</span>
-        </button>
+        <div className={styles.headerSpacer} />
         <h1 className={styles.headerTitle}>{t.yourGem}</h1>
         <div className={styles.headerSpacer} />
       </header>

@@ -20,6 +20,7 @@ export default defineConfig({
   brand: {
     displayName: '운명의 보석',
     primaryColor: '#1a1a2e',
+    icon: 'https://raw.githubusercontent.com/NAMYUNWOO/myicons/main/gemcard/icon.png',
     bridgeColorMode: 'inverted',
   },
   web: {

@@ -9,9 +9,10 @@ import {
   unishox2_compress_simple,
   unishox2_decompress_simple,
 } from 'unishox2.siara.cc';
-import type { MagicGem, Rarity, Element, Gender } from '../types/gem';
-import { getMagicCircleById, MAGIC_CIRCLES } from '../types/gem';
+import type { MagicGem, Rarity, Element, Gender, SupportedLocale } from '../types/gem';
+import { getMagicCircleById, MAGIC_CIRCLES, getLocalizedName } from '../types/gem';
 import { SAMPLE_GEM_TEMPLATES } from '../data/sampleGems';
+import { isInTossWebView } from './environment';
 
 // =============================================================================
 // Types
@@ -303,7 +304,7 @@ export function decodeGemFromUrl(encoded: string): Partial<MagicGem> | null {
 }
 
 /**
- * Generate full share URL
+ * Generate full share URL (web)
  */
 export function generateShareUrl(gem: MagicGem): string {
   const encoded = encodeGemToUrl(gem);
@@ -312,10 +313,66 @@ export function generateShareUrl(gem: MagicGem): string {
 }
 
 /**
- * Share gem URL using Web Share API (mobile/WebView) or clipboard (desktop)
- * Returns true if sharing succeeded
+ * Generate Toss deep link for sharing
+ * Format: intoss://gemcard/share/{encoded_gem_data}
  */
-export async function copyShareUrl(gem: MagicGem): Promise<boolean> {
+export function generateTossDeepLink(gem: MagicGem): string {
+  const encoded = encodeGemToUrl(gem);
+  return `intoss://gemcard/share/${encoded}`;
+}
+
+/**
+ * Share gem using Toss native share (App in Toss only)
+ * Uses getTossShareLink to create shareable link, then opens native share sheet
+ *
+ * @param gem - The gem to share
+ * @param locale - Current locale for gem name
+ * @param ogImageUrl - Optional OG image URL for preview
+ * @returns true if sharing succeeded
+ */
+export async function shareGemInToss(
+  gem: MagicGem,
+  locale: SupportedLocale = 'ko',
+  ogImageUrl?: string
+): Promise<boolean> {
+  try {
+    // Dynamic import to avoid issues in different environments
+    const { share, getTossShareLink } = await import('@apps-in-toss/web-framework');
+
+    const deepLink = generateTossDeepLink(gem);
+
+    // Generate Toss share link with optional OG image
+    const tossLink = await getTossShareLink(deepLink, ogImageUrl);
+
+    // Get localized gem name for the share message
+    const gemName = getLocalizedName(gem, locale);
+
+    // Open native share sheet with the link
+    await share({ message: `${gemName}\n${tossLink}` });
+
+    return true;
+  } catch (error) {
+    console.error('Toss share failed:', error);
+    return false;
+  }
+}
+
+/**
+ * Share gem URL using appropriate method based on environment
+ * - Toss WebView: Use Toss native share (getTossShareLink + share)
+ * - Web browser: Use Web Share API or clipboard
+ *
+ * @param gem - The gem to share
+ * @param locale - Current locale for gem name (used in Toss share)
+ * @returns true if sharing succeeded
+ */
+export async function copyShareUrl(gem: MagicGem, locale: SupportedLocale = 'ko'): Promise<boolean> {
+  // Use Toss native share when in Toss WebView
+  if (isInTossWebView()) {
+    return shareGemInToss(gem, locale);
+  }
+
+  // Web browser fallback
   const url = generateShareUrl(gem);
 
   // Try Web Share API first (works better in mobile/WebView)

@@ -12,7 +12,8 @@ import { isInTossWebView, isDevelopment } from '../../utils/environment';
  * - Test ID: For development and testing (provided by Toss)
  * - Production ID: Registered in Toss Ads Console
  */
-const TEST_REWARDED_AD_ID = 'ca-app-pub-3940256099942544/5224354917'; // Google AdMob test ID
+// const TEST_REWARDED_AD_ID = 'ca-app-pub-3940256099942544/5224354917'; // Google AdMob test ID
+const TEST_REWARDED_AD_ID = 'ait-ad-test-rewarded-id'; // 앱인토스 테스트 ID
 const PROD_REWARDED_AD_ID = 'gemcard-rewarded-replace'; // Replace after creating in console
 
 /**

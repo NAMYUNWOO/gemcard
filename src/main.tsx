@@ -1,9 +1,9 @@
-import { StrictMode } from 'react'
+import { TDSMobileAITProvider } from '@toss/tds-mobile-ait'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+  <TDSMobileAITProvider>
     <App />
-  </StrictMode>,
+  </TDSMobileAITProvider>
 )

@@ -9,27 +9,15 @@
 import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-/**
- * Check if running inside apps-in-toss WebView (ReactNativeWebView available)
- */
-function isInWebView(): boolean {
-  return typeof window !== 'undefined' && 'ReactNativeWebView' in window;
-}
-
 export function useBackEvent() {
   const location = useLocation();
   const navigate = useNavigate();
   const cleanupRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
-    // Only register back event handler in apps-in-toss WebView
-    if (!isInWebView()) {
-      return;
-    }
-
-    // Dynamic import to avoid errors in browser environment
-    import('@apps-in-toss/web-framework').then(({ bedrockEvent, closeView }) => {
-      cleanupRef.current = bedrockEvent.addEventListener('backEvent', {
+    // Dynamic import to avoid issues in different environments
+    import('@apps-in-toss/web-framework').then(({ graniteEvent, closeView }) => {
+      cleanupRef.current = graniteEvent.addEventListener('backEvent', {
         onEvent: () => {
           // location.key === 'default' means direct entry via scheme
           if (location.key === 'default') {
