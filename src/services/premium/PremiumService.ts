@@ -7,7 +7,6 @@
 
 import { isInTossWebView } from '../../utils/environment';
 import { getStorageService, STORAGE_CONSTANTS } from '../storage';
-import { setCacheLimitBySlots } from '../../utils/gemcadLoader';
 
 /**
  * Product ID for slot pack in Toss IAP
@@ -100,9 +99,6 @@ export class PremiumService {
     await storage.setMaxSlots(newMaxSlots);
     await storage.setPacksPurchased(newPacksPurchased);
 
-    // Update cache limit to match new slot count
-    this.updateCacheLimit(newMaxSlots);
-
     console.log(`[Premium] Purchase complete. New slots: ${newMaxSlots}`);
   }
 
@@ -123,13 +119,6 @@ export class PremiumService {
       canBuyPack: packsPurchased < STORAGE_CONSTANTS.MAX_PACK_PURCHASES,
       availableSlots: maxSlots - gems.length,
     };
-  }
-
-  /**
-   * Update geometry cache limit based on slot count
-   */
-  private updateCacheLimit(slots: number): void {
-    setCacheLimitBySlots(slots);
   }
 
   /**

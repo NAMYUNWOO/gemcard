@@ -31,6 +31,7 @@ body {
 .app-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 16px;
   border-bottom: 1px solid var(--gray-200);
   background: #fff;
@@ -40,24 +41,9 @@ body {
 }
 
 .app-header h1 {
-  flex: 1;
   font-size: 18px;
   font-weight: 600;
-  text-align: center;
   margin: 0;
-}
-
-.back-button {
-  width: 40px;
-  height: 40px;
-  border: none;
-  background: none;
-  font-size: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--gray-800);
 }
 
 /* 스켈레톤 로딩 */

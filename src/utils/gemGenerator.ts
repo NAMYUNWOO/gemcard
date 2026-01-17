@@ -4,10 +4,10 @@
  * Utilities for generating random magic gems.
  */
 
-import type { MagicGem, Rarity, GemOrigin, UserInfo } from '../types/gem';
-import { RARITY_CHANCES, RARITY_ORDER, getRandomMagicCircle } from '../types/gem';
 import { SAMPLE_GEM_TEMPLATES, getElementColor } from '../data/sampleGems';
 import { loadGemCadList, type GemShape } from '../types/card';
+import type { GemOrigin, MagicGem, Rarity, UserInfo } from '../types/gem';
+import { RARITY_CHANCES, RARITY_ORDER, getRandomMagicCircle } from '../types/gem';
 
 /**
  * Generate a unique ID
@@ -110,7 +110,7 @@ async function generateVisualParams(): Promise<{
   return {
     shape,
     color: '', // Will be set based on element
-    turbidity: Math.random(), // 0 ~ 1
+    turbidity: Math.random(), // 0.0 ~ 1.0  , other option : 0.5 ~ 1 : 0.5 + Math.random() * 0.5
     contrast: 0.5 + Math.random() * 0.5, // 0.5 ~ 1
   };
 }

@@ -312,14 +312,46 @@ export function generateShareUrl(gem: MagicGem): string {
 }
 
 /**
- * Copy share URL to clipboard
+ * Share gem URL using Web Share API (mobile/WebView) or clipboard (desktop)
+ * Returns true if sharing succeeded
  */
 export async function copyShareUrl(gem: MagicGem): Promise<boolean> {
+  const url = generateShareUrl(gem);
+
+  // Try Web Share API first (works better in mobile/WebView)
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: gem.name,
+        url: url,
+      });
+      return true;
+    } catch (e) {
+      // User cancelled or share failed - fall through to clipboard
+      if ((e as Error).name === 'AbortError') {
+        return false; // User cancelled
+      }
+    }
+  }
+
+  // Fallback to clipboard
   try {
-    const url = generateShareUrl(gem);
     await navigator.clipboard.writeText(url);
     return true;
   } catch {
-    return false;
+    // Final fallback: use execCommand (deprecated but wider support)
+    try {
+      const textarea = document.createElement('textarea');
+      textarea.value = url;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      const success = document.execCommand('copy');
+      document.body.removeChild(textarea);
+      return success;
+    } catch {
+      return false;
+    }
   }
 }

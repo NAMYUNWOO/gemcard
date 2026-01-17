@@ -22,7 +22,7 @@ import {
   getMagicCircleName,
   type Element,
 } from '../types/gem';
-import { useLocale } from '../hooks';
+import { useBackEvent, useLocale } from '../hooks';
 import { useTranslation } from '../i18n';
 import styles from './SharedGem.module.css';
 
@@ -31,6 +31,9 @@ export function SharedGem() {
   const navigate = useNavigate();
   const locale = useLocale();
   const t = useTranslation();
+
+  // Handle back button in apps-in-toss WebView
+  useBackEvent();
 
   // Decode gem from URL
   const gem = useMemo(() => {

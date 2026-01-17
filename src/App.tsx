@@ -4,7 +4,7 @@
  * Multi-slot gem system with Home page containing summon modal.
  */
 
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { GemDetail } from './pages/GemDetail';
 import { SharedGem } from './pages/SharedGem';
@@ -12,8 +12,8 @@ import './App.css';
 
 function App() {
   return (
-    // HashRouter 사용 - 앱인토스 WebView 라우팅 호환성 필수
-    <HashRouter>
+    // BrowserRouter 사용 - apps-in-toss 딥링크 호환성
+    <BrowserRouter>
       <Routes>
         {/* Main Routes */}
         <Route path="/" element={<Home />} />
@@ -26,7 +26,7 @@ function App() {
         <Route path="/collection" element={<Navigate to="/" replace />} />
         <Route path="/create" element={<Navigate to="/" replace />} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 

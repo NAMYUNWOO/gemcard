@@ -1,16 +1,29 @@
-// Apps-in-Toss Web Framework Configuration
-// Install: npm install @apps-in-toss/web-framework
-// Then run: npx ait init
+import { defineConfig } from '@apps-in-toss/web-framework/config';
+import { networkInterfaces } from 'os';
 
-export default {
-  appName: 'gemcard', // 앱인토스 콘솔에서 설정한 앱 이름
+function getLocalIP(): string {
+  const nets = networkInterfaces();
+  for (const name of ['en0', 'eth0', 'wlan0']) {
+    if (nets[name]) {
+      for (const net of nets[name]) {
+        if (net.family === 'IPv4' && !net.internal) {
+          return net.address;
+        }
+      }
+    }
+  }
+  return 'localhost';
+}
+
+export default defineConfig({
+  appName: 'gemcard',
   brand: {
-    displayName: '보석 점괘', // 화면에 노출될 앱의 한글 이름
-    primaryColor: '#1a1a2e', // 앱의 기본 색상
-    icon: '', // 앱 아이콘 이미지 주소 (나중에 설정)
+    displayName: '운명의 보석',
+    primaryColor: '#1a1a2e',
+    bridgeColorMode: 'inverted',
   },
   web: {
-    host: 'localhost',
+    host: getLocalIP(),
     port: 5173,
     outdir: 'dist',
     commands: {
@@ -18,11 +31,8 @@ export default {
       build: 'tsc -b && vite build',
     },
   },
-  webViewProps: {
-    type: 'game', // 전체 화면 사용 (게임/전체화면 콘텐츠용)
-  },
   permissions: [
     { name: 'clipboard', access: 'read' },
     { name: 'clipboard', access: 'write' },
   ],
-};
+});

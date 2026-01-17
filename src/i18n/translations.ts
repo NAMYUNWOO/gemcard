@@ -120,6 +120,9 @@ export interface Translations {
   purchasing: string;
   purchaseSuccess: string;
   purchaseFailed: string;
+
+  // Summoning Messages (random selection)
+  summoningMessages: string[];
 }
 
 const ko: Translations = {
@@ -168,7 +171,7 @@ const ko: Translations = {
   homeTitle: '보석 점괘',
   homeSubtitle: '당신만의 운명의 보석을 만나보세요',
   homeDescription: '이름, 생년월일을 입력하면 당신에게 어울리는 신비로운 보석이 나타납니다.',
-  summonYourGem: '점괘 보기',
+  summonYourGem: '운명의 보석 소환',
   yourGem: '나의 보석',
   viewDetails: '자세히 보기',
   summonNewGem: '다시 뽑기',
@@ -177,7 +180,7 @@ const ko: Translations = {
   gemOwned: '보석 1개 보유',
 
   // Gacha Page
-  gachaTitle: '점괘 보기',
+  gachaTitle: '운명의 보석 소환',
   gachaSubtitle: '정보를 입력하고 나만의 보석을 확인하세요',
   formName: '이름',
   formNamePlaceholder: '이름을 입력하세요',
@@ -242,6 +245,20 @@ const ko: Translations = {
   purchasing: '구매 중...',
   purchaseSuccess: '구매 완료!',
   purchaseFailed: '구매 실패',
+
+  // Summoning Messages
+  summoningMessages: [
+    '운명의 보석을 찾고 있습니다...',
+    '별들이 당신의 이름을 속삭입니다...',
+    '고대의 힘이 깨어나고 있습니다...',
+    '우주의 결정체가 형성되고 있습니다...',
+    '당신만을 위한 빛이 모이고 있습니다...',
+    '시간의 틈새에서 보석이 나타납니다...',
+    '영혼의 파장을 읽고 있습니다...',
+    '마법진이 당신의 운명을 직조합니다...',
+    '천상의 광물이 결집하고 있습니다...',
+    '신비로운 에너지가 응축되고 있습니다...',
+  ],
 };
 
 const en: Translations = {
@@ -364,14 +381,76 @@ const en: Translations = {
   purchasing: 'Purchasing...',
   purchaseSuccess: 'Purchase Complete!',
   purchaseFailed: 'Purchase Failed',
+
+  // Summoning Messages
+  summoningMessages: [
+    'Searching for your destined gem...',
+    'The stars whisper your name...',
+    'Ancient forces awaken...',
+    'A cosmic crystal takes form...',
+    'Light gathers just for you...',
+    'A gem emerges from the rift of time...',
+    'Reading the wavelength of your soul...',
+    'The magic circle weaves your fate...',
+    'Celestial minerals converge...',
+    'Mystical energy condenses...',
+  ],
+};
+
+const ja: Translations = {
+  ...en,
+  summoningMessages: [
+    '運命の宝石を探しています...',
+    '星々があなたの名前を囁いています...',
+    '古代の力が目覚めています...',
+    '宇宙の結晶が形成されています...',
+    'あなただけのために光が集まっています...',
+    '時の狭間から宝石が現れます...',
+    '魂の波長を読み取っています...',
+    '魔法陣があなたの運命を紡いでいます...',
+    '天上の鉱物が結集しています...',
+    '神秘的なエネルギーが凝縮しています...',
+  ],
+};
+
+const zh: Translations = {
+  ...en,
+  summoningMessages: [
+    '正在寻找命运之宝石...',
+    '星辰正在低语你的名字...',
+    '古老的力量正在觉醒...',
+    '宇宙的结晶正在形成...',
+    '光芒正为你汇聚...',
+    '宝石从时间的缝隙中浮现...',
+    '正在读取灵魂的波长...',
+    '魔法阵正在编织你的命运...',
+    '天界的矿物正在汇集...',
+    '神秘的能量正在凝聚...',
+  ],
+};
+
+const es: Translations = {
+  ...en,
+  summoningMessages: [
+    'Buscando tu gema del destino...',
+    'Las estrellas susurran tu nombre...',
+    'Fuerzas antiguas despiertan...',
+    'Un cristal cósmico toma forma...',
+    'La luz se reúne solo para ti...',
+    'Una gema emerge de la grieta del tiempo...',
+    'Leyendo la longitud de onda de tu alma...',
+    'El círculo mágico teje tu destino...',
+    'Minerales celestiales convergen...',
+    'Energía mística se condensa...',
+  ],
 };
 
 const translations: Record<SupportedLocale, Translations> = {
   ko,
   en,
-  zh: en, // Fallback to English for now
-  ja: en, // Fallback to English for now
-  es: en, // Fallback to English for now
+  zh,
+  ja,
+  es,
 };
 
 export function getTranslations(locale: SupportedLocale): Translations {

@@ -1,7 +1,9 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button, ConfirmDialog } from '@toss/tds-mobile';
 import { createLoan } from '../lib/db';
 import { compressImages, getImageSizeKB } from '../lib/imageUtils';
+import { useBackEvent } from '../hooks/useBackEvent';
 
 export default function AddLoan() {
   const navigate = useNavigate();
@@ -15,6 +17,10 @@ export default function AddLoan() {
   const [memo, setMemo] = useState('');
   const [photos, setPhotos] = useState<string[]>([]);
   const [saving, setSaving] = useState(false);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
+
+  // 공통 내비게이션 백버튼 이벤트 처리
+  useBackEvent();
 
   const handlePhotoSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -25,7 +31,7 @@ export default function AddLoan() {
       setPhotos((prev) => [...prev, ...compressed]);
     } catch (error) {
       console.error('Failed to compress images:', error);
-      alert('이미지 처리에 실패했어요');
+      setAlertMessage('이미지 처리에 실패했어요');
     }
   };
 
@@ -35,13 +41,13 @@ export default function AddLoan() {
 
   const handleSubmit = async () => {
     if (!borrowerName.trim()) {
-      alert('누구에게 빌려줬는지 입력해주세요');
+      setAlertMessage('누구에게 빌려줬는지 입력해주세요');
       return;
     }
 
     const parsedAmount = parseInt(amount.replace(/,/g, ''), 10);
     if (!parsedAmount || parsedAmount <= 0) {
-      alert('금액을 입력해주세요');
+      setAlertMessage('금액을 입력해주세요');
       return;
     }
 
@@ -61,7 +67,7 @@ export default function AddLoan() {
       navigate('/', { replace: true });
     } catch (error) {
       console.error('Failed to save loan:', error);
-      alert('저장에 실패했어요');
+      setAlertMessage('저장에 실패했어요');
     } finally {
       setSaving(false);
     }
@@ -91,9 +97,6 @@ export default function AddLoan() {
   return (
     <div className="page">
       <header className="app-header">
-        <button className="back-button" onClick={() => navigate(-1)}>
-          ←
-        </button>
         <h1>기록하기</h1>
       </header>
 
@@ -210,24 +213,27 @@ export default function AddLoan() {
       </div>
 
       <div className="bottom-button">
-        <button
-          style={{
-            width: '100%',
-            padding: 16,
-            fontSize: 16,
-            fontWeight: 600,
-            background: saving || !borrowerName.trim() || !amount ? '#D1D6DB' : '#3182F6',
-            color: 'white',
-            border: 'none',
-            borderRadius: 12,
-            cursor: saving || !borrowerName.trim() || !amount ? 'not-allowed' : 'pointer'
-          }}
+        <Button
+          variant="fill"
+          color="primary"
+          size="large"
+          display="full"
           onClick={handleSubmit}
           disabled={saving || !borrowerName.trim() || !amount}
+          loading={saving}
         >
-          {saving ? '저장 중...' : '저장하기'}
-        </button>
+          저장하기
+        </Button>
       </div>
+
+      {/* TDS 알림 다이얼로그 */}
+      <ConfirmDialog
+        open={alertMessage !== null}
+        onClose={() => setAlertMessage(null)}
+        title={<ConfirmDialog.Title>알림</ConfirmDialog.Title>}
+        description={<ConfirmDialog.Description>{alertMessage}</ConfirmDialog.Description>}
+        confirmButton={<ConfirmDialog.ConfirmButton onClick={() => setAlertMessage(null)}>확인</ConfirmDialog.ConfirmButton>}
+      />
     </div>
   );
 }

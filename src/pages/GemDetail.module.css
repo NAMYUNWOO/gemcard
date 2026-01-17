@@ -82,8 +82,8 @@
 
 /* Gem Display */
 .gemDisplay {
-  width: 280px;
-  height: 280px;
+  width: min(85vw, 360px);
+  aspect-ratio: 1;
   border-radius: var(--radius-3xl);
   overflow: hidden;
   transition: box-shadow 0.3s ease;
@@ -354,4 +354,39 @@
   font-family: var(--font-magic);
   font-style: italic;
   color: var(--text-dim);
+}
+
+/* =============================================================================
+   Gem Properties (Color & Transparency)
+   ============================================================================= */
+
+.gemProps {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.propItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.colorDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.propIcon {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.propValue {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
 }

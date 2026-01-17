@@ -1,8 +1,22 @@
+import { useEffect } from 'react';
+import { Button } from '@toss/tds-mobile';
+import { graniteEvent, closeView } from '@apps-in-toss/web-framework';
+
 interface OnboardingProps {
   onComplete: () => void;
 }
 
 export default function Onboarding({ onComplete }: OnboardingProps) {
+  // 온보딩에서 백버튼 누르면 앱 종료
+  useEffect(() => {
+    const cleanup = graniteEvent.addEventListener('backEvent', {
+      onEvent: () => {
+        closeView();
+      },
+    });
+    return cleanup;
+  }, []);
+
   const handleStart = () => {
     onComplete();
   };
@@ -183,23 +197,11 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
       </div>
 
       {/* 시작 버튼 */}
-      <button
-        onClick={handleStart}
-        style={{
-          width: '100%',
-          padding: 16,
-          fontSize: 16,
-          fontWeight: 600,
-          background: '#3182F6',
-          color: 'white',
-          border: 'none',
-          borderRadius: 12,
-          cursor: 'pointer',
-          marginTop: 24,
-        }}
-      >
-        시작하기
-      </button>
+      <div style={{ marginTop: 24 }}>
+        <Button variant="fill" color="primary" size="large" display="full" onClick={handleStart}>
+          시작하기
+        </Button>
+      </div>
     </div>
   );
 }

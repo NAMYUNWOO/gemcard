@@ -24,6 +24,7 @@ export interface GemSceneProps {
   senderName?: string;
   maxChars?: number;
   magicCircle?: number; // 1-16 for magic circle SVG
+  slotIndex?: number; // Slot index for IndexedDB geometry caching (0-9)
 }
 
 interface SceneState {
@@ -100,6 +101,7 @@ export function GemScene({
   senderName,
   maxChars,
   magicCircle,
+  slotIndex,
 }: GemSceneProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const backgroundRef = useRef<GemBackgroundHandle>(null);
@@ -142,7 +144,7 @@ export function GemScene({
 
   // Create gem mesh
   const createGemMesh = useCallback(
-    async (p: Omit<GemParams, 'id'>) => {
+    async (p: Omit<GemParams, 'id'>, cacheSlotIndex?: number) => {
       if (!sceneRef.current) return;
 
       // Increment version to invalidate any pending async operations
@@ -160,10 +162,10 @@ export function GemScene({
       // Get texture
       const texture = backgroundRef.current?.getTexture() || createFallbackTexture();
 
-      // Load geometry
+      // Load geometry (with slot-based caching if slotIndex provided)
       let geometry: THREE.BufferGeometry;
       try {
-        geometry = await loadGemCadGeometry(p.shape);
+        geometry = await loadGemCadGeometry(p.shape, cacheSlotIndex);
       } catch (e) {
         console.error('Failed to load GemCad geometry:', e);
         geometry = createFallbackBrilliantGeometry();
@@ -288,7 +290,7 @@ export function GemScene({
     // Create initial gem immediately with fallback texture if needed
     const initTimeout = setTimeout(() => {
       if (sceneRef.current && !sceneRef.current.gemstone) {
-        createGemMesh(params);
+        createGemMesh(params, slotIndex);
       }
     }, 50);
 
@@ -381,7 +383,10 @@ export function GemScene({
           (sceneRef.current.gemstone.material as THREE.Material).dispose();
           sceneRef.current.gemstone = null;
         }
+        // Properly release WebGL context
+        sceneRef.current.renderer.forceContextLoss();
         sceneRef.current.renderer.dispose();
+        sceneRef.current = null;
       }
 
       if (renderer.domElement.parentNode) {
@@ -390,8 +395,9 @@ export function GemScene({
     };
     // Note: params is intentionally not in deps - initial creation uses captured value,
     // subsequent changes are handled by the params useEffect
+    // slotIndex is captured at init time for initial createGemMesh call
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dynamicBackground, backgroundImage, cardMessage, senderName, createGemMesh, dragRotation]);
+  }, [dynamicBackground, backgroundImage, cardMessage, senderName, createGemMesh, dragRotation, slotIndex]);
 
   // Update gem when params change (after initial creation)
   const isInitialMount = useRef(true);
@@ -402,9 +408,9 @@ export function GemScene({
       return;
     }
     if (sceneRef.current) {
-      createGemMesh(params);
+      createGemMesh(params, slotIndex);
     }
-  }, [params.shape, params.color, params.turbidity, params.detailLevel, createGemMesh]);
+  }, [params.shape, params.color, params.turbidity, params.detailLevel, slotIndex, createGemMesh]);
 
   // Update contrast uniform only (performance optimization)
   useEffect(() => {

@@ -18,12 +18,14 @@ interface GemCardProps {
   gem: MagicGem;
   index?: number; // For stagger animation
   className?: string;
+  slotIndex?: number; // For IndexedDB geometry caching
 }
 
 export const GemCard = memo(function GemCard({
   gem,
   index = 0,
   className = '',
+  slotIndex,
 }: GemCardProps) {
   const locale = useLocale();
   const gemParams = {
@@ -50,6 +52,7 @@ export const GemCard = memo(function GemCard({
             autoRotate
             dynamicBackground
             magicCircle={gem.magicCircle?.id ?? 17}
+            slotIndex={slotIndex}
           />
         </div>
 

@@ -43,6 +43,7 @@ export function SummonModal({ isOpen, onClose, targetSlot, isReplacing, onSummon
   const t = useTranslation();
 
   const [state, setState] = useState<SummonState>('form');
+  const [summoningMessageIndex, setSummoningMessageIndex] = useState(0);
 
   // Form state
   const [name, setName] = useState('');
@@ -76,6 +77,14 @@ export function SummonModal({ isOpen, onClose, targetSlot, isReplacing, onSummon
       adService.preloadRewardedAd();
     }
   }, [isOpen]);
+
+  // Randomly select summoning message when summoning starts
+  useEffect(() => {
+    if (state === 'summoning') {
+      const randomIndex = Math.floor(Math.random() * t.summoningMessages.length);
+      setSummoningMessageIndex(randomIndex);
+    }
+  }, [state, t.summoningMessages.length]);
 
   // Sync birthDate when year/month/day change (with padding for storage)
   useEffect(() => {
@@ -348,13 +357,21 @@ export function SummonModal({ isOpen, onClose, targetSlot, isReplacing, onSummon
                 {t.formError}
               </p>
 
-              <MagicButton
-                onClick={handleFormSubmit}
-                size="lg"
-                className={styles.summonBtn}
-              >
-                {t.summonButton}
-              </MagicButton>
+              <div className={styles.formActions}>
+                <MagicButton
+                  onClick={onClose}
+                  variant="secondary"
+                  size="lg"
+                >
+                  {t.replaceCancel}
+                </MagicButton>
+                <MagicButton
+                  onClick={handleFormSubmit}
+                  size="lg"
+                >
+                  {t.summonButton}
+                </MagicButton>
+              </div>
             </div>
           </div>
         )}
@@ -411,7 +428,7 @@ export function SummonModal({ isOpen, onClose, targetSlot, isReplacing, onSummon
             </div>
 
             <p className={styles.summoningText}>
-              "{t.summoningMessage}"
+              "{t.summoningMessages[summoningMessageIndex]}"
             </p>
           </>
         )}

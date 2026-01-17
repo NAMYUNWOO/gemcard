@@ -3138,44 +3138,116 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
  * Color palettes by element for random generation
  */
 export const ELEMENT_COLORS: Record<Element, string[]> = {
-  // Fire: From blazing flames to cooling embers
+  // Fire: 백열하는 불꽃에서 식어가는 잉벌까지 (폭발적인 에너지)
   fire: [
-    '#FF2400', '#FF4500', '#FF8C00', '#FFD700', '#E25822', '#B22222', '#3D0C02'
+    '#FF0000', // Crimson High
+    '#FF4500', // Orange Red
+    '#DB2303', // Blazing Scarlet
+    '#D74B00', // Deep Amber
+    '#FF2F2F', // Vivid Red
+    '#A30000', // Dark Garnet
+    '#E25822', // Flame
+    '#B22222', // Firebrick
+    '#8B0000', // Blood Core
+    '#CA0000'  // Intense Ruby
   ],
 
-  // Water: From shallow coral seas to deep ocean darkness
+  // Water: 청명한 산호초에서 빛이 닿지 않는 심해까지 (유동적 신비)
   water: [
-    '#E0FFFF', '#7FFFD4', '#00BFFF', '#1E90FF', '#4169E1', '#000080', '#081827'
+    '#00FFFF', // Cyan Neon
+    '#00CED1', // Dark Turquoise
+    '#40E0D0', // Crystal Turquoise
+    '#1E90FF', // Dodger Blue
+    '#00BFFF', // Deep Sky
+    '#4169E1', // Royal Blue
+    '#0000CD', // Medium Blue
+    '#0047AB', // Cobalt
+    '#191970', // Midnight Navy
+    '#0A192F'  // Abyssal Azure
   ],
 
-  // Earth: Lush forests, solid rocks, and minerals
+  // Earth: 울창한 수풀의 생명력과 견고한 대륙의 광물 (대지의 무게)
   earth: [
-    '#2E8B57', '#556B2F', '#8B4513', '#A0522D', '#D2691E', '#B8860B', '#3C2F2F'
+    '#32CD32', // Lime Vitality
+    '#228B22', // Forest Core
+    '#006400', // Ancient Green
+    '#556B2F', // Dark Olive
+    '#8B4513', // Saddle Brown
+    '#A0522D', // Sienna Soil
+    '#D4AF37', // Metallic Gold
+    '#B8860B', // Goldenrod
+    '#CD7F32', // Bronze
+    '#3E2723'  // Deep Crust
   ],
 
-  // Wind: Invisible air, storms, and atmospheric clarity
+  // Wind: 폭풍 전야의 대기와 투명한 하늘의 명료함 (해방된 속도)
   wind: [
-    '#FFFFFF', '#F5F5F5', '#AFEEEE', '#87CEEB', '#B0C4DE', '#708090', '#2F4F4F'
+    '#FFFFFF', // Pure Atmosphere
+    '#F0FFFF', // Azure Mist
+    '#E0F7FA', // Pale Cyan
+    '#B2EBF2', // Minty Air
+    '#87CEEB', // Sky Blue
+    '#ADD8E6', // Light Blue
+    '#B0C4DE', // Light Steel
+    '#708090', // Stormy Slate
+    '#455A64', // Blue Gray
+    '#263238'  // Hurricane Shadow
   ],
 
-  // Light: Radiant glory and divine sanctity
+  // Light: 성스러운 광휘와 찬란한 천상의 축복 (신성한 권능)
   light: [
-    '#FFFFFF', '#FFFAF0', '#F0E68C', '#FFFACD', '#FFD700', '#E6E6FA', '#FAFAD2'
+    '#FFFFFF', // Divine White
+    '#FFFDE7', // Cream Glow
+    '#FFF9C4', // Soft Primrose
+    '#FFF59D', // Lemon Chiffon
+    '#FFECB3', // Amber Light
+    '#FFE082', // Warm Sun
+    '#FFD54F', // Radiant Gold
+    '#E6E6FA', // Sacred Lavender
+    '#F3E5F5', // Pearlescent
+    '#FFF3E0'  // Champagne Aura
   ],
 
-  // Darkness: The void that swallows light and purple abyss
+  // Darkness: 빛을 삼키는 보랏빛 공허와 자주색 심연 (금기된 신비)
   darkness: [
-    '#000000', '#0D0D1A', '#1C1C3D', '#2F1B41', '#4A235A', '#191970', '#2C3E50'
+    '#240046', // Deepest Violet
+    '#3C096C', // Royal Purple
+    '#5A189A', // Imperial Purple
+    '#7B2CBF', // Amethyst Power
+    '#4C1D70', // Shadow Violet
+    '#511845', // Dark Mulberry
+    '#631131', // Deep Magenta
+    '#581845', // Plum Shadow
+    '#301934', // Void Purple
+    '#1A0033'  // Midnight Abyss
   ],
 
-  // Spirit: Ghostly fluorescence and soul mysticism
+  // Spirit: 비물질적인 영적 형광과 몽환적인 신비 (영적 주파수)
   spirit: [
-    '#ADFF2F', '#00FA9A', '#7FFFD4', '#E0B0FF', '#DA70D6', '#9370DB', '#483D8B'
+    '#ADFF2F', // Neon Green
+    '#7FFF00', // Chartreuse Spark
+    '#00FF7F', // Spring Spirit
+    '#50C878', // Emerald Ghost
+    '#00FA9A', // Medium Spring
+    '#E0B0FF', // Mauve Soul
+    '#DA70D6', // Orchid Mist
+    '#BA55D3', // Medium Orchid
+    '#9370DB', // Mystic Purple
+    '#483D8B'  // Dark Spiritual
   ],
 
-  // Mind: Neural glow and psychic focus
+  // Mind: 사이킥 에너지의 폭발과 초월적 지능의 박동 (신경의 빛)
   mind: [
-    '#00FFFF', '#7DF9FF', '#120A8F', '#4B0082', '#6A5ACD', '#8A2BE2', '#E6E6FA'
+    '#00E5FF', // Electric Cyan
+    '#00B0FF', // Vivid Azure
+    '#2962FF', // Hyper Blue
+    '#6200EA', // Psychic Indigo
+    '#AA00FF', // Neural Purple
+    '#D500F9', // Neon Magenta
+    '#FF00FF', // Pure Fuchsia
+    '#FF4081', // Pink Focus
+    '#1DE9B6', // Telepathic Teal
+    '#120A8F'  // Ultramarine
   ],
 };
 

@@ -6,7 +6,7 @@
  */
 
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { StarField } from '../components/StarField';
 import { GemScene } from '../components/GemScene';
 import { RarityBadge } from '../components/RarityBadge';
@@ -14,11 +14,11 @@ import { MagicButton } from '../components/MagicButton';
 import { SummonModal } from '../components/SummonModal';
 import { ParticleSpoiler } from '../components/ParticleSpoiler';
 import { useGemStore } from '../stores/gemStore';
-import { copyShareUrl } from '../utils/gemShare';
 import { ELEMENT_ICONS, getElementLabel, getLocalizedDescription, getLocalizedName, getLocalizedTitle, type Element } from '../types/gem';
-import { useLocale, usePremium } from '../hooks';
+import { useBackEvent, useLocale, usePremium } from '../hooks';
 import { useTranslation } from '../i18n';
 import { STORAGE_CONSTANTS } from '../services/storage/types';
+import { isInTossWebView } from '../utils/environment';
 import styles from './Home.module.css';
 
 // Preview gem for empty state - enticing users to summon
@@ -33,8 +33,24 @@ const PREVIEW_GEM_PARAMS = {
 
 export function Home() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { currentGem, gems, maxSlots, activeSlot, setActiveSlot, getAllGems, powerDescRevealed, setPowerDescRevealed } = useGemStore();
-  const [copied, setCopied] = useState(false);
+
+  // Handle back button in apps-in-toss WebView
+  useBackEvent();
+
+  // Close app handler (for Toss WebView)
+  const handleCloseApp = async () => {
+    if (isInTossWebView()) {
+      try {
+        const { closeView } = await import('@apps-in-toss/web-framework');
+        closeView();
+      } catch (e) {
+        console.error('Failed to close view:', e);
+      }
+    }
+  };
+
   const [showSummonModal, setShowSummonModal] = useState(false);
   const [isReplacing, setIsReplacing] = useState(false);
   // Local state to track target slot for summoning - avoids Zustand/React sync issues
@@ -53,25 +69,18 @@ export function Home() {
     refreshPremium();
   }, [gems, maxSlots, refreshPremium]);
 
-  const handleShare = async () => {
-    try {
-      if (currentGem) {
-        // Share gem URL
-        const success = await copyShareUrl(currentGem);
-        if (success) {
-          setCopied(true);
-          setTimeout(() => setCopied(false), 2000);
-        }
-      } else {
-        // Share service URL
-        await navigator.clipboard.writeText(window.location.origin);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      }
-    } catch {
-      // Clipboard failed
+  // Handle navigation state (e.g., from GemDetail "다시 뽑기" button)
+  useEffect(() => {
+    const state = location.state as { openSummonModal?: boolean } | null;
+    if (state?.openSummonModal) {
+      // Open summon modal for active slot
+      setSummonTargetSlot(activeSlot);
+      setIsReplacing(gems[activeSlot] !== undefined);
+      setShowSummonModal(true);
+      // Clear the state to prevent re-opening on refresh
+      navigate(location.pathname, { replace: true, state: null });
     }
-  };
+  }, [location.state, activeSlot, gems, navigate, location.pathname]);
 
   const handleSlotClick = (slot: number) => {
     const gem = gems[slot];
@@ -123,15 +132,16 @@ export function Home() {
       <div className={styles.container}>
         <StarField starCount={50} />
 
-        {/* Share Button */}
-        <header className={styles.emptyHeader}>
-          <button className={styles.shareBtn} onClick={handleShare}>
-            {copied ? t.copied : t.share}
+        {/* Header */}
+        <header className={styles.header}>
+          <button className={styles.closeBtn} onClick={handleCloseApp}>
+            <span className={styles.closeIcon}>×</span>
           </button>
+          <h1 className={styles.headerTitle}>{t.homeTitle}</h1>
+          <div className={styles.headerSpacer} />
         </header>
 
         <main className={styles.emptyState}>
-          <h1 className={styles.title}>{t.homeTitle}</h1>
           <div className={styles.divider} />
           <p className={styles.subtitle}>
             "{t.homeSubtitle}"
@@ -186,10 +196,11 @@ export function Home() {
 
       {/* Header */}
       <header className={styles.header}>
-        <h1 className={styles.headerTitle}>{t.yourGem}</h1>
-        <button className={styles.shareBtn} onClick={handleShare}>
-          {copied ? t.copied : t.share}
+        <button className={styles.closeBtn} onClick={handleCloseApp}>
+          <span className={styles.closeIcon}>×</span>
         </button>
+        <h1 className={styles.headerTitle}>{t.yourGem}</h1>
+        <div className={styles.headerSpacer} />
       </header>
 
       {/* Main Content */}
@@ -230,6 +241,7 @@ export function Home() {
                         autoRotate={false}
                         dynamicBackground={false}
                         magicCircle={gem.magicCircle?.id ?? 17}
+                        slotIndex={slot}
                       />
                     </div>
                     <span className={styles.slotGemName}>{getLocalizedName(gem, locale)}</span>
@@ -280,6 +292,7 @@ export function Home() {
                   autoRotate
                   dynamicBackground
                   magicCircle={currentGem.magicCircle?.id ?? 17}
+                  slotIndex={activeSlot}
                 />
               </div>
 

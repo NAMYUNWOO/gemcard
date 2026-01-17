@@ -7,57 +7,35 @@ const gemCadCache = new Map<string, THREE.BufferGeometry>();
 
 // IndexedDB configuration for persistent caching
 const DB_NAME = 'gemcard-geometry-cache';
-const DB_VERSION = 1;
 const STORE_NAME = 'geometries';
 
-// Dynamic cache limit configuration
-const DEFAULT_CACHE_SIZE = 1;
-const PREMIUM_CACHE_SIZE = 5;
-const CACHE_LIMIT_KEY = 'gemcard-cache-limit';
-
-let cacheLimit = DEFAULT_CACHE_SIZE;
-
-/**
- * Initialize cache limit from localStorage
- * Called at module load time
- */
-function initCacheLimit(): void {
-  try {
-    const stored = localStorage.getItem(CACHE_LIMIT_KEY);
-    if (stored) {
-      const parsed = parseInt(stored, 10);
-      if (parsed === PREMIUM_CACHE_SIZE) {
-        cacheLimit = PREMIUM_CACHE_SIZE;
-      }
-    }
-  } catch {
-    // localStorage access failed, keep default
-  }
-}
-
-// Initialize cache limit on module load
-initCacheLimit();
+// Slot-based cache configuration (max 10 slots)
+const MAX_CACHE_SLOTS = 10;
 
 let dbPromise: Promise<IDBDatabase> | null = null;
 
 /**
  * Open IndexedDB connection (singleton pattern)
+ * Uses slotIndex as primary key for slot-based caching
  */
 function openDB(): Promise<IDBDatabase> {
   if (dbPromise) return dbPromise;
 
   dbPromise = new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    // Bump version to 2 to trigger upgrade for new schema
+    const request = indexedDB.open(DB_NAME, 2);
 
     request.onerror = () => reject(request.error);
     request.onsuccess = () => resolve(request.result);
 
     request.onupgradeneeded = (event) => {
       const db = (event.target as IDBOpenDBRequest).result;
-      if (!db.objectStoreNames.contains(STORE_NAME)) {
-        const store = db.createObjectStore(STORE_NAME, { keyPath: 'shapeId' });
-        store.createIndex('timestamp', 'timestamp', { unique: false });
+      // Delete old store if exists (migration from shapeId-based to slotIndex-based)
+      if (db.objectStoreNames.contains(STORE_NAME)) {
+        db.deleteObjectStore(STORE_NAME);
       }
+      // Create new store with slotIndex as key
+      db.createObjectStore(STORE_NAME, { keyPath: 'slotIndex' });
     };
   });
 
@@ -110,21 +88,24 @@ function arrayBufferToGeometry(buffer: ArrayBuffer): THREE.BufferGeometry {
 }
 
 /**
- * Get geometry from IndexedDB cache
- * Updates timestamp on hit for LRU tracking
+ * Get geometry from IndexedDB cache by slot index
+ * Returns cached geometry only if shapeId matches (same gem in same slot)
  */
-async function getFromCache(shapeId: string): Promise<THREE.BufferGeometry | null> {
+async function getFromCache(slotIndex: number, shapeId: string): Promise<THREE.BufferGeometry | null> {
+  if (slotIndex < 0 || slotIndex >= MAX_CACHE_SLOTS) {
+    return null;
+  }
+
   try {
     const db = await openDB();
     return new Promise((resolve) => {
-      const tx = db.transaction(STORE_NAME, 'readwrite');
+      const tx = db.transaction(STORE_NAME, 'readonly');
       const store = tx.objectStore(STORE_NAME);
-      const request = store.get(shapeId);
+      const request = store.get(slotIndex);
 
       request.onsuccess = () => {
-        if (request.result?.data) {
-          // Update timestamp for LRU
-          store.put({ ...request.result, timestamp: Date.now() });
+        // Only return if shapeId matches (same gem in same slot)
+        if (request.result?.data && request.result?.shapeId === shapeId) {
           resolve(arrayBufferToGeometry(request.result.data));
         } else {
           resolve(null);
@@ -138,45 +119,14 @@ async function getFromCache(shapeId: string): Promise<THREE.BufferGeometry | nul
 }
 
 /**
- * Set cache limit (called by payment system)
- * @param isPremium true for 5 items, false for 1 item
- * @deprecated Use setCacheLimitBySlots instead for dynamic slot-based caching
+ * Save geometry to IndexedDB cache at specific slot index
+ * Overwrites existing data at that slot
  */
-export function setCacheLimit(isPremium: boolean): void {
-  cacheLimit = isPremium ? PREMIUM_CACHE_SIZE : DEFAULT_CACHE_SIZE;
-  try {
-    localStorage.setItem(CACHE_LIMIT_KEY, String(cacheLimit));
-  } catch {
-    // localStorage save failed, ignore
+async function saveToCache(slotIndex: number, shapeId: string, geometry: THREE.BufferGeometry): Promise<void> {
+  if (slotIndex < 0 || slotIndex >= MAX_CACHE_SLOTS) {
+    return;
   }
-}
 
-/**
- * Set cache limit by slot count
- * Allows dynamic caching based on purchased slots (1-10)
- * @param slots Number of slots (1-10)
- */
-export function setCacheLimitBySlots(slots: number): void {
-  cacheLimit = Math.min(Math.max(slots, 1), 10);
-  try {
-    localStorage.setItem(CACHE_LIMIT_KEY, String(cacheLimit));
-  } catch {
-    // localStorage save failed, ignore
-  }
-}
-
-/**
- * Get current cache limit
- */
-export function getCacheLimit(): number {
-  return cacheLimit;
-}
-
-/**
- * Save geometry to IndexedDB cache with LRU eviction
- * Keeps maximum cacheLimit items (dynamic based on premium status)
- */
-async function saveToCache(shapeId: string, geometry: THREE.BufferGeometry): Promise<void> {
   try {
     const db = await openDB();
     const data = geometryToArrayBuffer(geometry);
@@ -184,23 +134,8 @@ async function saveToCache(shapeId: string, geometry: THREE.BufferGeometry): Pro
     const tx = db.transaction(STORE_NAME, 'readwrite');
     const store = tx.objectStore(STORE_NAME);
 
-    // Check current count and evict oldest if at max capacity
-    const countRequest = store.count();
-    countRequest.onsuccess = () => {
-      if (countRequest.result >= cacheLimit) {
-        // Delete oldest item (lowest timestamp)
-        const index = store.index('timestamp');
-        const cursorRequest = index.openCursor();
-        cursorRequest.onsuccess = () => {
-          const cursor = cursorRequest.result;
-          if (cursor) {
-            cursor.delete();
-          }
-        };
-      }
-    };
-
-    store.put({ shapeId, data, timestamp: Date.now() });
+    // Simply put at slotIndex - overwrites if exists
+    store.put({ slotIndex, shapeId, data });
   } catch (e) {
     console.warn('Failed to cache geometry:', e);
   }
@@ -331,21 +266,27 @@ export function createFallbackBrilliantGeometry(): THREE.BufferGeometry {
  * - Runtime CSG generation happens once per shape, then cached
  *
  * Caching strategy (3-tier):
- * 1. Memory cache (fastest, session-scoped)
- * 2. IndexedDB cache (persistent, LRU with dynamic limit: 1 free / 5 premium)
+ * 1. Memory cache (fastest, session-scoped, keyed by shapeId)
+ * 2. IndexedDB cache (persistent, keyed by slotIndex, max 10 slots)
  * 3. .asc file parsing + CSG generation (slowest, network-dependent)
+ *
+ * @param shapeId - The gem shape identifier (e.g., 'pc01006')
+ * @param slotIndex - Optional slot index for IndexedDB caching (0-9).
+ *                    If not provided, only memory cache is used.
  */
-export async function loadGemCadGeometry(shapeId: string): Promise<THREE.BufferGeometry> {
+export async function loadGemCadGeometry(shapeId: string, slotIndex?: number): Promise<THREE.BufferGeometry> {
   // 1. Check memory cache first (fastest)
   if (gemCadCache.has(shapeId)) {
     return gemCadCache.get(shapeId)!.clone();
   }
 
-  // 2. Check IndexedDB cache (persistent across sessions)
-  const cached = await getFromCache(shapeId);
-  if (cached) {
-    gemCadCache.set(shapeId, cached);
-    return cached.clone();
+  // 2. Check IndexedDB cache (persistent across sessions) - only if slotIndex provided
+  if (slotIndex !== undefined) {
+    const cached = await getFromCache(slotIndex, shapeId);
+    if (cached) {
+      gemCadCache.set(shapeId, cached);
+      return cached.clone();
+    }
   }
 
   // 3. Parse .asc file and generate geometry using CSG
@@ -363,8 +304,10 @@ export async function loadGemCadGeometry(shapeId: string): Promise<THREE.BufferG
   // Store in memory cache
   gemCadCache.set(shapeId, geometry);
 
-  // Store in IndexedDB cache (async, non-blocking)
-  saveToCache(shapeId, geometry);
+  // Store in IndexedDB cache (async, non-blocking) - only if slotIndex provided
+  if (slotIndex !== undefined) {
+    saveToCache(slotIndex, shapeId, geometry);
+  }
 
   return geometry.clone();
 }

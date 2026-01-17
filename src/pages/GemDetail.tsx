@@ -25,17 +25,20 @@ import {
   getMagicCircleMeaning,
   type Element,
 } from '../types/gem';
-import { useLocale, useRevealAction } from '../hooks';
+import { useBackEvent, useLocale, useRevealAction } from '../hooks';
 import { useTranslation } from '../i18n';
 import styles from './GemDetail.module.css';
 
 export function GemDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { currentGem, powerDescRevealed, setPowerDescRevealed } = useGemStore();
+  const { currentGem, activeSlot, powerDescRevealed, setPowerDescRevealed } = useGemStore();
   const [copied, setCopied] = useState(false);
   const locale = useLocale();
   const t = useTranslation();
+
+  // Handle back button in apps-in-toss WebView
+  useBackEvent();
 
   // Spoiler reveal action hook
   const { executeAction: handleRevealClick } = useRevealAction({
@@ -130,7 +133,25 @@ export function GemDetail() {
             autoRotate
             dynamicBackground
             magicCircle={gem.magicCircle?.id ?? 17}
+            slotIndex={activeSlot}
           />
+        </div>
+
+        {/* Gem Properties */}
+        <div className={styles.gemProps}>
+          <div className={styles.propItem}>
+            <span
+              className={styles.colorDot}
+              style={{ backgroundColor: gem.color }}
+            />
+            <span className={styles.propValue}>{gem.color}</span>
+          </div>
+          <div className={styles.propItem}>
+            <span className={styles.propIcon}>◐</span>
+            <span className={styles.propValue}>
+              {Math.round((1 - gem.turbidity) * 100)}%
+            </span>
+          </div>
         </div>
 
         {/* Gem Info */}
@@ -228,7 +249,7 @@ export function GemDetail() {
         <div className={styles.actions}>
           <MagicButton
             size="md"
-            onClick={() => navigate('/summon')}
+            onClick={() => navigate('/', { state: { openSummonModal: true } })}
           >
             {t.summonNewGem}
           </MagicButton>

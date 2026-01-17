@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Home from './pages/Home';
 import AddLoan from './pages/AddLoan';
@@ -31,13 +31,13 @@ function App() {
   }
 
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/add" element={<AddLoan />} />
         <Route path="/loan/:id" element={<LoanDetail />} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
