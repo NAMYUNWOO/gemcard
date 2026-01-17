@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import type { SupportedLocale, MagicPower } from '../types/gem';
 import { getLocalizedDescription } from '../types/gem';
 
-const DEFAULT_LOCALE: SupportedLocale = 'en';
+const DEFAULT_LOCALE: SupportedLocale = 'ko';
 
 /**
  * Detect browser locale and map to supported locale

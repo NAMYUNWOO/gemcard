@@ -13,8 +13,9 @@ import { RarityBadge } from '../components/RarityBadge';
 import { MagicButton } from '../components/MagicButton';
 import { useGemStore } from '../stores/gemStore';
 import { copyShareUrl } from '../utils/gemShare';
-import { ELEMENT_ICONS, ELEMENT_LABELS, getLocalizedDescription, type Element } from '../types/gem';
+import { ELEMENT_ICONS, getElementLabel, getLocalizedDescription, type Element } from '../types/gem';
 import { useLocale } from '../hooks';
+import { useTranslation } from '../i18n';
 import styles from './Home.module.css';
 
 // Preview gem for empty state - enticing users to summon
@@ -32,6 +33,7 @@ export function Home() {
   const { currentGem } = useGemStore();
   const [copied, setCopied] = useState(false);
   const locale = useLocale();
+  const t = useTranslation();
 
   const handleShare = async () => {
     try {
@@ -62,20 +64,18 @@ export function Home() {
         {/* Share Button */}
         <header className={styles.emptyHeader}>
           <button className={styles.shareBtn} onClick={handleShare}>
-            {copied ? 'Copied!' : 'Share'}
+            {copied ? t.copied : t.share}
           </button>
         </header>
 
         <main className={styles.emptyState}>
-          <h1 className={styles.title}>Arcane Gems</h1>
+          <h1 className={styles.title}>{t.homeTitle}</h1>
           <div className={styles.divider} />
           <p className={styles.subtitle}>
-            "Your destiny awaits crystallization..."
+            "{t.homeSubtitle}"
           </p>
           <p className={styles.description}>
-            Summon a mystical gem bound to your essence.
-            <br />
-            Each soul may possess only one gem at a time.
+            {t.homeDescription}
           </p>
 
           {/* Preview Gem */}
@@ -90,7 +90,7 @@ export function Home() {
           </div>
 
           <MagicButton onClick={() => navigate('/summon')} size="lg">
-            Summon Your Gem
+            {t.summonYourGem}
           </MagicButton>
         </main>
       </div>
@@ -115,9 +115,9 @@ export function Home() {
 
       {/* Header */}
       <header className={styles.header}>
-        <h1 className={styles.headerTitle}>Your Gem</h1>
+        <h1 className={styles.headerTitle}>{t.yourGem}</h1>
         <button className={styles.shareBtn} onClick={handleShare}>
-          {copied ? 'Copied!' : 'Share'}
+          {copied ? t.copied : t.share}
         </button>
       </header>
 
@@ -165,7 +165,7 @@ export function Home() {
 
             {element && (
               <span className={styles.elementLabel}>
-                Element: {ELEMENT_LABELS[element]}
+                {t.element}: {getElementLabel(element, locale)}
               </span>
             )}
           </div>
@@ -173,7 +173,7 @@ export function Home() {
           {/* User Info (if exists) */}
           {currentGem.userInfo?.name && (
             <div className={styles.bondedTo}>
-              <span className={styles.bondedLabel}>Bonded to</span>
+              <span className={styles.bondedLabel}>{t.bondedTo}</span>
               <span className={styles.bondedName}>{currentGem.userInfo.name}</span>
             </div>
           )}
@@ -186,13 +186,13 @@ export function Home() {
             variant="secondary"
             size="md"
           >
-            View Details
+            {t.viewDetails}
           </MagicButton>
           <MagicButton
             onClick={() => navigate('/summon')}
             size="md"
           >
-            Summon New Gem
+            {t.summonNewGem}
           </MagicButton>
         </div>
       </main>

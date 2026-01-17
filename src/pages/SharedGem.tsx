@@ -14,18 +14,21 @@ import { MagicButton } from '../components/MagicButton';
 import { decodeGemFromUrl } from '../utils/gemShare';
 import {
   ELEMENT_ICONS,
-  ELEMENT_LABELS,
-  GENDER_LABELS,
+  getElementLabel,
+  getGenderLabel,
   getLocalizedDescription,
+  getMagicCircleName,
   type Element,
 } from '../types/gem';
 import { useLocale } from '../hooks';
+import { useTranslation } from '../i18n';
 import styles from './SharedGem.module.css';
 
 export function SharedGem() {
   const { data } = useParams<{ data: string }>();
   const navigate = useNavigate();
   const locale = useLocale();
+  const t = useTranslation();
 
   // Decode gem from URL
   const gem = useMemo(() => {
@@ -39,12 +42,12 @@ export function SharedGem() {
       <div className={styles.container}>
         <StarField starCount={30} />
         <div className={styles.errorState}>
-          <h2 className={styles.errorTitle}>Invalid Link</h2>
+          <h2 className={styles.errorTitle}>{t.invalidLink}</h2>
           <p className={styles.errorText}>
-            This gem link is invalid or corrupted.
+            {t.invalidLinkMessage}
           </p>
           <MagicButton onClick={() => navigate('/')}>
-            Go Home
+            {t.goHome}
           </MagicButton>
         </div>
       </div>
@@ -84,7 +87,7 @@ export function SharedGem() {
       {/* Header */}
       <header className={styles.header}>
         <span className={styles.sharedLabel}>
-          {gem.userInfo?.name ? `${gem.userInfo.name}'s Gem` : 'Shared Gem'}
+          {gem.userInfo?.name ? `${gem.userInfo.name}${t.someoneGem}` : t.sharedGem}
         </span>
       </header>
 
@@ -130,7 +133,7 @@ export function SharedGem() {
 
               {element && (
                 <span className={styles.elementLabel}>
-                  Element: {ELEMENT_LABELS[element]}
+                  {t.element}: {getElementLabel(element, locale)}
                 </span>
               )}
             </div>
@@ -139,15 +142,15 @@ export function SharedGem() {
           {/* Magic Circle Info */}
           {gem.magicCircle && (
             <div className={styles.circleInfo}>
-              <span className={styles.circleLabel}>Sealed by</span>
-              <span className={styles.circleName}>{gem.magicCircle.name}</span>
+              <span className={styles.circleLabel}>{t.sealedBy}</span>
+              <span className={styles.circleName}>{getMagicCircleName(gem.magicCircle, locale)}</span>
             </div>
           )}
 
           {/* User Info Section */}
           {gem.userInfo && (gem.userInfo.name || gem.userInfo.gender || gem.userInfo.birthdate) && (
             <div className={styles.userInfo}>
-              <span className={styles.userInfoLabel}>Bonded To</span>
+              <span className={styles.userInfoLabel}>{t.bondedTo}</span>
 
               {gem.userInfo.name && (
                 <span className={styles.userName}>{gem.userInfo.name}</span>
@@ -156,14 +159,14 @@ export function SharedGem() {
               <div className={styles.userDetails}>
                 {gem.userInfo.gender && (
                   <span className={styles.userDetail}>
-                    {GENDER_LABELS[gem.userInfo.gender]}
+                    {getGenderLabel(gem.userInfo.gender, locale)}
                   </span>
                 )}
 
                 {gem.userInfo.birthdate?.date && (
                   <span className={styles.userDetail}>
-                    Born: {gem.userInfo.birthdate.date}
-                    {birthTime && ` at ${birthTime}`}
+                    {t.born}: {gem.userInfo.birthdate.date}
+                    {birthTime && ` ${birthTime}`}
                   </span>
                 )}
               </div>
@@ -174,7 +177,7 @@ export function SharedGem() {
         {/* Actions */}
         <div className={styles.actions}>
           <MagicButton onClick={() => navigate('/')} size="md">
-            Summon Your Own Gem
+            {t.summonYourOwn}
           </MagicButton>
         </div>
       </main>
