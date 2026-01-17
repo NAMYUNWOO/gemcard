@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gem Image Exporter</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a2e;
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #00d4ff;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      background: #00d4ff;
+      color: #1a1a2e;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    button:hover {
+      background: #00a8cc;
+      transform: translateY(-2px);
+    }
+    button:disabled {
+      background: #555;
+      color: #999;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .status {
+      background: #16213e;
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 24px;
+      background: #0f0f23;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00d4ff, #00ff88);
+      transition: width 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+    .preview-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .preview-box {
+      background: #16213e;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .preview-box h3 {
+      margin-bottom: 10px;
+      color: #00d4ff;
+    }
+    #preview-canvas {
+      border: 2px solid #333;
+      border-radius: 4px;
+    }
+    .log {
+      background: #0f0f23;
+      padding: 15px;
+      border-radius: 8px;
+      max-height: 300px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 12px;
+      margin-top: 20px;
+    }
+    .log-entry {
+      padding: 2px 0;
+      border-bottom: 1px solid #1a1a2e;
+    }
+    .log-entry.success { color: #00ff88; }
+    .log-entry.error { color: #ff6b6b; }
+    .log-entry.info { color: #00d4ff; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .stat-box {
+      background: #16213e;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #00d4ff;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: #888;
+      margin-top: 5px;
+    }
+    .size-input {
+      padding: 8px 12px;
+      font-size: 14px;
+      background: #0f0f23;
+      border: 1px solid #333;
+      border-radius: 4px;
+      color: #fff;
+      width: 80px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Gem Image Exporter</h1>
+
+    <div class="controls">
+      <button id="startBtn">Start Export</button>
+      <button id="stopBtn" disabled>Stop</button>
+      <label>
+        Image Size:
+        <input type="number" id="imageSize" class="size-input" value="256" min="64" max="1024" step="64">
+      </label>
+      <label>
+        Delay (ms):
+        <input type="number" id="delayMs" class="size-input" value="100" min="0" max="1000" step="50">
+      </label>
+      <label>
+        Test Limit (0=all):
+        <input type="number" id="testLimit" class="size-input" value="0" min="0" max="2000" step="10">
+      </label>
+      <label>
+        <input type="checkbox" id="skipDownload"> Preview Only (no download)
+      </label>
+      <label>
+        Fixed Scale:
+        <input type="number" id="fixedScale" class="size-input" value="1.0" min="0.1" max="5.0" step="0.1">
+      </label>
+    </div>
+
+    <div class="status">
+      <div id="statusText">Ready to export gems...</div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%">0%</div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat-box">
+        <div class="stat-value" id="totalCount">0</div>
+        <div class="stat-label">Total Gems</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value" id="processedCount">0</div>
+        <div class="stat-label">Processed</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value" id="successCount">0</div>
+        <div class="stat-label">Success</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value" id="errorCount">0</div>
+        <div class="stat-label">Errors</div>
+      </div>
+    </div>
+
+    <div class="preview-container">
+      <div class="preview-box">
+        <h3>Current Gem</h3>
+        <canvas id="preview-canvas" width="256" height="256"></canvas>
+        <div id="currentGemName" style="margin-top: 10px;">-</div>
+      </div>
+    </div>
+
+    <div class="log" id="log"></div>
+  </div>
+
+  <!-- JSZip for compression -->
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+
+  <!-- Import maps for ES modules -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.182.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.182.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { ConvexGeometry } from 'three/addons/geometries/ConvexGeometry.js';
+
+    // GemCad Parser (ported from gemcadParser.ts)
+    function parseGemCad(content) {
+      const lines = content.split('\n');
+      const data = {
+        gearTeeth: 64,
+        symmetry: 8,
+        refractiveIndex: 1.54,
+        name: 'Unknown',
+        facets: []
+      };
+
+      let combinedContent = '';
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+        if (line.startsWith(' ') || line.startsWith('\t')) {
+          combinedContent += ' ' + trimmed;
+        } else {
+          combinedContent += '\n' + trimmed;
+        }
+      }
+
+      const processedLines = combinedContent.split('\n').filter(l => l.trim());
+
+      for (const line of processedLines) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+
+        const parts = trimmed.split(/\s+/);
+        const cmd = parts[0];
+
+        switch (cmd) {
+          case 'g':
+            data.gearTeeth = parseInt(parts[1]) || 64;
+            break;
+          case 'y':
+            data.symmetry = parseInt(parts[1]) || 8;
+            break;
+          case 'I':
+            data.refractiveIndex = parseFloat(parts[1]) || 1.54;
+            break;
+          case 'H':
+            if (!data.name || data.name === 'Unknown') {
+              const fullText = parts.slice(1).join(' ');
+              const match = fullText.match(/^[A-Z]{2}\s*[\d.]+[A-Z]?\s+(.+)$/);
+              if (match) {
+                data.name = match[1].trim();
+              } else {
+                data.name = fullText;
+              }
+            }
+            break;
+          case 'a': {
+            const angle = parseFloat(parts[1]);
+            const distance = parseFloat(parts[2]);
+
+            let endIndex = parts.length;
+            const gIndex = parts.indexOf('G');
+            if (gIndex !== -1) {
+              endIndex = gIndex;
+            }
+
+            const indices = [];
+            let name = '';
+            let skipNext = false;
+
+            for (let i = 3; i < endIndex; i++) {
+              if (skipNext) {
+                if (!name) name = parts[i];
+                skipNext = false;
+                continue;
+              }
+              if (parts[i] === 'n') {
+                skipNext = true;
+                continue;
+              }
+              const num = parseInt(parts[i]);
+              if (!isNaN(num)) {
+                indices.push(num);
+              }
+            }
+
+            const baseIndex = indices[0] || 0;
+            data.facets.push({ angle, distance, baseIndex, name, indices });
+            break;
+          }
+        }
+      }
+
+      return data;
+    }
+
+    // Generate gem geometry using ConvexHull for accurate silhouette
+    function generateGemGeometrySimple(gemcadData, scale = 1) {
+      const { gearTeeth, facets } = gemcadData;
+
+      const maxDistance = Math.max(...facets.map(f => f.distance));
+      const vertices = [];
+
+      // For each facet, calculate representative points on the gem surface
+      for (const facet of facets) {
+        const angleRad = (facet.angle * Math.PI) / 180;
+        const distanceScaled = facet.distance * scale;
+
+        for (const idx of facet.indices) {
+          const azimuth = (idx / gearTeeth) * 2 * Math.PI;
+
+          let x, y, z;
+
+          if (Math.abs(facet.angle) < 0.01) {
+            // Table facet (horizontal, facing up) - add center point
+            vertices.push(new THREE.Vector3(0, distanceScaled, 0));
+            continue;
+          } else if (Math.abs(facet.angle - 90) < 0.01 || Math.abs(facet.angle + 90) < 0.01) {
+            // Girdle facet (vertical)
+            x = Math.cos(azimuth) * distanceScaled;
+            z = Math.sin(azimuth) * distanceScaled;
+            y = 0;
+          } else {
+            const tiltAngle = Math.abs(angleRad);
+            const isDown = facet.angle < 0;
+
+            // Calculate point on facet plane at this azimuth
+            const horizontalDist = distanceScaled * Math.cos(tiltAngle);
+            const verticalDist = distanceScaled * Math.sin(tiltAngle) * (isDown ? -1 : 1);
+
+            x = Math.cos(azimuth) * horizontalDist;
+            z = Math.sin(azimuth) * horizontalDist;
+            y = verticalDist;
+          }
+
+          vertices.push(new THREE.Vector3(x, y, z));
+        }
+      }
+
+      // Remove duplicate vertices (within tolerance)
+      const uniqueVertices = [];
+      const tolerance = 0.001;
+      for (const v of vertices) {
+        let isDuplicate = false;
+        for (const uv of uniqueVertices) {
+          if (v.distanceTo(uv) < tolerance) {
+            isDuplicate = true;
+            break;
+          }
+        }
+        if (!isDuplicate) {
+          uniqueVertices.push(v);
+        }
+      }
+
+      if (uniqueVertices.length < 4) {
+        // Fallback: create icosahedron
+        return new THREE.IcosahedronGeometry(maxDistance * scale, 1);
+      }
+
+      try {
+        // Use ConvexGeometry for accurate convex hull
+        const geometry = new ConvexGeometry(uniqueVertices);
+        return geometry;
+      } catch (error) {
+        console.warn('ConvexGeometry failed, using fallback', error);
+        return new THREE.IcosahedronGeometry(maxDistance * scale, 1);
+      }
+    }
+
+    // State
+    let isRunning = false;
+    let gemList = [];
+    let currentIndex = 0;
+    let successCount = 0;
+    let errorCount = 0;
+    let zip = null; // JSZip instance
+
+    // Three.js setup
+    let renderer, scene, camera, mesh;
+    const imageSize = () => parseInt(document.getElementById('imageSize').value) || 256;
+    const delayMs = () => parseInt(document.getElementById('delayMs').value) || 100;
+    const testLimit = () => parseInt(document.getElementById('testLimit').value) || 0;
+    const skipDownload = () => document.getElementById('skipDownload').checked;
+    const fixedScale = () => parseFloat(document.getElementById('fixedScale').value) || 1.0;
+
+    // UI Elements
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const statusText = document.getElementById('statusText');
+    const progressFill = document.getElementById('progressFill');
+    const totalCountEl = document.getElementById('totalCount');
+    const processedCountEl = document.getElementById('processedCount');
+    const successCountEl = document.getElementById('successCount');
+    const errorCountEl = document.getElementById('errorCount');
+    const currentGemNameEl = document.getElementById('currentGemName');
+    const logEl = document.getElementById('log');
+    const previewCanvas = document.getElementById('preview-canvas');
+
+    function log(message, type = 'info') {
+      const entry = document.createElement('div');
+      entry.className = `log-entry ${type}`;
+      entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      logEl.insertBefore(entry, logEl.firstChild);
+
+      // Keep log size manageable
+      while (logEl.children.length > 100) {
+        logEl.removeChild(logEl.lastChild);
+      }
+    }
+
+    function updateProgress() {
+      const percent = gemList.length > 0
+        ? Math.round((currentIndex / gemList.length) * 100)
+        : 0;
+      progressFill.style.width = `${percent}%`;
+      progressFill.textContent = `${percent}%`;
+      processedCountEl.textContent = currentIndex;
+      successCountEl.textContent = successCount;
+      errorCountEl.textContent = errorCount;
+    }
+
+    function initThreeJS() {
+      const size = imageSize();
+
+      // Create renderer with white background
+      renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        preserveDrawingBuffer: true,
+        alpha: false
+      });
+      renderer.setSize(size, size);
+      renderer.setClearColor(0xffffff, 1);
+      renderer.setPixelRatio(1);
+
+      // Scene
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xffffff);
+
+      // Orthographic camera for accurate size comparison (no perspective distortion)
+      const frustumSize = 3;
+      camera = new THREE.OrthographicCamera(
+        -frustumSize / 2, frustumSize / 2,
+        frustumSize / 2, -frustumSize / 2,
+        0.1, 100
+      );
+      // Position camera at an angle to show more gem features
+      camera.position.set(0, 2, 3);
+      camera.lookAt(0, 0, 0);
+
+      // Lighting (even though we use MeshBasicMaterial, keep for potential debugging)
+      const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+      scene.add(ambientLight);
+
+      log('Three.js initialized', 'success');
+    }
+
+    // Base path for gem_cads (adjust based on server)
+    const GEM_CADS_BASE = '../public/gem_cads';
+
+    async function loadGemList() {
+      try {
+        const response = await fetch(`${GEM_CADS_BASE}/index.json`);
+        gemList = await response.json();
+        totalCountEl.textContent = gemList.length;
+        log(`Loaded ${gemList.length} gems from index`, 'success');
+        return true;
+      } catch (error) {
+        log(`Failed to load gem list: ${error.message}`, 'error');
+        return false;
+      }
+    }
+
+    async function loadGemGeometry(shapeId) {
+      const fileName = shapeId.endsWith('.asc') ? shapeId : `${shapeId}.asc`;
+      const response = await fetch(`${GEM_CADS_BASE}/${fileName}`);
+
+      if (!response.ok) {
+        throw new Error(`Failed to load ${fileName}: ${response.status}`);
+      }
+
+      const content = await response.text();
+      const gemcadData = parseGemCad(content);
+      return generateGemGeometrySimple(gemcadData, 1.0);
+    }
+
+    function countBlackPixels(webglCanvas) {
+      // Create a temporary 2D canvas to read pixels from WebGL canvas
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = webglCanvas.width;
+      tempCanvas.height = webglCanvas.height;
+      const ctx = tempCanvas.getContext('2d');
+
+      // Draw the WebGL canvas onto the 2D canvas
+      ctx.drawImage(webglCanvas, 0, 0);
+
+      const imageData = ctx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+      const data = imageData.data;
+
+      let blackCount = 0;
+      // Count pixels that are not white (R, G, B all < 250)
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+        // If pixel is not white (or near-white)
+        if (r < 250 || g < 250 || b < 250) {
+          blackCount++;
+        }
+      }
+
+      return blackCount;
+    }
+
+    function addImageToZip(canvas, filename) {
+      return new Promise((resolve) => {
+        canvas.toBlob((blob) => {
+          zip.file(filename, blob);
+          resolve();
+        }, 'image/png');
+      });
+    }
+
+    function downloadZip() {
+      return new Promise((resolve) => {
+        statusText.textContent = 'Generating ZIP file...';
+        log('Generating ZIP file (this may take a moment)...', 'info');
+
+        zip.generateAsync({
+          type: 'blob',
+          compression: 'DEFLATE',
+          compressionOptions: { level: 6 }
+        }, (metadata) => {
+          // Progress callback
+          const percent = Math.round(metadata.percent);
+          progressFill.style.width = `${percent}%`;
+          progressFill.textContent = `ZIP: ${percent}%`;
+        }).then((blob) => {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `gem-silhouettes-${Date.now()}.zip`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+
+          const sizeMB = (blob.size / 1024 / 1024).toFixed(2);
+          log(`ZIP file downloaded: ${sizeMB} MB`, 'success');
+          resolve();
+        });
+      });
+    }
+
+    async function processGem(shapeId) {
+      statusText.textContent = `Processing: ${shapeId}`;
+      currentGemNameEl.textContent = shapeId;
+
+      try {
+        // Load geometry
+        const geometry = await loadGemGeometry(shapeId);
+
+        // Remove old mesh
+        if (mesh) {
+          scene.remove(mesh);
+          mesh.geometry.dispose();
+          mesh.material.dispose();
+        }
+
+        // Create black material (silhouette)
+        const material = new THREE.MeshBasicMaterial({
+          color: 0x000000,
+          side: THREE.DoubleSide
+        });
+
+        mesh = new THREE.Mesh(geometry, material);
+
+        // Center the mesh at origin (but keep original size!)
+        geometry.computeBoundingBox();
+        const box = geometry.boundingBox;
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+        mesh.position.sub(center);
+
+        // Apply FIXED scale to ALL gems (for objective size comparison)
+        // All gems use the same scale factor, so larger gems = more pixels
+        mesh.scale.setScalar(fixedScale());
+
+        scene.add(mesh);
+
+        // Render
+        renderer.render(scene, camera);
+
+        // Get canvas and copy to preview
+        const renderCanvas = renderer.domElement;
+        const previewCtx = previewCanvas.getContext('2d');
+        previewCanvas.width = imageSize();
+        previewCanvas.height = imageSize();
+        previewCtx.drawImage(renderCanvas, 0, 0);
+
+        // Count black pixels
+        const blackPixels = countBlackPixels(renderCanvas);
+
+        // Create filename with zero-padded pixel count
+        const paddedCount = String(blackPixels).padStart(6, '0');
+        const filename = `${paddedCount}_${shapeId}.png`;
+
+        // Add to ZIP (unless in preview mode)
+        if (!skipDownload()) {
+          await addImageToZip(renderCanvas, filename);
+        }
+
+        successCount++;
+        log(`${shapeId}: ${blackPixels} pixels -> ${filename}`, 'success');
+
+        return true;
+      } catch (error) {
+        errorCount++;
+        log(`${shapeId}: ${error.message}`, 'error');
+        return false;
+      }
+    }
+
+    async function runExport() {
+      isRunning = true;
+      startBtn.disabled = true;
+      stopBtn.disabled = false;
+
+      // Initialize ZIP
+      zip = new JSZip();
+
+      initThreeJS();
+
+      if (!(await loadGemList())) {
+        isRunning = false;
+        startBtn.disabled = false;
+        stopBtn.disabled = true;
+        return;
+      }
+
+      // Apply test limit if set
+      const limit = testLimit();
+      if (limit > 0 && limit < gemList.length) {
+        gemList = gemList.slice(0, limit);
+        totalCountEl.textContent = gemList.length;
+        log(`Test mode: limited to first ${limit} gems`, 'info');
+      }
+
+      log(`Starting export of ${gemList.length} gems...`, 'info');
+      if (skipDownload()) {
+        log('Preview mode: downloads disabled', 'info');
+      }
+
+      currentIndex = 0;
+      successCount = 0;
+      errorCount = 0;
+      updateProgress();
+
+      while (currentIndex < gemList.length && isRunning) {
+        const shapeId = gemList[currentIndex];
+        await processGem(shapeId);
+        currentIndex++;
+        updateProgress();
+
+        // Delay between downloads to prevent browser throttling
+        if (delayMs() > 0) {
+          await new Promise(resolve => setTimeout(resolve, delayMs()));
+        }
+      }
+
+      if (isRunning) {
+        log(`Processing complete! ${successCount} success, ${errorCount} errors`, 'success');
+
+        // Download ZIP file (unless in preview mode)
+        if (!skipDownload() && successCount > 0) {
+          await downloadZip();
+        }
+
+        statusText.textContent = `Export complete! ${successCount} success, ${errorCount} errors`;
+      } else {
+        statusText.textContent = `Export stopped at ${currentIndex}/${gemList.length}`;
+        log(`Export stopped`, 'info');
+
+        // Offer to download partial ZIP if there are any images
+        if (!skipDownload() && successCount > 0) {
+          log('Downloading partial results...', 'info');
+          await downloadZip();
+        }
+      }
+
+      isRunning = false;
+      startBtn.disabled = false;
+      stopBtn.disabled = true;
+    }
+
+    function stopExport() {
+      isRunning = false;
+      log('Stopping export...', 'info');
+    }
+
+    // Event listeners
+    startBtn.addEventListener('click', runExport);
+    stopBtn.addEventListener('click', stopExport);
+
+    // Initialize on load
+    log('Gem Image Exporter ready. Click "Start Export" to begin.', 'info');
+  </script>
+</body>
+</html>

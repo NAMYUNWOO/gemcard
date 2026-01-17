@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gem Validator</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #1a1a2e;
+      color: #fff;
+      font-family: system-ui, -apple-system, sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    #header {
+      padding: 16px;
+      background: #16213e;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #0f3460;
+    }
+    #info {
+      font-size: 18px;
+    }
+    #info .name {
+      color: #e94560;
+      font-weight: bold;
+    }
+    #info .count {
+      color: #888;
+      font-size: 14px;
+      margin-left: 12px;
+    }
+    #controls {
+      font-size: 12px;
+      color: #888;
+    }
+    #controls kbd {
+      background: #0f3460;
+      padding: 4px 8px;
+      border-radius: 4px;
+      margin: 0 4px;
+    }
+    #canvas-container {
+      flex: 1;
+      position: relative;
+    }
+    #error-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(233, 69, 96, 0.9);
+      padding: 24px;
+      border-radius: 8px;
+      text-align: center;
+      display: none;
+    }
+    #error-overlay.show {
+      display: block;
+    }
+    #loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      color: #888;
+    }
+    #deleted-list {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      background: rgba(15, 52, 96, 0.95);
+      padding: 12px;
+      border-radius: 8px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-size: 12px;
+      min-width: 200px;
+    }
+    #deleted-list h4 {
+      color: #e94560;
+      margin-bottom: 8px;
+    }
+    #deleted-list ul {
+      list-style: none;
+    }
+    #deleted-list li {
+      padding: 4px 0;
+      border-bottom: 1px solid #0f3460;
+    }
+    #jump-input {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #16213e;
+      padding: 24px;
+      border-radius: 8px;
+      display: none;
+      z-index: 100;
+    }
+    #jump-input.show {
+      display: block;
+    }
+    #jump-input input {
+      background: #0f3460;
+      border: 1px solid #e94560;
+      color: #fff;
+      padding: 8px 16px;
+      font-size: 18px;
+      border-radius: 4px;
+      width: 200px;
+    }
+    #jump-input label {
+      display: block;
+      margin-bottom: 8px;
+      color: #888;
+    }
+    #cache-status {
+      position: fixed;
+      top: 70px;
+      right: 16px;
+      background: rgba(15, 52, 96, 0.95);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+    #cache-status .cached {
+      color: #4ade80;
+    }
+    #cache-status .loading {
+      color: #fbbf24;
+    }
+  </style>
+</head>
+<body>
+  <div id="header">
+    <div id="info">
+      <span class="name" id="gem-name">Loading...</span>
+      <span class="count" id="gem-count"></span>
+    </div>
+    <div id="controls">
+      <kbd>←</kbd><kbd>→</kbd> Navigate
+      <kbd>D</kbd> Delete
+      <kbd>G</kbd> Go to #
+      <kbd>R</kbd> Reload
+    </div>
+  </div>
+  <div id="canvas-container">
+    <div id="loading">Loading gems...</div>
+    <div id="error-overlay">
+      <h3>Error Loading Gem</h3>
+      <p id="error-message"></p>
+    </div>
+  </div>
+  <div id="deleted-list">
+    <h4>Deleted (Press 'S' to save list)</h4>
+    <ul id="deleted-items"></ul>
+  </div>
+  <div id="jump-input">
+    <label>Jump to gem # (1-<span id="total-count"></span>)</label>
+    <input type="number" id="jump-number" min="1">
+  </div>
+  <div id="cache-status">
+    Cache: <span id="cache-info">0/10</span>
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+      "three-mesh-bvh": "https://cdn.jsdelivr.net/npm/three-mesh-bvh@0.7.0/build/index.module.js",
+      "three-bvh-csg": "https://cdn.jsdelivr.net/npm/three-bvh-csg@0.0.16/build/index.module.js"
+    }
+  }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { SUBTRACTION, Evaluator, Brush } from 'three-bvh-csg';
+
+    // GemCad parser
+    function parseGemCad(content) {
+      const lines = content.split('\n');
+      const data = {
+        gearTeeth: 64,
+        symmetry: 8,
+        refractiveIndex: 1.54,
+        name: 'Unknown',
+        facets: []
+      };
+
+      let combinedContent = '';
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+        if (line.startsWith(' ') || line.startsWith('\t')) {
+          combinedContent += ' ' + trimmed;
+        } else {
+          combinedContent += '\n' + trimmed;
+        }
+      }
+
+      const processedLines = combinedContent.split('\n').filter(l => l.trim());
+
+      for (const line of processedLines) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+
+        const parts = trimmed.split(/\s+/);
+        const cmd = parts[0];
+
+        switch (cmd) {
+          case 'g':
+            data.gearTeeth = parseInt(parts[1]) || 64;
+            break;
+          case 'y':
+            data.symmetry = parseInt(parts[1]) || 8;
+            break;
+          case 'I':
+            data.refractiveIndex = parseFloat(parts[1]) || 1.54;
+            break;
+          case 'H':
+            if (!data.name || data.name === 'Unknown') {
+              const fullText = parts.slice(1).join(' ');
+              const match = fullText.match(/^[A-Z]{2}\s*[\d.]+[A-Z]?\s+(.+)$/);
+              if (match) {
+                data.name = match[1].trim();
+              } else {
+                data.name = fullText;
+              }
+            }
+            break;
+          case 'a': {
+            const angle = parseFloat(parts[1]);
+            const distance = parseFloat(parts[2]);
+
+            let endIndex = parts.length;
+            const gIndex = parts.indexOf('G');
+            if (gIndex !== -1) {
+              endIndex = gIndex;
+            }
+
+            const indices = [];
+            let name = '';
+            let skipNext = false;
+
+            for (let i = 3; i < endIndex; i++) {
+              if (skipNext) {
+                if (!name) name = parts[i];
+                skipNext = false;
+                continue;
+              }
+              if (parts[i] === 'n') {
+                skipNext = true;
+                continue;
+              }
+              const num = parseInt(parts[i]);
+              if (!isNaN(num)) {
+                indices.push(num);
+              }
+            }
+
+            const baseIndex = indices[0] || 0;
+            data.facets.push({ angle, distance, baseIndex, name, indices });
+            break;
+          }
+        }
+      }
+
+      return data;
+    }
+
+    // Generate gem geometry
+    function generateGemGeometry(gemcadData, scale = 1) {
+      const { gearTeeth, facets } = gemcadData;
+      const evaluator = new Evaluator();
+
+      const maxDistance = Math.max(...facets.map(f => f.distance));
+      const baseRadius = maxDistance * scale * 1.5;
+      const baseHeight = maxDistance * scale * 3;
+
+      let baseCylinder = new THREE.CylinderGeometry(baseRadius, baseRadius, baseHeight, 64);
+      let result = new Brush(baseCylinder);
+      result.updateMatrixWorld();
+
+      for (const facet of facets) {
+        const angleRad = (facet.angle * Math.PI) / 180;
+        const distanceScaled = facet.distance * scale;
+
+        for (const idx of facet.indices) {
+          const azimuth = (idx / gearTeeth) * 2 * Math.PI;
+
+          let normal;
+
+          if (Math.abs(facet.angle) < 0.01) {
+            normal = new THREE.Vector3(0, 1, 0);
+          } else if (Math.abs(facet.angle - 90) < 0.01 || Math.abs(facet.angle + 90) < 0.01) {
+            normal = new THREE.Vector3(Math.cos(azimuth), 0, Math.sin(azimuth));
+          } else {
+            const tiltAngle = Math.abs(angleRad);
+            const isDown = facet.angle < 0;
+
+            const radialX = Math.cos(azimuth);
+            const radialZ = Math.sin(azimuth);
+
+            const horizontalComponent = Math.sin(tiltAngle);
+            const verticalComponent = Math.cos(tiltAngle) * (isDown ? -1 : 1);
+
+            normal = new THREE.Vector3(
+              radialX * horizontalComponent,
+              verticalComponent,
+              radialZ * horizontalComponent
+            ).normalize();
+          }
+
+          const boxSize = baseRadius * 4;
+          const cuttingBox = new THREE.BoxGeometry(boxSize, boxSize, boxSize);
+          const cuttingBrush = new Brush(cuttingBox);
+
+          cuttingBrush.position.copy(
+            normal.clone().multiplyScalar(distanceScaled + boxSize / 2)
+          );
+
+          const up = new THREE.Vector3(0, 1, 0);
+          const quaternion = new THREE.Quaternion().setFromUnitVectors(up, normal);
+          cuttingBrush.quaternion.copy(quaternion);
+
+          cuttingBrush.updateMatrixWorld();
+
+          try {
+            result = evaluator.evaluate(result, cuttingBrush, SUBTRACTION);
+            result.updateMatrixWorld();
+          } catch (e) {
+            console.warn('CSG operation failed for facet', facet.name, idx);
+          }
+        }
+      }
+
+      let geometry = result.geometry.clone();
+      if (geometry.index !== null) {
+        geometry = geometry.toNonIndexed();
+      }
+
+      computeFlatNormals(geometry);
+      return geometry;
+    }
+
+    function computeFlatNormals(geometry) {
+      const positionAttribute = geometry.getAttribute('position');
+      const normalArray = new Float32Array(positionAttribute.count * 3);
+
+      const vA = new THREE.Vector3();
+      const vB = new THREE.Vector3();
+      const vC = new THREE.Vector3();
+      const ab = new THREE.Vector3();
+      const ac = new THREE.Vector3();
+      const normal = new THREE.Vector3();
+
+      for (let i = 0; i < positionAttribute.count; i += 3) {
+        vA.fromBufferAttribute(positionAttribute, i);
+        vB.fromBufferAttribute(positionAttribute, i + 1);
+        vC.fromBufferAttribute(positionAttribute, i + 2);
+
+        ab.subVectors(vB, vA);
+        ac.subVectors(vC, vA);
+        normal.crossVectors(ab, ac).normalize();
+
+        normalArray[i * 3] = normal.x;
+        normalArray[i * 3 + 1] = normal.y;
+        normalArray[i * 3 + 2] = normal.z;
+
+        normalArray[(i + 1) * 3] = normal.x;
+        normalArray[(i + 1) * 3 + 1] = normal.y;
+        normalArray[(i + 1) * 3 + 2] = normal.z;
+
+        normalArray[(i + 2) * 3] = normal.x;
+        normalArray[(i + 2) * 3 + 1] = normal.y;
+        normalArray[(i + 2) * 3 + 2] = normal.z;
+      }
+
+      geometry.setAttribute('normal', new THREE.BufferAttribute(normalArray, 3));
+    }
+
+    // Main app
+    class GemValidator {
+      constructor() {
+        this.gems = [];
+        this.currentIndex = 0;
+        this.deletedGems = [];
+        this.scene = null;
+        this.camera = null;
+        this.renderer = null;
+        this.controls = null;
+        this.currentMesh = null;
+        this.isLoading = false;
+
+        // Prefetch cache
+        this.geometryCache = new Map(); // gemName -> { geometry, refractiveIndex }
+        this.prefetchQueue = [];
+        this.isPrefetching = false;
+        this.PREFETCH_COUNT = 10;
+
+        this.init();
+      }
+
+      async init() {
+        await this.loadGemList();
+        this.setupThree();
+        this.setupControls();
+        await this.loadCurrentGem();
+        this.startPrefetch();
+        this.animate();
+      }
+
+      async loadGemList() {
+        try {
+          const response = await fetch('/gem_cads/index.json');
+          this.gems = await response.json();
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('total-count').textContent = this.gems.length;
+
+          // Load saved deleted list from localStorage
+          const saved = localStorage.getItem('gem-validator-deleted');
+          if (saved) {
+            this.deletedGems = JSON.parse(saved);
+            this.updateDeletedList();
+          }
+
+          // Load last position
+          const lastPos = localStorage.getItem('gem-validator-position');
+          if (lastPos) {
+            this.currentIndex = Math.min(parseInt(lastPos), this.gems.length - 1);
+          }
+        } catch (e) {
+          document.getElementById('loading').textContent = 'Failed to load gem list';
+          console.error(e);
+        }
+      }
+
+      setupThree() {
+        const container = document.getElementById('canvas-container');
+
+        this.scene = new THREE.Scene();
+        this.scene.background = new THREE.Color(0x1a1a2e);
+
+        this.camera = new THREE.PerspectiveCamera(
+          45,
+          container.clientWidth / container.clientHeight,
+          0.1,
+          1000
+        );
+        this.camera.position.set(3, 2, 3);
+
+        this.renderer = new THREE.WebGLRenderer({ antialias: true });
+        this.renderer.setSize(container.clientWidth, container.clientHeight);
+        this.renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(this.renderer.domElement);
+
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        this.controls.enableDamping = true;
+        this.controls.dampingFactor = 0.05;
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        this.scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(5, 10, 5);
+        this.scene.add(directionalLight);
+
+        const pointLight = new THREE.PointLight(0xe94560, 1, 20);
+        pointLight.position.set(-3, 3, -3);
+        this.scene.add(pointLight);
+
+        // Grid helper
+        const grid = new THREE.GridHelper(10, 20, 0x0f3460, 0x0f3460);
+        this.scene.add(grid);
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+          const width = container.clientWidth;
+          const height = container.clientHeight;
+          this.camera.aspect = width / height;
+          this.camera.updateProjectionMatrix();
+          this.renderer.setSize(width, height);
+        });
+      }
+
+      setupControls() {
+        const jumpInput = document.getElementById('jump-input');
+        const jumpNumber = document.getElementById('jump-number');
+
+        document.addEventListener('keydown', (e) => {
+          if (jumpInput.classList.contains('show')) {
+            if (e.key === 'Escape') {
+              jumpInput.classList.remove('show');
+            } else if (e.key === 'Enter') {
+              const num = parseInt(jumpNumber.value);
+              if (num >= 1 && num <= this.gems.length) {
+                this.currentIndex = num - 1;
+                this.loadCurrentGem();
+              }
+              jumpInput.classList.remove('show');
+            }
+            return;
+          }
+
+          switch(e.key) {
+            case 'ArrowLeft':
+              this.navigate(-1);
+              break;
+            case 'ArrowRight':
+              this.navigate(1);
+              break;
+            case 'd':
+            case 'D':
+              this.markForDeletion();
+              break;
+            case 'g':
+            case 'G':
+              jumpNumber.value = this.currentIndex + 1;
+              jumpNumber.max = this.gems.length;
+              jumpInput.classList.add('show');
+              jumpNumber.focus();
+              jumpNumber.select();
+              break;
+            case 'r':
+            case 'R':
+              this.loadCurrentGem();
+              break;
+            case 's':
+            case 'S':
+              this.saveDeletedList();
+              break;
+          }
+        });
+      }
+
+      navigate(delta) {
+        if (this.isLoading) return;
+
+        this.currentIndex += delta;
+        if (this.currentIndex < 0) this.currentIndex = this.gems.length - 1;
+        if (this.currentIndex >= this.gems.length) this.currentIndex = 0;
+
+        // Skip already deleted gems
+        let attempts = 0;
+        while (this.deletedGems.includes(this.gems[this.currentIndex]) && attempts < this.gems.length) {
+          this.currentIndex += delta > 0 ? 1 : -1;
+          if (this.currentIndex < 0) this.currentIndex = this.gems.length - 1;
+          if (this.currentIndex >= this.gems.length) this.currentIndex = 0;
+          attempts++;
+        }
+
+        this.loadCurrentGem();
+        this.startPrefetch();
+      }
+
+      // Get the next N gem indices (skipping deleted)
+      getNextIndices(count) {
+        const indices = [];
+        let idx = this.currentIndex;
+        for (let i = 0; i < count && indices.length < count; i++) {
+          idx = (idx + 1) % this.gems.length;
+          if (!this.deletedGems.includes(this.gems[idx])) {
+            indices.push(idx);
+          }
+        }
+        return indices;
+      }
+
+      // Update cache status display
+      updateCacheStatus() {
+        const nextIndices = this.getNextIndices(this.PREFETCH_COUNT);
+        const cachedCount = nextIndices.filter(idx =>
+          this.geometryCache.has(this.gems[idx])
+        ).length;
+        const cacheInfo = document.getElementById('cache-info');
+        cacheInfo.textContent = `${cachedCount}/${this.PREFETCH_COUNT}`;
+        cacheInfo.className = cachedCount === this.PREFETCH_COUNT ? 'cached' : 'loading';
+      }
+
+      // Start prefetching next gems
+      startPrefetch() {
+        // Clear old cache entries that are too far from current index
+        this.cleanCache();
+
+        const nextIndices = this.getNextIndices(this.PREFETCH_COUNT);
+
+        // Queue gems that aren't cached yet
+        this.prefetchQueue = nextIndices
+          .filter(idx => !this.geometryCache.has(this.gems[idx]))
+          .map(idx => this.gems[idx]);
+
+        this.updateCacheStatus();
+
+        if (!this.isPrefetching && this.prefetchQueue.length > 0) {
+          this.processPrefetchQueue();
+        }
+      }
+
+      // Clean cache - remove entries too far from current position
+      cleanCache() {
+        const keepSet = new Set();
+        const currentGem = this.gems[this.currentIndex];
+        keepSet.add(currentGem);
+
+        this.getNextIndices(this.PREFETCH_COUNT + 5).forEach(idx => {
+          keepSet.add(this.gems[idx]);
+        });
+
+        for (const key of this.geometryCache.keys()) {
+          if (!keepSet.has(key)) {
+            const cached = this.geometryCache.get(key);
+            if (cached && cached.geometry) {
+              cached.geometry.dispose();
+            }
+            this.geometryCache.delete(key);
+          }
+        }
+      }
+
+      // Process prefetch queue
+      async processPrefetchQueue() {
+        if (this.prefetchQueue.length === 0) {
+          this.isPrefetching = false;
+          return;
+        }
+
+        this.isPrefetching = true;
+        const gemName = this.prefetchQueue.shift();
+
+        // Skip if already cached
+        if (this.geometryCache.has(gemName)) {
+          setTimeout(() => this.processPrefetchQueue(), 0);
+          return;
+        }
+
+        try {
+          const response = await fetch(`/gem_cads/${gemName}.asc`);
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+          const content = await response.text();
+          const gemData = parseGemCad(content);
+
+          if (gemData.facets.length === 0) {
+            throw new Error('No facets found');
+          }
+
+          const geometry = generateGemGeometry(gemData, 1);
+          const posAttr = geometry.getAttribute('position');
+
+          if (posAttr && posAttr.count > 0) {
+            // Center geometry
+            geometry.computeBoundingBox();
+            const box = geometry.boundingBox;
+            const center = box.getCenter(new THREE.Vector3());
+            geometry.translate(-center.x, -center.y, -center.z);
+
+            this.geometryCache.set(gemName, {
+              geometry,
+              refractiveIndex: gemData.refractiveIndex || 1.54
+            });
+          }
+        } catch (e) {
+          console.warn(`Prefetch failed for ${gemName}:`, e.message);
+          // Cache error state
+          this.geometryCache.set(gemName, { error: e.message });
+        }
+
+        this.updateCacheStatus();
+
+        // Small delay to not block UI
+        setTimeout(() => this.processPrefetchQueue(), 10);
+      }
+
+      async loadCurrentGem() {
+        if (this.gems.length === 0) return;
+
+        this.isLoading = true;
+        const gemName = this.gems[this.currentIndex];
+
+        document.getElementById('gem-name').textContent = gemName;
+        document.getElementById('gem-count').textContent =
+          `(${this.currentIndex + 1} / ${this.gems.length}) - ${this.deletedGems.length} deleted`;
+        document.getElementById('error-overlay').classList.remove('show');
+
+        // Save position
+        localStorage.setItem('gem-validator-position', this.currentIndex);
+
+        // Remove old mesh
+        if (this.currentMesh) {
+          this.scene.remove(this.currentMesh);
+          // Don't dispose geometry if it's in cache
+          if (!this.geometryCache.has(this.gems[this.currentIndex - 1])) {
+            this.currentMesh.geometry.dispose();
+          }
+          this.currentMesh.material.dispose();
+        }
+
+        try {
+          let geometry, refractiveIndex;
+
+          // Check cache first
+          const cached = this.geometryCache.get(gemName);
+          if (cached) {
+            if (cached.error) {
+              throw new Error(cached.error);
+            }
+            geometry = cached.geometry.clone(); // Clone so we can modify
+            refractiveIndex = cached.refractiveIndex;
+          } else {
+            // Not cached - load directly
+            const response = await fetch(`/gem_cads/${gemName}.asc`);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+            const content = await response.text();
+            const gemData = parseGemCad(content);
+
+            if (gemData.facets.length === 0) {
+              throw new Error('No facets found in file');
+            }
+
+            geometry = generateGemGeometry(gemData, 1);
+            refractiveIndex = gemData.refractiveIndex || 1.54;
+
+            // Check if geometry is valid
+            const posAttr = geometry.getAttribute('position');
+            if (!posAttr || posAttr.count === 0) {
+              throw new Error('Generated geometry has no vertices');
+            }
+
+            // Center geometry
+            geometry.computeBoundingBox();
+            const box = geometry.boundingBox;
+            const center = box.getCenter(new THREE.Vector3());
+            geometry.translate(-center.x, -center.y, -center.z);
+          }
+
+          const material = new THREE.MeshPhysicalMaterial({
+            color: 0xe94560,
+            metalness: 0.1,
+            roughness: 0.1,
+            transmission: 0.9,
+            thickness: 0.5,
+            envMapIntensity: 1,
+            clearcoat: 1,
+            clearcoatRoughness: 0.1,
+            ior: refractiveIndex
+          });
+
+          this.currentMesh = new THREE.Mesh(geometry, material);
+          this.scene.add(this.currentMesh);
+
+          // Scale the mesh
+          geometry.computeBoundingBox();
+          const box = geometry.boundingBox;
+          const size = box.getSize(new THREE.Vector3());
+          const maxDim = Math.max(size.x, size.y, size.z);
+          const scale = 2 / maxDim;
+          this.currentMesh.scale.setScalar(scale);
+
+        } catch (e) {
+          console.error('Error loading gem:', e);
+          document.getElementById('error-message').textContent = e.message;
+          document.getElementById('error-overlay').classList.add('show');
+        }
+
+        this.isLoading = false;
+        this.updateCacheStatus();
+      }
+
+      markForDeletion() {
+        const gemName = this.gems[this.currentIndex];
+        if (!this.deletedGems.includes(gemName)) {
+          this.deletedGems.push(gemName);
+          this.updateDeletedList();
+          localStorage.setItem('gem-validator-deleted', JSON.stringify(this.deletedGems));
+        }
+        this.navigate(1);
+      }
+
+      updateDeletedList() {
+        const list = document.getElementById('deleted-items');
+        list.innerHTML = this.deletedGems.map(name => `<li>${name}</li>`).join('');
+        document.getElementById('gem-count').textContent =
+          `(${this.currentIndex + 1} / ${this.gems.length}) - ${this.deletedGems.length} deleted`;
+      }
+
+      saveDeletedList() {
+        if (this.deletedGems.length === 0) {
+          alert('No gems marked for deletion');
+          return;
+        }
+
+        const content = this.deletedGems.join('\n');
+        const blob = new Blob([content], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'gems-to-delete.txt';
+        a.click();
+        URL.revokeObjectURL(url);
+
+        alert(`Saved ${this.deletedGems.length} gems to gems-to-delete.txt\nRun: node scripts/delete-gems.js gems-to-delete.txt`);
+      }
+
+      animate() {
+        requestAnimationFrame(() => this.animate());
+
+        if (this.currentMesh) {
+          this.currentMesh.rotation.y += 0.005;
+        }
+
+        this.controls.update();
+        this.renderer.render(this.scene, this.camera);
+      }
+    }
+
+    new GemValidator();
+  </script>
+</body>
+</html>
