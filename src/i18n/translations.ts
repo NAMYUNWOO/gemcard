@@ -105,7 +105,7 @@ export interface Translations {
 
 const ko: Translations = {
   // Common
-  appName: '아케인 젬',
+  appName: '보석 점괘',
   home: '홈',
   share: '공유',
   copied: '복사됨!',
@@ -146,20 +146,20 @@ const ko: Translations = {
   magicCircle20Meaning: '켈트 매듭으로 묶인 북유럽 룬, 북방 왕국의 지혜를 잇는 다리',
 
   // Home Page
-  homeTitle: '아케인 젬',
-  homeSubtitle: '당신의 운명이 결정화되기를 기다리고 있습니다...',
-  homeDescription: '당신의 본질에 결속된 신비로운 보석을 소환하세요. 이름, 생년월일, 또는 본질의 일부를 나누어 우주가 당신만의 마법 결정을 만들 수 있게 하세요.',
-  summonYourGem: '보석 소환하기',
+  homeTitle: '보석 점괘',
+  homeSubtitle: '당신만의 운명의 보석을 만나보세요',
+  homeDescription: '이름, 생년월일을 입력하면 당신에게 어울리는 신비로운 보석이 나타납니다.',
+  summonYourGem: '점괘 보기',
   yourGem: '나의 보석',
   viewDetails: '자세히 보기',
-  summonNewGem: '새 보석 소환',
-  bondedTo: '결속자',
+  summonNewGem: '다시 뽑기',
+  bondedTo: '주인',
   element: '속성',
   gemOwned: '보석 1개 보유',
 
   // Gacha Page
-  gachaTitle: '보석 소환하기',
-  gachaSubtitle: '운명을 결정화하기 위해 당신의 본질을 나눠주세요...',
+  gachaTitle: '점괘 보기',
+  gachaSubtitle: '정보를 입력하고 나만의 보석을 확인하세요',
   formName: '이름',
   formNamePlaceholder: '이름을 입력하세요',
   formGender: '성별',
@@ -168,42 +168,42 @@ const ko: Translations = {
   formYear: '년',
   formMonth: '월',
   formDay: '일',
-  formBirthTime: '출생 시간',
+  formBirthTime: '태어난 시간',
   formHour: '시',
   formMinute: '분',
   formSecond: '초',
-  formOptional: '선택사항',
-  formError: '최소 하나의 필드를 입력해주세요',
-  summonButton: '소환',
-  summoning: '소환 중',
-  summoningMessage: '고대의 힘이 일어나고 있습니다...',
-  acceptAndGoHome: '확인 후 홈으로',
+  formOptional: '선택',
+  formError: '최소 하나는 입력해주세요',
+  summonButton: '보석 뽑기',
+  summoning: '뽑는 중',
+  summoningMessage: '운명의 보석을 찾고 있습니다...',
+  acceptAndGoHome: '확인',
 
   // Replace Confirmation
   replaceTitle: '보석 교체',
-  replaceMessage: '이미 보석을 보유하고 있습니다',
+  replaceMessage: '이미 보석이 있습니다',
   replaceCurrentGem: '현재 보석',
-  replaceWarning: '새 보석을 소환하면 현재 보석이 영원히 사라집니다. 계속하시겠습니까?',
+  replaceWarning: '새 보석을 뽑으면 현재 보석은 사라집니다. 계속할까요?',
   replaceCancel: '취소',
-  replaceConfirm: '새 보석 소환',
+  replaceConfirm: '새로 뽑기',
 
   // Gem Detail Page
   gemNotFound: '보석을 찾을 수 없음',
-  gemNotFoundMessage: '이 보석은 허공으로 사라졌습니다...',
-  sealedBy: '봉인자',
-  born: '탄생',
+  gemNotFoundMessage: '이 보석은 사라졌습니다...',
+  sealedBy: '봉인',
+  born: '생년월일',
   obtained: '획득일',
-  origin: '출처',
-  originGacha: '소환',
+  origin: '획득 방법',
+  originGacha: '뽑기',
   originExchange: '교환',
   originGift: '선물',
 
   // Shared Gem Page
   invalidLink: '잘못된 링크',
-  invalidLinkMessage: '이 보석 링크가 유효하지 않거나 손상되었습니다.',
+  invalidLinkMessage: '링크가 올바르지 않습니다.',
   sharedGem: '공유된 보석',
-  someoneGem: '의 보석',
-  summonYourOwn: '나만의 보석 소환하기',
+  someoneGem: '님의 보석',
+  summonYourOwn: '나도 뽑아보기',
 };
 
 const en: Translations = {
