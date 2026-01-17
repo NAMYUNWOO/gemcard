@@ -1,0 +1,506 @@
+/* 기본 리셋 및 설정 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary-color: #3182F6;
+  --danger-color: #F04452;
+  --success-color: #00C471;
+  --gray-100: #F4F5F7;
+  --gray-200: #E5E8EB;
+  --gray-300: #D1D6DB;
+  --gray-400: #B0B8C1;
+  --gray-500: #8B95A1;
+  --gray-600: #6B7684;
+  --gray-700: #4E5968;
+  --gray-800: #333D4B;
+  --gray-900: #191F28;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--gray-100);
+  color: var(--gray-900);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 앱 헤더 */
+.app-header {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid var(--gray-200);
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.app-header h1 {
+  flex: 1;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  margin: 0;
+}
+
+.back-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-800);
+}
+
+/* 스켈레톤 로딩 */
+.skeleton {
+  background: linear-gradient(90deg, var(--gray-200) 25%, var(--gray-100) 50%, var(--gray-200) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 8px;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* 페이지 레이아웃 */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.content {
+  flex: 1;
+  padding: 16px;
+  padding-bottom: 100px;
+}
+
+.form-content {
+  padding-bottom: 120px;
+}
+
+.detail-content {
+  padding-bottom: 140px;
+}
+
+/* 요약 카드 */
+.summary-card {
+  background: linear-gradient(135deg, var(--primary-color), #1B64DA);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  color: #fff;
+}
+
+.summary-label {
+  font-size: 14px;
+  opacity: 0.9;
+  margin-bottom: 8px;
+}
+
+.summary-amount {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/* 섹션 */
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-600);
+  margin-bottom: 12px;
+}
+
+.loan-section {
+  margin-top: 8px;
+}
+
+/* 빈 상태 */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--gray-500);
+}
+
+.empty-state p {
+  font-size: 16px;
+}
+
+.empty-sub {
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+/* 대출 카드 */
+.loan-card {
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.loan-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 2px 8px rgba(49, 130, 246, 0.1);
+}
+
+.loan-card.paid-back {
+  opacity: 0.7;
+  background: var(--gray-100);
+}
+
+.loan-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.borrower-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gray-800);
+}
+
+.loan-date {
+  font-size: 13px;
+  color: var(--gray-500);
+}
+
+.loan-card-body {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.loan-amount {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gray-900);
+}
+
+.interest-rate {
+  font-size: 13px;
+  color: var(--gray-500);
+}
+
+.loan-card-footer {
+  margin-top: 8px;
+}
+
+.due-date {
+  font-size: 13px;
+  color: var(--danger-color);
+}
+
+.loan-card-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.badge-text {
+  font-size: 12px;
+  color: var(--success-color);
+  font-weight: 600;
+}
+
+.photo-indicator {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--gray-500);
+}
+
+/* FAB 컨테이너 */
+.fab-container {
+  position: fixed;
+  bottom: 24px;
+  left: 16px;
+  right: 16px;
+}
+
+/* 하단 버튼 */
+.bottom-button {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: #fff;
+  border-top: 1px solid var(--gray-200);
+}
+
+.bottom-buttons {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: #fff;
+  border-top: 1px solid var(--gray-200);
+  display: flex;
+  gap: 12px;
+}
+
+/* 폼 스타일 */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: 8px;
+}
+
+.input-suffix {
+  color: var(--gray-500);
+  font-size: 16px;
+}
+
+/* 날짜 입력 */
+.date-input {
+  display: block;
+  min-width: 150px;
+  border: 1px solid var(--gray-300);
+  border-radius: 8px;
+  font-size: 16px;
+  color: var(--gray-900);
+  background: #fff;
+}
+
+.date-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+/* 사진 그리드 */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.photo-grid.view-mode {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.photo-item {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  background: var(--gray-100);
+}
+
+.photo-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-add {
+  aspect-ratio: 1;
+  border: 2px dashed var(--gray-300);
+  border-radius: 8px;
+  background: var(--gray-100);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--gray-500);
+  transition: all 0.2s ease;
+}
+
+.photo-add:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.photo-add span:first-child {
+  font-size: 24px;
+}
+
+.photo-add-text {
+  font-size: 12px;
+}
+
+.photo-size-info {
+  font-size: 13px;
+  color: var(--gray-500);
+  margin-top: 8px;
+}
+
+/* 상세 페이지 */
+.detail-header {
+  text-align: center;
+  padding: 32px 16px;
+  border-bottom: 1px solid var(--gray-200);
+  margin-bottom: 24px;
+}
+
+.detail-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: 8px;
+}
+
+.detail-amount {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 4px;
+}
+
+.detail-interest {
+  font-size: 14px;
+  color: var(--gray-500);
+  margin-bottom: 12px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status-badge.pending {
+  background: #FFF0F1;
+  color: var(--danger-color);
+}
+
+.status-badge.paid {
+  background: #E8F9F0;
+  color: var(--success-color);
+}
+
+/* 상세 정보 */
+.detail-info {
+  background: var(--gray-100);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-row.vertical {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.info-label {
+  font-size: 14px;
+  color: var(--gray-600);
+}
+
+.info-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-900);
+}
+
+.info-value.memo {
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* 상세 사진 */
+.detail-photos {
+  margin-top: 24px;
+}
+
+/* 텍스트 버튼 */
+.text-button {
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-600);
+  cursor: pointer;
+  padding: 8px;
+}
+
+.text-button.danger {
+  color: var(--danger-color);
+}
+
+/* 사진 모달 */
+.photo-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.photo-modal img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* 반응형 */
+@media (max-width: 360px) {
+  .photo-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

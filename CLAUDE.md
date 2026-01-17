@@ -6,6 +6,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Arcane Gems** is a React + TypeScript + Vite web application featuring a single-gem-per-user mystical gem summoning system with 3D visualization using Three.js. Users input personal info (name, gender, birthdate) and summon a unique magical gem. Each user can only possess one gem at a time - summoning a new gem replaces the previous one.
 
+**App in Toss (a.k.a AIT)** 
+- we purpose this project to deploy in toss
+- read `AIT_LLMs.md` file to create app in toss and understand what is app in toss. 
+- avoid architecture design which toss does not recommend and not allow.
+
+
+**check todo TASK**
+- read `TASK.md`.
+
 ## Commands
 
 ```bash

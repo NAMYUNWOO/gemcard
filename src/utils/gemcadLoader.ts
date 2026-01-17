@@ -6,39 +6,6 @@ import { parseGemCad, generateGemGeometry } from './gemcadParser';
 const gemCadCache = new Map<string, THREE.BufferGeometry>();
 
 /**
- * Load pre-built geometry from binary file
- * Binary format: [vertexCount (4 bytes)] [positions (vertexCount*3*4 bytes)] [normals (vertexCount*3*4 bytes)]
- */
-async function loadPrebuiltGeometry(shapeId: string): Promise<THREE.BufferGeometry | null> {
-  try {
-    const response = await fetch(`/gem_geometry/${shapeId}.bin`);
-    if (!response.ok) return null;
-
-    const buffer = await response.arrayBuffer();
-    const view = new DataView(buffer);
-
-    // Read vertex count from header
-    const vertexCount = view.getUint32(0, true); // little-endian
-
-    // Calculate offsets
-    const headerSize = 4;
-    const positionsSize = vertexCount * 3 * 4;
-
-    // Read positions and normals
-    const positions = new Float32Array(buffer, headerSize, vertexCount * 3);
-    const normals = new Float32Array(buffer, headerSize + positionsSize, vertexCount * 3);
-
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-    geometry.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
-
-    return geometry;
-  } catch {
-    return null;
-  }
-}
-
-/**
  * Compute flat normals for each triangle face
  * This creates sharp edges between facets, essential for gem rendering
  */
@@ -154,8 +121,13 @@ export function createFallbackBrilliantGeometry(): THREE.BufferGeometry {
 }
 
 /**
- * Load GemCad geometry - tries pre-built JSON first, then falls back to .asc parsing
+ * Load GemCad geometry by parsing .asc files at runtime
  * Results are cached to avoid redundant network requests and parsing
+ *
+ * This approach is optimized for App in Toss deployment:
+ * - Only loads the gem shape when needed (lazy loading)
+ * - Source .asc files are much smaller than pre-built binaries (8.8MB vs 416MB)
+ * - Runtime CSG generation happens once per shape, then cached
  */
 export async function loadGemCadGeometry(shapeId: string): Promise<THREE.BufferGeometry> {
   // Check cache first
@@ -163,15 +135,7 @@ export async function loadGemCadGeometry(shapeId: string): Promise<THREE.BufferG
     return gemCadCache.get(shapeId)!.clone();
   }
 
-  // Try loading pre-built geometry first (fast)
-  const prebuilt = await loadPrebuiltGeometry(shapeId);
-  if (prebuilt) {
-    gemCadCache.set(shapeId, prebuilt);
-    return prebuilt.clone();
-  }
-
-  // Fall back to parsing .asc file (slow)
-  console.log(`Pre-built geometry not found for ${shapeId}, parsing .asc file...`);
+  // Parse .asc file and generate geometry using CSG
   const fileName = shapeId.endsWith('.asc') ? shapeId : `${shapeId}.asc`;
   const response = await fetch(`/gem_cads/${fileName}`);
 
@@ -183,7 +147,7 @@ export async function loadGemCadGeometry(shapeId: string): Promise<THREE.BufferG
   const gemcadData = parseGemCad(content);
   const geometry = generateGemGeometry(gemcadData, 1.0);
 
-  // Store in cache
+  // Store in cache for subsequent requests
   gemCadCache.set(shapeId, geometry);
 
   return geometry.clone();
