@@ -6,7 +6,8 @@
 
 import { memo } from 'react';
 import type { Rarity } from '../types/gem';
-import { RARITY_LABELS } from '../types/gem';
+import { getRarityLabel } from '../types/gem';
+import { useLocale } from '../hooks/useLocale';
 import styles from './RarityBadge.module.css';
 
 interface RarityBadgeProps {
@@ -22,11 +23,13 @@ export const RarityBadge = memo(function RarityBadge({
   showLabel = true,
   className = '',
 }: RarityBadgeProps) {
+  const locale = useLocale();
+
   return (
     <span
       className={`${styles.badge} ${styles[rarity]} ${styles[size]} ${className}`}
     >
-      {showLabel && RARITY_LABELS[rarity]}
+      {showLabel && getRarityLabel(rarity, locale)}
     </span>
   );
 });

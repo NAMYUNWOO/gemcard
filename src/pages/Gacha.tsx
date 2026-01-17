@@ -16,8 +16,9 @@ import { ParticleSpoiler } from '../components/ParticleSpoiler';
 import { generateMagicGem } from '../utils/gemGenerator';
 import { useGemStore } from '../stores/gemStore';
 import type { MagicGem, UserInfo, Gender, BirthDateTime } from '../types/gem';
-import { ELEMENT_ICONS, GENDER_LABELS, isValidUserInfo, getLocalizedDescription } from '../types/gem';
+import { ELEMENT_ICONS, GENDER_LABELS, isValidUserInfo, getLocalizedDescription, getGenderLabel } from '../types/gem';
 import { useLocale, useRevealAction } from '../hooks';
+import { useTranslation } from '../i18n';
 import styles from './Gacha.module.css';
 
 type GachaState = 'form' | 'confirm-replace' | 'summoning' | 'revealed';
@@ -26,6 +27,7 @@ export function Gacha() {
   const navigate = useNavigate();
   const { currentGem, setGem, lastUserInfo, setLastUserInfo, powerDescRevealed, setPowerDescRevealed } = useGemStore();
   const locale = useLocale();
+  const t = useTranslation();
 
   const [state, setState] = useState<GachaState>('form');
   const [summonedGem, setSummonedGem] = useState<MagicGem | null>(null);
@@ -107,7 +109,7 @@ export function Gacha() {
   const validateForm = useCallback((): boolean => {
     const userInfo = buildUserInfo();
     if (!isValidUserInfo(userInfo)) {
-      setFormError('Please fill in at least one field');
+      setFormError(t.formError);
       return false;
     }
     setFormError('');
@@ -191,10 +193,10 @@ export function Gacha() {
       <header className={styles.header}>
         <button className={styles.backBtn} onClick={() => navigate('/')}>
           <span className={styles.backIcon}>{'<'}</span>
-          <span>Home</span>
+          <span>{t.home}</span>
         </button>
         {currentGem && (
-          <span className={styles.hasGem}>1 Gem Owned</span>
+          <span className={styles.hasGem}>{t.gemOwned}</span>
         )}
       </header>
 
@@ -203,36 +205,36 @@ export function Gacha() {
         {/* Form State */}
         {state === 'form' && (
           <div className={styles.formContainer}>
-            <h1 className={styles.formTitle}>Summon Your Gem</h1>
+            <h1 className={styles.formTitle}>{t.gachaTitle}</h1>
             <p className={styles.formSubtitle}>
-              "Share your essence to crystallize destiny..."
+              "{t.gachaSubtitle}"
             </p>
 
             <div className={styles.form}>
               {/* Name */}
               <div className={styles.formGroup}>
-                <label className={styles.label}>Name</label>
+                <label className={styles.label}>{t.formName}</label>
                 <input
                   type="text"
                   className={styles.input}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Your name"
+                  placeholder={t.formNamePlaceholder}
                 />
               </div>
 
               {/* Gender */}
               <div className={styles.formGroup}>
-                <label className={styles.label}>Gender</label>
+                <label className={styles.label}>{t.formGender}</label>
                 <select
                   className={styles.select}
                   value={gender}
                   onChange={(e) => setGender(e.target.value as Gender | '')}
                 >
-                  <option value="">Select...</option>
+                  <option value="">{t.formSelectGender}</option>
                   {(Object.keys(GENDER_LABELS) as Gender[]).map((g) => (
                     <option key={g} value={g}>
-                      {GENDER_LABELS[g]}
+                      {getGenderLabel(g, locale)}
                     </option>
                   ))}
                 </select>
@@ -240,14 +242,14 @@ export function Gacha() {
 
               {/* Birth Date (Year / Month / Day) */}
               <div className={styles.formGroup}>
-                <label className={styles.label}>Birth Date</label>
+                <label className={styles.label}>{t.formBirthDate}</label>
                 <div className={styles.dateInputs}>
                   <input
                     type="number"
                     className={styles.dateInput}
                     value={birthYear}
                     onChange={(e) => setBirthYear(e.target.value.slice(0, 4))}
-                    placeholder="Year"
+                    placeholder={t.formYear}
                     min="1900"
                     max="2100"
                   />
@@ -257,7 +259,7 @@ export function Gacha() {
                     className={styles.dateInputSmall}
                     value={birthMonth}
                     onChange={(e) => setBirthMonth(e.target.value.slice(0, 2))}
-                    placeholder="MM"
+                    placeholder={t.formMonth}
                     min="1"
                     max="12"
                   />
@@ -267,7 +269,7 @@ export function Gacha() {
                     className={styles.dateInputSmall}
                     value={birthDay}
                     onChange={(e) => setBirthDay(e.target.value.slice(0, 2))}
-                    placeholder="DD"
+                    placeholder={t.formDay}
                     min="1"
                     max="31"
                   />
@@ -276,14 +278,14 @@ export function Gacha() {
 
               {/* Time (Hour, Minute, Second) */}
               <div className={styles.formGroup}>
-                <label className={styles.label}>Birth Time (optional)</label>
+                <label className={styles.label}>{t.formBirthTime} ({t.formOptional})</label>
                 <div className={styles.timeInputs}>
                   <input
                     type="number"
                     className={styles.timeInput}
                     value={birthHour}
                     onChange={(e) => setBirthHour(e.target.value)}
-                    placeholder="HH"
+                    placeholder={t.formHour}
                     min="0"
                     max="23"
                   />
@@ -293,7 +295,7 @@ export function Gacha() {
                     className={styles.timeInput}
                     value={birthMinute}
                     onChange={(e) => setBirthMinute(e.target.value)}
-                    placeholder="MM"
+                    placeholder={t.formMinute}
                     min="0"
                     max="59"
                   />
@@ -303,7 +305,7 @@ export function Gacha() {
                     className={styles.timeInput}
                     value={birthSecond}
                     onChange={(e) => setBirthSecond(e.target.value)}
-                    placeholder="SS"
+                    placeholder={t.formSecond}
                     min="0"
                     max="59"
                   />
@@ -315,7 +317,7 @@ export function Gacha() {
               )}
 
               <p className={styles.formHint}>
-                At least one field is required
+                {t.formError}
               </p>
 
               <MagicButton
@@ -323,7 +325,7 @@ export function Gacha() {
                 size="lg"
                 className={styles.summonBtn}
               >
-                Begin Summoning
+                {t.summonButton}
               </MagicButton>
             </div>
           </div>
@@ -333,14 +335,12 @@ export function Gacha() {
         {state === 'confirm-replace' && (
           <div className={styles.confirmContainer}>
             <div className={styles.confirmIcon}>⚠️</div>
-            <h2 className={styles.confirmTitle}>Replace Existing Gem?</h2>
+            <h2 className={styles.confirmTitle}>{t.replaceTitle}</h2>
             <p className={styles.confirmText}>
-              You already possess a gem. Summoning a new one will
-              <strong> permanently replace </strong>
-              your current gem.
+              {t.replaceWarning}
             </p>
             <p className={styles.confirmWarning}>
-              "{currentGem?.name}" will be lost forever.
+              "{currentGem?.name}"
             </p>
             <div className={styles.confirmActions}>
               <MagicButton
@@ -348,13 +348,13 @@ export function Gacha() {
                 variant="secondary"
                 size="md"
               >
-                Keep Current Gem
+                {t.replaceCancel}
               </MagicButton>
               <MagicButton
                 onClick={handleConfirmReplace}
                 size="md"
               >
-                Replace Gem
+                {t.replaceConfirm}
               </MagicButton>
             </div>
           </div>
@@ -368,7 +368,7 @@ export function Gacha() {
             </div>
 
             <p className={styles.summoningText}>
-              "Ancient forces stir..."
+              "{t.summoningMessage}"
             </p>
           </>
         )}
@@ -423,13 +423,13 @@ export function Gacha() {
                 variant="secondary"
                 size="md"
               >
-                Accept & Go Home
+                {t.acceptAndGoHome}
               </MagicButton>
               <MagicButton
                 onClick={handleViewDetails}
                 size="md"
               >
-                View Details
+                {t.viewDetails}
               </MagicButton>
             </div>
           </div>

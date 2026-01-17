@@ -15,12 +15,15 @@ import { useGemStore } from '../stores/gemStore';
 import { copyShareUrl } from '../utils/gemShare';
 import {
   ELEMENT_ICONS,
-  ELEMENT_LABELS,
-  GENDER_LABELS,
+  getElementLabel,
+  getGenderLabel,
   getLocalizedDescription,
+  getMagicCircleName,
+  getMagicCircleMeaning,
   type Element,
 } from '../types/gem';
 import { useLocale } from '../hooks';
+import { useTranslation } from '../i18n';
 import styles from './GemDetail.module.css';
 
 export function GemDetail() {
@@ -29,6 +32,7 @@ export function GemDetail() {
   const { currentGem } = useGemStore();
   const [copied, setCopied] = useState(false);
   const locale = useLocale();
+  const t = useTranslation();
 
   const handleShare = async () => {
     if (!currentGem) return;
@@ -49,10 +53,10 @@ export function GemDetail() {
       <div className={styles.container}>
         <StarField starCount={30} />
         <div className={styles.notFound}>
-          <h2>Gem Not Found</h2>
-          <p>This gem has vanished into the void...</p>
+          <h2>{t.gemNotFound}</h2>
+          <p>{t.gemNotFoundMessage}</p>
           <MagicButton onClick={() => navigate('/')}>
-            Return Home
+            {t.returnHome}
           </MagicButton>
         </div>
       </div>
@@ -68,7 +72,7 @@ export function GemDetail() {
     detailLevel: 5,
   };
 
-  const obtainedDate = new Date(gem.obtainedAt).toLocaleDateString('en-US', {
+  const obtainedDate = new Date(gem.obtainedAt).toLocaleDateString(locale === 'ko' ? 'ko-KR' : locale, {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -99,11 +103,11 @@ export function GemDetail() {
       <header className={styles.header}>
         <button className={styles.backBtn} onClick={() => navigate('/')}>
           <span className={styles.backIcon}>{'<'}</span>
-          <span>Home</span>
+          <span>{t.home}</span>
         </button>
 
         <button className={styles.shareBtn} onClick={handleShare}>
-          {copied ? 'Copied!' : 'Share'}
+          {copied ? t.copied : t.share}
         </button>
       </header>
 
@@ -151,7 +155,7 @@ export function GemDetail() {
 
             {element && (
               <span className={styles.elementLabel}>
-                Element: {ELEMENT_LABELS[element]}
+                {t.element}: {getElementLabel(element, locale)}
               </span>
             )}
           </div>
@@ -159,16 +163,16 @@ export function GemDetail() {
           {/* Magic Circle Info */}
           {gem.magicCircle && (
             <div className={styles.circleInfo}>
-              <span className={styles.circleLabel}>Sealed by</span>
-              <span className={styles.circleName}>{gem.magicCircle.name}</span>
-              <span className={styles.circleMeaning}>{gem.magicCircle.meaning}</span>
+              <span className={styles.circleLabel}>{t.sealedBy}</span>
+              <span className={styles.circleName}>{getMagicCircleName(gem.magicCircle, locale)}</span>
+              <span className={styles.circleMeaning}>{getMagicCircleMeaning(gem.magicCircle, locale)}</span>
             </div>
           )}
 
           {/* User Info Section */}
           {gem.userInfo && (gem.userInfo.name || gem.userInfo.gender || gem.userInfo.birthdate) && (
             <div className={styles.userInfo}>
-              <span className={styles.userInfoLabel}>Bonded To</span>
+              <span className={styles.userInfoLabel}>{t.bondedTo}</span>
 
               {gem.userInfo.name && (
                 <span className={styles.userName}>{gem.userInfo.name}</span>
@@ -177,14 +181,14 @@ export function GemDetail() {
               <div className={styles.userDetails}>
                 {gem.userInfo.gender && (
                   <span className={styles.userDetail}>
-                    {GENDER_LABELS[gem.userInfo.gender]}
+                    {getGenderLabel(gem.userInfo.gender, locale)}
                   </span>
                 )}
 
                 {gem.userInfo.birthdate?.date && (
                   <span className={styles.userDetail}>
-                    Born: {gem.userInfo.birthdate.date}
-                    {birthTime && ` at ${birthTime}`}
+                    {t.born}: {gem.userInfo.birthdate.date}
+                    {birthTime && ` ${birthTime}`}
                   </span>
                 )}
               </div>
@@ -194,15 +198,15 @@ export function GemDetail() {
           {/* Metadata */}
           <div className={styles.metadata}>
             <div className={styles.metaItem}>
-              <span className={styles.metaLabel}>Obtained</span>
+              <span className={styles.metaLabel}>{t.obtained}</span>
               <span className={styles.metaValue}>{obtainedDate}</span>
             </div>
             <div className={styles.metaItem}>
-              <span className={styles.metaLabel}>Origin</span>
+              <span className={styles.metaLabel}>{t.origin}</span>
               <span className={styles.metaValue}>
-                {gem.origin === 'gacha' && 'Summoned'}
-                {gem.origin === 'exchange' && 'Exchanged'}
-                {gem.origin === 'gift' && 'Gifted'}
+                {gem.origin === 'gacha' && t.originGacha}
+                {gem.origin === 'exchange' && t.originExchange}
+                {gem.origin === 'gift' && t.originGift}
               </span>
             </div>
           </div>
@@ -214,7 +218,7 @@ export function GemDetail() {
             size="md"
             onClick={() => navigate('/summon')}
           >
-            Summon New Gem
+            {t.summonNewGem}
           </MagicButton>
         </div>
       </main>
