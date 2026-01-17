@@ -8,7 +8,8 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import type { MagicGem } from '../types/gem';
-import { getRarityClass, ELEMENT_ICONS } from '../types/gem';
+import { getRarityClass, ELEMENT_ICONS, getLocalizedName } from '../types/gem';
+import { useLocale } from '../hooks';
 import { GemScene } from './GemScene';
 import { RarityBadge } from './RarityBadge';
 import styles from './GemCard.module.css';
@@ -24,6 +25,7 @@ export const GemCard = memo(function GemCard({
   index = 0,
   className = '',
 }: GemCardProps) {
+  const locale = useLocale();
   const gemParams = {
     shape: gem.shape,
     color: gem.color,
@@ -61,10 +63,7 @@ export const GemCard = memo(function GemCard({
           )}
 
           {/* Gem Name */}
-          <h3 className={styles.name}>{gem.name}</h3>
-
-          {/* Cut Name */}
-          <p className={styles.cut}>{gem.cutName}</p>
+          <h3 className={styles.name}>{getLocalizedName(gem, locale)}</h3>
 
           {/* Rarity Badge */}
           <RarityBadge rarity={gem.rarity} size="sm" />

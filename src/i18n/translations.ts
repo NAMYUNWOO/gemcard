@@ -101,6 +101,25 @@ export interface Translations {
   sharedGem: string;
   someoneGem: string;
   summonYourOwn: string;
+
+  // Share Messages
+  shareTitle: string;
+  shareText: string;
+
+  // Gem Storage (Multi-slot)
+  myGemStorage: string;
+  gemStorageCount: string;
+  emptySlot: string;
+  buyMoreSlots: string;
+  slotPackPrice: string;
+  maxSlotReached: string;
+  selectSlot: string;
+  replaceGem: string;
+  watchAdToReplace: string;
+  adRequired: string;
+  purchasing: string;
+  purchaseSuccess: string;
+  purchaseFailed: string;
 }
 
 const ko: Translations = {
@@ -204,6 +223,25 @@ const ko: Translations = {
   sharedGem: '공유된 보석',
   someoneGem: '님의 보석',
   summonYourOwn: '나도 뽑아보기',
+
+  // Share Messages
+  shareTitle: '나의 보석',
+  shareText: '나만의 신비로운 보석을 뽑았어요!',
+
+  // Gem Storage (Multi-slot)
+  myGemStorage: '내 보석함',
+  gemStorageCount: '{used} / {max}',
+  emptySlot: '빈 슬롯',
+  buyMoreSlots: '+3 슬롯',
+  slotPackPrice: '₩1,000',
+  maxSlotReached: '최대 슬롯 보유',
+  selectSlot: '슬롯 선택',
+  replaceGem: '보석 교체',
+  watchAdToReplace: '광고를 시청하고 보석을 교체하세요',
+  adRequired: '광고 시청 필요',
+  purchasing: '구매 중...',
+  purchaseSuccess: '구매 완료!',
+  purchaseFailed: '구매 실패',
 };
 
 const en: Translations = {
@@ -307,6 +345,25 @@ const en: Translations = {
   sharedGem: 'Shared Gem',
   someoneGem: '\'s Gem',
   summonYourOwn: 'Summon Your Own Gem',
+
+  // Share Messages
+  shareTitle: 'My Gem',
+  shareText: 'I summoned my mystical gem!',
+
+  // Gem Storage (Multi-slot)
+  myGemStorage: 'My Gem Storage',
+  gemStorageCount: '{used} / {max}',
+  emptySlot: 'Empty',
+  buyMoreSlots: '+3 Slots',
+  slotPackPrice: '₩1,000',
+  maxSlotReached: 'Max Slots',
+  selectSlot: 'Select Slot',
+  replaceGem: 'Replace Gem',
+  watchAdToReplace: 'Watch an ad to replace your gem',
+  adRequired: 'Ad Required',
+  purchasing: 'Purchasing...',
+  purchaseSuccess: 'Purchase Complete!',
+  purchaseFailed: 'Purchase Failed',
 };
 
 const translations: Record<SupportedLocale, Translations> = {

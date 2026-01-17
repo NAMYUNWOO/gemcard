@@ -183,12 +183,33 @@ export function getLocalizedDescription(
   return magicPower.descriptions?.[locale] ?? magicPower.description;
 }
 
+/**
+ * Get localized title from MagicPower
+ */
+export function getLocalizedTitle(
+  magicPower: MagicPower,
+  locale: SupportedLocale = 'ko'
+): string {
+  return magicPower.titles?.[locale] ?? magicPower.title;
+}
+
+/**
+ * Get localized name from MagicGem
+ */
+export function getLocalizedName(
+  gem: { name: string; names?: LocalizedDescriptions },
+  locale: SupportedLocale = 'ko'
+): string {
+  return gem.names?.[locale] ?? gem.name;
+}
+
 // =============================================================================
 // Magic Power
 // =============================================================================
 
 export interface MagicPower {
   title: string;
+  titles?: LocalizedDescriptions;
   description: string;  // Default (Korean)
   descriptions?: LocalizedDescriptions;
   element?: Element;
@@ -246,16 +267,19 @@ export interface MagicGem {
 
   // Visual properties (compatible with existing GemScene)
   shape: string;      // GemCad file name
-  cutName: string;    // Cut name (e.g., "Standard Brilliant")
   color: string;      // Hex color
   turbidity: number;  // Opacity 0~1
   contrast: number;   // Internal contrast 0.5~1
 
   // Magic properties
-  name: string;           // Gem name (e.g., "Tear of the Moon Goddess")
+  name: string;           // Gem name (default Korean)
+  names?: LocalizedDescriptions;  // Localized gem names
   magicPower: MagicPower;
   rarity: Rarity;
   magicCircle: MagicCircle;  // Associated magic circle
+
+  // Template index (for efficient URL sharing)
+  templateIndex?: number;  // Index in SAMPLE_GEM_TEMPLATES array
 
   // User info (stored with gem, doesn't affect generation)
   userInfo?: UserInfo;
@@ -271,7 +295,10 @@ export interface MagicGem {
 
 export interface SampleGemTemplate {
   name: string;
-  magicPower: MagicPower;
+  names?: LocalizedDescriptions;
+  magicPower: MagicPower & {
+    titles?: LocalizedDescriptions;
+  };
   rarity: Rarity;
 }
 

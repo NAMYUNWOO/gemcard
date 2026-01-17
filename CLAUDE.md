@@ -30,15 +30,15 @@ npm run prebuild-gems # Pre-build gem geometries to binary format
 ### Route Structure
 
 **Core Routes:**
-- `/` - Home page (displays current gem or prompts to summon)
-- `/summon` - Summoning page (user info form + gem generation)
+- `/` - Home page (gem storage + detail + summon modal)
 - `/gem/:id` - Gem detail view with share functionality
 - `/share/:data` - Shared gem view (compressed gem data in URL)
 
-**Legacy Routes (redirect to new structure):**
-- `/gacha` → `/summon`
+**Legacy Routes (redirect to Home):**
+- `/summon` → `/`
+- `/gacha` → `/`
 - `/collection` → `/`
-- `/create` → `/summon`
+- `/create` → `/`
 
 ### Directory Structure
 
@@ -52,7 +52,8 @@ src/
 │   ├── ParticleSpoiler.tsx # Tap-to-reveal spoiler effect
 │   ├── RarityBadge.tsx  # Rarity indicator badge
 │   ├── StarField.tsx    # Animated star background
-│   └── SummonCircle.tsx # Magic circle animation
+│   ├── SummonCircle.tsx # Magic circle animation
+│   └── SummonModal/     # Gem summoning modal (form + animation)
 ├── constants/           # Application constants
 │   └── gem.ts           # Rendering constants (camera, animation, etc.)
 ├── data/                # Static data
@@ -63,8 +64,7 @@ src/
 │   ├── useLocale.ts     # Locale detection and management
 │   └── useRevealAction.ts # Tap-to-reveal action handler
 ├── pages/               # Route-level page components
-│   ├── Home.tsx         # Landing page
-│   ├── Gacha.tsx        # Summoning flow (form → animation → reveal)
+│   ├── Home.tsx         # Main page (gem storage + summon modal)
 │   ├── GemDetail.tsx    # Single gem detail view
 │   └── SharedGem.tsx    # Shared gem viewer
 ├── shaders/             # GLSL shaders for gem rendering
@@ -116,6 +116,25 @@ scripts/
 - **Storage key:** `'gemcard:cards'`
 - Manages GemCard instances for the sharing feature
 
+### Slot Summoning State Pattern (Home.tsx)
+모달에 슬롯을 전달할 때 **Zustand store 대신 로컬 React state 사용**
+
+**문제:** Zustand의 `setActiveSlot(slot)` 호출 후 같은 이벤트 핸들러 내에서 모달을 열면, React 컴포넌트가 아직 리렌더되지 않아 `activeSlot`이 이전 값을 참조함
+
+**해결:** `summonTargetSlot` 로컬 state 사용
+```typescript
+const [summonTargetSlot, setSummonTargetSlot] = useState<number>(0);
+
+// 빈 슬롯 클릭 시
+setSummonTargetSlot(slot);  // 로컬 state에 저장 (동기적)
+setShowSummonModal(true);
+
+// 모달에 전달
+<SummonModal targetSlot={summonTargetSlot} ... />
+```
+
+**주의:** `activeSlot`은 현재 선택된 슬롯 표시용, `summonTargetSlot`은 소환 대상 슬롯 전달용
+
 ## Core Systems
 
 ### Single-Gem System
@@ -145,14 +164,21 @@ scripts/
 
 ### Gem Generation Flow
 ```
-generateMagicGem(origin, userInfo?)
+generateMagicGem(origin, userInfo?, excludeTemplateIndices?)
   → rollRarity() based on probability
-  → getTemplateByRarity() from sampleGems.ts
+  → getTemplateByRarity(rarity, excludeSet) from sampleGems.ts
+    - Excludes already-owned templates from selection
+    - Falls back to full pool if all templates of that rarity are owned
   → generateVisualParams() (random shape from gem_cads)
   → getElementColor() for color
   → getRandomMagicCircle()
   → return MagicGem with all properties
 ```
+
+### Duplicate Prevention
+- When summoning, owned gem `templateIndex` values are collected
+- These indices are excluded from the template selection pool
+- If all templates of a rarity are owned, duplicates are allowed (fallback)
 
 ## 3D Rendering Pipeline
 
@@ -251,6 +277,87 @@ Magic power descriptions support multiple languages via `LocalizedDescriptions` 
 | `src/stores/gemStore.ts` | Main application state |
 | `src/data/sampleGems.ts` | Gem template database (don't edit manually) |
 | `src/constants/gem.ts` | Rendering constants |
+
+## Firebase & Storage Architecture
+
+### Environment Detection
+- App in Toss WebView: `*.apps.tossmini.com`, `*.private-apps.tossmini.com`
+- Non-Toss: 로컬 브라우저 환경
+
+### Storage Strategy
+| 환경 | Storage | 인증 |
+|------|---------|------|
+| App in Toss | Firebase Firestore | Toss 토큰 → Firebase Custom Auth |
+| Non-Toss | localStorage / IndexedDB | 없음 (로컬 전용) |
+
+### Firebase Usage Control
+| 환경 | Origin 체크 | Firebase 사용 조건 |
+|------|------------|-------------------|
+| Production | ✓ 필수 | Toss WebView에서만 |
+| Development | ✗ 선택 | `VITE_USE_FIREBASE=true` 설정 시 |
+
+```bash
+# 개발 환경에서 Firebase 테스트
+VITE_USE_FIREBASE=true npm run dev
+```
+
+### Payment Model (Toss IAP)
+| 상태 | 슬롯 수 | 가격 |
+|------|---------|------|
+| 기본 | 1개 | 무료 |
+| 1회 구매 | 4개 (+3) | ₩1,000 |
+| 2회 구매 | 7개 (+3) | ₩1,000 |
+| 3회 구매 | 10개 (+3) | ₩1,000 |
+
+- gem 교체: 슬롯 내 gem 삭제 후 새로 소환 → **보상형 광고 시청 필수**
+- gem 캐시 한도: 슬롯 수와 동일 (1~10)
+
+### Ads Integration (Toss Ads)
+| 광고 유형 | 사용 시점 | 테스트 ID |
+|----------|----------|----------|
+| 보상형 광고 | gem 교체 | `ait-ad-test-rewarded-id` |
+
+### Extended Directory Structure
+
+```
+src/
+├── config/
+│   └── firebase.ts              # Firebase 초기화 (환경변수 사용)
+│
+├── services/
+│   ├── storage/
+│   │   ├── types.ts             # GemStorageService 인터페이스
+│   │   ├── LocalStorageService.ts   # localStorage/IndexedDB 구현
+│   │   ├── FirestoreService.ts  # Firebase Firestore 구현
+│   │   └── index.ts             # 팩토리 + origin 기반 서비스 선택
+│   │
+│   ├── auth/
+│   │   └── TossAuthService.ts   # Toss 토큰 → Firebase Custom Auth
+│   │
+│   ├── premium/
+│   │   └── PremiumService.ts    # Toss IAP 결제 처리
+│   │
+│   └── ads/
+│       └── AdService.ts         # Toss 보상형 광고 연동
+│
+├── hooks/
+│   ├── useStorageService.ts     # Storage 서비스 React hook
+│   ├── useAuth.ts               # 인증 상태 관리 hook
+│   └── usePremium.ts            # 프리미엄 상태 관리 hook
+│
+└── utils/
+    └── environment.ts           # App in Toss 환경 감지
+```
+
+### Key Files Reference (Extended)
+| 파일 | 역할 |
+|------|------|
+| `src/config/firebase.ts` | Firebase 초기화 |
+| `src/services/storage/` | Storage 추상화 레이어 |
+| `src/services/auth/TossAuthService.ts` | Toss 인증 연동 |
+| `src/services/premium/PremiumService.ts` | IAP 결제 처리 |
+| `src/services/ads/AdService.ts` | 보상형 광고 연동 |
+| `src/utils/environment.ts` | App in Toss 감지 |
 
 ## Notes for AI Assistants
 

@@ -13,9 +13,23 @@ import type { Element, SampleGemTemplate } from '../types/gem';
 
 export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
   {
-    name: 'Ignis of Execution',
+    name: '집행의 불꽃',
+    names: {
+      ko: '집행의 불꽃',
+      en: 'Ignis of Execution',
+      zh: '执行之火',
+      ja: '執行の焔',
+      es: 'Fuego de Ejecución',
+    },
     magicPower: {
-      title: 'First Strike',
+      title: '첫 번째 타격',
+      titles: {
+        ko: '첫 번째 타격',
+        en: 'First Strike',
+        zh: '第一击',
+        ja: '先制攻撃',
+        es: 'Primer Golpe',
+      },
       description: '미루고 싶은 심리를 완전히 태워버리고, 생각한 즉시 몸이 움직이게 만드는 강제 집행력을 부여하여 하루의 생산성을 물리적으로 2배 이상 끌어올립니다.',
       descriptions: {
         ko: '미루고 싶은 심리를 완전히 태워버리고, 생각한 즉시 몸이 움직이게 만드는 강제 집행력을 부여하여 하루의 생산성을 물리적으로 2배 이상 끌어올립니다.',
@@ -29,9 +43,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Embers of Social Warmth',
+    name: '사교의 온기',
+    names: {
+      ko: '사교의 온기',
+      en: 'Embers of Social Warmth',
+      zh: '社交温情之烬',
+      ja: '社交の温もりの残り火',
+      es: 'Brasas de Calor Social',
+    },
     magicPower: {
-      title: 'Networking Spark',
+      title: '인맥의 불꽃',
+      titles: {
+        ko: '인맥의 불꽃',
+        en: 'Networking Spark',
+        zh: '社交火花',
+        ja: '交流の火種',
+        es: 'Chispa de Networking',
+      },
       description: '처음 만난 차가운 분위기의 상대라도 소지자에게 호감을 느끼게 하는 따뜻한 아우라를 방출하며, 어색한 대화를 화기애애한 비즈니스 기회로 전환합니다.',
       descriptions: {
         ko: '처음 만난 차가운 분위기의 상대라도 소지자에게 호감을 느끼게 하는 따뜻한 아우라를 방출하며, 어색한 대화를 화기애애한 비즈니스 기회로 전환합니다.',
@@ -45,9 +73,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Flicker of Daily Focus',
+    name: '일상 집중의 흔들림',
+    names: {
+      ko: '일상 집중의 흔들림',
+      en: 'Flicker of Daily Focus',
+      zh: '일상专注지점 (日常专注之光)',
+      ja: '日常集中の揺らぎ',
+      es: 'Destello de Enfoque Diario',
+    },
     magicPower: {
-      title: 'Brief Intensity',
+      title: '짧은 강렬함',
+      titles: {
+        ko: '짧은 강렬함',
+        en: 'Brief Intensity',
+        zh: '短促强度',
+        ja: '短き強烈さ',
+        es: 'Intensidad Breve',
+      },
       description: '30분이라는 짧은 시간 동안 뇌를 풀가동시켜 고난도의 작업을 완수하게 돕습니다. 집중력이 흩어질 때마다 심장을 자극해 몰입의 상태로 되돌립니다.',
       descriptions: {
         ko: '30분이라는 짧은 시간 동안 뇌를 풀가동시켜 고난도의 작업을 완수하게 돕습니다. 집중력이 흩어질 때마다 심장을 자극해 몰입의 상태로 되돌립니다.',
@@ -61,9 +103,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Blaze of Trendsetting',
+    name: '유행 선도의 화염',
+    names: {
+      ko: '유행 선도의 화염',
+      en: 'Blaze of Trendsetting',
+      zh: '领潮之焰',
+      ja: '流行先導の炎',
+      es: 'Llama de Tendencias',
+    },
     magicPower: {
-      title: 'Viral Ignition',
+      title: '확산의 점화',
+      titles: {
+        ko: '확산의 점화',
+        en: 'Viral Ignition',
+        zh: '病毒式点燃',
+        ja: '拡散の着火',
+        es: 'Ignición Viral',
+      },
       description: '소지자가 제안하는 아이디어나 기획이 유행의 불씨가 되어 시장에 번져나가게 합니다. 대중의 욕망을 정확히 타격하여 소수의 지지를 거대한 팬덤으로 확장합니다.',
       descriptions: {
         ko: '소지자가 제안하는 아이디어나 기획이 유행의 불씨가 되어 시장에 번져나가게 합니다. 대중의 욕망을 정확히 타격하여 소수의 지지를 거대한 팬덤으로 확장합니다.',
@@ -77,9 +133,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Scarlet Decision Stone',
+    name: '진홍빛 결단석',
+    names: {
+      ko: '진홍빛 결단석',
+      en: 'Scarlet Decision Stone',
+      zh: '绯红决断石',
+      ja: '深紅の決断石',
+      es: 'Piedra de Decisión Escarlata',
+    },
     magicPower: {
-      title: 'Iron Will',
+      title: '강철의 의지',
+      titles: {
+        ko: '강철의 의지',
+        en: 'Iron Will',
+        zh: '钢铁意志',
+        ja: '鋼の意志',
+        es: 'Voluntad de Hierro',
+      },
       description: '수만 가지 선택지 앞에서도 망설임 없이 가장 이익이 큰 길을 선택할 확신을 줍니다. 우유부단함으로 인해 발생하는 시간 낭비와 기회비용을 0으로 만듭니다.',
       descriptions: {
         ko: '수만 가지 선택지 앞에서도 망설임 없이 가장 이익이 큰 길을 선택할 확신을 줍니다. 우유부단함으로 인해 발생하는 시간 낭비와 기회비용을 0으로 만듭니다.',
@@ -93,9 +163,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Heat of Peak Vigor',
+    name: '정점 활력의 열기',
+    names: {
+      ko: '정점 활력의 열기',
+      en: 'Heat of Peak Vigor',
+      zh: '巅峰活力之热',
+      ja: '頂点の活熱',
+      es: 'Calor de Vigor Máximo',
+    },
     magicPower: {
-      title: 'Stamina Surge',
+      title: '지구력의 파동',
+      titles: {
+        ko: '지구력의 파동',
+        en: 'Stamina Surge',
+        zh: '耐力飙升',
+        ja: 'スタミナサージ',
+        es: 'Oleada de Estamina',
+      },
       description: '밤샘 작업이나 극한의 체력 소모 상황에서도 몸이 타오르는 듯한 에너지를 공급받습니다. 카페인 없이도 24시간 동안 최상의 컨디션을 유지하며 경쟁자를 압도합니다.',
       descriptions: {
         ko: '밤샘 작업이나 극한의 체력 소모 상황에서도 몸이 타오르는 듯한 에너지를 공급받습니다. 카페인 없이도 24시간 동안 최상의 컨디션을 유지하며 경쟁자를 압도합니다.',
@@ -109,9 +193,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Pyre of Persuasion',
+    name: '설득의 장작',
+    names: {
+      ko: '설득의 장작',
+      en: 'Pyre of Persuasion',
+      zh: '说服之火',
+      ja: '説得の火葬',
+      es: 'Pira de Persuasión',
+    },
     magicPower: {
-      title: 'Orator’s Soul',
+      title: '웅변가의 혼',
+      titles: {
+        ko: '웅변가의 혼',
+        en: 'Orator’s Soul',
+        zh: '演说家之魂',
+        ja: '弁論家の魂',
+        es: 'Alma de Orador',
+      },
       description: '소지자의 목소리에 청중의 이성을 마비시키는 열정을 담습니다. 불가능해 보였던 투자 유치나 반대파의 설득을 한 번의 연설로 완벽하게 해결하는 권능을 줍니다.',
       descriptions: {
         ko: '소지자의 목소리에 청중의 이성을 마비시키는 열정을 담습니다. 불가능해 보였던 투자 유치나 반대파의 설득을 한 번의 연설로 완벽하게 해결하는 권능을 줍니다.',
@@ -125,9 +223,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Lava-Glass of Ambition',
+    name: '야망의 용암유리',
+    names: {
+      ko: '야망의 용암유리',
+      en: 'Lava-Glass of Ambition',
+      zh: '野心熔岩玻璃',
+      ja: '野望の溶岩ガラス',
+      es: 'Vidrio de Lava de Ambición',
+    },
     magicPower: {
-      title: 'Visionary Flare',
+      title: '선견지명의 섬광',
+      titles: {
+        ko: '선견지명의 섬광',
+        en: 'Visionary Flare',
+        zh: '远见闪光',
+        ja: '先見の閃光',
+        es: 'Destello Visionario',
+      },
       description: '현실에 안주하려는 나약함을 태우고, 더 높은 지위와 권력을 향한 끝없는 갈망을 현실적인 전략으로 변모시켜 소지자를 조직의 최정점으로 이끕니다.',
       descriptions: {
         ko: '현실에 안주하려는 나약함을 태우고, 더 높은 지위와 권력을 향한 끝없는 갈망을 현실적인 전략으로 변모시켜 소지자를 조직의 최정점으로 이끕니다.',
@@ -141,9 +253,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Volcano of Creativity',
+    name: '창의의 화산',
+    names: {
+      ko: '창의의 화산',
+      en: 'Volcano of Creativity',
+      zh: '创意火山',
+      ja: '創造の火山',
+      es: 'Volcán de Creatividad',
+    },
     magicPower: {
-      title: 'Idea Eruption',
+      title: '아이디어의 분출',
+      titles: {
+        ko: '아이디어의 분출',
+        en: 'Idea Eruption',
+        zh: '灵感爆发',
+        ja: 'アイデアの噴火',
+        es: 'Erupción de Ideas',
+      },
       description: '뇌 속에 막혀 있던 창의적 회로를 폭발시켜, 기존에 없던 혁신적인 비즈니스 모델이나 예술적 영감을 매일 수십 개씩 쏟아내게 하는 창조의 원천이 됩니다.',
       descriptions: {
         ko: '뇌 속에 막혀 있던 창의적 회로를 폭발시켜, 기존에 없던 혁신적인 비즈니스 모델이나 예술적 영감을 매일 수십 개씩 쏟아내게 하는 창조의 원천이 됩니다.',
@@ -157,9 +283,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Inferno of Executive Power',
+    name: '집행권의 인페르노',
+    names: {
+      ko: '집행권의 인페르노',
+      en: 'Inferno of Executive Power',
+      zh: '执行权之火狱',
+      ja: '執行権の烈火',
+      es: 'Infierno de Poder Ejecutivo',
+    },
     magicPower: {
-      title: 'Absolute Command',
+      title: '절대 명령',
+      titles: {
+        ko: '절대 명령',
+        en: 'Absolute Command',
+        zh: '绝对指令',
+        ja: '絶対命令',
+        es: 'Mando Absoluto',
+      },
       description: '조직 내에서 그 누구도 소지자의 명령에 토를 달지 못하게 만드는 지배자의 위엄을 부여합니다. 카리스마만으로 수만 명의 인원을 일사불란하게 통제합니다.',
       descriptions: {
         ko: '조직 내에서 그 누구도 소지자의 명령에 토를 달지 못하게 만드는 지배자의 위엄을 부여합니다. 카리스마만으로 수만 명의 인원을 일사불란하게 통제합니다.',
@@ -173,9 +313,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'epic',
   },
   {
-    name: 'Sunlight of Market Dominance',
+    name: '시장 지배의 태양광',
+    names: {
+      ko: '시장 지배의 태양광',
+      en: 'Sunlight of Market Dominance',
+      zh: '市场支配之光',
+      ja: '市場支配の陽光',
+      es: 'Luz de Dominio de Mercado',
+    },
     magicPower: {
-      title: 'Monopoly Heat',
+      title: '독점의 열기',
+      titles: {
+        ko: '독점의 열기',
+        en: 'Monopoly Heat',
+        zh: '垄断之热',
+        ja: '独占の熱気',
+        es: 'Calor de Monopolio',
+      },
       description: '소지자가 속한 업계의 모든 자본과 관심을 블랙홀처럼 빨아들입니다. 경쟁사를 고사시키고 오직 자신만이 시장의 중심에서 빛나는 독점적 행운을 선사합니다.',
       descriptions: {
         ko: '소지자가 속한 업계의 모든 자본과 관심을 블랙홀처럼 빨아들입니다. 경쟁사를 고사시키고 오직 자신만이 시장의 중심에서 빛나는 독점적 행운을 선사합니다.',
@@ -189,9 +343,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'epic',
   },
   {
-    name: 'Phoenix Heart of Rebirth',
+    name: '재탄생의 불사조 심장',
+    names: {
+      ko: '재탄생의 불사조 심장',
+      en: 'Phoenix Heart of Rebirth',
+      zh: '重生凤凰之心',
+      ja: '再生の不死鳥の心臓',
+      es: 'Corazón de Fénix de Renacimiento',
+    },
     magicPower: {
-      title: 'Infinite Resurgence',
+      title: '무한한 부활',
+      titles: {
+        ko: '무한한 부활',
+        en: 'Infinite Resurgence',
+        zh: '无限复苏',
+        ja: '無限の復活',
+        es: 'Resurgimiento Infinito',
+      },
       description: '완전히 파산하거나 사회적 지위가 바닥으로 추락해도, 그 실패를 자양분 삼아 이전보다 100배 거대한 제국을 재건할 수 있는 신적인 회복력과 역전의 기회를 강제로 만듭니다.',
       descriptions: {
         ko: '완전히 파산하거나 사회적 지위가 바닥으로 추락해도, 그 실패를 자양분 삼아 이전보다 100배 거대한 제국을 재건할 수 있는 신적인 회복력과 역전의 기회를 강제로 만듭니다.',
@@ -205,9 +373,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'legendary',
   },
   {
-    name: 'Primeval Nova Core',
+    name: '태고의 신성 핵',
+    names: {
+      ko: '태고의 신성 핵',
+      en: 'Primeval Nova Core',
+      zh: '太古新星核',
+      ja: '太古の新星の核',
+      es: 'Núcleo de Nova Primordial',
+    },
     magicPower: {
-      title: 'Reality Ignition',
+      title: '현실 점화',
+      titles: {
+        ko: '현실 점화',
+        en: 'Reality Ignition',
+        zh: '现实点燃',
+        ja: '現実点火',
+        es: 'Ignición de Realidad',
+      },
       description: '상상하는 것만으로 현실의 물리적 흐름을 바꿉니다. 안 될 일도 되게 만들며, 소지자가 걷는 길을 가로막는 모든 사회적, 법적 장애물을 태워 없애고 승리만을 남깁니다.',
       descriptions: {
         ko: '상상하는 것만으로 현실의 물리적 흐름을 바꿉니다. 안 될 일도 되게 만들며, 소지자가 걷는 길을 가로막는 모든 사회적, 법적 장애물을 태워 없애고 승리만을 남깁니다.',
@@ -221,9 +403,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'legendary',
   },
   {
-    name: 'Dewdrop of Calm',
+    name: '평온의 이슬',
+    names: {
+      ko: '평온의 이슬',
+      en: 'Dewdrop of Calm',
+      zh: '宁静露珠',
+      ja: '平穏の露',
+      es: 'Gota de Calma',
+    },
     magicPower: {
-      title: 'Anxiety Wash',
+      title: '불안의 세척',
+      titles: {
+        ko: '불안의 세척',
+        en: 'Anxiety Wash',
+        zh: '洗涤焦虑',
+        ja: '不安の洗浄',
+        es: 'Lavado de Ansiedad',
+      },
       description: '가슴을 조여오는 면접이나 중요한 미팅 전, 모든 긴장감을 씻어내고 깊은 호수처럼 평온한 상태를 유지하여 평소 실력의 120%를 발휘하게 합니다.',
       descriptions: {
         ko: '가슴을 조여오는 면접이나 중요한 미팅 전, 모든 긴장감을 씻어내고 깊은 호수처럼 평온한 상태를 유지하여 평소 실력의 120%를 발휘하게 합니다.',
@@ -237,9 +433,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Mist of Subtle Favor',
+    name: '은은한 호의의 안개',
+    names: {
+      ko: '은은한 호의의 안개',
+      en: 'Mist of Subtle Favor',
+      zh: '柔情之雾',
+      ja: '仄かな好意の霧',
+      es: 'Niebla de Favor Sutil',
+    },
     magicPower: {
-      title: 'Fluid Charm',
+      title: '유연한 매력',
+      titles: {
+        ko: '유연한 매력',
+        en: 'Fluid Charm',
+        zh: '柔化魅力',
+        ja: 'しなやかな魅力',
+        es: 'Encanto Fluido',
+      },
       description: '물안개처럼 자연스럽게 주변에 스며들어 비호감이었던 인상조차 긍정적으로 바꿉니다. 사람들이 자신도 모르게 소지자의 편을 들게 만드는 부드러운 유인력을 가집니다.',
       descriptions: {
         ko: '물안개처럼 자연스럽게 주변에 스며들어 비호감이었던 인상조차 긍정적으로 바꿉니다. 사람들이 자신도 모르게 소지자의 편을 들게 만드는 부드러운 유인력을 가집니다.',
@@ -253,9 +463,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Ripple of Intuition',
+    name: '직관의 파동',
+    names: {
+      ko: '직관의 파동',
+      en: 'Ripple of Intuition',
+      zh: '直觉波动',
+      ja: '直感の波動',
+      es: 'Ondulación de Intuición',
+    },
     magicPower: {
-      title: 'Gut Feeling',
+      title: '본능적 감각',
+      titles: {
+        ko: '본능적 감각',
+        en: 'Gut Feeling',
+        zh: '本能直觉',
+        ja: '本能の直感',
+        es: 'Corazonada',
+      },
       description: '주식 차트나 계약서의 미세한 위화감을 파동으로 느껴 사전에 피해를 막아줍니다. 논리적인 이유를 알기 전에도 몸이 먼저 위험을 감지해 소지자를 보호합니다.',
       descriptions: {
         ko: '주식 차트나 계약서의 미세한 위화감을 파동으로 느껴 사전에 피해를 막아줍니다. 논리적인 이유를 알기 전에도 몸이 먼저 위험을 감지해 소지자를 보호합니다.',
@@ -269,9 +493,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Stream of Eloquence',
+    name: '웅변의 흐름',
+    names: {
+      ko: '웅변의 흐름',
+      en: 'Stream of Eloquence',
+      zh: '雄辩之流',
+      ja: '雄弁の流れ',
+      es: 'Corriente de Elocuencia',
+    },
     magicPower: {
-      title: 'Silver Tongue',
+      title: '유려한 말솜씨',
+      titles: {
+        ko: '유려한 말솜씨',
+        en: 'Silver Tongue',
+        zh: '伶牙俐齿',
+        ja: '立て板に水',
+        es: 'Lengua de Plata',
+      },
       description: '막힌 대화를 물 흐르듯 유연하게 풀어냅니다. 어떤 까다로운 질문에도 재치 있게 응대하며, 상대방의 기분을 거스르지 않으면서 자신이 원하는 결론으로 유도합니다.',
       descriptions: {
         ko: '막힌 대화를 물 흐르듯 유연하게 풀어냅니다. 어떤 까다로운 질문에도 재치 있게 응대하며, 상대방의 기분을 거스르지 않으면서 자신이 원하는 결론으로 유도합니다.',
@@ -285,9 +523,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Aquamarine Clarity',
+    name: '청람빛 명료함',
+    names: {
+      ko: '청람빛 명료함',
+      en: 'Aquamarine Clarity',
+      zh: '澄澈青晶',
+      ja: '澄み渡る青藍',
+      es: 'Claridad de Aguamarina',
+    },
     magicPower: {
-      title: 'Logic Filter',
+      title: '논리 필터',
+      titles: {
+        ko: '논리 필터',
+        en: 'Logic Filter',
+        zh: '逻辑过滤',
+        ja: '論理フィルター',
+        es: 'Filtro de Lógica',
+      },
       description: '복잡하게 꼬인 감정 덩어리에서 이성적인 팩트만을 걸러내어 보여줍니다. 연인 관계나 비즈니스 갈등에서 감정 소모 없이 가장 합리적인 해결책을 도출하게 합니다.',
       descriptions: {
         ko: '복잡하게 꼬인 감정 덩어리에서 이성적인 팩트만을 걸러내어 보여줍니다. 연인 관계나 비즈니스 갈등에서 감정 소모 없이 가장 합리적인 해결책을 도출하게 합니다.',
@@ -301,9 +553,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Rain of Productivity',
+    name: '생산성의 비',
+    names: {
+      ko: '생산성의 비',
+      en: 'Rain of Productivity',
+      zh: '生产力之雨',
+      ja: '生産性の雨',
+      es: 'Lluvia de Productividad',
+    },
     magicPower: {
-      title: 'Task Flow',
+      title: '작업 흐름',
+      titles: {
+        ko: '작업 흐름',
+        en: 'Task Flow',
+        zh: '任务流转',
+        ja: 'タスクフロー',
+        es: 'Flujo de Tareas',
+      },
       description: '쏟아지는 업무들을 하나씩 순차적으로 처리하는 최적의 리듬을 부여합니다. 마치 비가 내리듯 자연스럽게 할 일을 마무리지어 퇴근 시간을 2시간 이상 앞당깁니다.',
       descriptions: {
         ko: '쏟아지는 업무들을 하나씩 순차적으로 처리하는 최적의 리듬을 부여합니다. 마치 비가 내리듯 자연스럽게 할 일을 마무리지어 퇴근 시간을 2시간 이상 앞당깁니다.',
@@ -317,9 +583,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Glacier of Self-Control',
+    name: '자제력의 빙하',
+    names: {
+      ko: '자제력의 빙하',
+      en: 'Glacier of Self-Control',
+      zh: '自制力冰川',
+      ja: '自制の氷河',
+      es: 'Glaciar de Autocontrol',
+    },
     magicPower: {
-      title: 'Stoic Aegis',
+      title: '스토아의 방패',
+      titles: {
+        ko: '스토아의 방패',
+        en: 'Stoic Aegis',
+        zh: '禁欲之盾',
+        ja: 'ストア派の盾',
+        es: 'Egida Estoica',
+      },
       description: '지름신, 폭식, 게임 중독 등 순간적인 충동을 얼음처럼 얼려버립니다. 철저한 자기 객관화를 통해 자신의 삶을 완벽하게 통제하는 냉철한 관리자로 거듭나게 합니다.',
       descriptions: {
         ko: '지름신, 폭식, 게임 중독 등 순간적인 충동을 얼음처럼 얼려버립니다. 철저한 자기 객관화를 통해 자신의 삶을 완벽하게 통제하는 냉철한 관리자로 거듭나게 합니다.',
@@ -333,9 +613,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Tidal Shift Crystal',
+    name: '조수의 변화 수정',
+    names: {
+      ko: '조수의 변화 수정',
+      en: 'Tidal Shift Crystal',
+      zh: '潮汐转换水晶',
+      ja: '潮流変化の晶石',
+      es: 'Cristal de Cambio de Marea',
+    },
     magicPower: {
-      title: 'Trend Surfing',
+      title: '트렌드 서핑',
+      titles: {
+        ko: '트렌드 서핑',
+        en: 'Trend Surfing',
+        zh: '趋势冲浪',
+        ja: 'トレンドサーフィン',
+        es: 'Surf de Tendencias',
+      },
       description: '시대의 흐름이 어디로 바뀌는지 남들보다 반 박자 빠르게 파악하게 합니다. 거대한 변화의 파도에 휩쓸리는 대신 그 위에 올라타 부와 명성을 독식하게 돕니다.',
       descriptions: {
         ko: '시대의 흐름이 어디로 바뀌는지 남들보다 반 박자 빠르게 파악하게 합니다. 거대한 변화의 파도에 휩쓸리는 대신 그 위에 올라타 부와 명성을 독식하게 돕니다.',
@@ -349,9 +643,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Source of Vitality',
+    name: '생명력의 근원',
+    names: {
+      ko: '생명력의 근원',
+      en: 'Source of Vitality',
+      zh: '活力源泉',
+      ja: '活力の源',
+      es: 'Fuente de Vitalidad',
+    },
     magicPower: {
-      title: 'Cellular Cleansing',
+      title: '세포 정화',
+      titles: {
+        ko: '세포 정화',
+        en: 'Cellular Cleansing',
+        zh: '细胞净化',
+        ja: '細胞の浄化',
+        es: 'Limpieza Celular',
+      },
       description: '몸속의 독소와 피로 물질을 매일 밤 완벽히 정화합니다. 4시간만 자도 8시간을 잔 듯한 최상의 세포 상태를 유지하며 피부 노화를 획기적으로 늦추는 효과가 있습니다.',
       descriptions: {
         ko: '몸속의 독소와 피로 물질을 매일 밤 완벽히 정화합니다. 4시간만 자도 8시간을 잔 듯한 최상의 세포 상태를 유지하며 피부 노화를 획기적으로 늦추는 효과가 있습니다.',
@@ -365,9 +673,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Deep Sea of Secrets',
+    name: '비밀의 심해',
+    names: {
+      ko: '비밀의 심해',
+      en: 'Deep Sea of Secrets',
+      zh: '秘密深海',
+      ja: '秘密の深海',
+      es: 'Mar Profundo de Secretos',
+    },
     magicPower: {
-      title: 'Information Abyss',
+      title: '정보의 심연',
+      titles: {
+        ko: '정보의 심연',
+        en: 'Information Abyss',
+        zh: '信息深渊',
+        ja: '情報の深淵',
+        es: 'Abismo de Información',
+      },
       description: '자신에게 불리한 정보나 치부를 심해 속으로 영원히 가라앉힙니다. 어떠한 뒷조사나 폭로에도 소지자의 비밀은 절대 수면 위로 떠오르지 않는 철저한 방어력을 부여합니다.',
       descriptions: {
         ko: '자신에게 불리한 정보나 치부를 심해 속으로 영원히 가라앉힙니다. 어떠한 뒷조사나 폭로에도 소지자의 비밀은 절대 수면 위로 떠오르지 않는 철저한 방어력을 부여합니다.',
@@ -381,9 +703,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'epic',
   },
   {
-    name: 'Vortex of Wealth Flow',
+    name: '부의 흐름 소용돌이',
+    names: {
+      ko: '부의 흐름 소용돌이',
+      en: 'Vortex of Wealth Flow',
+      zh: '财富流涡旋',
+      ja: '富の流転の渦',
+      es: 'Vórtice de Flujo de Riqueza',
+    },
     magicPower: {
-      title: 'Cash Magnet',
+      title: '현금 마그넷',
+      titles: {
+        ko: '현금 마그넷',
+        en: 'Cash Magnet',
+        zh: '现金磁石',
+        ja: 'キャッシュマグネット',
+        es: 'Imán de Efectivo',
+      },
       description: '정체된 자산 흐름을 소지자를 중심으로 회전시킵니다. 전 세계의 돈이 소지자의 계좌로 흘러들어오는 통로를 개척하며, 쓰면 쓸수록 더 큰 돈이 들어오는 풍요의 소용돌이를 만듭니다.',
       descriptions: {
         ko: '정체된 자산 흐름을 소지자를 중심으로 회전시킵니다. 전 세계의 돈이 소지자의 계좌로 흘러들어오는 통로를 개척하며, 쓰면 쓸수록 더 큰 돈이 들어오는 풍요의 소용돌이를 만듭니다.',
@@ -397,9 +733,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'epic',
   },
   {
-    name: 'Oceanic Consciousness',
+    name: '대양의 의식',
+    names: {
+      ko: '대양의 의식',
+      en: 'Oceanic Consciousness',
+      zh: '海洋意识',
+      ja: '大洋の意識',
+      es: 'Conciencia Oceánica',
+    },
     magicPower: {
-      title: 'World Wisdom',
+      title: '세상의 지혜',
+      titles: {
+        ko: '세상의 지혜',
+        en: 'World Wisdom',
+        zh: '世界智慧',
+        ja: '世界の知恵',
+        es: 'Sabiduría del Mundo',
+      },
       description: '전 인류의 지식 체계를 바다처럼 수용하고 이해하는 통찰력을 줍니다. 세상 모든 이치에 통달하여 어떤 난제에도 해답을 내놓는, 살아있는 현자로서 추앙받게 만듭니다.',
       descriptions: {
         ko: '전 인류의 지식 체계를 바다처럼 수용하고 이해하는 통찰력을 줍니다. 세상 모든 이치에 통달하여 어떤 난제에도 해답을 내놓는, 살아있는 현자로서 추앙받게 만듭니다.',
@@ -413,9 +763,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'legendary',
   },
   {
-    name: 'Primordial Life Source',
+    name: '생체 시계 역행자',
+    names: {
+      ko: '생체 시계 역행자',
+      en: 'Primordial Life Source',
+      zh: '生物钟逆转者',
+      ja: '生体時計の逆行者',
+      es: 'Reversor del Reloj Biológico',
+    },
     magicPower: {
-      title: 'Eternal Youth',
+      title: '영원한 젊음',
+      titles: {
+        ko: '영원한 젊음',
+        en: 'Eternal Youth',
+        zh: '永恒青春',
+        ja: '永遠の若さ',
+        es: 'Eterna Juventud',
+      },
       description: '신체의 생체 시계를 거꾸로 돌립니다. 장기는 가장 건강했던 시절로 회귀하고 육체는 질병으로부터 완전 격리되며, 수백 년을 살아도 청년의 기상을 유지하는 신적 축복을 내립니다.',
       descriptions: {
         ko: '신체의 생체 시계를 거꾸로 돌립니다. 장기는 가장 건강했던 시절로 회귀하고 육체는 질병으로부터 완전 격리되며, 수백 년을 살아도 청년의 기상을 유지하는 신적 축복을 내립니다.',
@@ -429,9 +793,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'legendary',
   },
   {
-    name: 'Pebble of Patience',
+    name: '인내의 조약돌',
+    names: {
+      ko: '인내의 조약돌',
+      en: 'Pebble of Patience',
+      zh: '毅力之卵石',
+      ja: '忍耐の小石',
+      es: 'Piedra de Paciencia',
+    },
     magicPower: {
-      title: 'Steady Step',
+      title: '꾸준한 발걸음',
+      titles: {
+        ko: '꾸준한 발걸음',
+        en: 'Steady Step',
+        zh: '稳健步伐',
+        ja: '着実な一歩',
+        es: 'Paso Constante',
+      },
       description: '반복되는 지루한 일상과 수련을 견디는 인내심을 줍니다. 작은 성과들이 쌓여 거대한 산이 될 때까지 포기하지 않는 끈기를 주어 반드시 목표에 도달하게 합니다.',
       descriptions: {
         ko: '반복되는 지루한 일상과 수련을 견디는 인내심을 줍니다. 작은 성과들이 쌓여 거대한 산이 될 때까지 포기하지 않는 끈기를 주어 반드시 목표에 도달하게 합니다.',
@@ -445,9 +823,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Clay of Skill Absorption',
+    name: '습득의 점토',
+    names: {
+      ko: '습득의 점토',
+      en: 'Clay of Skill Absorption',
+      zh: '吸收之粘土',
+      ja: '習得の粘土',
+      es: 'Arcilla de Absorción',
+    },
     magicPower: {
-      title: 'Fast Learning',
+      title: '쾌속 학습',
+      titles: {
+        ko: '쾌속 학습',
+        en: 'Fast Learning',
+        zh: '极速学习',
+        ja: '快速学習',
+        es: 'Aprendizaje Rápido',
+      },
       description: '새로운 소프트웨어나 도구 사용법을 마치 흙을 만지듯 쉽게 익히게 합니다. 복잡한 매뉴얼 없이도 본능적으로 기술의 핵심을 파악하여 실무에 즉각 적용하게 돕습니다.',
       descriptions: {
         ko: '새로운 소프트웨어나 도구 사용법을 마치 흙을 만지듯 쉽게 익히게 합니다. 복잡한 매뉴얼 없이도 본능적으로 기술의 핵심을 파악하여 실무에 즉각 적용하게 돕습니다.',
@@ -461,9 +853,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Sand of Saving',
+    name: '저축의 모래',
+    names: {
+      ko: '저축의 모래',
+      en: 'Sand of Saving',
+      zh: '储蓄之砂',
+      ja: '貯蓄の砂',
+      es: 'Arena de Ahorro',
+    },
     magicPower: {
-      title: 'Frugal Mind',
+      title: '검소한 정신',
+      titles: {
+        ko: '검소한 정신',
+        en: 'Frugal Mind',
+        zh: '勤俭之心',
+        ja: '節約精神',
+        es: 'Mente Frugal',
+      },
       description: '불필요한 지출 욕구를 억제하고 자산이 조금씩 쌓이는 재미를 극대화합니다. 티끌 모아 태산이라는 말처럼 사소한 이득들이 모여 탄탄한 종잣돈이 되도록 상황을 유도합니다.',
       descriptions: {
         ko: '불필요한 지출 욕구를 억제하고 자산이 조금씩 쌓이는 재미를 극대화합니다. 티끌 모아 태산이라는 말처럼 사소한 이득들이 모여 탄탄한 종잣돈이 되도록 상황을 유도합니다.',
@@ -477,9 +883,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Quartz of Reliability',
+    name: '신뢰의 석영',
+    names: {
+      ko: '신뢰의 석영',
+      en: 'Quartz of Reliability',
+      zh: '信任石英',
+      ja: '信頼の石英',
+      es: 'Cuarzo de Fiabilidad',
+    },
     magicPower: {
-      title: 'Solid Trust',
+      title: '견고한 믿음',
+      titles: {
+        ko: '견고한 믿음',
+        en: 'Solid Trust',
+        zh: '坚实可靠',
+        ja: '堅実な信頼',
+        es: 'Confianza Sólida',
+      },
       description: '소지자에게 말 한마디의 무게를 더해줍니다. 주변 사람들이 소지자를 \'믿을 수 있는 사람\'으로 인식하게 하여 중요한 업무나 고액의 투자를 전적으로 맡기게 하는 신뢰의 운입니다.',
       descriptions: {
         ko: '소지자에게 말 한마디의 무게를 더해줍니다. 주변 사람들이 소지자를 \'믿을 수 있는 사람\'으로 인식하게 하여 중요한 업무나 고액의 투자를 전적으로 맡기게 하는 신뢰의 운입니다.',
@@ -493,9 +913,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Granite Professionalism',
+    name: '전문성의 화강암',
+    names: {
+      ko: '전문성의 화강암',
+      en: 'Granite Professionalism',
+      zh: '职业操守花岗岩',
+      ja: '専門性の花崗岩',
+      es: 'Granito de Profesionalismo',
+    },
     magicPower: {
-      title: 'Unshakable Base',
+      title: '흔들리지 않는 기반',
+      titles: {
+        ko: '흔들리지 않는 기반',
+        en: 'Unshakable Base',
+        zh: '不动根基',
+        ja: '揺るぎない基盤',
+        es: 'Base Inquebrantable',
+      },
       description: '외부의 비난이나 압박에도 흔들리지 않는 작업 태도를 완성합니다. 개인적인 슬픔이나 기쁨에 상관없이 항상 일정한 퀄리티의 결과물을 내놓는 프로 중의 프로가 되게 합니다.',
       descriptions: {
         ko: '외부의 비난이나 압박에도 흔들리지 않는 작업 태도를 완성합니다. 개인적인 슬픔이나 기쁨에 상관없이 항상 일정한 퀄리티의 결과물을 내놓는 프로 중의 프로가 되게 합니다.',
@@ -509,9 +943,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Root of Networking',
+    name: '인맥의 뿌리',
+    names: {
+      ko: '인맥의 뿌리',
+      en: 'Root of Networking',
+      zh: '人脉之根',
+      ja: '人脈の根',
+      es: 'Raíz de Networking',
+    },
     magicPower: {
-      title: 'Deep Connection',
+      title: '깊은 연결',
+      titles: {
+        ko: '깊은 연결',
+        en: 'Deep Connection',
+        zh: '深度联结',
+        ja: '深い繋がり',
+        es: 'Conexión Profunda',
+      },
       description: '가벼운 인맥이 아니라, 소지자가 위기에 처했을 때 발 벗고 나설 진정한 조력자들을 땅속의 뿌리처럼 깊게 연결합니다. 시간이 갈수록 견고해지는 강력한 인적 인프라를 구축합니다.',
       descriptions: {
         ko: '가벼운 인맥이 아니라, 소지자가 위기에 처했을 때 발 벗고 나설 진정한 조력자들을 땅속의 뿌리처럼 깊게 연결합니다. 시간이 갈수록 견고해지는 강력한 인적 인프라를 구축합니다.',
@@ -525,9 +973,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Basalt of Physical Immunity',
+    name: '신체 면역의 현무암',
+    names: {
+      ko: '신체 면역의 현무암',
+      en: 'Basalt of Physical Immunity',
+      zh: '身体免疫玄武岩',
+      ja: '身体免疫の玄武岩',
+      es: 'Basalto de Inmunidad Física',
+    },
     magicPower: {
-      title: 'Iron Body',
+      title: '강철 몸매',
+      titles: {
+        ko: '강철 몸매',
+        en: 'Iron Body',
+        zh: '钢铁躯体',
+        ja: '鋼の肉体',
+        es: 'Cuerpo de Hierro',
+      },
       description: '현대인의 고질병인 거북목, 허리 통증, 만성 피로로부터 척추와 근육을 강철처럼 보호합니다. 사고 시에도 뼈가 부러지지 않는 기적적인 방어력을 발휘하여 일생의 건강을 보장합니다.',
       descriptions: {
         ko: '현대인의 고질병인 거북목, 허리 통증, 만성 피로로부터 척추와 근육을 강철처럼 보호합니다. 사고 시에도 뼈가 부러지지 않는 기적적인 방어력을 발휘하여 일생의 건강을 보장합니다.',
@@ -541,9 +1003,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Emerald of Land Luck',
+    name: '기회의 지각석',
+    names: {
+      ko: '기회의 지각석',
+      en: 'Emerald of Land Luck',
+      zh: '机会地壳石',
+      ja: '機会の地殻石',
+      es: 'Piedra de Oportunidad',
+    },
     magicPower: {
-      title: 'Real Estate Eye',
+      title: '부동산 거물',
+      titles: {
+        ko: '부동산 거물',
+        en: 'Real Estate Eye',
+        zh: '地产大亨',
+        ja: '不動産大物',
+        es: 'Magnate Inmobiliario',
+      },
       description: '가치가 폭등할 땅과 건물을 직관적으로 알아봅니다. 소지자가 구매하는 모든 부동산은 지각 변동 수준의 개발 호재를 맞이하게 되며, 평생 주거 걱정 없는 부의 기반을 마련해줍니다.',
       descriptions: {
         ko: '가치가 폭등할 땅과 건물을 직관적으로 알아봅니다. 소지자가 구매하는 모든 부동산은 지각 변동 수준의 개발 호재를 맞이하게 되며, 평생 주거 걱정 없는 부의 기반을 마련해줍니다.',
@@ -557,9 +1033,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Topaz of Generosity',
+    name: '업보의 토양',
+    names: {
+      ko: '업보의 토양',
+      en: 'Topaz of Generosity',
+      zh: '因果之土',
+      ja: '業の土壌',
+      es: 'Suelo de Karma',
+    },
     magicPower: {
-      title: 'Grateful Return',
+      title: '증폭된 보답',
+      titles: {
+        ko: '증폭된 보답',
+        en: 'Grateful Return',
+        zh: '放大回报',
+        ja: '増幅された報い',
+        es: 'Recompensa Amplificada',
+      },
       description: '베푼 것 이상의 보답이 반드시 돌아오는 카르마의 땅을 만듭니다. 작은 호의가 나중에 거대한 사업적 계약이나 목숨을 구하는 도움으로 되돌아오는 선순환의 고리를 완성합니다.',
       descriptions: {
         ko: '베푼 것 이상의 보답이 반드시 돌아오는 카르마의 땅을 만듭니다. 작은 호의가 나중에 거대한 사업적 계약이나 목숨을 구하는 도움으로 되돌아오는 선순환의 고리를 완성합니다.',
@@ -573,9 +1063,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Heart of the Continent',
+    name: '절대 방어의 보루',
+    names: {
+      ko: '절대 방어의 보루',
+      en: 'Heart of the Continent',
+      zh: '绝对防御堡垒',
+      ja: '絶対防御の要塞',
+      es: 'Bastión de Defensa Absoluta',
+    },
     magicPower: {
-      title: 'Sovereign Wealth',
+      title: '불침의 자산',
+      titles: {
+        ko: '불침의 자산',
+        en: 'Sovereign Wealth',
+        zh: '不沉资产',
+        ja: '不沈の資産',
+        es: 'Activo Inquebrantable',
+      },
       description: '전 세계 시장이 흔들려도 소지자의 자산만은 요지부동입니다. 금보다 안전하고 부동산보다 견고한 경제적 요새를 구축하여, 대공황이 와도 가문 전체가 풍족하게 살 수 있는 기반을 다집니다.',
       descriptions: {
         ko: '전 세계 시장이 흔들려도 소지자의 자산만은 요지부동입니다. 금보다 안전하고 부동산보다 견고한 경제적 요새를 구축하여, 대공황이 와도 가문 전체가 풍족하게 살 수 있는 기반을 다집니다.',
@@ -589,9 +1093,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'epic',
   },
   {
-    name: 'Ironwood Contract',
+    name: '운명의 구속석',
+    names: {
+      ko: '운명의 구속석',
+      en: 'Ironwood Contract',
+      zh: '命运束缚石',
+      ja: '運命の束縛石',
+      es: 'Piedra de Vínculo de Destino',
+    },
     magicPower: {
-      title: 'Absolute Bond',
+      title: '파기 불능의 서약',
+      titles: {
+        ko: '파기 불능의 서약',
+        en: 'Absolute Bond',
+        zh: '不可撤销之誓',
+        ja: '破棄不能の誓約',
+        es: 'Voto Irrevocable',
+      },
       description: '소지자가 맺는 모든 계약과 약속을 파기 불가능한 운명으로 묶습니다. 상대방의 배신을 물리적으로 봉쇄하며, 소지자에게 유리한 조건이 영구히 지속되도록 현실을 고착화합니다.',
       descriptions: {
         ko: '소지자가 맺는 모든 계약과 약속을 파기 불가능한 운명으로 묶습니다. 상대방의 배신을 물리적으로 봉쇄하며, 소지자에게 유리한 조건이 영구히 지속되도록 현실을 고착화합니다.',
@@ -605,9 +1123,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'epic',
   },
   {
-    name: 'Adamantine Foundation',
+    name: '다이아몬드 불멸성',
+    names: {
+      ko: '다이아몬드 불멸성',
+      en: 'Adamantine Foundation',
+      zh: '金刚不朽性',
+      ja: '金剛の不滅性',
+      es: 'Inmortalidad de Diamante',
+    },
     magicPower: {
-      title: 'Indestructible Life',
+      title: '불굴의 복원력',
+      titles: {
+        ko: '불굴의 복원력',
+        en: 'Indestructible Life',
+        zh: '不屈弹性',
+        ja: '不屈の復元力',
+        es: 'Resiliencia Inquebrantable',
+      },
       description: '사회적, 경제적, 신체적 어떤 측면에서도 \'무너짐\'이 없는 존재가 됩니다. 어떠한 공격이나 재앙도 소지자의 삶이라는 거대한 성벽을 뚫지 못하며, 절대적인 안전지대를 창조합니다.',
       descriptions: {
         ko: '사회적, 경제적, 신체적 어떤 측면에서도 \'무너짐\'이 없는 존재가 됩니다. 어떠한 공격이나 재앙도 소지자의 삶이라는 거대한 성벽을 뚫지 못하며, 절대적인 안전지대를 창조합니다.',
@@ -621,9 +1153,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'legendary',
   },
   {
-    name: 'Gaia’s Core Jewel',
+    name: '창조주의 분광석',
+    names: {
+      ko: '창조주의 분광석',
+      en: 'Gaia’s Core Jewel',
+      zh: '创造者之分光石',
+      ja: '創造主の分光石',
+      es: 'Prisma del Creador',
+    },
     magicPower: {
-      title: 'World Architect',
+      title: '현실 재설계',
+      titles: {
+        ko: '현실 재설계',
+        en: 'World Architect',
+        zh: '现实重塑',
+        ja: '現実の再設計',
+        es: 'Rediseño de Realidad',
+      },
       description: '세상의 물리적 법칙과 경제적 시스템을 자신의 입맛에 맞게 재설계합니다. 무에서 유를 창조하는 기업가적 능력을 넘어, 새로운 가치 체계를 세우고 인류의 삶의 방식을 결정하는 지배자가 됩니다.',
       descriptions: {
         ko: '세상의 물리적 법칙과 경제적 시스템을 자신의 입맛에 맞게 재설계합니다. 무에서 유를 창조하는 기업가적 능력을 넘어, 새로운 가치 체계를 세우고 인류의 삶의 방식을 결정하는 지배자가 됩니다.',
@@ -637,9 +1183,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'legendary',
   },
   {
-    name: 'Feather of Light Travel',
+    name: '항해의 산들바람',
+    names: {
+      ko: '항해의 산들바람',
+      en: 'Feather of Light Travel',
+      zh: '航行之微风',
+      ja: '航海の微風',
+      es: 'Brisa de Navegación',
+    },
     magicPower: {
-      title: 'Commute Ease',
+      title: '신호 가속기',
+      titles: {
+        ko: '신호 가속기',
+        en: 'Commute Ease',
+        zh: '信号加速',
+        ja: '信号加速器',
+        es: 'Acelerador de Señales',
+      },
       description: '출퇴근길의 모든 교통 체증을 바람처럼 피해 갑니다. 소지자가 도착하는 곳마다 신호가 바뀌고 대기 시간이 사라져, 하루에 버려지는 이동 시간을 혁신적으로 단축합니다.',
       descriptions: {
         ko: '출퇴근길의 모든 교통 체증을 바람처럼 피해 갑니다. 소지자가 도착하는 곳마다 신호가 바뀌고 대기 시간이 사라져, 하루에 버려지는 이동 시간을 혁신적으로 단축합니다.',
@@ -653,9 +1213,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Zephyr of Inspiration',
+    name: '산들바람의 영감',
+    names: {
+      ko: '산들바람의 영감',
+      en: 'Zephyr of Inspiration',
+      zh: '灵感之微风',
+      ja: '霊感の微風',
+      es: 'Brisa de Inspiración',
+    },
     magicPower: {
-      title: 'Idea Breeze',
+      title: '창의적 벼락',
+      titles: {
+        ko: '창의적 벼락',
+        en: 'Idea Breeze',
+        zh: '创意之霆',
+        ja: '創造の雷光',
+        es: 'Rayo Creativo',
+      },
       description: '산책 중이나 샤워 중에 뇌를 자극하는 신선한 아이디어를 배달해 줍니다. 막혔던 기획안의 실마리가 바람을 타듯 가볍게 떠올라 창조적인 스트레스를 말끔히 해소해 줍니다.',
       descriptions: {
         ko: '산책 중이나 샤워 중에 뇌를 자극하는 신선한 아이디어를 배달해 줍니다. 막혔던 기획안의 실마리가 바람을 타듯 가볍게 떠올라 창조적인 스트레스를 말끔히 해소해 줍니다.',
@@ -669,9 +1243,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Whisper of Social Context',
+    name: '통찰의 바람',
+    names: {
+      ko: '통찰의 바람',
+      en: 'Whisper of Social Context',
+      zh: '洞察之风',
+      ja: '洞察の風',
+      es: 'Viento de Perspicacia',
+    },
     magicPower: {
-      title: 'Atmosphere Reader',
+      title: '사교의 주역',
+      titles: {
+        ko: '사교의 주역',
+        en: 'Atmosphere Reader',
+        zh: '社交主角',
+        ja: '社交の主役',
+        es: 'Protagonista Social',
+      },
       description: '모임의 분위기와 사람들의 속마음을 바람의 흐름처럼 읽어냅니다. 지금 내가 무슨 말을 해야 환영받을지, 혹은 입을 다물어야 할지 정확히 판단하게 하여 사교의 달인이 되게 합니다.',
       descriptions: {
         ko: '모임의 분위기와 사람들의 속마음을 바람의 흐름처럼 읽어냅니다. 지금 내가 무슨 말을 해야 환영받을지, 혹은 입을 다물어야 할지 정확히 판단하게 하여 사교의 달인이 되게 합니다.',
@@ -685,9 +1273,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Gale of Rapid Working',
+    name: '가속의 돌풍',
+    names: {
+      ko: '가속의 돌풍',
+      en: 'Gale of Rapid Working',
+      zh: '加速之狂风',
+      ja: '加速の疾風',
+      es: 'Vendaval de Aceleración',
+    },
     magicPower: {
-      title: 'Windspeed Tasker',
+      title: '삼배속의 위력',
+      titles: {
+        ko: '삼배속의 위력',
+        en: 'Windspeed Tasker',
+        zh: '三倍速之威',
+        ja: '三倍速の威力',
+        es: 'Triple Velocidad',
+      },
       description: '타이핑 속도와 사고 회로를 3배 이상 가속합니다. 남들이 하루 종일 걸릴 분량의 리포트나 코딩을 단 몇 시간 만에 끝내게 하며, 여유로운 오후를 보낼 수 있는 자유를 선사합니다.',
       descriptions: {
         ko: '타이핑 속도와 사고 회로를 3배 이상 가속합니다. 남들이 하루 종일 걸릴 분량의 리포트나 코딩을 단 몇 시간 만에 끝내게 하며, 여유로운 오후를 보낼 수 있는 자유를 선사합니다.',
@@ -701,9 +1303,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Aether Link of Language',
+    name: '언어 습득의 미풍',
+    names: {
+      ko: '언어 습득의 미풍',
+      en: 'Aether Link of Language',
+      zh: '语言学习之轻风',
+      ja: '語学習得の微風',
+      es: 'Céfiro de Aprendizaje',
+    },
     magicPower: {
-      title: 'Global Tongue',
+      title: '어감의 달인',
+      titles: {
+        ko: '어감의 달인',
+        en: 'Global Tongue',
+        zh: '语感大师',
+        ja: 'ニュアンスの達人',
+        es: 'Maestro del Matiz',
+      },
       description: '낯선 외국어나 전문 용어를 습득하는 속도가 비약적으로 상승합니다. 원어민의 뉘앙스를 바람처럼 부드럽게 캐치하여 소통의 장벽을 허물고 전 세계 어디서든 당당히 대화하게 돕습니다.',
       descriptions: {
         ko: '낯선 외국어나 전문 용어를 습득하는 속도가 비약적으로 상승합니다. 원어민의 뉘앙스를 바람처럼 부드럽게 캐치하여 소통의 장벽을 허물고 전 세계 어디서든 당당히 대화하게 돕습니다.',
@@ -717,9 +1333,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Draft of Market Agility',
+    name: '전환의 바람',
+    names: {
+      ko: '전환의 바람',
+      en: 'Draft of Market Agility',
+      zh: '转型之风',
+      ja: '転換の風',
+      es: 'Viento de Giro',
+    },
     magicPower: {
-      title: 'Pivot Master',
+      title: '전략적 유연함',
+      titles: {
+        ko: '전략적 유연함',
+        en: 'Pivot Master',
+        zh: '战略灵活性',
+        ja: '戦略的柔軟性',
+        es: 'Flexibilidad Estratégica',
+      },
       description: '상황 변화에 맞춰 사업이나 투자 방향을 즉각적으로 전환하는 유연함을 줍니다. 고집 부리다 망하는 대신, 바람의 방향을 타고 가장 이익이 되는 곳으로 빠르게 옮겨가는 민첩성을 부여합니다.',
       descriptions: {
         ko: '상황 변화에 맞춰 사업이나 투자 방향을 즉각적으로 전환하는 유연함을 줍니다. 고집 부리다 망하는 대신, 바람의 방향을 타고 가장 이익이 되는 곳으로 빠르게 옮겨가는 민첩성을 부여합니다.',
@@ -733,9 +1363,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Cyclone of Viral Fame',
+    name: '확산의 태풍',
+    names: {
+      ko: '확산의 태풍',
+      en: 'Cyclone of Viral Fame',
+      zh: '传播之飓风',
+      ja: '拡散の台風',
+      es: 'Tifón de Viralidad',
+    },
     magicPower: {
-      title: 'Digital Tempest',
+      title: '무비용 홍보',
+      titles: {
+        ko: '무비용 홍보',
+        en: 'Digital Tempest',
+        zh: '零成本营销',
+        ja: '宣伝費ゼロの伝播',
+        es: 'Mercadeo Sin Costo',
+      },
       description: 'SNS에 올린 작은 게시물이 태풍처럼 전 세계로 퍼져나갑니다. 마케팅 비용 없이도 수백만 명의 관심을 사로잡으며, 하룻밤 사이에 글로벌 인플루언서나 명사로 등극하게 만드는 전파력을 줍니다.',
       descriptions: {
         ko: 'SNS에 올린 작은 게시물이 태풍처럼 전 세계로 퍼져나갑니다. 마케팅 비용 없이도 수백만 명의 관심을 사로잡으며, 하룻밤 사이에 글로벌 인플루언서나 명사로 등극하게 만드는 전파력을 줍니다.',
@@ -749,9 +1393,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Sky-Gate Opal',
+    name: '무역풍의 효율',
+    names: {
+      ko: '무역풍의 효율',
+      en: 'Sky-Gate Opal',
+      zh: '贸易风之效能',
+      ja: '貿易風の効率',
+      es: 'Eficiencia Alisia',
+    },
     magicPower: {
-      title: 'Logistics Overlord',
+      title: '자원 통제자',
+      titles: {
+        ko: '자원 통제자',
+        en: 'Logistics Overlord',
+        zh: '资源掌控者',
+        ja: '資源の統制者',
+        es: 'Controlador de Recursos',
+      },
       description: '물류, 유통, 무역 분야에서 압도적인 효율성을 발휘합니다. 전 세계의 자원이 소지자가 원하는 곳으로 가장 저렴하고 빠르게 이동하며, 보이지 않는 공급망을 지배하는 유통의 제왕이 되게 합니다.',
       descriptions: {
         ko: '물류, 유통, 무역 분야에서 압도적인 효율성을 발휘합니다. 전 세계의 자원이 소지자가 원하는 곳으로 가장 저렴하고 빠르게 이동하며, 보이지 않는 공급망을 지배하는 유통의 제왕이 되게 합니다.',
@@ -765,9 +1423,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Echo of Reputational Bloom',
+    name: '명성의 미풍',
+    names: {
+      ko: '명성의 미풍',
+      en: 'Echo of Reputational Bloom',
+      zh: '名望之微风',
+      ja: '名声の微風',
+      es: 'Brisa de Reputación',
+    },
     magicPower: {
-      title: 'Fragrant Name',
+      title: '신뢰받는 이름',
+      titles: {
+        ko: '신뢰받는 이름',
+        en: 'Fragrant Name',
+        zh: '可信之名',
+        ja: '信頼される名',
+        es: 'Nombre de Confianza',
+      },
       description: '소지자의 평판이 좋은 소문을 타고 멀리 퍼져나갑니다. 직접 만나지 않은 사람들도 소지자의 이름을 경외하며, 미팅 전부터 이미 유리한 조건을 제시받게 하는 보이지 않는 힘을 발휘합니다.',
       descriptions: {
         ko: '소지자의 평판이 좋은 소문을 타고 멀리 퍼져나갑니다. 직접 만나지 않은 사람들도 소지자의 이름을 경외하며, 미팅 전부터 이미 유리한 조건을 제시받게 하는 보이지 않는 힘을 발휘합니다.',
@@ -781,9 +1453,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Eye of the Storm Sanctuary',
+    name: '폭풍의 눈',
+    names: {
+      ko: '폭풍의 눈',
+      en: 'Eye of the Storm Sanctuary',
+      zh: '风暴之眼',
+      ja: '台風の目',
+      es: 'Ojo de la Tormenta',
+    },
     magicPower: {
-      title: 'Chaos Shield',
+      title: '안전한 피난처',
+      titles: {
+        ko: '안전한 피난처',
+        en: 'Chaos Shield',
+        zh: '安全避风港',
+        ja: '安全な避難所',
+        es: 'Refugio Seguro',
+      },
       description: '전쟁이나 금융 위기 같은 대격변의 시기에도 소지자가 속한 영역은 기적적으로 평온을 유지합니다. 주변이 모두 무너질 때 혼자만 최고의 수익률을 올리며 위기를 기회로 바꾸는 기적을 행합니다.',
       descriptions: {
         ko: '전쟁이나 금융 위기 같은 대격변의 시기에도 소지자가 속한 영역은 기적적으로 평온을 유지합니다. 주변이 모두 무너질 때 혼자만 최고의 수익률을 올리며 위기를 기회로 바꾸는 기적을 행합니다.',
@@ -797,9 +1483,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'epic',
   },
   {
-    name: 'Whirlwind of Opportunity',
+    name: '기회의 바람',
+    names: {
+      ko: '기회의 바람',
+      en: 'Whirlwind of Opportunity',
+      zh: '机遇之风',
+      ja: '好機の風',
+      es: 'Vientos de Oportunidad',
+    },
     magicPower: {
-      title: 'Infinite Chance',
+      title: '끊임없는 제안',
+      titles: {
+        ko: '끊임없는 제안',
+        en: 'Infinite Chance',
+        zh: '源源不断的提议',
+        ja: '絶え間ない提案',
+        es: 'Ofertas Perpetuas',
+      },
       description: '사방에서 기회의 바람이 불어옵니다. 가만히 있어도 좋은 제안, 투자 기회, 인연이 끊임없이 찾아오며 인생에서 \'운이 없다\'는 말이 소지자의 사전에서 영원히 사라지게 만듭니다.',
       descriptions: {
         ko: '사방에서 기회의 바람이 불어옵니다. 가만히 있어도 좋은 제안, 투자 기회, 인연이 끊임없이 찾아오며 인생에서 \'운이 없다\'는 말이 소지자의 사전에서 영원히 사라지게 만듭니다.',
@@ -813,9 +1513,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'epic',
   },
   {
-    name: 'Breath of the World Spirit',
+    name: '세계 맥동의 통찰',
+    names: {
+      ko: '세계 맥동의 통찰',
+      en: 'Breath of the World Spirit',
+      zh: '世界脉动洞察',
+      ja: '世界の脈動の洞察',
+      es: 'Perspicacia del Pulso del Mundo',
+    },
     magicPower: {
-      title: 'Omnipresent Mind',
+      title: '실시간 자각',
+      titles: {
+        ko: '실시간 자각',
+        en: 'Omnipresent Mind',
+        zh: '实时觉知',
+        ja: 'リアルタイム自覚',
+        es: 'Conciencia en Tiempo Real',
+      },
       description: '전 세계의 정보를 실시간으로 호흡하듯 파악합니다. 어떤 사건이 일어나기도 전에 그 징조를 느끼며, 지구 반대편의 기회조차 내 손 안의 일처럼 다루는 초국가적 지배력을 선사합니다.',
       descriptions: {
         ko: '전 세계의 정보를 실시간으로 호흡하듯 파악합니다. 어떤 사건이 일어나기도 전에 그 징조를 느끼며, 지구 반대편의 기회조차 내 손 안의 일처럼 다루는 초국가적 지배력을 선사합니다.',
@@ -829,9 +1543,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'legendary',
   },
   {
-    name: 'Infinite Gale of Freedom',
+    name: '창공의 자유',
+    names: {
+      ko: '창공의 자유',
+      en: 'Infinite Gale of Freedom',
+      zh: '苍穹之自由',
+      ja: '蒼穹の自由',
+      es: 'Libertad del Firmamento',
+    },
     magicPower: {
-      title: 'Cosmic Traveler',
+      title: '무한한 해방',
+      titles: {
+        ko: '무한한 해방',
+        en: 'Cosmic Traveler',
+        zh: '无限解放',
+        ja: '無限の解放',
+        es: 'Liberación Infinita',
+      },
       description: '모든 사회적 굴레와 물리적 한계에서 벗어납니다. 돈, 시간, 공간에 얽매이지 않고 자신이 원하는 삶을 즉각적으로 실현하며, 누구에게도 구속받지 않는 완전한 자유의 존재가 됩니다.',
       descriptions: {
         ko: '모든 사회적 굴레와 물리적 한계에서 벗어납니다. 돈, 시간, 공간에 얽매이지 않고 자신이 원하는 삶을 즉각적으로 실현하며, 누구에게도 구속받지 않는 완전한 자유의 존재가 됩니다.',
@@ -845,9 +1573,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'legendary',
   },
   {
-    name: 'Glow of Confidence',
+    name: '첫인상의 광택',
+    names: {
+      ko: '첫인상의 광택',
+      en: 'Glow of Confidence',
+      zh: '初见之光泽',
+      ja: '初対面の光沢',
+      es: 'Lustre de Primera Impresión',
+    },
     magicPower: {
-      title: 'Aura Glow',
+      title: '즉각적인 호감',
+      titles: {
+        ko: '즉각적인 호감',
+        en: 'Aura Glow',
+        zh: '瞬间好感',
+        ja: '即座の好感',
+        es: 'Favor Inmediato',
+      },
       description: '면접이나 첫 만남에서 소지자의 인상을 빛나게 만듭니다. 특별한 말을 하지 않아도 긍정적이고 정직한 사람이라는 확신을 주어 상대의 경계심을 즉각 해제하는 빛의 장막을 형성합니다.',
       descriptions: {
         ko: '면접이나 첫 만남에서 소지자의 인상을 빛나게 만듭니다. 특별한 말을 하지 않아도 긍정적이고 정직한 사람이라는 확신을 주어 상대의 경계심을 즉각 해제하는 빛의 장막을 형성합니다.',
@@ -861,9 +1603,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Prism of Clarity',
+    name: '지표의 조명자',
+    names: {
+      ko: '지표의 조명자',
+      en: 'Prism of Clarity',
+      zh: '指标照明者',
+      ja: '指標の照明者',
+      es: 'Iluminador de Métricas',
+    },
     magicPower: {
-      title: 'Data Shined',
+      title: '수치의 명료함',
+      titles: {
+        ko: '수치의 명료함',
+        en: 'Data Shined',
+        zh: '数据清晰',
+        ja: '数値の明瞭さ',
+        es: 'Claridad Numérica',
+      },
       description: '복잡한 엑셀 시트나 난해한 보고서 속에서 핵심적인 수치와 문제점을 빛으로 비추듯 강조해 보여줍니다. 정보의 홍수 속에서 길을 잃지 않고 최선의 전략을 수립하게 돕습니다.',
       descriptions: {
         ko: '복잡한 엑셀 시트나 난해한 보고서 속에서 핵심적인 수치와 문제점을 빛으로 비추듯 강조해 보여줍니다. 정보의 홍수 속에서 길을 잃지 않고 최선의 전략을 수립하게 돕습니다.',
@@ -877,9 +1633,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Flicker of Hope',
+    name: '긍정의 햇살',
+    names: {
+      ko: '긍정의 햇살',
+      en: 'Flicker of Hope',
+      zh: '乐观之阳光',
+      ja: '肯定の陽光',
+      es: 'Brillo de Positivismo',
+    },
     magicPower: {
-      title: 'Depression Burner',
+      title: '절망의 소멸',
+      titles: {
+        ko: '절망의 소멸',
+        en: 'Depression Burner',
+        zh: '焚毁绝望',
+        ja: '絶望の消滅',
+        es: 'Extintor de Desesperación',
+      },
       description: '마음속에 스며드는 우울함과 무력감을 순식간에 태워버립니다. 매일 아침 태양을 본 듯한 긍정적인 에너지를 주입하여 다시 일어서서 나아갈 수 있는 내면의 빛을 유지합니다.',
       descriptions: {
         ko: '마음속에 스며드는 우울함과 무력감을 순식간에 태워버립니다. 매일 아침 태양을 본 듯한 긍정적인 에너지를 주입하여 다시 일어서서 나아갈 수 있는 내면의 빛을 유지합니다.',
@@ -893,9 +1663,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Beacon of Leadership',
+    name: '지도력의 등대',
+    names: {
+      ko: '지도력의 등대',
+      en: 'Beacon of Leadership',
+      zh: '领导力之灯塔',
+      ja: '指導力の灯台',
+      es: 'Faro de Liderazgo',
+    },
     magicPower: {
-      title: 'Guiding Light',
+      title: '명확한 방향',
+      titles: {
+        ko: '명확한 방향',
+        en: 'Guiding Light',
+        zh: '明确方向',
+        ja: '명확한 방향성',
+        es: 'Dirección Clara',
+      },
       description: '어두운 상황에서도 팀원들이 믿고 따를 수 있는 명확한 방향성을 제시합니다. 소지자의 말은 곧 신념이 되며, 혼란에 빠진 조직을 승리로 이끄는 고귀한 리더의 품격을 부여합니다.',
       descriptions: {
         ko: '어두운 상황에서도 팀원들이 믿고 따를 수 있는 명확한 방향성을 제시합니다. 소지자의 말은 곧 신념이 되며, 혼란에 빠진 조직을 승리로 이끄는 고귀한 리더의 품격을 부여합니다.',
@@ -909,9 +1693,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Ray of Aesthetics',
+    name: '신성한 미학석',
+    names: {
+      ko: '신성한 미학석',
+      en: 'Ray of Aesthetics',
+      zh: '神圣美学石',
+      ja: '神聖な美学石',
+      es: 'Piedra Estética Divina',
+    },
     magicPower: {
-      title: 'Golden Ratio',
+      title: '거장의 손길',
+      titles: {
+        ko: '거장의 손길',
+        en: 'Golden Ratio',
+        zh: '大师之触',
+        ja: '巨匠の手法',
+        es: 'Toque del Maestro',
+      },
       description: '디자인, 패션, 예술 등 모든 미적인 분야에서 신적인 감각을 일깨웁니다. 소지자가 손대는 모든 결과물은 대중이 가장 아름답다고 느끼는 황금 비율을 갖추게 되어 명품의 반열에 오릅니다.',
       descriptions: {
         ko: '디자인, 패션, 예술 등 모든 미적인 분야에서 신적인 감각을 일깨웁니다. 소지자가 손대는 모든 결과물은 대중이 가장 아름답다고 느끼는 황금 비율을 갖추게 되어 명품의 반열에 오릅니다.',
@@ -925,9 +1723,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Halogen of Efficiency',
+    name: '순간 기억의 수정',
+    names: {
+      ko: '순간 기억의 수정',
+      en: 'Halogen of Efficiency',
+      zh: '瞬间记忆水晶',
+      ja: '瞬間記憶の水晶',
+      es: 'Cristal de Memoria Flash',
+    },
     magicPower: {
-      title: 'Visual Memory',
+      title: '완전한 회상',
+      titles: {
+        ko: '완전한 회상',
+        en: 'Visual Memory',
+        zh: '完美回想',
+        ja: '完全なる回想',
+        es: 'Recuerdo Total',
+      },
       description: '한 번 본 장면이나 문서를 사진 찍듯 머릿속에 밝게 저장합니다. 필요할 때마다 그 기억의 조명을 켜서 정확한 정보를 인출하게 하여 시험이나 미팅에서 완벽한 지적 능력을 뽐내게 합니다.',
       descriptions: {
         ko: '한 번 본 장면이나 문서를 사진 찍듯 머릿속에 밝게 저장합니다. 필요할 때마다 그 기억의 조명을 켜서 정확한 정보를 인출하게 하여 시험이나 미팅에서 완벽한 지적 능력을 뽐내게 합니다.',
@@ -941,9 +1753,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Supernova of Stardom',
+    name: '떠오르는 별의 보석',
+    names: {
+      ko: '떠오르는 별의 보석',
+      en: 'Supernova of Stardom',
+      zh: '冉冉新星石',
+      ja: '昇る星の宝石',
+      es: 'Joya de Estrella Naciente',
+    },
     magicPower: {
-      title: 'Global Spotlight',
+      title: '세계적 영향력',
+      titles: {
+        ko: '세계적 영향력',
+        en: 'Global Spotlight',
+        zh: '全球影响力',
+        ja: '세계적인 영향력',
+        es: 'Influencia Global',
+      },
       description: '무명 시절을 단숨에 끝내고 전 세계적인 스타덤에 오르게 합니다. 소지자의 일거수일투족이 뉴스가 되며, 대중의 사랑을 독차지하고 사회적 유행을 선도하는 신적인 셀러브리티가 됩니다.',
       descriptions: {
         ko: '무명 시절을 단숨에 끝내고 전 세계적인 스타덤에 오르게 합니다. 소지자의 일거수일투족이 뉴스가 되며, 대중의 사랑을 독차지하고 사회적 유행을 선도하는 신적인 셀러브리티가 됩니다.',
@@ -957,9 +1783,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Verdict Radiance',
+    name: '정의의 빛',
+    names: {
+      ko: '정의의 빛',
+      en: 'Verdict Radiance',
+      zh: '正义之光',
+      ja: '正義の光',
+      es: 'Luz de Justicia',
+    },
     magicPower: {
-      title: 'Legal Aegis',
+      title: '진실의 증거',
+      titles: {
+        ko: '진실의 증거',
+        en: 'Legal Aegis',
+        zh: '真相之证',
+        ja: '真実の証明',
+        es: 'Prueba de la Verdad',
+      },
       description: '법적인 분쟁이나 억울한 누명 속에서 진실의 빛을 밝힙니다. 결정적인 증거가 소지자에게 유리하게 발견되거나, 판관의 마음을 움직여 정의로운 승리를 쟁취하게 하는 무적의 보호막을 제공합니다.',
       descriptions: {
         ko: '법적인 분쟁이나 억울한 누명 속에서 진실의 빛을 밝힙니다. 결정적인 증거가 소지자에게 유리하게 발견되거나, 판관의 마음을 움직여 정의로운 승리를 쟁취하게 하는 무적의 보호막을 제공합니다.',
@@ -973,9 +1813,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Flash of Pure Genius',
+    name: '깨달음의 금강석',
+    names: {
+      ko: '깨달음의 금강석',
+      en: 'Flash of Pure Genius',
+      zh: '悟之金刚石',
+      ja: '悟りの金剛石',
+      es: 'Diamante de Iluminación',
+    },
     magicPower: {
-      title: 'Eureka Instant',
+      title: '즉각적 해답',
+      titles: {
+        ko: '즉각적 해답',
+        en: 'Eureka Instant',
+        zh: '瞬间解答',
+        ja: '即座の解答',
+        es: 'Respuesta Instantánea',
+      },
       description: '수년간 고민해도 풀리지 않던 난제에 대해 찰나의 순간 완벽한 해답을 보여줍니다. 노벨상급의 학술적 발견이나 시장을 뒤흔들 발명품을 탄생시키는 결정적인 영감의 섬광을 내립니다.',
       descriptions: {
         ko: '수년간 고민해도 풀리지 않던 난제에 대해 찰나의 순간 완벽한 해답을 보여줍니다. 노벨상급의 학술적 발견이나 시장을 뒤흔들 발명품을 탄생시키는 결정적인 영감의 섬광을 내립니다.',
@@ -989,9 +1843,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Golden Ratio Diamond',
+    name: '업계 표준의 황금',
+    names: {
+      ko: '업계 표준의 황금',
+      en: 'Golden Ratio Diamond',
+      zh: '行业标准之金',
+      ja: '業界標準の黄金',
+      es: 'Oro de Estándar Industrial',
+    },
     magicPower: {
-      title: 'Perfectionist Edge',
+      title: '절대적 기준',
+      titles: {
+        ko: '절대적 기준',
+        en: 'Perfectionist Edge',
+        zh: '绝对基准',
+        ja: '絶対的な基準',
+        es: 'Punto de Referencia Absoluto',
+      },
       description: '소지자가 만드는 모든 제품이나 서비스가 업계의 표준(Standard)이 되게 합니다. 감히 넘볼 수 없는 완성도를 갖추게 하여 경쟁자들을 스스로 포기하게 만드는 압도적인 격의 차이를 만듭니다.',
       descriptions: {
         ko: '소지자가 만드는 모든 제품이나 서비스가 업계의 표준(Standard)이 되게 합니다. 감히 넘볼 수 없는 완성도를 갖추게 하여 경쟁자들을 스스로 포기하게 만드는 압도적인 격의 차이를 만듭니다.',
@@ -1005,9 +1873,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'epic',
   },
   {
-    name: 'Aureola of Influence',
+    name: '희망의 봉화',
+    names: {
+      ko: '희망의 봉화',
+      en: 'Aureola of Influence',
+      zh: '希望之烽火',
+      ja: '希望の烽火',
+      es: 'Faro de Esperanza',
+    },
     magicPower: {
-      title: 'Savior’s Charisma',
+      title: '구원자의 휘광',
+      titles: {
+        ko: '구원자의 휘광',
+        en: 'Savior’s Charisma',
+        zh: '救世主之光芒',
+        ja: '救済者の輝き',
+        es: 'Carisma del Salvador',
+      },
       description: '소지자의 존재 자체가 사람들에게 구원이자 희망이 됩니다. 소지자의 신념을 따르는 거대 종교나 사상적 집단이 형성되며, 세상을 선한 방향으로 개혁하는 신성한 권력을 소유하게 됩니다.',
       descriptions: {
         ko: '소지자의 존재 자체가 사람들에게 구원이자 희망이 됩니다. 소지자의 신념을 따르는 거대 종교나 사상적 집단이 형성되며, 세상을 선한 방향으로 개혁하는 신성한 권력을 소유하게 됩니다.',
@@ -1021,9 +1903,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'epic',
   },
   {
-    name: 'Nova of Enlightenment',
+    name: '깨달음의 신성',
+    names: {
+      ko: '깨달음의 신성',
+      en: 'Nova of Enlightenment',
+      zh: '觉醒之新星',
+      ja: '覚醒の新星',
+      es: 'Nova de Iluminación',
+    },
     magicPower: {
-      title: 'Absolute Awareness',
+      title: '절대적 각성',
+      titles: {
+        ko: '절대적 각성',
+        en: 'Absolute Awareness',
+        zh: '绝对觉知',
+        ja: '絶対的な自覚',
+        es: 'Conciencia Absoluta',
+      },
       description: '인간의 지각 한계를 넘어 우주와 세상의 모든 비밀을 빛으로 꿰뚫어 봅니다. 죽음의 공포조차 초월한 완전한 깨달음에 도달하며, 고통 없는 영원한 정신적 평안과 지혜를 누립니다.',
       descriptions: {
         ko: '인간의 지각 한계를 넘어 우주와 세상의 모든 비밀을 빛으로 꿰뚫어 봅니다. 죽음의 공포조차 초월한 완전한 깨달음에 도달하며, 고통 없는 영원한 정신적 평안과 지혜를 누립니다.',
@@ -1037,9 +1933,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'legendary',
   },
   {
-    name: 'Solaris Core',
+    name: '태양의 핵',
+    names: {
+      ko: '태양의 핵',
+      en: 'Solaris Core',
+      zh: '烈阳之核心',
+      ja: '太陽の核',
+      es: 'Núcleo de Solaris',
+    },
     magicPower: {
-      title: 'Creator’s Will',
+      title: '창조주의 의지',
+      titles: {
+        ko: '창조주의 의지',
+        en: 'Creator’s Will',
+        zh: '创造者之意志',
+        ja: '創造主の意志',
+        es: 'Voluntad del Creador',
+      },
       description: '소지자의 의지 자체가 곧 법과 진리가 됩니다. 빛이 세상을 창조하듯 소지자가 말하는 대로 새로운 질서가 세워지며, 인류 역사를 자신의 손으로 직접 써 내려가는 신적인 권능을 행사합니다.',
       descriptions: {
         ko: '소지자의 의지 자체가 곧 법과 진리가 됩니다. 빛이 세상을 창조하듯 소지자가 말하는 대로 새로운 질서가 세워지며, 인류 역사를 자신의 손으로 직접 써 내려가는 신적인 권능을 행사합니다.',
@@ -1053,9 +1963,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'legendary',
   },
   {
-    name: 'Shadow Wrap',
+    name: '그림자 외피',
+    names: {
+      ko: '그림자 외피',
+      en: 'Shadow Wrap',
+      zh: '阴影外壳',
+      ja: '影の外皮',
+      es: 'Envoltura de Sombra',
+    },
     magicPower: {
-      title: 'Privacy Shield',
+      title: '사생활의 방패',
+      titles: {
+        ko: '사생활의 방패',
+        en: 'Privacy Shield',
+        zh: '隐私护盾',
+        ja: 'プライバシーの盾',
+        es: 'Escudo de Privacidad',
+      },
       description: '온라인과 오프라인에서 자신의 개인정보와 사생활을 완벽하게 은닉합니다. 해커나 스토커의 추적을 물리적으로 차단하며, 소지자가 원치 않는 정보는 세상 그 누구도 찾아낼 수 없게 감춥니다.',
       descriptions: {
         ko: '온라인과 오프라인에서 자신의 개인정보와 사생활을 완벽하게 은닉합니다. 해커나 스토커의 추적을 물리적으로 차단하며, 소지자가 원치 않는 정보는 세상 그 누구도 찾아낼 수 없게 감춥니다.',
@@ -1069,9 +1993,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Ink-Spot Onyx',
+    name: '칠흑의 마노',
+    names: {
+      ko: '칠흑의 마노',
+      en: 'Ink-Spot Onyx',
+      zh: '墨色玛瑙',
+      ja: '漆黒の瑪瑙',
+      es: 'ónice de Mancha de Tinta',
+    },
     magicPower: {
-      title: 'Strategic Silence',
+      title: '전략적 정적',
+      titles: {
+        ko: '전략적 정적',
+        en: 'Strategic Silence',
+        zh: '战略性缄默',
+        ja: '戦略的な沈黙',
+        es: 'Silencio Estratégico',
+      },
       description: '불필요한 말을 아끼고 상대를 관찰하는 침착함을 줍니다. 적절한 타이밍에 침묵함으로써 상대방이 스스로 패를 드러내게 만들고, 협상에서 우위를 점하는 그림자의 지혜를 선사합니다.',
       descriptions: {
         ko: '불필요한 말을 아끼고 상대를 관찰하는 침착함을 줍니다. 적절한 타이밍에 침묵함으로써 상대방이 스스로 패를 드러내게 만들고, 협상에서 우위를 점하는 그림자의 지혜를 선사합니다.',
@@ -1085,9 +2023,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Velvet Night',
+    name: '벨벳의 밤',
+    names: {
+      ko: '벨벳의 밤',
+      en: 'Velvet Night',
+      zh: '丝绒之夜',
+      ja: 'ベルベットの夜',
+      es: 'Noche de Terciopelo',
+    },
     magicPower: {
-      title: 'Instant Hibernation',
+      title: '즉각적 동면',
+      titles: {
+        ko: '즉각적 동면',
+        en: 'Instant Hibernation',
+        zh: '瞬间休眠',
+        ja: '即座の冬眠',
+        es: 'Hibernación Instantánea',
+      },
       description: '단 10분만 눈을 붙여도 5시간을 잔 듯한 깊은 숙면 효과를 줍니다. 소음과 빛을 완벽히 차단하는 정신적 장막을 형성하여 언제 어디서든 뇌를 완벽히 충전할 수 있게 합니다.',
       descriptions: {
         ko: '단 10분만 눈을 붙여도 5시간을 잔 듯한 깊은 숙면 효과를 줍니다. 소음과 빛을 완벽히 차단하는 정신적 장막을 형성하여 언제 어디서든 뇌를 완벽히 충전할 수 있게 합니다.',
@@ -1101,9 +2053,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Obsidian of Introspection',
+    name: '성찰의 흑요석',
+    names: {
+      ko: '성찰의 흑요석',
+      en: 'Obsidian of Introspection',
+      zh: '反思之黑曜石',
+      ja: '内省の黒曜石',
+      es: 'Obsidiana de Introspección',
+    },
     magicPower: {
-      title: 'Trauma Burner',
+      title: '상처의 소멸',
+      titles: {
+        ko: '상처의 소멸',
+        en: 'Trauma Burner',
+        zh: '创伤焚毁者',
+        ja: 'トラウマの消滅',
+        es: 'Quemador de Traumas',
+      },
       description: '내면의 어두운 상처와 트라우마를 심연 속으로 집어삼켜 없애버립니다. 과거의 실수가 더 이상 발목을 잡지 못하게 하며, 강철 같은 멘탈로 무장하여 어떤 심리 공격에도 굴하지 않게 합니다.',
       descriptions: {
         ko: '내면의 어두운 상처와 트라우마를 심연 속으로 집어삼켜 없애버립니다. 과거의 실수가 더 이상 발목을 잡지 못하게 하며, 강철 같은 멘탈로 무장하여 어떤 심리 공격에도 굴하지 않게 합니다.',
@@ -1117,9 +2083,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Cloak of Subconscious Reading',
+    name: '무의식 독해의 망토',
+    names: {
+      ko: '무의식 독해의 망토',
+      en: 'Cloak of Subconscious Reading',
+      zh: '潜意识读心斗篷',
+      ja: '無意識読解の外套',
+      es: 'Manto de Lectura Subconsciente',
+    },
     magicPower: {
-      title: 'Mind Shadow',
+      title: '정신의 그림자',
+      titles: {
+        ko: '정신의 그림자',
+        en: 'Mind Shadow',
+        zh: '心灵之影',
+        ja: '精神の影',
+        es: 'Sombra Mental',
+      },
       description: '대화 상대의 무의식적인 욕망과 두려움을 어둠 속에서 관찰하듯 명확히 읽어냅니다. 상대가 입으로 하는 말 뒤에 숨겨진 추악한 진실이나 간절한 소망을 파악하여 심리 전술을 펼칩니다.',
       descriptions: {
         ko: '대화 상대의 무의식적인 욕망과 두려움을 어둠 속에서 관찰하듯 명확히 읽어냅니다. 상대가 입으로 하는 말 뒤에 숨겨진 추악한 진실이나 간절한 소망을 파악하여 심리 전술을 펼칩니다.',
@@ -1133,9 +2113,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Mist of Anonymity',
+    name: '익명의 안개',
+    names: {
+      ko: '익명의 안개',
+      en: 'Mist of Anonymity',
+      zh: '匿名之雾',
+      ja: '匿名の霧',
+      es: 'Niebla de Anonimato',
+    },
     magicPower: {
-      title: 'Unseen Hand',
+      title: '보이지 않는 손',
+      titles: {
+        ko: '보이지 않는 손',
+        en: 'Unseen Hand',
+        zh: '幕后黑手',
+        ja: '見えざる手',
+        es: 'Mano Invisible',
+      },
       description: '거대한 일을 성취하면서도 정작 자신의 정체는 드러나지 않게 합니다. \'보이지 않는 큰손\'으로 활동하며 배후에서 여론과 시장을 조종하고, 정작 자신은 안전한 어둠 속에서 과실만을 챙기게 합니다.',
       descriptions: {
         ko: '거대한 일을 성취하면서도 정작 자신의 정체는 드러나지 않게 합니다. \'보이지 않는 큰손\'으로 활동하며 배후에서 여론과 시장을 조종하고, 정작 자신은 안전한 어둠 속에서 과실만을 챙기게 합니다.',
@@ -1149,9 +2143,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Void Ledger',
+    name: '허공의 장부',
+    names: {
+      ko: '허공의 장부',
+      en: 'Void Ledger',
+      zh: '虚空账本',
+      ja: '虚空の帳簿',
+      es: 'Libro de Cuentas del Vacío',
+    },
     magicPower: {
-      title: 'Untraceable Wealth',
+      title: '추적 불가한 부',
+      titles: {
+        ko: '추적 불가한 부',
+        en: 'Untraceable Wealth',
+        zh: '无法追踪之富',
+        ja: '追跡不能な富',
+        es: 'Riqueza Inrastreable',
+      },
       description: '국가나 권력기관이 절대 추적할 수 없는 완벽한 비밀 자산망을 구축합니다. 세금, 압류, 해킹의 위협이 전혀 없는 어둠의 경제 영토를 소유하게 하여 영원히 마르지 않는 자금줄을 보장합니다.',
       descriptions: {
         ko: '국가나 권력기관이 절대 추적할 수 없는 완벽한 비밀 자산망을 구축합니다. 세금, 압류, 해킹의 위협이 전혀 없는 어둠의 경제 영토를 소유하게 하여 영원히 마르지 않는 자금줄을 보장합니다.',
@@ -1165,9 +2173,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Nightmare Weaver',
+    name: '악몽의 직공',
+    names: {
+      ko: '악몽의 직공',
+      en: 'Nightmare Weaver',
+      zh: '噩梦织手',
+      ja: '悪夢の織り手',
+      es: 'Tejedor de Pesadillas',
+    },
     magicPower: {
-      title: 'Rival’s Phobia',
+      title: '경쟁자의 공포',
+      titles: {
+        ko: '경쟁자의 공포',
+        en: 'Rival’s Phobia',
+        zh: '对手之恐慌',
+        ja: '競合の恐怖',
+        es: 'Fobia del Rival',
+      },
       description: '자신을 해치려는 적들에게 극심한 공포와 환각을 심어줍니다. 적들이 스스로 무너져 내리게 하며, 소지자의 이름만 들어도 전의를 상실하게 만드는 강력한 심리적 저주를 반사적으로 발동합니다.',
       descriptions: {
         ko: '자신을 해치려는 적들에게 극심한 공포와 환각을 심어줍니다. 적들이 스스로 무너져 내리게 하며, 소지자의 이름만 들어도 전의를 상실하게 만드는 강력한 심리적 저주를 반사적으로 발동합니다.',
@@ -1181,9 +2203,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Eclipse of Bad Luck',
+    name: '불운의 일식',
+    names: {
+      ko: '불운의 일식',
+      en: 'Eclipse of Bad Luck',
+      zh: '厄运之食',
+      ja: '厄災の日食',
+      es: 'Eclipse de Mala Suerte',
+    },
     magicPower: {
-      title: 'Fortune Devourer',
+      title: '행운의 포식자',
+      titles: {
+        ko: '행운의 포식자',
+        en: 'Fortune Devourer',
+        zh: '命运吞噬者',
+        ja: '幸運の捕食者',
+        es: 'Devorador de Fortuna',
+      },
       description: '자신에게 다가올 불운을 강제로 집어삼켜 무효화합니다. 사고가 날 운명이나 사기당할 운명을 어둠의 공간으로 격리하고, 대신 타인의 행운을 끌어당겨 자신의 것으로 흡수하는 냉혹한 운을 부여합니다.',
       descriptions: {
         ko: '자신에게 다가올 불운을 강제로 집어삼켜 무효화합니다. 사고가 날 운명이나 사기당할 운명을 어둠의 공간으로 격리하고, 대신 타인의 행운을 끌어당겨 자신의 것으로 흡수하는 냉혹한 운을 부여합니다.',
@@ -1197,9 +2233,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Black Hole of Influence',
+    name: '영향력의 블랙홀',
+    names: {
+      ko: '영향력의 블랙홀',
+      en: 'Black Hole of Influence',
+      zh: '影响力黑洞',
+      ja: '影響力の暗黒孔',
+      es: 'Agujero Negro de Influencia',
+    },
     magicPower: {
-      title: 'Absolute Gravity',
+      title: '절대적 중력',
+      titles: {
+        ko: '절대적 중력',
+        en: 'Absolute Gravity',
+        zh: '绝对引力',
+        ja: '絶対的な重力',
+        es: 'Gravedad Absoluta',
+      },
       description: '말 한마디 없이 존재감만으로 좌중을 압도하고 모든 시선을 빨아들입니다. 거부할 수 없는 강력한 매력과 신비주의를 통해 사람들이 스스로 소지자의 추종자가 되어 어둠의 군단을 형성하게 합니다.',
       descriptions: {
         ko: '말 한마디 없이 존재감만으로 좌중을 압도하고 모든 시선을 빨아들입니다. 거부할 수 없는 강력한 매력과 신비주의를 통해 사람들이 스스로 소지자의 추종자가 되어 어둠의 군단을 형성하게 합니다.',
@@ -1213,9 +2263,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'epic',
   },
   {
-    name: 'Phantom King’s Crown',
+    name: '유령 왕의 왕관',
+    names: {
+      ko: '유령 왕의 왕관',
+      en: 'Phantom King’s Crown',
+      zh: '幻影之王冕',
+      ja: '幻影王の冠',
+      es: 'Corona del Rey Fantasma',
+    },
     magicPower: {
-      title: 'Shadow Governance',
+      title: '그림자 통치',
+      titles: {
+        ko: '그림자 통치',
+        en: 'Shadow Governance',
+        zh: '影之统治',
+        ja: '影の統治',
+        es: 'Gobernanza de las Sombras',
+      },
       description: '전 세계의 지하 경제와 정보 조직을 지배하는 그림자의 황제가 됩니다. 공식적인 직함은 없으나 국가 원수들조차 소지자의 눈치를 보게 만들며, 보이지 않는 곳에서 인류의 향방을 결정합니다.',
       descriptions: {
         ko: '전 세계의 지하 경제와 정보 조직을 지배하는 그림자의 황제가 됩니다. 공식적인 직함은 없으나 국가 원수들조차 소지자의 눈치를 보게 만들며, 보이지 않는 곳에서 인류의 향방을 결정합니다.',
@@ -1229,9 +2293,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'epic',
   },
   {
-    name: 'Singularity Stone',
+    name: '특이점의 돌',
+    names: {
+      ko: '특이점의 돌',
+      en: 'Singularity Stone',
+      zh: '奇点石',
+      ja: '特異点の石',
+      es: 'Piedra de Singularidad',
+    },
     magicPower: {
-      title: 'Reality Eraser',
+      title: '현실의 말소자',
+      titles: {
+        ko: '현실의 말소자',
+        en: 'Reality Eraser',
+        zh: '现实抹除者',
+        ja: '現実の抹消者',
+        es: 'Borrador de la Realidad',
+      },
       description: '자신에게 방해되는 존재나 사건을 현실에서 마치 없었던 일처럼 말끔히 지워버립니다. 인과율을 왜곡하여 소지자의 뜻에 반하는 과거와 미래를 소멸시키고, 오직 자신만을 위한 어둠의 왕국을 건설합니다.',
       descriptions: {
         ko: '자신에게 방해되는 존재나 사건을 현실에서 마치 없었던 일처럼 말끔히 지워버립니다. 인과율을 왜곡하여 소지자의 뜻에 반하는 과거와 미래를 소멸시키고, 오직 자신만을 위한 어둠의 왕국을 건설합니다.',
@@ -1245,9 +2323,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'legendary',
   },
   {
-    name: 'God of the Void',
+    name: '허공의 신',
+    names: {
+      ko: '허공의 신',
+      en: 'God of the Void',
+      zh: '虚空之神',
+      ja: '虚空の神',
+      es: 'Dios del Vacío',
+    },
     magicPower: {
-      title: 'Existential Mastery',
+      title: '존재의 숙달',
+      titles: {
+        ko: '존재의 숙달',
+        en: 'Existential Mastery',
+        zh: '存在之掌控',
+        ja: '存在の習熟',
+        es: 'Maestría Existencial',
+      },
       description: '존재와 비존재의 경계를 자유자재로 넘나듭니다. 물리적 형태를 초월하여 우주 그 자체가 되거나 티끌이 될 수 있으며, 삶과 죽음의 굴레에서 완전히 벗어나 영원한 고독의 정점에서 세상을 관조합니다.',
       descriptions: {
         ko: '존재와 비존재의 경계를 자유자재로 넘나듭니다. 물리적 형태를 초월하여 우주 그 자체가 되거나 티끌이 될 수 있으며, 삶과 죽음의 굴레에서 완전히 벗어나 영원한 고독의 정점에서 세상을 관조합니다.',
@@ -1261,9 +2353,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'legendary',
   },
   {
-    name: 'Ancestral Bead',
+    name: '조상의 구슬',
+    names: {
+      ko: '조상의 구슬',
+      en: 'Ancestral Bead',
+      zh: '祖先之珠',
+      ja: '祖先の珠',
+      es: 'Cuenta Ancestral',
+    },
     magicPower: {
-      title: 'Lineage Guidance',
+      title: '혈통의 인도',
+      titles: {
+        ko: '혈통의 인도',
+        en: 'Lineage Guidance',
+        zh: '血脉指引',
+        ja: '血統の導き',
+        es: 'Guía del Linaje',
+      },
       description: '고비마다 조상들의 지혜가 담긴 꿈이나 직감을 통해 올바른 길을 안내받습니다. 가문의 수호령이 소지자를 지켜주어 사소한 사고나 질병으로부터 항시 보호받는 가호의 행운입니다.',
       descriptions: {
         ko: '고비마다 조상들의 지혜가 담긴 꿈이나 직감을 통해 올바른 길을 안내받습니다. 가문의 수호령이 소지자를 지켜주어 사소한 사고나 질병으로부터 항시 보호받는 가호의 행운입니다.',
@@ -1277,9 +2383,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Spirit-Bell of Empathy',
+    name: '공감의 방령',
+    names: {
+      ko: '공감의 방령',
+      en: 'Spirit-Bell of Empathy',
+      zh: '共鸣之灵铃',
+      ja: '共鳴の鈴',
+      es: 'Campana de Empatía',
+    },
     magicPower: {
-      title: 'Heart Sync',
+      title: '마음의 동기화',
+      titles: {
+        ko: '마음의 동기화',
+        en: 'Heart Sync',
+        zh: '心灵同步',
+        ja: '心の同期',
+        es: 'Sincronización del Corazón',
+      },
       description: '동물의 감정이나 식물의 생명력을 느끼고 소통하게 합니다. 반려동물과의 깊은 유대감을 형성하고 자연의 에너지를 흡수하여 신체 회복력을 높이는 힐링의 권능을 부여합니다.',
       descriptions: {
         ko: '동물의 감정이나 식물의 생명력을 느끼고 소통하게 합니다. 반려동물과의 깊은 유대감을 형성하고 자연의 에너지를 흡수하여 신체 회복력을 높이는 힐링의 권능을 부여합니다.',
@@ -1293,9 +2413,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Thread of Gratitude',
+    name: '감사의 실타래',
+    names: {
+      ko: '감사의 실타래',
+      en: 'Thread of Gratitude',
+      zh: '感恩之线',
+      ja: '感謝の糸',
+      es: 'Hilo de Gratitud',
+    },
     magicPower: {
-      title: 'Positive Feedback',
+      title: '긍정적 보답',
+      titles: {
+        ko: '긍정적 보답',
+        en: 'Positive Feedback',
+        zh: '积极反馈',
+        ja: '肯定的回帰',
+        es: 'Retroalimentación Positiva',
+      },
       description: '타인에게 베푼 작은 친절이 나중에 10배의 보답으로 돌아오게 합니다. 일상 속에서 적을 만들지 않고 모든 인연을 자산으로 만드는 선한 선순환의 운을 형성합니다.',
       descriptions: {
         ko: '타인에게 베푼 작은 친절이 나중에 10배의 보답으로 돌아오게 합니다. 일상 속에서 적을 만들지 않고 모든 인연을 자산으로 만드는 선한 선순환의 운을 형성합니다.',
@@ -1309,9 +2443,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Amulet of Fated Allies',
+    name: '숙명적 동료의 부적',
+    names: {
+      ko: '숙명적 동료의 부적',
+      en: 'Amulet of Fated Allies',
+      zh: '宿命盟友符',
+      ja: '宿命の仲間の守り札',
+      es: 'Amuleto de Aliados Fatídicos',
+    },
     magicPower: {
-      title: 'Soul Mate Magnet',
+      title: '영혼의 반려자 자석',
+      titles: {
+        ko: '영혼의 반려자 자석',
+        en: 'Soul Mate Magnet',
+        zh: '灵魂伴侣磁石',
+        ja: '魂の伴侶の磁石',
+        es: 'Imán de Almas Gemelas',
+      },
       description: '인생을 바꿀 진정한 스승이나 평생의 반려자를 운명적으로 만나게 합니다. 수억 명의 인구 중에서도 소지자의 영혼과 공명하는 최적의 파트너를 정확한 타이밍에 끌어당깁니다.',
       descriptions: {
         ko: '인생을 바꿀 진정한 스승이나 평생의 반려자를 운명적으로 만나게 합니다. 수억 명의 인구 중에서도 소지자의 영혼과 공명하는 최적의 파트너를 정확한 타이밍에 끌어당깁니다.',
@@ -1325,9 +2473,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Aura of Mentorship',
+    name: '전수의 오라',
+    names: {
+      ko: '전수의 오라',
+      en: 'Aura of Mentorship',
+      zh: '导师之光',
+      ja: '導きの威光',
+      es: 'Aura de Mentoría',
+    },
     magicPower: {
-      title: 'Wisdom Transmission',
+      title: '지혜의 전파',
+      titles: {
+        ko: '지혜의 전파',
+        en: 'Wisdom Transmission',
+        zh: '智慧传承',
+        ja: '知恵の伝播',
+        es: 'Transmisión de Sabiduría',
+      },
       description: '자신의 지식과 가치관을 타인에게 전수할 때 깊은 영적 울림을 줍니다. 소지자의 가르침을 받은 제자들은 사회 각층에서 성공하며, 소지자를 정신적 지주로 모시는 거대한 학파를 형성합니다.',
       descriptions: {
         ko: '자신의 지식과 가치관을 타인에게 전수할 때 깊은 영적 울림을 줍니다. 소지자의 가르침을 받은 제자들은 사회 각층에서 성공하며, 소지자를 정신적 지주로 모시는 거대한 학파를 형성합니다.',
@@ -1341,9 +2503,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Karmic Balance Stone',
+    name: '인과의 균형석',
+    names: {
+      ko: '인과의 균형석',
+      en: 'Karmic Balance Stone',
+      zh: '因果平衡石',
+      ja: '因果の均衡石',
+      es: 'Piedra de Equilibrio Kármico',
+    },
     magicPower: {
-      title: 'Justice Scale',
+      title: '정의의 저울',
+      titles: {
+        ko: '정의의 저울',
+        en: 'Justice Scale',
+        zh: '正义之秤',
+        ja: '正義の天秤',
+        es: 'Balanza de Justicia',
+      },
       description: '나쁜 짓을 한 자들에게는 즉각적인 천벌을, 선한 자에게는 상을 내리는 인과의 법칙을 소지자 주변에 강화합니다. 소지자를 모함하는 자는 반드시 자멸하게 되는 영적인 보호막입니다.',
       descriptions: {
         ko: '나쁜 짓을 한 자들에게는 즉각적인 천벌을, 선한 자에게는 상을 내리는 인과의 법칙을 소지자 주변에 강화합니다. 소지자를 모함하는 자는 반드시 자멸하게 되는 영적인 보호막입니다.',
@@ -1357,9 +2533,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Eternal Echo Crystal',
+    name: '영원한 메아리 수정',
+    names: {
+      ko: '영원한 메아리 수정',
+      en: 'Eternal Echo Crystal',
+      zh: '永恒回响水晶',
+      ja: '永遠の残響水晶',
+      es: 'Cristal de Eco Eterno',
+    },
     magicPower: {
-      title: 'Legacy Builder',
+      title: '업적의 건설자',
+      titles: {
+        ko: '업적의 건설자',
+        en: 'Legacy Builder',
+        zh: '功绩建筑师',
+        ja: '業績の構築者',
+        es: 'Constructor de Legados',
+      },
       description: '소지자가 죽은 뒤에도 수백 년 동안 잊히지 않을 업적을 남기게 돕습니다. 소지자의 이름이 역사 교과서에 새겨지고 그 사상이 인류 문명의 기틀이 되는 영원불멸의 명성을 보장합니다.',
       descriptions: {
         ko: '소지자가 죽은 뒤에도 수백 년 동안 잊히지 않을 업적을 남기게 돕습니다. 소지자의 이름이 역사 교과서에 새겨지고 그 사상이 인류 문명의 기틀이 되는 영원불멸의 명성을 보장합니다.',
@@ -1373,9 +2563,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Soul-Bound Guard',
+    name: '영혼 결속 파수꾼',
+    names: {
+      ko: '영혼 결속 파수꾼',
+      en: 'Soul-Bound Guard',
+      zh: '魂缚守卫',
+      ja: '魂に縛られし守護者',
+      es: 'Guardia de Almas Vinculadas',
+    },
     magicPower: {
-      title: 'Guardian Spirit',
+      title: '수호령',
+      titles: {
+        ko: '수호령',
+        en: 'Guardian Spirit',
+        zh: '守护灵',
+        ja: '守護霊',
+        es: 'Espíritu Guardián',
+      },
       description: '소지자의 곁을 지키는 강력한 영적 보디가드를 소환합니다. 물리적인 테러나 보이지 않는 저주로부터 소지자의 영혼과 육체를 완벽히 방어하며, 위기 시 소지자를 안전한 곳으로 강제 전송합니다.',
       descriptions: {
         ko: '소지자의 곁을 지키는 강력한 영적 보디가드를 소환합니다. 물리적인 테러나 보이지 않는 저주로부터 소지자의 영혼과 육체를 완벽히 방어하며, 위기 시 소지자를 안전한 곳으로 강제 전송합니다.',
@@ -1389,9 +2593,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Dream-Weaver Pearl',
+    name: '꿈을 짜는 진주',
+    names: {
+      ko: '꿈을 짜는 진주',
+      en: 'Dream-Weaver Pearl',
+      zh: '织梦珍珠',
+      ja: '夢織りの真珠',
+      es: 'Perla Tejedora de Sueños',
+    },
     magicPower: {
-      title: 'Lucid Life',
+      title: '자각의 삶',
+      titles: {
+        ko: '자각의 삶',
+        en: 'Lucid Life',
+        zh: '清晰人生',
+        ja: '明晰な生',
+        es: 'Vida Lúcida',
+      },
       description: '꿈속에서 미래의 사건을 미리 체험하고 대비하게 합니다. 꿈과 현실의 경계에서 얻은 정보를 바탕으로 완벽한 인생 시나리오를 설계하며, 매일 아침 예지력을 갖춘 채 하루를 시작합니다.',
       descriptions: {
         ko: '꿈속에서 미래의 사건을 미리 체험하고 대비하게 합니다. 꿈과 현실의 경계에서 얻은 정보를 바탕으로 완벽한 인생 시나리오를 설계하며, 매일 아침 예지력을 갖춘 채 하루를 시작합니다.',
@@ -1405,9 +2623,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Harmony of the Spheres',
+    name: '천체의 조화',
+    names: {
+      ko: '천체의 조화',
+      en: 'Harmony of the Spheres',
+      zh: '天体和谐',
+      ja: '天体の調和',
+      es: 'Armonía de las Esferas',
+    },
     magicPower: {
-      title: 'Universal Sync',
+      title: '우주적 동기화',
+      titles: {
+        ko: '우주적 동기화',
+        en: 'Universal Sync',
+        zh: '宇宙同步',
+        ja: '宇宙的な同期',
+        es: 'Sincronización Universal',
+      },
       description: '우주의 흐름과 완벽하게 동기화됩니다. 하는 일마다 타이밍이 기가 막히게 맞아떨어지며, 전 세계 모든 상황이 소지자의 성공을 돕기 위해 움직이는 듯한 \'초월적 운\'의 상태에 진입합니다.',
       descriptions: {
         ko: '우주의 흐름과 완벽하게 동기화됩니다. 하는 일마다 타이밍이 기가 막히게 맞아떨어지며, 전 세계 모든 상황이 소지자의 성공을 돕기 위해 움직이는 듯한 \'초월적 운\'의 상태에 진입합니다.',
@@ -1421,9 +2653,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'epic',
   },
   {
-    name: 'Sovereign Soul Jewel',
+    name: '주권자의 영혼 보석',
+    names: {
+      ko: '주권자의 영혼 보석',
+      en: 'Sovereign Soul Jewel',
+      zh: '主权灵魂宝石',
+      ja: '主権の魂石',
+      es: 'Joya del Alma Soberana',
+    },
     magicPower: {
-      title: 'Kingmaker’s Aura',
+      title: '제왕을 만드는 위엄',
+      titles: {
+        ko: '제왕을 만드는 위엄',
+        en: 'Kingmaker’s Aura',
+        zh: '造王者之光',
+        ja: 'キングメーカーの威光',
+        es: 'Aura de Creador de Reyes',
+      },
       description: '소지자가 선택한 인물을 왕으로 만들거나 몰락시킬 수 있는 영적 권위를 가집니다. 정치적, 사회적 지도자들의 영혼을 지배하여 그들이 소지자의 의지대로 움직이게 만드는 배후의 지배자가 됩니다.',
       descriptions: {
         ko: '소지자가 선택한 인물을 왕으로 만들거나 몰락시킬 수 있는 영적 권위를 가집니다. 정치적, 사회적 지도자들의 영혼을 지배하여 그들이 소지자의 의지대로 움직이게 만드는 배후의 지배자가 됩니다.',
@@ -1437,9 +2683,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'epic',
   },
   {
-    name: 'Dharma Overlord Jewel',
+    name: '법도의 군주 보석',
+    names: {
+      ko: '법도의 군주 보석',
+      en: 'Dharma Overlord Jewel',
+      zh: '法度领主宝石',
+      ja: '法度の君主の宝石',
+      es: 'Joya del Soberano del Dharma',
+    },
     magicPower: {
-      title: 'Karma Dictator',
+      title: '업보의 지배자',
+      titles: {
+        ko: '업보의 지배자',
+        en: 'Karma Dictator',
+        zh: '业力独裁者',
+        ja: '業の支配者',
+        es: 'Dictador del Karma',
+      },
       description: '인류 전체의 카르마(업보)를 조정하고 심판합니다. 세상의 도덕적 기준을 재정립하고 선과 악의 전쟁에서 최종 승리자를 결정하며, 영적 질서를 바로잡는 신의 대행자로 활동합니다.',
       descriptions: {
         ko: '인류 전체의 카르마(업보)를 조정하고 심판합니다. 세상의 도덕적 기준을 재정립하고 선과 악의 전쟁에서 최종 승리자를 결정하며, 영적 질서를 바로잡는 신의 대행자로 활동합니다.',
@@ -1453,9 +2713,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'legendary',
   },
   {
-    name: 'One-Soul Diamond',
+    name: '일체 영혼의 금강석',
+    names: {
+      ko: '일체 영혼의 금강석',
+      en: 'One-Soul Diamond',
+      zh: '一体灵魂之钻',
+      ja: '一体なる魂の金剛石',
+      es: 'Diamante de Alma Única',
+    },
     magicPower: {
-      title: 'Absolute Unity',
+      title: '절대적 통합',
+      titles: {
+        ko: '절대적 통합',
+        en: 'Absolute Unity',
+        zh: '绝对统一',
+        ja: '絶対的な統合',
+        es: 'Unidad Absoluta',
+      },
       description: '모든 존재와 영적으로 하나가 됩니다. 타인의 고통과 기쁨을 내 것처럼 조절하며, 온 인류의 의식을 연결하여 평화롭고 진화된 새로운 차원의 문명을 창조하는 신의 권능을 행사합니다.',
       descriptions: {
         ko: '모든 존재와 영적으로 하나가 됩니다. 타인의 고통과 기쁨을 내 것처럼 조절하며, 온 인류의 의식을 연결하여 평화롭고 진화된 새로운 차원의 문명을 창조하는 신의 권능을 행사합니다.',
@@ -1469,9 +2743,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'legendary',
   },
   {
-    name: 'Puzzle-Piece Agate',
+    name: '결합의 마노',
+    names: {
+      ko: '결합의 마노',
+      en: 'Puzzle-Piece Agate',
+      zh: '谜团联结玛瑙',
+      ja: '連結の瑪瑙',
+      es: 'Ágata de Vínculo Lógico',
+    },
     magicPower: {
-      title: 'Logical Link',
+      title: '논리적 연결',
+      titles: {
+        ko: '논리적 연결',
+        en: 'Logical Link',
+        zh: '逻辑关联',
+        ja: '論理的な結合',
+        es: 'Conexión Lógica',
+      },
       description: '흩어진 정보들을 하나로 엮어 완벽한 결론을 도출합니다. 추리력과 분석력을 극대화하여 범죄 수사, 복잡한 데이터 분석, 어려운 수학 문제를 유희처럼 해결하게 돕습니다.',
       descriptions: {
         ko: '흩어진 정보들을 하나로 엮어 완벽한 결론을 도출합니다. 추리력과 분석력을 극대화하여 범죄 수사, 복잡한 데이터 분석, 어려운 수학 문제를 유희처럼 해결하게 돕습니다.',
@@ -1485,9 +2773,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Stoic Marble',
+    name: '부동의 대리석',
+    names: {
+      ko: '부동의 대리석',
+      en: 'Stoic Marble',
+      zh: '沉稳大理石',
+      ja: '不動の大理石',
+      es: 'Mármol Estoico',
+    },
     magicPower: {
-      title: 'Dopamine Guard',
+      title: '도파민 방어',
+      titles: {
+        ko: '도파민 방어',
+        en: 'Dopamine Guard',
+        zh: '多巴胺防御',
+        ja: 'ドーパミン防衛',
+        es: 'Defensa de Dopamina',
+      },
       description: '숏폼 영상이나 게임 같은 자극적인 유혹으로부터 뇌를 보호합니다. 불필요한 도파민 분비를 억제하고 오직 가치 있는 일에서만 즐거움을 느끼게 하여 철저한 자기 주도적 삶을 살게 합니다.',
       descriptions: {
         ko: '숏폼 영상이나 게임 같은 자극적인 유혹으로부터 뇌를 보호합니다. 불필요한 도파민 분비를 억제하고 오직 가치 있는 일에서만 즐거움을 느끼게 하여 철저한 자기 주도적 삶을 살게 합니다.',
@@ -1501,9 +2803,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Cerebro-Sparker',
+    name: '두뇌의 촉발자',
+    names: {
+      ko: '두뇌의 촉발자',
+      en: 'Cerebro-Sparker',
+      zh: '大脑触发者',
+      ja: '脳の火付け役',
+      es: 'Spark Cerebral',
+    },
     magicPower: {
-      title: 'Quick Wit',
+      title: '천재적 순발력',
+      titles: {
+        ko: '천재적 순발력',
+        en: 'Quick Wit',
+        zh: '天才机敏',
+        ja: '天才的な機転',
+        es: 'Ingenio de Genio',
+      },
       description: '어떤 압박 면접이나 돌발 상황에서도 1초 만에 재치 있는 대답을 내놓게 합니다. 뇌 회전 속도를 가속하여 말싸움에서 절대 지지 않고 유머로 좌중을 장악하는 천재적 순발력을 줍니다.',
       descriptions: {
         ko: '어떤 압박 면접이나 돌발 상황에서도 1초 만에 재치 있는 대답을 내놓게 합니다. 뇌 회전 속도를 가속하여 말싸움에서 절대 지지 않고 유머로 좌중을 장악하는 천재적 순발력을 줍니다.',
@@ -1517,9 +2833,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'common',
   },
   {
-    name: 'Mind-Palace Key',
+    name: '기억의 궁전 열쇠',
+    names: {
+      ko: '기억의 궁전 열쇠',
+      en: 'Mind-Palace Key',
+      zh: '记忆宫殿之钥',
+      ja: '記憶の宮殿の鍵',
+      es: 'Llave del Palacio Mental',
+    },
     magicPower: {
-      title: 'Infinite Storage',
+      title: '무한한 저장',
+      titles: {
+        ko: '무한한 저장',
+        en: 'Infinite Storage',
+        zh: '无限存储',
+        ja: '無限の貯蔵',
+        es: 'Almacenamiento Infinito',
+      },
       description: '읽는 모든 책과 문서, 만나는 모든 사람의 얼굴을 무한한 뇌 용량 속에 폴더별로 저장합니다. 잊고 싶은 것만 골라 지우고, 필요한 정보는 0.1초 만에 인출하는 완벽한 기억술을 선사합니다.',
       descriptions: {
         ko: '읽는 모든 책과 문서, 만나는 모든 사람의 얼굴을 무한한 뇌 용량 속에 폴더별로 저장합니다. 잊고 싶은 것만 골라 지우고, 필요한 정보는 0.1초 만에 인출하는 완벽한 기억술을 선사합니다.',
@@ -1533,9 +2863,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Lapis of Polyglot',
+    name: '다국어의 청람석',
+    names: {
+      ko: '다국어의 청람석',
+      en: 'Lapis of Polyglot',
+      zh: '多语青金石',
+      ja: '多言語の青藍石',
+      es: 'Lapislázuli Políglota',
+    },
     magicPower: {
-      title: 'Language Master',
+      title: '언어의 달인',
+      titles: {
+        ko: '언어의 달인',
+        en: 'Language Master',
+        zh: '语言大师',
+        ja: '言語の達人',
+        es: 'Maestro de Lenguas',
+      },
       description: '전 세계 모든 언어의 구조를 본능적으로 파악합니다. 수십 개의 외국어를 원어민 수준으로 구사하게 하며, 프로그래밍 언어나 기계어까지 마스터하여 기술적 한계를 뛰어넘는 지능을 부여합니다.',
       descriptions: {
         ko: '전 세계 모든 언어의 구조를 본능적으로 파악합니다. 수십 개의 외국어를 원어민 수준으로 구사하게 하며, 프로그래밍 언어나 기계어까지 마스터하여 기술적 한계를 뛰어넘는 지능을 부여합니다.',
@@ -1549,9 +2893,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Analytical Prism',
+    name: '분석의 프리즘',
+    names: {
+      ko: '분석의 프리즘',
+      en: 'Analytical Prism',
+      zh: '分析棱镜',
+      ja: '분석의 프리즘',
+      es: 'Prisma Analítico',
+    },
     magicPower: {
-      title: 'Pattern Seeker',
+      title: '패턴 추적자',
+      titles: {
+        ko: '패턴 추적자',
+        en: 'Pattern Seeker',
+        zh: '模式寻找者',
+        ja: 'パターンの追跡者',
+        es: 'Buscador de Patrones',
+      },
       description: '복잡한 사회 현상이나 주식 시장의 차트 이면에 숨겨진 패턴을 시각화하여 보여줍니다. 남들이 혼란스러워할 때 혼자서 승리의 방정식을 찾아내어 압도적인 수익을 올리게 돕습니다.',
       descriptions: {
         ko: '복잡한 사회 현상이나 주식 시장의 차트 이면에 숨겨진 패턴을 시각화하여 보여줍니다. 남들이 혼란스러워할 때 혼자서 승리의 방정식을 찾아내어 압도적인 수익을 올리게 돕습니다.',
@@ -1565,9 +2923,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'uncommon',
   },
   {
-    name: 'Cerebro-Crystalline Core',
+    name: '지능의 결정핵',
+    names: {
+      ko: '지능의 결정핵',
+      en: 'Cerebro-Crystalline Core',
+      zh: '智能晶核',
+      ja: '知能の結晶核',
+      es: 'Intelecto Cristalino',
+    },
     magicPower: {
-      title: 'Singularity Intellect',
+      title: '특이점의 정신',
+      titles: {
+        ko: '특이점의 정신',
+        en: 'Singularity Intellect',
+        zh: '奇点思维',
+        ja: '特異点の精神',
+        es: 'Mente de Singularidad',
+      },
       description: '뇌의 신경망을 광섬유 수준으로 가속하여 현대의 AI보다 빠른 연산 능력을 갖게 합니다. 수조 개의 변수를 동시에 고려하여 미래를 예측하며, 지적인 우월함만으로 전 세계를 지배합니다.',
       descriptions: {
         ko: '뇌의 신경망을 광섬유 수준으로 가속하여 현대의 AI보다 빠른 연산 능력을 갖게 합니다. 수조 개의 변수를 동시에 고려하여 미래를 예측하며, 지적인 우월함만으로 전 세계를 지배합니다.',
@@ -1581,9 +2953,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Blueprints of the Architect',
+    name: '설계자의 청사진',
+    names: {
+      ko: '설계자의 청사진',
+      en: 'Blueprints of the Architect',
+      zh: '建筑师蓝图',
+      ja: '設計者の設計図',
+      es: 'Planos del Arquitecto',
+    },
     magicPower: {
-      title: 'Master Strategy',
+      title: '마스터 전략',
+      titles: {
+        ko: '마스터 전략',
+        en: 'Master Strategy',
+        zh: '大师战略',
+        ja: 'マスター戦略',
+        es: 'Estrategia Maestra',
+      },
       description: '10년, 20년 뒤의 미래를 설계하는 정교한 인생 설계도를 머릿속에 상시 띄워줍니다. 현재의 작은 행동이 미래에 어떤 결과를 초래할지 정확히 계산하여 단 한 치의 오차도 없는 성공을 설계합니다.',
       descriptions: {
         ko: '10년, 20년 뒤의 미래를 설계하는 정교한 인생 설계도를 머릿속에 상시 띄워줍니다. 현재의 작은 행동이 미래에 어떤 결과를 초래할지 정확히 계산하여 단 한 치의 오차도 없는 성공을 설계합니다.',
@@ -1597,9 +2983,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Mnemosyne’s Mirror',
+    name: '기억의 화석',
+    names: {
+      ko: '기억의 화석',
+      en: 'Mnemosyne’s Mirror',
+      zh: '记忆之石',
+      ja: '記憶の化石',
+      es: 'Fósil del Recuerdo',
+    },
     magicPower: {
-      title: 'Truth Defector',
+      title: '지식의 보관소',
+      titles: {
+        ko: '지식의 보관소',
+        en: 'Truth Defector',
+        zh: '知识档案',
+        ja: '知識の記録庫',
+        es: 'Archivo de Conocimiento',
+      },
       description: '상대방이 하는 말이 논리적인지, 거짓인지, 숨은 의도가 무엇인지 실시간으로 분석하여 경고창을 띄워줍니다. 사기꾼이나 가스라이팅을 시도하는 자들을 지적으로 굴복시키고 진실만을 수호합니다.',
       descriptions: {
         ko: '상대방이 하는 말이 논리적인지, 거짓인지, 숨은 의도가 무엇인지 실시간으로 분석하여 경고창을 띄워줍니다. 사기꾼이나 가스라이팅을 시도하는 자들을 지적으로 굴복시키고 진실만을 수호합니다.',
@@ -1613,9 +3013,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'rare',
   },
   {
-    name: 'Akashic Access Jewel',
+    name: '아카식 레코드',
+    names: {
+      ko: '아카식 레코드',
+      en: 'Akashic Access Jewel',
+      zh: '阿卡西记录',
+      ja: 'アカシックレコード',
+      es: 'Registro Akáshico',
+    },
     magicPower: {
-      title: 'Infinite Wisdom',
+      title: '보편적 진리',
+      titles: {
+        ko: '보편적 진리',
+        en: 'Infinite Wisdom',
+        zh: '普遍真理',
+        ja: '普遍的な真理',
+        es: 'Verdad Universal',
+      },
       description: '인류가 쌓아온 모든 지식의 집합체인 \'아카식 레코드\'에 직접 접속합니다. 아직 발견되지 않은 미래의 과학 기술이나 예술적 기법을 가져와 현재에 구현하는 시대의 선구자가 됩니다.',
       descriptions: {
         ko: '인류가 쌓아온 모든 지식의 집합체인 \'아카식 레코드\'에 직접 접속합니다. 아직 발견되지 않은 미래의 과학 기술이나 예술적 기법을 가져와 현재에 구현하는 시대의 선구자가 됩니다.',
@@ -1629,9 +3043,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'epic',
   },
   {
-    name: 'Neural Overdrive',
+    name: '투사의 정석',
+    names: {
+      ko: '투사의 정석',
+      en: 'Neural Overdrive',
+      zh: '投影精石',
+      ja: '投影の精石',
+      es: 'Piedra de Esencia de Proyección',
+    },
     magicPower: {
-      title: 'Reality Projection',
+      title: '현실 투영',
+      titles: {
+        ko: '현실 투영',
+        en: 'Reality Projection',
+        zh: '现实投影',
+        ja: '現実投影',
+        es: 'Proyección de Realidad',
+      },
       description: '소지자의 상상력을 물리적 현실로 투사하는 계산식을 완성합니다. 머릿속으로 시뮬레이션한 비즈니스나 공학 설계가 현실에서 그대로 작동하며, 생각만으로 세상을 조립하는 지적 창조주가 됩니다.',
       descriptions: {
         ko: '소지자의 상상력을 물리적 현실로 투사하는 계산식을 완성합니다. 머릿속으로 시뮬레이션한 비즈니스나 공학 설계가 현실에서 그대로 작동하며, 생각만으로 세상을 조립하는 지적 창조주가 됩니다.',
@@ -1645,9 +3073,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'epic',
   },
   {
-    name: 'God-Brain Emerald',
+    name: '신적 지능의 핵',
+    names: {
+      ko: '신적 지능의 핵',
+      en: 'God-Brain Emerald',
+      zh: '神级智能核心',
+      ja: '神的知能の核',
+      es: 'Núcleo de Inteligencia Divina',
+    },
     magicPower: {
-      title: 'Absolute Cognition',
+      title: '전지적 인지',
+      titles: {
+        ko: '전지적 인지',
+        en: 'Absolute Cognition',
+        zh: '全知认知',
+        ja: '全知の認知',
+        es: 'Percepción Omnisciente',
+      },
       description: '우주 전체의 정보량을 처리할 수 있는 신적 지능에 도달합니다. 모든 시간대와 차원의 지식을 동시에 인지하며, 존재의 이유와 우주의 끝을 이해하는 초월적 의식의 정점에 서게 됩니다.',
       descriptions: {
         ko: '우주 전체의 정보량을 처리할 수 있는 신적 지능에 도달합니다. 모든 시간대와 차원의 지식을 동시에 인지하며, 존재의 이유와 우주의 끝을 이해하는 초월적 의식의 정점에 서게 됩니다.',
@@ -1661,9 +3103,23 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
     rarity: 'legendary',
   },
   {
-    name: 'The Singularity',
+    name: '초월적 영혼',
+    names: {
+      ko: '초월적 영혼',
+      en: 'The Singularity',
+      zh: '超越之魂',
+      ja: '超越の魂',
+      es: 'Alma Trascendental',
+    },
     magicPower: {
-      title: 'Mind Upload',
+      title: '순수 정보체',
+      titles: {
+        ko: '순수 정보체',
+        en: 'Mind Upload',
+        zh: '纯粹信息体',
+        ja: '純粋情報体',
+        es: 'Ser de Información Pura',
+      },
       description: '자신의 정신을 시공간에 구애받지 않는 순수 정보 형태로 변환합니다. 육체의 한계를 벗어나 디지털 세계와 우주 신경망 어디든 존재하며, 인류 전체의 진화를 이끄는 거대한 집단 지성의 핵이 됩니다.',
       descriptions: {
         ko: '자신의 정신을 시공간에 구애받지 않는 순수 정보 형태로 변환합니다. 육체의 한계를 벗어나 디지털 세계와 우주 신경망 어디든 존재하며, 인류 전체의 진화를 이끄는 거대한 집단 지성의 핵이 됩니다.',

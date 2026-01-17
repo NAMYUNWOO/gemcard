@@ -1,22 +1,31 @@
-/* Gacha Page - Gem Summoning Experience */
+/* SummonModal - Overlay for gem summoning */
 
-.container {
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   height: 100dvh;
+  background: rgba(0, 0, 0, 0.9);
   display: flex;
   flex-direction: column;
+  z-index: 1000;
+  animation: overlay-in 0.3s ease;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-/* =============================================================================
-   Header
-   ============================================================================= */
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
+/* Header */
 .header {
   position: relative;
   z-index: 10;
@@ -27,7 +36,7 @@
   padding-top: calc(var(--space-4) + env(safe-area-inset-top, 0px));
 }
 
-.backBtn {
+.closeBtn {
   display: flex;
   align-items: center;
   gap: var(--space-2);
@@ -37,25 +46,22 @@
   transition: color 0.2s ease;
 }
 
-.backBtn:hover {
+.closeBtn:hover {
   color: var(--text-bright);
 }
 
-.backIcon {
+.closeIcon {
   font-size: 18px;
 }
 
-.hasGem {
+.slotInfo {
   font-family: var(--font-display);
   font-size: var(--text-xs);
   color: var(--gold-dim);
   letter-spacing: 0.1em;
 }
 
-/* =============================================================================
-   Main Content
-   ============================================================================= */
-
+/* Main Content */
 .main {
   flex: 1;
   display: flex;
@@ -68,10 +74,7 @@
   z-index: 5;
 }
 
-/* =============================================================================
-   Form State
-   ============================================================================= */
-
+/* Form State */
 .formContainer {
   display: flex;
   flex-direction: column;
@@ -299,10 +302,13 @@
   text-align: center;
 }
 
-/* =============================================================================
-   Confirm Replace State
-   ============================================================================= */
+/* Summon Button */
+.summonBtn {
+  min-width: 200px;
+  margin-top: var(--space-2);
+}
 
+/* Confirm Replace State */
 .confirmContainer {
   display: flex;
   flex-direction: column;
@@ -360,10 +366,7 @@
   width: 100%;
 }
 
-/* =============================================================================
-   Summoning State
-   ============================================================================= */
-
+/* Summoning State */
 .circleWrapper {
   display: flex;
   align-items: center;
@@ -384,132 +387,44 @@
   50% { opacity: 1; }
 }
 
-/* Summon Button */
-.summonBtn {
-  min-width: 200px;
-  margin-top: var(--space-2);
-}
-
-/* =============================================================================
-   Reveal State
-   ============================================================================= */
-
-.revealContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-4);
-  width: 100%;
-  max-width: 400px;
-  animation: reveal-in 0.8s ease forwards;
-}
-
-@keyframes reveal-in {
-  0% {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* Gem Display */
-.gemDisplay {
-  width: 350px;
-  height: 350px;
-  border-radius: var(--radius-3xl);
-  overflow: hidden;
-  box-shadow: 0 0 60px var(--glow-color, rgba(139, 92, 246, 0.4));
-}
-
-/* Global rarity classes for glow */
-.revealContainer:global(.rarity-legendary) .gemDisplay {
-  box-shadow: 0 0 80px rgba(255, 215, 0, 0.6);
-}
-
-.revealContainer:global(.rarity-epic) .gemDisplay {
-  box-shadow: 0 0 60px rgba(168, 85, 247, 0.5);
-}
-
-/* Gem Info */
-.gemInfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-2);
-  text-align: center;
-  padding: 0 var(--space-4);
-}
-
-.gemName {
-  font-family: var(--font-display);
-  font-size: var(--text-2xl);
-  font-weight: 600;
-  color: var(--gold);
-  letter-spacing: 0.05em;
-  margin-top: var(--space-2);
-}
-
-.cutName {
+/* Ad Notice */
+.adNotice {
   font-family: var(--font-body);
   font-size: var(--text-sm);
-  color: var(--text-muted);
-}
-
-/* Magic Power Section */
-.magicPower {
-  margin-top: var(--space-3);
-  padding: var(--space-4);
-  background: var(--glass-gradient);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-xl);
-  max-width: 320px;
-}
-
-.element {
-  font-size: 24px;
-  display: block;
-  margin-bottom: var(--space-2);
-}
-
-.powerTitle {
-  font-family: var(--font-display);
-  font-size: var(--text-base);
-  font-weight: 500;
-  color: var(--ethereal-cyan);
-  letter-spacing: 0.05em;
-  margin-bottom: var(--space-2);
-}
-
-.powerDesc {
-  font-family: var(--font-magic);
-  font-style: italic;
-  font-size: var(--text-base);
-  color: var(--text-dim);
-  line-height: 1.6;
-}
-
-.revealHint {
-  font-family: var(--font-body);
-  font-size: var(--text-xs);
   color: var(--gold-dim);
-  text-align: center;
-  margin-top: var(--space-2);
-  animation: pulse-text 2s ease-in-out infinite;
+  margin-bottom: var(--space-4);
+  padding: var(--space-2) var(--space-3);
+  background: rgba(255, 215, 0, 0.1);
+  border-radius: var(--radius-md);
 }
 
-/* Action Buttons */
-.actions {
+/* Watching Ad State */
+.adContainer {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
-  width: 100%;
-  max-width: 280px;
-  margin-top: var(--space-4);
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-8);
+}
+
+.adSpinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(255, 215, 0, 0.2);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.adText {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--text-dim);
 }

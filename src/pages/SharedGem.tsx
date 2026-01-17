@@ -17,6 +17,8 @@ import {
   getElementLabel,
   getGenderLabel,
   getLocalizedDescription,
+  getLocalizedName,
+  getLocalizedTitle,
   getMagicCircleName,
   type Element,
 } from '../types/gem';
@@ -110,7 +112,7 @@ export function SharedGem() {
           {gem.rarity && <RarityBadge rarity={gem.rarity} size="md" />}
 
           {/* Name */}
-          <h1 className={styles.gemName}>{gem.name}</h1>
+          <h1 className={styles.gemName}>{gem.name ? getLocalizedName(gem as { name: string }, locale) : ''}</h1>
 
           {/* Divider */}
           <div className={styles.divider} />
@@ -124,7 +126,7 @@ export function SharedGem() {
                     {ELEMENT_ICONS[element]}
                   </span>
                 )}
-                <h2 className={styles.powerTitle}>{gem.magicPower.title}</h2>
+                <h2 className={styles.powerTitle}>{gem.magicPower.title ? getLocalizedTitle(gem.magicPower, locale) : ''}</h2>
               </div>
 
               <p className={styles.powerDesc}>

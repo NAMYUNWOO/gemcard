@@ -30,6 +30,17 @@ def convert_csv_to_ts(csv_path: str) -> str:
         for row in reader:
             name = escape_ts_string(row['Name'])
             title = escape_ts_string(row['Title'])
+            # 다국어 Name
+            name_ko = escape_ts_string(row.get('Name_ko', ''))
+            name_zh = escape_ts_string(row.get('Name_zh', ''))
+            name_ja = escape_ts_string(row.get('Name_ja', ''))
+            name_es = escape_ts_string(row.get('Name_es', ''))
+            # 다국어 Title
+            title_ko = escape_ts_string(row.get('Title_ko', ''))
+            title_zh = escape_ts_string(row.get('Title_zh', ''))
+            title_ja = escape_ts_string(row.get('Title_ja', ''))
+            title_es = escape_ts_string(row.get('Title_es', ''))
+            # Description
             description_ko = escape_ts_string(row['Description'])
             description_en = escape_ts_string(row.get('Description_en', ''))
             description_zh = escape_ts_string(row.get('Description_zh', ''))
@@ -39,9 +50,23 @@ def convert_csv_to_ts(csv_path: str) -> str:
             element = row['Element'].lower().strip()
 
             template = f"""  {{
-    name: '{name}',
+    name: '{name_ko}',
+    names: {{
+      ko: '{name_ko}',
+      en: '{name}',
+      zh: '{name_zh}',
+      ja: '{name_ja}',
+      es: '{name_es}',
+    }},
     magicPower: {{
-      title: '{title}',
+      title: '{title_ko}',
+      titles: {{
+        ko: '{title_ko}',
+        en: '{title}',
+        zh: '{title_zh}',
+        ja: '{title_ja}',
+        es: '{title_es}',
+      }},
       description: '{description_ko}',
       descriptions: {{
         ko: '{description_ko}',

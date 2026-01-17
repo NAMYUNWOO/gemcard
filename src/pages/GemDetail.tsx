@@ -11,6 +11,7 @@ import { StarField } from '../components/StarField';
 import { GemScene } from '../components/GemScene';
 import { RarityBadge } from '../components/RarityBadge';
 import { MagicButton } from '../components/MagicButton';
+import { ParticleSpoiler } from '../components/ParticleSpoiler';
 import { useGemStore } from '../stores/gemStore';
 import { copyShareUrl } from '../utils/gemShare';
 import {
@@ -18,21 +19,29 @@ import {
   getElementLabel,
   getGenderLabel,
   getLocalizedDescription,
+  getLocalizedName,
+  getLocalizedTitle,
   getMagicCircleName,
   getMagicCircleMeaning,
   type Element,
 } from '../types/gem';
-import { useLocale } from '../hooks';
+import { useLocale, useRevealAction } from '../hooks';
 import { useTranslation } from '../i18n';
 import styles from './GemDetail.module.css';
 
 export function GemDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { currentGem } = useGemStore();
+  const { currentGem, powerDescRevealed, setPowerDescRevealed } = useGemStore();
   const [copied, setCopied] = useState(false);
   const locale = useLocale();
   const t = useTranslation();
+
+  // Spoiler reveal action hook
+  const { executeAction: handleRevealClick } = useRevealAction({
+    gem: currentGem,
+    onSuccess: () => setPowerDescRevealed(true),
+  });
 
   const handleShare = async () => {
     if (!currentGem) return;
@@ -130,13 +139,10 @@ export function GemDetail() {
           <RarityBadge rarity={gem.rarity} size="md" />
 
           {/* Name */}
-          <h1 className={styles.gemName}>{gem.name}</h1>
+          <h1 className={styles.gemName}>{getLocalizedName(gem, locale)}</h1>
 
           {/* Divider */}
           <div className={styles.divider} />
-
-          {/* Cut Name */}
-          <p className={styles.cutName}>{gem.cutName}</p>
 
           {/* Magic Power Card */}
           <div className={styles.powerCard}>
@@ -146,12 +152,18 @@ export function GemDetail() {
                   {ELEMENT_ICONS[element]}
                 </span>
               )}
-              <h2 className={styles.powerTitle}>{gem.magicPower.title}</h2>
+              <h2 className={styles.powerTitle}>{getLocalizedTitle(gem.magicPower, locale)}</h2>
             </div>
 
-            <p className={styles.powerDesc}>
-              "{getLocalizedDescription(gem.magicPower, locale)}"
-            </p>
+            <ParticleSpoiler
+              hidden={!powerDescRevealed}
+              onClick={handleRevealClick}
+              particleColor="#aaaaaa"
+            >
+              <p className={styles.powerDesc}>
+                "{getLocalizedDescription(gem.magicPower, locale)}"
+              </p>
+            </ParticleSpoiler>
 
             {element && (
               <span className={styles.elementLabel}>

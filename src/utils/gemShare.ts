@@ -11,6 +11,7 @@ import {
 } from 'unishox2.siara.cc';
 import type { MagicGem, Rarity, Element, Gender } from '../types/gem';
 import { getMagicCircleById, MAGIC_CIRCLES } from '../types/gem';
+import { SAMPLE_GEM_TEMPLATES } from '../data/sampleGems';
 
 // =============================================================================
 // Types
@@ -18,21 +19,36 @@ import { getMagicCircleById, MAGIC_CIRCLES } from '../types/gem';
 
 /**
  * Compact data format for URL encoding (short keys to minimize size)
+ *
+ * For new gems with templateIndex:
+ *   - i: templateIndex (0-N) - restores name, rarity, magicPower from template
+ *   - Only visual properties (s, c, x, u, k) and user info are stored
+ *
+ * For backward compatibility (legacy gems without templateIndex):
+ *   - m, p, q, e, r: full gem text data
  */
 interface CompactGemData {
+  // Template-based encoding (new, much shorter URL)
+  i?: number;  // templateIndex - if present, restores name/power/rarity from template
+
+  // User info (optional)
   n?: string;  // userName
   g?: number;  // gender (0-3)
   d?: string;  // birthdate (YYYYMMDD)
   t?: number;  // birthTime (seconds 0-86399)
+
+  // Visual properties (always required)
   s: string;   // shape
   c: number;   // circleNo (17-20)
   x: string;   // color (no #)
   u: number;   // turbidity (0-100)
   k: number;   // contrast (50-100)
-  r: number;   // rarity (0-4)
-  m: string;   // gemName
-  p: string;   // powerTitle
-  q: string;   // powerDesc
+
+  // Legacy fields (for backward compatibility - only used when i is not present)
+  r?: number;  // rarity (0-4)
+  m?: string;  // gemName
+  p?: string;  // powerTitle
+  q?: string;  // powerDesc
   e?: number;  // element (0-7, optional)
 }
 
@@ -121,23 +137,35 @@ function urlSafeBase64ToUint8Array(base64: string): Uint8Array {
 
 /**
  * Encode a MagicGem to a compressed URL-safe string
+ *
+ * If gem has templateIndex, uses template-based encoding (much shorter URL).
+ * Otherwise, falls back to legacy encoding with full text data.
  */
 export function encodeGemToUrl(gem: MagicGem): string {
+  // Visual properties (always required)
   const compact: CompactGemData = {
     s: gem.shape,
     c: gem.magicCircle.id,
     x: gem.color.replace('#', ''),
     u: Math.round(gem.turbidity * 100),
     k: Math.round(gem.contrast * 100),
-    r: RARITY_TO_INDEX[gem.rarity],
-    m: gem.name,
-    p: gem.magicPower.title,
-    q: gem.magicPower.description,
   };
 
-  // Add optional element
-  if (gem.magicPower.element) {
-    compact.e = ELEMENT_TO_INDEX[gem.magicPower.element];
+  // Use template index if available (much shorter URL)
+  if (gem.templateIndex !== undefined) {
+    compact.i = gem.templateIndex;
+    // No need to store m, p, q, e, r - they can be restored from template
+  } else {
+    // Legacy encoding: store full text data
+    compact.r = RARITY_TO_INDEX[gem.rarity];
+    compact.m = gem.name;
+    compact.p = gem.magicPower.title;
+    compact.q = gem.magicPower.description;
+
+    // Add optional element
+    if (gem.magicPower.element) {
+      compact.e = ELEMENT_TO_INDEX[gem.magicPower.element];
+    }
   }
 
   // Add user info if present
@@ -183,6 +211,10 @@ export function encodeGemToUrl(gem: MagicGem): string {
 /**
  * Decode a compressed URL string back to gem data
  * Returns null if decoding fails
+ *
+ * Supports two encoding formats:
+ * 1. Template-based (new): Uses templateIndex to restore name/power/rarity from template
+ * 2. Legacy: Uses full text data (m, p, q, e, r fields)
  */
 export function decodeGemFromUrl(encoded: string): Partial<MagicGem> | null {
   try {
@@ -195,27 +227,47 @@ export function decodeGemFromUrl(encoded: string): Partial<MagicGem> | null {
 
     const compact: CompactGemData = JSON.parse(json);
 
-    // Validate required fields
-    if (!compact.s || !compact.x || !compact.m || !compact.p || !compact.q) {
+    // Validate required visual fields
+    if (!compact.s || !compact.x) {
       return null;
     }
 
-    // Build MagicGem
+    // Build MagicGem base with visual properties
     const gem: Partial<MagicGem> = {
       shape: compact.s,
-      cutName: '', // Will need to be loaded separately
       color: `#${compact.x}`,
       turbidity: compact.u / 100,
       contrast: compact.k / 100,
-      rarity: INDEX_TO_RARITY[compact.r] ?? 'common',
-      name: compact.m,
-      magicPower: {
+      magicCircle: getMagicCircleById(compact.c) ?? MAGIC_CIRCLES[0],
+    };
+
+    // Check if using template-based encoding
+    if (compact.i !== undefined) {
+      const template = SAMPLE_GEM_TEMPLATES[compact.i];
+      if (!template) {
+        return null; // Invalid template index
+      }
+
+      // Restore from template (with full localization support)
+      gem.name = template.name;
+      gem.names = template.names;
+      gem.rarity = template.rarity;
+      gem.magicPower = { ...template.magicPower };
+      gem.templateIndex = compact.i;
+    } else {
+      // Legacy decoding: validate and use stored text data
+      if (!compact.m || !compact.p || !compact.q) {
+        return null;
+      }
+
+      gem.name = compact.m;
+      gem.rarity = compact.r !== undefined ? (INDEX_TO_RARITY[compact.r] ?? 'common') : 'common';
+      gem.magicPower = {
         title: compact.p,
         description: compact.q,
         element: compact.e !== undefined ? INDEX_TO_ELEMENT[compact.e] : undefined,
-      },
-      magicCircle: getMagicCircleById(compact.c) ?? MAGIC_CIRCLES[0],
-    };
+      };
+    }
 
     // Restore user info
     if (compact.n || compact.g !== undefined || compact.d) {

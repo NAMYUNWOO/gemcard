@@ -154,12 +154,6 @@
   margin: var(--space-2) 0;
 }
 
-.cutName {
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  color: var(--text-muted);
-}
-
 /* Power Card */
 .powerCard {
   margin-top: var(--space-4);
@@ -203,7 +197,7 @@
 
 .elementLabel {
   font-family: var(--font-body);
-  font-size: var(--text-xs);
+  font-size: var(--text-sm);
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -224,7 +218,7 @@
 
 .circleLabel {
   font-family: var(--font-body);
-  font-size: var(--text-xs);
+  font-size: var(--text-sm);
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -232,7 +226,7 @@
 
 .circleName {
   font-family: var(--font-display);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   font-weight: 500;
   color: var(--spirit-violet);
   letter-spacing: 0.05em;
@@ -241,7 +235,7 @@
 .circleMeaning {
   font-family: var(--font-magic);
   font-style: italic;
-  font-size: var(--text-xs);
+  font-size: var(--text-sm);
   color: var(--text-dim);
   text-align: center;
   line-height: 1.5;

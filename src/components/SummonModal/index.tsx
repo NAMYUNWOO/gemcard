@@ -1,42 +1,48 @@
 /**
- * Gacha Page (Summon Page)
+ * SummonModal Component
  *
- * Mystical gem summoning experience with user info form.
- * In single-gem system, new summon replaces existing gem.
+ * Modal overlay for gem summoning with user info form.
+ * Supports multi-slot system with ad-based replacement.
  */
 
 import { useState, useCallback, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { StarField } from '../components/StarField';
-import { SummonCircle } from '../components/SummonCircle';
-import { MagicButton } from '../components/MagicButton';
-import { GemScene } from '../components/GemScene';
-import { RarityBadge } from '../components/RarityBadge';
-import { ParticleSpoiler } from '../components/ParticleSpoiler';
-import { generateMagicGem } from '../utils/gemGenerator';
-import { useGemStore } from '../stores/gemStore';
-import type { MagicGem, UserInfo, Gender, BirthDateTime } from '../types/gem';
-import { ELEMENT_ICONS, GENDER_LABELS, isValidUserInfo, getLocalizedDescription, getGenderLabel } from '../types/gem';
-import { useLocale, useRevealAction } from '../hooks';
-import { useTranslation } from '../i18n';
-import styles from './Gacha.module.css';
+import { StarField } from '../StarField';
+import { SummonCircle } from '../SummonCircle';
+import { MagicButton } from '../MagicButton';
+import { generateMagicGem } from '../../utils/gemGenerator';
+import { useGemStore } from '../../stores/gemStore';
+import type { UserInfo, Gender, BirthDateTime } from '../../types/gem';
+import { GENDER_LABELS, isValidUserInfo, getLocalizedName, getGenderLabel } from '../../types/gem';
+import { useLocale } from '../../hooks';
+import { useTranslation } from '../../i18n';
+import { adService } from '../../services/ads/AdService';
+import { isInTossWebView } from '../../utils/environment';
+import styles from './SummonModal.module.css';
 
-type GachaState = 'form' | 'confirm-replace' | 'summoning' | 'revealed';
+type SummonState = 'form' | 'confirm-replace' | 'watching-ad' | 'summoning';
 
-export function Gacha() {
-  const navigate = useNavigate();
-  const { currentGem, setGem, lastUserInfo, setLastUserInfo, powerDescRevealed, setPowerDescRevealed } = useGemStore();
+interface SummonModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  targetSlot: number;
+  isReplacing: boolean;
+  onSummonComplete?: () => void;
+}
+
+export function SummonModal({ isOpen, onClose, targetSlot, isReplacing, onSummonComplete }: SummonModalProps) {
+  const {
+    gems,
+    maxSlots,
+    setGemAtSlot,
+    lastUserInfo,
+    setLastUserInfo,
+    setPowerDescRevealed,
+    getAllGems,
+  } = useGemStore();
   const locale = useLocale();
   const t = useTranslation();
 
-  const [state, setState] = useState<GachaState>('form');
-  const [summonedGem, setSummonedGem] = useState<MagicGem | null>(null);
-
-  // Spoiler reveal action hook
-  const { executeAction: handleRevealClick } = useRevealAction({
-    gem: summonedGem,
-    onSuccess: () => setPowerDescRevealed(true),
-  });
+  const [state, setState] = useState<SummonState>('form');
 
   // Form state
   const [name, setName] = useState('');
@@ -51,6 +57,25 @@ export function Gacha() {
   const [birthYear, setBirthYear] = useState('');
   const [birthMonth, setBirthMonth] = useState('');
   const [birthDay, setBirthDay] = useState('');
+
+  const allGems = getAllGems();
+  const gemCount = allGems.length;
+  const currentGemToReplace = gems[targetSlot];
+
+  // Reset state when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setState(isReplacing ? 'confirm-replace' : 'form');
+      setFormError('');
+    }
+  }, [isOpen, isReplacing]);
+
+  // Preload ad when modal opens (if in Toss WebView)
+  useEffect(() => {
+    if (isOpen && isInTossWebView()) {
+      adService.preloadRewardedAd();
+    }
+  }, [isOpen]);
 
   // Sync birthDate when year/month/day change (with padding for storage)
   useEffect(() => {
@@ -114,24 +139,7 @@ export function Gacha() {
     }
     setFormError('');
     return true;
-  }, [buildUserInfo]);
-
-  // Handle form submission
-  const handleFormSubmit = useCallback(() => {
-    if (!validateForm()) return;
-
-    // If user already has a gem, show confirmation
-    if (currentGem) {
-      setState('confirm-replace');
-    } else {
-      startSummoning();
-    }
-  }, [validateForm, currentGem]);
-
-  // Cancel replacement
-  const handleCancelReplace = useCallback(() => {
-    setState('form');
-  }, []);
+  }, [buildUserInfo, t.formError]);
 
   // Start the summoning process
   const startSummoning = useCallback(async () => {
@@ -143,60 +151,80 @@ export function Gacha() {
     // Save user info for next time
     setLastUserInfo(userInfo);
 
-    // Generate gem with user info
-    const gem = await generateMagicGem('gacha', userInfo);
+    // Collect owned template indices to avoid duplicates
+    const ownedTemplateIndices = allGems
+      .map((gem) => gem.templateIndex)
+      .filter((idx): idx is number => idx !== undefined);
+
+    // Generate gem with user info, excluding already owned templates
+    const gem = await generateMagicGem('gacha', userInfo, ownedTemplateIndices);
 
     // Delay for animation
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    setSummonedGem(gem);
-    setState('revealed');
-  }, [buildUserInfo, setLastUserInfo, setPowerDescRevealed]);
+    // Save gem to slot and notify completion
+    setGemAtSlot(gem, targetSlot);
+    onClose();
+    onSummonComplete?.();
+  }, [buildUserInfo, setLastUserInfo, setPowerDescRevealed, setGemAtSlot, allGems, targetSlot, onClose, onSummonComplete]);
 
-  // Confirm replacement
-  const handleConfirmReplace = useCallback(() => {
-    startSummoning();
-  }, [startSummoning]);
+  // Handle form submission
+  const handleFormSubmit = useCallback(() => {
+    if (!validateForm()) return;
 
-  // Accept the gem and go home
-  const handleAccept = useCallback(() => {
-    if (!summonedGem) return;
+    if (isReplacing) {
+      setState('confirm-replace');
+    } else {
+      startSummoning();
+    }
+  }, [validateForm, isReplacing, startSummoning]);
 
-    setGem(summonedGem);
-    navigate('/');
-  }, [summonedGem, setGem, navigate]);
+  // Cancel replacement
+  const handleCancelReplace = useCallback(() => {
+    if (isReplacing) {
+      // If we started with replace confirmation, close the modal
+      onClose();
+    } else {
+      // Otherwise go back to form
+      setState('form');
+    }
+  }, [isReplacing, onClose]);
 
-  // View gem details
-  const handleViewDetails = useCallback(() => {
-    if (!summonedGem) return;
+  // Confirm replacement (with ad for Toss environment)
+  const handleConfirmReplace = useCallback(async () => {
+    // If replacing a gem, show ad first (in Toss environment)
+    if (isReplacing && isInTossWebView()) {
+      setState('watching-ad');
 
-    setGem(summonedGem);
-    navigate(`/gem/${summonedGem.id}`);
-  }, [summonedGem, setGem, navigate]);
+      const adWatched = await adService.showRewardedAd();
 
-  const gemParams = summonedGem
-    ? {
-        shape: summonedGem.shape,
-        color: summonedGem.color,
-        turbidity: summonedGem.turbidity,
-        dispersion: 0.05,
-        thickness: 1.5,
-        detailLevel: 5,
+      if (!adWatched) {
+        // User canceled or ad failed - go back to confirmation
+        setState('confirm-replace');
+        return;
       }
-    : null;
+    }
+
+    // Ad watched or not required - proceed with summoning
+    startSummoning();
+  }, [isReplacing, startSummoning]);
+
+  if (!isOpen) return null;
 
   return (
-    <div className={styles.container}>
+    <div className={styles.overlay}>
       <StarField />
 
       {/* Header */}
       <header className={styles.header}>
-        <button className={styles.backBtn} onClick={() => navigate('/')}>
-          <span className={styles.backIcon}>{'<'}</span>
-          <span>{t.home}</span>
+        <button className={styles.closeBtn} onClick={onClose}>
+          <span className={styles.closeIcon}>{'<'}</span>
+          <span>{t.replaceCancel}</span>
         </button>
-        {currentGem && (
-          <span className={styles.hasGem}>{t.gemOwned}</span>
+        {gemCount > 0 && (
+          <span className={styles.slotInfo}>
+            {gemCount} / {maxSlots}
+          </span>
         )}
       </header>
 
@@ -340,8 +368,15 @@ export function Gacha() {
               {t.replaceWarning}
             </p>
             <p className={styles.confirmWarning}>
-              "{currentGem?.name}"
+              "{currentGemToReplace && getLocalizedName(currentGemToReplace, locale)}"
             </p>
+
+            {isInTossWebView() && (
+              <p className={styles.adNotice}>
+                {t.adRequired}
+              </p>
+            )}
+
             <div className={styles.confirmActions}>
               <MagicButton
                 onClick={handleCancelReplace}
@@ -360,6 +395,14 @@ export function Gacha() {
           </div>
         )}
 
+        {/* Watching Ad State */}
+        {state === 'watching-ad' && (
+          <div className={styles.adContainer}>
+            <div className={styles.adSpinner} />
+            <p className={styles.adText}>{t.adRequired}</p>
+          </div>
+        )}
+
         {/* Summoning State */}
         {state === 'summoning' && (
           <>
@@ -371,68 +414,6 @@ export function Gacha() {
               "{t.summoningMessage}"
             </p>
           </>
-        )}
-
-        {/* Revealed State */}
-        {state === 'revealed' && summonedGem && gemParams && (
-          <div className={styles.revealContainer}>
-            {/* Gem Display */}
-            <div className={styles.gemDisplay}>
-              <GemScene
-                params={gemParams}
-                contrast={summonedGem.contrast}
-                autoRotate
-                dynamicBackground
-                magicCircle={summonedGem.magicCircle?.id ?? 17}
-              />
-            </div>
-
-            {/* Gem Info */}
-            <div className={styles.gemInfo}>
-              <RarityBadge rarity={summonedGem.rarity} size="lg" />
-
-              <h2 className={styles.gemName}>{summonedGem.name}</h2>
-
-              <p className={styles.cutName}>{summonedGem.cutName}</p>
-
-              <div className={styles.magicPower}>
-                {summonedGem.magicPower.element && (
-                  <span className={styles.element}>
-                    {ELEMENT_ICONS[summonedGem.magicPower.element]}
-                  </span>
-                )}
-                <h3 className={styles.powerTitle}>
-                  {summonedGem.magicPower.title}
-                </h3>
-                <ParticleSpoiler
-                  hidden={!powerDescRevealed}
-                  onClick={handleRevealClick}
-                  particleColor="#aaaaaa"
-                >
-                  <p className={styles.powerDesc}>
-                    "{getLocalizedDescription(summonedGem.magicPower, locale)}"
-                  </p>
-                </ParticleSpoiler>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className={styles.actions}>
-              <MagicButton
-                onClick={handleAccept}
-                variant="secondary"
-                size="md"
-              >
-                {t.acceptAndGoHome}
-              </MagicButton>
-              <MagicButton
-                onClick={handleViewDetails}
-                size="md"
-              >
-                {t.viewDetails}
-              </MagicButton>
-            </div>
-          </div>
         )}
       </main>
     </div>

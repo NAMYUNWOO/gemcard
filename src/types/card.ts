@@ -26,39 +26,6 @@ export interface GemCard {
 // GemCad 파일 목록 캐시
 let gemCadList: string[] | null = null;
 
-// 컷 이름 캐시
-const cutNameCache = new Map<string, string>();
-
-// 컷 이름 가져오기
-export async function getCutName(shapeId: string): Promise<string> {
-  if (cutNameCache.has(shapeId)) {
-    return cutNameCache.get(shapeId)!;
-  }
-
-  try {
-    const fileName = shapeId.endsWith('.asc') ? shapeId : `${shapeId}.asc`;
-    const response = await fetch(`/gem_cads/${fileName}`);
-    const content = await response.text();
-
-    // H 라인에서 컷 이름 추출
-    const lines = content.split('\n');
-    for (const line of lines) {
-      if (line.trim().startsWith('H ')) {
-        const fullText = line.trim().slice(2);
-        // PC 08.087D 같은 패턴도 처리 (숫자 뒤에 문자 포함)
-        const match = fullText.match(/^[A-Z]{2}\s*[\d.]+[A-Z]?\s+(.+)$/);
-        const name = match ? match[1].trim() : fullText;
-        cutNameCache.set(shapeId, name);
-        return name;
-      }
-    }
-    return 'Unknown Cut';
-  } catch (e) {
-    console.error('Failed to get cut name:', e);
-    return 'Unknown Cut';
-  }
-}
-
 // GemCad 파일 목록 로드
 export async function loadGemCadList(): Promise<string[]> {
   if (gemCadList) return gemCadList;

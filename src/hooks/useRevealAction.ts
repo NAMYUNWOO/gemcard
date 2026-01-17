@@ -6,8 +6,11 @@
  */
 
 import { useCallback } from 'react';
-import type { MagicGem } from '../types/gem';
+import type { MagicGem, SupportedLocale } from '../types/gem';
+import { getLocalizedName } from '../types/gem';
 import { generateShareUrl } from '../utils/gemShare';
+import { getTranslations } from '../i18n';
+import { getCurrentLocale } from './useLocale';
 
 // =============================================================================
 // Types
@@ -32,12 +35,15 @@ interface UseRevealActionResult {
 
 async function executeShareAction(gem: MagicGem): Promise<boolean> {
   const shareUrl = generateShareUrl(gem);
+  const locale: SupportedLocale = getCurrentLocale();
+  const t = getTranslations(locale);
+  const gemName = getLocalizedName(gem, locale);
 
   if (navigator.share) {
     try {
       await navigator.share({
-        title: gem.name,
-        text: `I summoned ${gem.name}!`,
+        title: `${gemName} - ${t.shareTitle}`,
+        text: t.shareText,
         url: shareUrl,
       });
       return true;

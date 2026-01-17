@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import type { SupportedLocale, MagicPower } from '../types/gem';
-import { getLocalizedDescription } from '../types/gem';
+import type { SupportedLocale, MagicPower, LocalizedDescriptions } from '../types/gem';
+import { getLocalizedDescription, getLocalizedTitle, getLocalizedName } from '../types/gem';
 
 const DEFAULT_LOCALE: SupportedLocale = 'ko';
 
@@ -35,6 +35,22 @@ export function useLocale(): SupportedLocale {
 export function useLocalizedDescription(magicPower: MagicPower): string {
   const locale = useLocale();
   return useMemo(() => getLocalizedDescription(magicPower, locale), [magicPower, locale]);
+}
+
+/**
+ * Hook to get localized title from MagicPower
+ */
+export function useLocalizedTitle(magicPower: MagicPower): string {
+  const locale = useLocale();
+  return useMemo(() => getLocalizedTitle(magicPower, locale), [magicPower, locale]);
+}
+
+/**
+ * Hook to get localized gem name
+ */
+export function useLocalizedName(gem: { name: string; names?: LocalizedDescriptions }): string {
+  const locale = useLocale();
+  return useMemo(() => getLocalizedName(gem, locale), [gem, locale]);
 }
 
 /**
