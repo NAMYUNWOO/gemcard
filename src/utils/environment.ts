@@ -2,7 +2,7 @@
  * Environment Detection Utilities
  *
  * Detects whether the app is running in App in Toss WebView or regular browser.
- * Used to determine storage strategy (Firestore vs localStorage).
+ * Used to determine storage strategy (TossStorage vs localStorage).
  *
  * Note: Domain-based detection doesn't work in QR code test environments.
  * We use getOperationalEnvironment() API for accurate detection.
@@ -83,29 +83,4 @@ export function isDevelopment(): boolean {
  */
 export function isProduction(): boolean {
   return import.meta.env.PROD;
-}
-
-/**
- * Determine whether to use Firebase (Firestore) for storage
- *
- * Strategy:
- * - Production: Only use Firebase when running in Toss WebView (origin check)
- * - Development: Use Firebase if VITE_USE_FIREBASE=true (for testing)
- *
- * @returns true if Firebase should be used, false for localStorage
- */
-export function shouldUseFirebase(): boolean {
-  // In production, strictly check origin (Toss WebView only)
-  if (isProduction()) {
-    return isInTossWebView();
-  }
-
-  // In development, allow Firebase usage via environment variable
-  const useFirebaseEnv = import.meta.env.VITE_USE_FIREBASE;
-  if (useFirebaseEnv === 'true' || useFirebaseEnv === '1') {
-    return true;
-  }
-
-  // Default: use localStorage in development
-  return false;
 }

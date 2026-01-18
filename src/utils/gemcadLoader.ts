@@ -313,12 +313,30 @@ export async function loadGemCadGeometry(shapeId: string, slotIndex?: number): P
 }
 
 /**
- * Clear the geometry cache
+ * Clear the geometry cache (memory only)
  * Useful for memory management or forcing reload
  */
 export function clearGeometryCache(): void {
   gemCadCache.forEach(geometry => geometry.dispose());
   gemCadCache.clear();
+}
+
+/**
+ * Clear IndexedDB geometry cache
+ */
+export async function clearIndexedDBCache(): Promise<void> {
+  try {
+    await new Promise<void>((resolve, reject) => {
+      const request = indexedDB.deleteDatabase(DB_NAME);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+      request.onblocked = () => resolve();
+    });
+    dbPromise = null;
+    console.log('[GemCadLoader] IndexedDB cache cleared');
+  } catch (e) {
+    console.warn('[GemCadLoader] Failed to clear IndexedDB:', e);
+  }
 }
 
 /**

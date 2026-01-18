@@ -331,7 +331,7 @@ Magic power descriptions support multiple languages via `LocalizedDescriptions` 
 | `src/data/sampleGems.ts` | Gem template database (don't edit manually) |
 | `src/constants/gem.ts` | Rendering constants |
 
-## Firebase & Storage Architecture
+## Storage Architecture
 
 ### Environment Detection
 - App in Toss WebView: `*.apps.tossmini.com`, `*.private-apps.tossmini.com`
@@ -340,19 +340,11 @@ Magic power descriptions support multiple languages via `LocalizedDescriptions` 
 ### Storage Strategy
 | 환경 | Storage | 인증 |
 |------|---------|------|
-| App in Toss | Firebase Firestore | Toss 토큰 → Firebase Custom Auth |
-| Non-Toss | localStorage / IndexedDB | 없음 (로컬 전용) |
+| App in Toss | Toss Native Storage (`@apps-in-toss/web-framework`) | 없음 (Toss가 관리) |
+| Non-Toss | localStorage | 없음 (로컬 전용) |
 
-### Firebase Usage Control
-| 환경 | Origin 체크 | Firebase 사용 조건 |
-|------|------------|-------------------|
-| Production | ✓ 필수 | Toss WebView에서만 |
-| Development | ✗ 선택 | `VITE_USE_FIREBASE=true` 설정 시 |
-
-```bash
-# 개발 환경에서 Firebase 테스트
-VITE_USE_FIREBASE=true npm run dev
-```
+Toss Native Storage는 `@apps-in-toss/web-framework`의 `Storage` API를 사용하여
+Toss 앱 내에서 영구적인 key-value 저장소를 제공합니다.
 
 ### Referral System (Toss contactsViral)
 | 상태 | 슬롯 수 | 획득 방법 |
@@ -401,41 +393,34 @@ referralService.openInviteFriends(
 
 ```
 src/
-├── config/
-│   └── firebase.ts              # Firebase 초기화 (환경변수 사용)
-│
 ├── services/
 │   ├── storage/
-│   │   ├── types.ts             # GemStorageService 인터페이스
-│   │   ├── LocalStorageService.ts   # localStorage/IndexedDB 구현
-│   │   ├── FirestoreService.ts  # Firebase Firestore 구현
-│   │   └── index.ts             # 팩토리 + origin 기반 서비스 선택
-│   │
-│   ├── auth/
-│   │   └── TossAuthService.ts   # Toss 토큰 → Firebase Custom Auth
+│   │   ├── types.ts               # GemStorageService 인터페이스
+│   │   ├── LocalStorageService.ts # localStorage 구현 (Non-Toss)
+│   │   ├── TossStorageService.ts  # Toss Native Storage 구현
+│   │   └── index.ts               # 팩토리 + 환경 기반 서비스 선택
 │   │
 │   ├── referral/
-│   │   └── ReferralService.ts   # Toss contactsViral 친구 초대 연동
+│   │   └── ReferralService.ts     # Toss contactsViral 친구 초대 연동
 │   │
 │   └── ads/
-│       └── AdService.ts         # Toss 보상형 광고 연동
+│       └── AdService.ts           # Toss 전면 광고 연동
 │
 ├── hooks/
-│   ├── useStorageService.ts     # Storage 서비스 React hook
-│   └── useAuth.ts               # 인증 상태 관리 hook
+│   └── useStorageService.ts       # Storage 서비스 React hook
 │
 └── utils/
-    └── environment.ts           # App in Toss 환경 감지
+    └── environment.ts             # App in Toss 환경 감지
 ```
 
 ### Key Files Reference (Extended)
 | 파일 | 역할 |
 |------|------|
-| `src/config/firebase.ts` | Firebase 초기화 |
-| `src/services/storage/` | Storage 추상화 레이어 |
-| `src/services/auth/TossAuthService.ts` | Toss 인증 연동 |
+| `src/services/storage/TossStorageService.ts` | Toss Native Storage 구현 |
+| `src/services/storage/LocalStorageService.ts` | localStorage 구현 (Non-Toss) |
+| `src/services/storage/index.ts` | Storage 팩토리 |
 | `src/services/referral/ReferralService.ts` | contactsViral 친구 초대 |
-| `src/services/ads/AdService.ts` | 보상형 광고 연동 |
+| `src/services/ads/AdService.ts` | 전면 광고 연동 |
 | `src/utils/environment.ts` | App in Toss 감지 |
 
 ## 🚀 프로덕션 배포 체크리스트
@@ -509,17 +494,44 @@ contactsViral.open({
 
 ---
 
+### 4. 개발용 테스트 버튼 ⚠️ 수동 변경 필요
+
+**파일**: `src/pages/Home.tsx:28`
+
+```typescript
+// TODO: 실제 배포 시 false로 변경
+const SHOW_DEV_BUTTONS = true;  // ← false로 변경
+```
+
+| 버튼 | 기능 |
+|------|------|
+| 🧪 [DEV] 슬롯 +1 | 슬롯 확장 테스트 (maxSlots < 10일 때만 표시) |
+| 🗑️ [DEV] 초기화 | 모든 데이터 삭제 후 새로고침 |
+
+**[DEV] 초기화 버튼이 삭제하는 데이터:**
+- `arcane-gems-collection` (Zustand store)
+- `arcane-gems-storage-v4` (Storage service)
+- `gemcard:cards` (Card store)
+- IndexedDB `gemcard-geometry-cache` (Geometry cache)
+- 메모리 캐시
+
+**⚠️ 프로덕션 배포 전 반드시 `SHOW_DEV_BUTTONS = false`로 변경!**
+
+---
+
 ### 배포 전 최종 확인
 
 ```bash
-# 1. 환경변수 확인
-cat .env | grep -v "^#" | grep -v "^$"
+# 1. DEV 버튼 비활성화 확인
+grep "SHOW_DEV_BUTTONS" src/pages/Home.tsx
+# → const SHOW_DEV_BUTTONS = false; 여야 함
 
-# 2. 빌드 테스트
-npm run build
-
-# 3. 테스트 ID가 남아있는지 확인
+# 2. 테스트 광고 ID 확인
 grep -r "ait-ad-test" src/services/ads/
+# → 출력 없어야 함 (실제 ID로 교체됨)
+
+# 3. 빌드 테스트
+npm run build
 ```
 
 ## Notes for AI Assistants

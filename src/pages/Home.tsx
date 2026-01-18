@@ -21,7 +21,36 @@ import { useTranslation } from '../i18n';
 import { STORAGE_CONSTANTS } from '../services/storage/types';
 import { referralService } from '../services/referral/ReferralService';
 import { isInTossWebView } from '../utils/environment';
+import { clearGeometryCache, clearIndexedDBCache } from '../utils/gemcadLoader';
 import styles from './Home.module.css';
+
+// TODO: 실제 배포 시 false로 변경
+const SHOW_DEV_BUTTONS = true;
+
+/**
+ * [DEV] Clear all app data - reset to fresh user state
+ * Clears: Zustand store, localStorage, IndexedDB, memory caches
+ */
+async function clearAllAppData(): Promise<void> {
+  // 1. Clear memory cache
+  clearGeometryCache();
+
+  // 2. Clear IndexedDB geometry cache
+  await clearIndexedDBCache();
+
+  // 3. Clear all localStorage keys related to this app
+  const keysToRemove = [
+    'arcane-gems-collection',    // Zustand store (v5)
+    'arcane-gems-storage-v4',    // Storage service
+    'gemcard:cards',             // Card store
+  ];
+  keysToRemove.forEach(key => localStorage.removeItem(key));
+
+  console.log('[DEV] All app data cleared - refreshing page');
+
+  // 4. Reload to apply changes
+  window.location.reload();
+}
 
 // Module ID for Toss contactsViral (공유 리워드)
 const CONTACTS_VIRAL_MODULE_ID = 'ccc81274-9b1b-43c1-bd5a-4291ed45104f';
@@ -155,6 +184,25 @@ export function Home() {
           <MagicButton onClick={handleSummonNewGem} size="lg">
             {t.summonYourGem}
           </MagicButton>
+
+          {/* DEV: Reset button (development only) */}
+          {SHOW_DEV_BUTTONS && (
+            <button
+              onClick={clearAllAppData}
+              style={{
+                marginTop: '20px',
+                padding: '8px 16px',
+                borderRadius: '8px',
+                border: '1px solid #ff6b6b',
+                background: 'rgba(255, 107, 107, 0.1)',
+                color: '#ff6b6b',
+                cursor: 'pointer',
+                fontSize: '12px',
+              }}
+            >
+              🗑️ [DEV] 전체 초기화
+            </button>
+          )}
         </main>
 
         {/* Summon Modal */}
@@ -258,6 +306,31 @@ export function Home() {
               >
                 <span className={styles.inviteIcon}>👥</span>
                 <span className={styles.inviteText}>친구 초대하고 슬롯 받기</span>
+              </button>
+            )}
+
+            {/* DEV: Test buttons (development only) */}
+            {SHOW_DEV_BUTTONS && maxSlots < STORAGE_CONSTANTS.MAX_SLOTS && (
+              <button
+                className={styles.inviteButton}
+                onClick={() => {
+                  incrementReferralCount();
+                  console.log('[DEV] Simulated referral reward - slot +1');
+                }}
+                style={{ borderColor: '#ff6b6b', background: 'rgba(255, 107, 107, 0.1)' }}
+              >
+                <span className={styles.inviteIcon}>🧪</span>
+                <span className={styles.inviteText}>[DEV] 슬롯 +1</span>
+              </button>
+            )}
+            {SHOW_DEV_BUTTONS && (
+              <button
+                className={styles.inviteButton}
+                onClick={clearAllAppData}
+                style={{ borderColor: '#ff6b6b', background: 'rgba(255, 107, 107, 0.1)' }}
+              >
+                <span className={styles.inviteIcon}>🗑️</span>
+                <span className={styles.inviteText}>[DEV] 초기화</span>
               </button>
             )}
           </div>

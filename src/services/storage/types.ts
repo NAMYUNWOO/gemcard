@@ -2,7 +2,7 @@
  * Storage Service Types
  *
  * Abstract interface for gem storage that can be implemented by
- * different backends (localStorage, Firestore, etc.)
+ * different backends (localStorage, Toss Storage, etc.)
  */
 
 import type { MagicGem, UserInfo } from '../../types/gem';
@@ -18,7 +18,7 @@ export interface GemSlotData {
 
 /**
  * Storage service interface
- * Implemented by LocalStorageService and FirestoreService
+ * Implemented by LocalStorageService and TossStorageService
  */
 export interface GemStorageService {
   /**

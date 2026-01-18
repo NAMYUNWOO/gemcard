@@ -2,13 +2,13 @@
  * Storage Service Factory
  *
  * Automatically selects the appropriate storage service based on environment:
- * - Toss WebView: FirestoreService (cloud storage)
- * - Regular Browser: LocalStorageService (local storage)
+ * - Toss WebView: TossStorageService (Toss native Storage API)
+ * - Regular Browser: LocalStorageService (localStorage)
  */
 
-import { isInTossWebView, shouldUseFirebase } from '../../utils/environment';
+import { isInTossWebView } from '../../utils/environment';
 import { LocalStorageService } from './LocalStorageService';
-import { FirestoreService } from './FirestoreService';
+import { TossStorageService } from './TossStorageService';
 import type { GemStorageService } from './types';
 
 /** Singleton storage service instance */
@@ -21,8 +21,8 @@ let initPromise: Promise<void> | null = null;
  * Get the storage service instance (singleton)
  *
  * Automatically selects the appropriate implementation based on environment:
- * - Toss WebView: FirestoreService
- * - Regular Browser: LocalStorageService
+ * - Toss WebView: TossStorageService (Toss native Storage API)
+ * - Regular Browser: LocalStorageService (localStorage)
  *
  * @returns Initialized storage service
  */
@@ -40,10 +40,9 @@ export async function getStorageService(): Promise<GemStorageService> {
 
   // Create and initialize the appropriate service
   const isToss = isInTossWebView();
-  const useFirebase = shouldUseFirebase();
-  console.log(`[Storage] Environment: ${isToss ? 'Toss WebView' : 'Web Browser'}, Using: ${useFirebase ? 'Firebase' : 'LocalStorage'}`);
+  console.log(`[Storage] Environment: ${isToss ? 'Toss WebView' : 'Web Browser'}, Using: ${isToss ? 'TossStorage' : 'LocalStorage'}`);
 
-  const service = useFirebase ? new FirestoreService() : new LocalStorageService();
+  const service = isToss ? new TossStorageService() : new LocalStorageService();
 
   initPromise = (async () => {
     try {
@@ -52,8 +51,8 @@ export async function getStorageService(): Promise<GemStorageService> {
       console.log('[Storage] Service initialized successfully');
     } catch (e) {
       console.error('[Storage] Failed to initialize:', e);
-      // Fall back to localStorage if Firestore fails
-      if (useFirebase) {
+      // Fall back to localStorage if TossStorage fails
+      if (isToss) {
         console.log('[Storage] Falling back to LocalStorageService');
         const fallback = new LocalStorageService();
         await fallback.initialize();
