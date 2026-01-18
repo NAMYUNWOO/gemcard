@@ -292,21 +292,21 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
       es: 'Infierno de Poder Ejecutivo',
     },
     magicPower: {
-      title: '절대 명령',
+      title: '전략적 동기화',
       titles: {
-        ko: '절대 명령',
-        en: 'Absolute Command',
-        zh: '绝对指令',
-        ja: '絶対命令',
-        es: 'Mando Absoluto',
+        ko: '전략적 동기화',
+        en: 'Strategic Alignment',
+        zh: '战略协作',
+        ja: '戦略的同期',
+        es: 'Sincronización Estratégica',
       },
-      description: '조직 내에서 그 누구도 소지자의 명령에 토를 달지 못하게 만드는 지배자의 위엄을 부여합니다. 카리스마만으로 수만 명의 인원을 일사불란하게 통제합니다.',
+      description: '조직 구성원들이 공통의 목표에 자발적으로 몰입하게 만드는 강력한 리더십을 부여합니다. 비전만으로 팀을 하나로 묶습니다.',
       descriptions: {
-        ko: '조직 내에서 그 누구도 소지자의 명령에 토를 달지 못하게 만드는 지배자의 위엄을 부여합니다. 카리스마만으로 수만 명의 인원을 일사불란하게 통제합니다.',
-        en: 'Grants the dignity of a ruler that prevents anyone from questioning the holder\'s commands, establishing a hierarchy where everyone follows voluntarily.',
-        zh: '赋予统治者的威严，使组织内无人敢质疑持有者的命令，建立起所有人自发追随的等级制度。',
-        ja: '組織内で誰一人として持ち主の命令に異を唱えられない支配者の威厳を付与します。誰もが自発的に従う階級秩序を確立します。',
-        es: 'Otorga la dignidad de un gobernante que impide que alguien cuestione las órdenes del poseedor, estableciendo una jerarquía de seguimiento voluntario.',
+        ko: '조직 구성원들이 공통의 목표에 자발적으로 몰입하게 만드는 강력한 리더십을 부여합니다. 비전만으로 팀을 하나로 묶습니다.',
+        en: 'Inspires team members to voluntarily align with and commit to shared goals through visionary leadership.',
+        zh: '赋予领导力，激发团队成员自发地对齐并致力于共同目标。',
+        ja: 'ビジョンを通じてチームメンバーが自発的に共通の目標に邁進できるよう導くリーダーシップを付与します。',
+        es: 'Inspira a los miembros del equipo a alinearse voluntariamente con objetivos compartidos mediante un liderazgo visionario.',
       },
       element: 'fire' as Element,
     },
@@ -322,21 +322,21 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
       es: 'Luz de Dominio de Mercado',
     },
     magicPower: {
-      title: '독점의 열기',
+      title: '시장의 이정표',
       titles: {
-        ko: '독점의 열기',
-        en: 'Monopoly Heat',
-        zh: '垄断之热',
-        ja: '独占の熱気',
-        es: 'Calor de Monopolio',
+        ko: '시장의 이정표',
+        en: 'Market Beacon',
+        zh: '市场标杆',
+        ja: '市場の道標',
+        es: 'Faro del Mercado',
       },
-      description: '소지자가 속한 업계의 모든 자본과 관심을 블랙홀처럼 빨아들입니다. 경쟁사를 고사시키고 오직 자신만이 시장의 중심에서 빛나는 독점적 행운을 선사합니다.',
+      description: '소지자의 브랜드가 업계의 표준이 되어 대중의 신뢰를 얻고 지속 가능한 시장 성장을 선도하게 합니다.',
       descriptions: {
-        ko: '소지자가 속한 업계의 모든 자본과 관심을 블랙홀처럼 빨아들입니다. 경쟁사를 고사시키고 오직 자신만이 시장의 중심에서 빛나는 독점적 행운을 선사합니다.',
-        en: 'Absorbs all capital and interest in the industry like a black hole, making the holder\'s brand an absolute monopoly while competitors wither.',
-        zh: '像黑洞一样吸干行业内所有的资本和关注，使竞争对手枯竭，唯独让持有者的品牌成为绝对的垄断。',
-        ja: '業界内のあらゆる資本と関心をブラックホールのように吸い込み、競合他社を枯渇させ、持ち主のブランドだけを絶対的な独占状態にします。',
-        es: 'Absorbe todo el capital e interés de la industria como un agujero negro, convirtiendo la marca del poseedor en un monopolio absoluto.',
+        ko: '소지자의 브랜드가 업계의 표준이 되어 대중의 신뢰를 얻고 지속 가능한 시장 성장을 선도하게 합니다.',
+        en: 'Makes the brand an industry standard, earning public trust and leading sustainable market growth.',
+        zh: '使品牌成为行业标准，赢得公众信任并引领市场的可持续增长。',
+        ja: 'ブランドを業界標準へと押し上げ、公衆の信頼を獲得し、持続可能な市場成長を牽引します。',
+        es: 'Convierte la marca en un estándar de la industria, ganando la confianza del público y liderando el crecimiento sostenible.',
       },
       element: 'fire' as Element,
     },
@@ -382,21 +382,21 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
       es: 'Núcleo de Nova Primordial',
     },
     magicPower: {
-      title: '현실 점화',
+      title: '장벽 돌파',
       titles: {
-        ko: '현실 점화',
-        en: 'Reality Ignition',
-        zh: '现实点燃',
-        ja: '現実点火',
-        es: 'Ignición de Realidad',
+        ko: '장벽 돌파',
+        en: 'Hurdle Breakthrough',
+        zh: '突破障碍',
+        ja: '障害突破',
+        es: 'Superación de Obstáculos',
       },
-      description: '상상하는 것만으로 현실의 물리적 흐름을 바꿉니다. 안 될 일도 되게 만들며, 소지자가 걷는 길을 가로막는 모든 사회적, 법적 장애물을 태워 없애고 승리만을 남깁니다.',
+      description: '목표 달성을 가로막는 복잡한 시스템적, 환경적 장애물을 창의적인 해법으로 돌파하는 강력한 추진력을 줍니다.',
       descriptions: {
-        ko: '상상하는 것만으로 현실의 물리적 흐름을 바꿉니다. 안 될 일도 되게 만들며, 소지자가 걷는 길을 가로막는 모든 사회적, 법적 장애물을 태워 없애고 승리만을 남깁니다.',
-        en: 'Changes the physical flow of reality just by imagining it, making the impossible possible and turning every path into a shortcut to success.',
-        zh: '仅靠想象就能改变现实的物理流向，变不可能为可能，使持有者走过的每一条路都成为‘成功的捷径’。',
-        ja: '想像するだけで現実の物理的な流れを変えます。不可能なことも可能にし、持ち主が歩むすべての道を「成功への近道」に変えます。',
-        es: 'Cambia el flujo físico de la realidad con solo imaginarlo, haciendo posible lo imposible y convirtiendo cada camino en un atajo al éxito.',
+        ko: '목표 달성을 가로막는 복잡한 시스템적, 환경적 장애물을 창의적인 해법으로 돌파하는 강력한 추진력을 줍니다.',
+        en: 'Provides powerful momentum to break through complex systemic or environmental hurdles with creative solutions.',
+        zh: '提供强大的动力，通过创意方案突破复杂的系统或环境障碍。',
+        ja: '複雑なシステムや環境の障害を、独創的な解決策で突破するための強力な推進力を提供します。',
+        es: 'Proporciona un impulso poderoso para superar obstáculos sistémicos o ambientales complejos con soluciones creativas.',
       },
       element: 'fire' as Element,
     },
@@ -652,21 +652,21 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
       es: 'Fuente de Vitalidad',
     },
     magicPower: {
-      title: '세포 정화',
+      title: '최상의 회복력',
       titles: {
-        ko: '세포 정화',
-        en: 'Cellular Cleansing',
-        zh: '细胞净化',
-        ja: '細胞の浄化',
-        es: 'Limpieza Celular',
+        ko: '최상의 회복력',
+        en: 'Peak Recovery',
+        zh: '巅峰恢复',
+        ja: '最高の回復力',
+        es: 'Recuperación Máxima',
       },
-      description: '몸속의 독소와 피로 물질을 매일 밤 완벽히 정화합니다. 4시간만 자도 8시간을 잔 듯한 최상의 세포 상태를 유지하며 피부 노화를 획기적으로 늦추는 효과가 있습니다.',
+      description: '일상에서 쌓인 피로를 효율적으로 관리하여 짧은 휴식으로도 최상의 컨디션과 맑은 정신을 유지하게 돕습니다.',
       descriptions: {
-        ko: '몸속의 독소와 피로 물질을 매일 밤 완벽히 정화합니다. 4시간만 자도 8시간을 잔 듯한 최상의 세포 상태를 유지하며 피부 노화를 획기적으로 늦추는 효과가 있습니다.',
-        en: 'Completely purifies toxins and fatigue substances from the body every night, providing peak condition as if 8 hours were slept in just 4.',
-        zh: '每晚完美净化体内的毒素和疲劳物质，即使只睡4小时也能获得如同睡了8小时般的巅峰状态。',
-        ja: '体内の毒素と疲労物質を毎晩完璧に浄化します。4時間眠るだけでも8時間眠ったような最高のコンディションを提供します。',
-        es: 'Purifica las toxinas y el cansancio del cuerpo cada noche, brindando una condición física máxima como si se hubiera dormido 8 horas en solo 4.',
+        ko: '일상에서 쌓인 피로를 효율적으로 관리하여 짧은 휴식으로도 최상의 컨디션과 맑은 정신을 유지하게 돕습니다.',
+        en: 'Efficiently manages daily fatigue, restoring peak vitality and mental clarity through optimal recovery sessions.',
+        zh: '有效管理日常疲劳，通过优化的恢复过程恢复巅峰活力和清醒头脑。',
+        ja: '日々の疲労を効率的に管理し、短い休息でも最高のコンディションと明晰な精神状態を維持します。',
+        es: 'Gestiona eficientemente la fatiga diaria, restaurando la vitalidad máxima y la claridad mental mediante la recuperación.',
       },
       element: 'water' as Element,
     },
@@ -682,21 +682,21 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
       es: 'Mar Profundo de Secretos',
     },
     magicPower: {
-      title: '정보의 심연',
+      title: '완벽한 보안',
       titles: {
-        ko: '정보의 심연',
-        en: 'Information Abyss',
-        zh: '信息深渊',
-        ja: '情報の深淵',
-        es: 'Abismo de Información',
+        ko: '완벽한 보안',
+        en: 'Absolute Privacy',
+        zh: '绝对隐私',
+        ja: '完璧なセキュリティ',
+        es: 'Privacidad Absoluta',
       },
-      description: '자신에게 불리한 정보나 치부를 심해 속으로 영원히 가라앉힙니다. 어떠한 뒷조사나 폭로에도 소지자의 비밀은 절대 수면 위로 떠오르지 않는 철저한 방어력을 부여합니다.',
+      description: '소지자의 소중한 정보와 데이터 자산을 외부 위협으로부터 철저히 보호하여 어떤 환경에서도 완벽한 보안을 유지합니다.',
       descriptions: {
-        ko: '자신에게 불리한 정보나 치부를 심해 속으로 영원히 가라앉힙니다. 어떠한 뒷조사나 폭로에도 소지자의 비밀은 절대 수면 위로 떠오르지 않는 철저한 방어력을 부여합니다.',
-        en: 'Sinks disadvantageous information or personal flaws into the deep sea forever, protecting the holder with perfect confidentiality.',
-        zh: '将对自己不利的信息或短处永远沉入深海，在任何背景调查或曝光面前保持完美的保密性。',
-        ja: '自分に不利な情報や恥部を深海の中へ永遠に沈めます。いかなる身辺調査や暴露にも揺るがない完璧な秘匿性を維持します。',
-        es: 'Hunde la información desventajosa o los defectos personales en el mar profundo para siempre, protegiendo al poseedor con una confidencialidad perfecta.',
+        ko: '소지자의 소중한 정보와 데이터 자산을 외부 위협으로부터 철저히 보호하여 어떤 환경에서도 완벽한 보안을 유지합니다.',
+        en: 'Strictly protects valuable information and data assets from external threats, ensuring ironclad privacy.',
+        zh: '严密保护宝贵的信息和数据资产免受外部威胁，确保无懈可击的隐私。',
+        ja: '貴重な情報やデータ資産を外部の脅威から厳重に保護し、いかなる環境でも完璧なセキュリティを維持します。',
+        es: 'Protege estrictamente la información valiosa y los activos de datos contra amenazas externas, asegurando la privacidad.',
       },
       element: 'water' as Element,
     },
@@ -772,21 +772,21 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
       es: 'Reversor del Reloj Biológico',
     },
     magicPower: {
-      title: '영원한 젊음',
+      title: '시간을 잊은 활력',
       titles: {
-        ko: '영원한 젊음',
-        en: 'Eternal Youth',
-        zh: '永恒青春',
-        ja: '永遠の若さ',
-        es: 'Eterna Juventud',
+        ko: '시간을 잊은 활력',
+        en: 'Timeless Vigor',
+        zh: '永恒活力',
+        ja: '時を忘れる活力',
+        es: 'Vigor Atemporal',
       },
-      description: '신체의 생체 시계를 거꾸로 돌립니다. 장기는 가장 건강했던 시절로 회귀하고 육체는 질병으로부터 완전 격리되며, 수백 년을 살아도 청년의 기상을 유지하는 신적 축복을 내립니다.',
+      description: '신체 밸런스를 최적으로 유지하여 세월의 흐름 속에서도 활기찬 에너지와 기초 체력을 잃지 않도록 수호합니다.',
       descriptions: {
-        ko: '신체의 생체 시계를 거꾸로 돌립니다. 장기는 가장 건강했던 시절로 회귀하고 육체는 질병으로부터 완전 격리되며, 수백 년을 살아도 청년의 기상을 유지하는 신적 축복을 내립니다.',
-        en: 'Turns back the biological clock, returning organs to their healthiest state and making the body a \'super-body\' that resists aging.',
-        zh: '倒转身体的生物钟，使器官回归到最健康的时期，让身体成为不被疾病或衰老击倒的‘超级肉体’。',
-        ja: '身体の生物時計を逆回転させ、臓器を最も健康な時期へと回帰させます。病気や老化に負けない「スーパーボディ」を作り上げます。',
-        es: 'Retrocede el reloj biológico del cuerpo, devolviendo los órganos a su estado más saludable y creando un cuerpo resistente al envejecimiento.',
+        ko: '신체 밸런스를 최적으로 유지하여 세월의 흐름 속에서도 활기찬 에너지와 기초 체력을 잃지 않도록 수호합니다.',
+        en: 'Maintains optimal physical balance and vigor, supporting enduring stamina and a healthy lifestyle through the years.',
+        zh: '保持最佳的身体平衡与活力，支持持久的耐力和健康的生活方式。',
+        ja: '身体のバランスを最適に維持し、歳月が流れても活気に満ちたエネルギーと基礎体力を失わないよう守ります。',
+        es: 'Mantiene un equilibrio físico y vigor óptimos, apoyando una resistencia duradera y un estilo de vida saludable.',
       },
       element: 'water' as Element,
     },
@@ -982,21 +982,21 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
       es: 'Basalto de Inmunidad Física',
     },
     magicPower: {
-      title: '강철 몸매',
+      title: '강건한 신체 기반',
       titles: {
-        ko: '강철 몸매',
-        en: 'Iron Body',
-        zh: '钢铁躯体',
-        ja: '鋼の肉体',
-        es: 'Cuerpo de Hierro',
+        ko: '강건한 신체 기반',
+        en: 'Ergonomic Support',
+        zh: '身体支撑',
+        ja: '身体基盤のサポート',
+        es: 'Soporte Ergonómico',
       },
-      description: '현대인의 고질병인 거북목, 허리 통증, 만성 피로로부터 척추와 근육을 강철처럼 보호합니다. 사고 시에도 뼈가 부러지지 않는 기적적인 방어력을 발휘하여 일생의 건강을 보장합니다.',
+      description: '장시간 업무 중에도 올바른 자세를 유지하도록 도와 근육의 부담을 줄이고 건강한 신체 기반을 다지게 합니다.',
       descriptions: {
-        ko: '현대인의 고질병인 거북목, 허리 통증, 만성 피로로부터 척추와 근육을 강철처럼 보호합니다. 사고 시에도 뼈가 부러지지 않는 기적적인 방어력을 발휘하여 일생의 건강을 보장합니다.',
-        en: 'Protects the spine and muscles like steel from modern chronic illnesses, ensuring a healthy physical foundation.',
-        zh: '像钢铁一样保护脊椎和肌肉，免受乌龟颈、腰痛、慢性疲劳等现代慢性病的侵害。',
-        ja: '現代人の持病である腰痛や慢性疲労から、脊椎と筋肉を鋼のように保護し、健康な身体的基盤を保証します。',
-        es: 'Protege la columna y los músculos como el acero de las enfermedades crónicas modernas, garantizando una base física saludable.',
+        ko: '장시간 업무 중에도 올바른 자세를 유지하도록 도와 근육의 부담을 줄이고 건강한 신체 기반을 다지게 합니다.',
+        en: 'Supports ergonomic posture during long work hours, significantly reducing physical strain and building a healthy foundation.',
+        zh: '在长时间工作中支持人体工程学姿势，显著减少身体负担并建立健康的基盘。',
+        ja: '長時間の業務中でも正しい姿勢を維持できるよう助け、筋肉の負担を軽減して健康な身体基盤を構築します。',
+        es: 'Apoya una postura ergonómica durante largas horas de trabajo, reduciendo significativamente la tensión física.',
       },
       element: 'earth' as Element,
     },
@@ -1012,21 +1012,21 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
       es: 'Piedra de Oportunidad',
     },
     magicPower: {
-      title: '부동산 거물',
+      title: '자산 통찰력',
       titles: {
-        ko: '부동산 거물',
-        en: 'Real Estate Eye',
-        zh: '地产大亨',
-        ja: '不動産大物',
-        es: 'Magnate Inmobiliario',
+        ko: '자산 통찰력',
+        en: 'Strategic Asset Vision',
+        zh: '资产洞察',
+        ja: '資産への洞察力',
+        es: 'Visión de Activos Estratégicos',
       },
-      description: '가치가 폭등할 땅과 건물을 직관적으로 알아봅니다. 소지자가 구매하는 모든 부동산은 지각 변동 수준의 개발 호재를 맞이하게 되며, 평생 주거 걱정 없는 부의 기반을 마련해줍니다.',
+      description: '장기적인 가치가 높은 입지와 자산을 알아보는 뛰어난 안목을 주어 안정적인 부의 기반을 마련하도록 돕습니다.',
       descriptions: {
-        ko: '가치가 폭등할 땅과 건물을 직관적으로 알아봅니다. 소지자가 구매하는 모든 부동산은 지각 변동 수준의 개발 호재를 맞이하게 되며, 평생 주거 걱정 없는 부의 기반을 마련해줍니다.',
-        en: 'Intuitively recognizes land and buildings whose value will skyrocket, turning real estate purchases into legendary successes.',
-        zh: '直觉地识别出价值将暴涨的土地和建筑，使持有者购买的所有房地产都成为传奇般的投资成功。',
-        ja: '価値が急騰する土地や建物を直感的に見抜き、購入するすべての不動産を伝説的な投資成功へと導きます。',
-        es: 'Reconoce intuitivamente terrenos y edificios cuyo valor se disparará, convirtiendo las compras inmobiliarias en éxitos legendarios.',
+        ko: '장기적인 가치가 높은 입지와 자산을 알아보는 뛰어난 안목을 주어 안정적인 부의 기반을 마련하도록 돕습니다.',
+        en: 'Grants sharp insight to identify high-value long-term assets, building a stable and enduring economic foundation.',
+        zh: '赋予敏锐的眼光来识别高价值的长期资产，从而建立稳定持久的经济基础。',
+        ja: '長期的な価値が高い立地や資産を見抜く優れた眼識を与え、安定した富の基盤を築く手助けをします。',
+        es: 'Brinda una visión aguda para identificar activos de alto valor a largo plazo, construyendo una base económica estable.',
       },
       element: 'earth' as Element,
     },
@@ -1102,21 +1102,21 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
       es: 'Piedra de Vínculo de Destino',
     },
     magicPower: {
-      title: '파기 불능의 서약',
+      title: '강철의 신뢰',
       titles: {
-        ko: '파기 불능의 서약',
-        en: 'Absolute Bond',
-        zh: '不可撤销之誓',
-        ja: '破棄不能の誓約',
-        es: 'Voto Irrevocable',
+        ko: '강철의 신뢰',
+        en: 'Inviolable Trust',
+        zh: '坚不可摧的信任',
+        ja: '揺るぎない信頼',
+        es: 'Confianza Inviolable',
       },
-      description: '소지자가 맺는 모든 계약과 약속을 파기 불가능한 운명으로 묶습니다. 상대방의 배신을 물리적으로 봉쇄하며, 소지자에게 유리한 조건이 영구히 지속되도록 현실을 고착화합니다.',
+      description: '모든 파트너십을 상호 신뢰와 이익이 보장되는 견고한 관계로 만들어 서로 최고의 시너지를 내는 환경을 조성합니다.',
       descriptions: {
-        ko: '소지자가 맺는 모든 계약과 약속을 파기 불가능한 운명으로 묶습니다. 상대방의 배신을 물리적으로 봉쇄하며, 소지자에게 유리한 조건이 영구히 지속되도록 현실을 고착화합니다.',
-        en: 'Binds every contract and promise as an unbreakable destiny, physically and psychologically blocking any betrayal.',
-        zh: '将持有者签订的所有合同和约定捆绑为不可撤销的命运，从物理和心理上封锁对方的背叛。',
-        ja: '持ち主が結ぶすべての契約と約束を破棄不可能な運命として結びつけ、相手の裏切りを物理的・心理的に封鎖します。',
-        es: 'Vincula cada contrato y promesa como un destino inquebrantable, bloqueando física y psicológicamente cualquier traición.',
+        ko: '모든 파트너십을 상호 신뢰와 이익이 보장되는 견고한 관계로 만들어 서로 최고의 시너지를 내는 환경을 조성합니다.',
+        en: 'Strengthens partnerships into robust, trust-based relationships, fostering an environment for maximum synergy.',
+        zh: '将伙伴关系加强为稳固、基于信任的关系，营造发挥最大协同效应的环境。',
+        ja: 'あらゆるパートナーシップを相互信頼と利益が保証される堅固な関係に変え、最高のシナジーを生む環境を整えます。',
+        es: 'Fortalece las asociaciones en relaciones robustas basadas en la confianza, fomentando la máxima sinergia.',
       },
       element: 'earth' as Element,
     },
@@ -1762,21 +1762,21 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
       es: 'Joya de Estrella Naciente',
     },
     magicPower: {
-      title: '세계적 영향력',
+      title: '글로벌 인플루언스',
       titles: {
-        ko: '세계적 영향력',
-        en: 'Global Spotlight',
+        ko: '글로벌 인플루언스',
+        en: 'Global Influence',
         zh: '全球影响力',
-        ja: '세계적인 영향력',
+        ja: 'グローバルな影響力',
         es: 'Influencia Global',
       },
-      description: '무명 시절을 단숨에 끝내고 전 세계적인 스타덤에 오르게 합니다. 소지자의 일거수일투족이 뉴스가 되며, 대중의 사랑을 독차지하고 사회적 유행을 선도하는 신적인 셀러브리티가 됩니다.',
+      description: '소지자의 진정성이 전 세계에 알려지며 강력한 팬덤을 형성하고 긍정적인 사회적 유행을 선도하게 합니다.',
       descriptions: {
-        ko: '무명 시절을 단숨에 끝내고 전 세계적인 스타덤에 오르게 합니다. 소지자의 일거수일투족이 뉴스가 되며, 대중의 사랑을 독차지하고 사회적 유행을 선도하는 신적인 셀러브리티가 됩니다.',
-        en: 'Ends anonymity in an instant and rises to global stardom, making every move a focus of world attention.',
-        zh: '瞬间结束无名时期并跃升为全球明星，使持有者的一举一动都成为新闻头条和世界关注的焦点。',
-        ja: '無名時代を一瞬で終わらせ、全世界的なスターダムに押し上げます。持ち主の一挙手一投足が世界の注目を浴びるようになります。',
-        es: 'Termina con el anonimato en un instante y eleva al poseedor al estrellato global, convirtiendo cada movimiento en el foco del mundo.',
+        ko: '소지자의 진정성이 전 세계에 알려지며 강력한 팬덤을 형성하고 긍정적인 사회적 유행을 선도하게 합니다.',
+        en: 'Spreads the holder\'s authenticity globally, building a powerful following and leading positive social trends.',
+        zh: '向全球传播持有者的真实性，建立强大的粉丝群并引领积极的社会潮流。',
+        ja: '持ち主の真実性が世界中に広まり、強力なファン層を形成して肯定的な社会的流行を先導するようにします。',
+        es: 'Difunde la autenticidad del poseedor globalmente, creando seguidores poderosos y liderando tendencias sociales positivas.',
       },
       element: 'light' as Element,
     },
@@ -1912,21 +1912,21 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
       es: 'Nova de Iluminación',
     },
     magicPower: {
-      title: '절대적 각성',
+      title: '명료한 통찰',
       titles: {
-        ko: '절대적 각성',
-        en: 'Absolute Awareness',
-        zh: '绝对觉知',
-        ja: '絶対的な自覚',
-        es: 'Conciencia Absoluta',
+        ko: '명료한 통찰',
+        en: 'Clarity of Insight',
+        zh: '清晰洞察',
+        ja: '明瞭な洞察',
+        es: 'Claridad de Visión',
       },
-      description: '인간의 지각 한계를 넘어 우주와 세상의 모든 비밀을 빛으로 꿰뚫어 봅니다. 죽음의 공포조차 초월한 완전한 깨달음에 도달하며, 고통 없는 영원한 정신적 평안과 지혜를 누립니다.',
+      description: '복잡한 세상 이면의 패턴을 꿰뚫어 보는 지적 통찰력을 주어 혼란 속에서도 명확한 최선의 해답을 찾게 합니다.',
       descriptions: {
-        ko: '인간의 지각 한계를 넘어 우주와 세상의 모든 비밀을 빛으로 꿰뚫어 봅니다. 죽음의 공포조차 초월한 완전한 깨달음에 도달하며, 고통 없는 영원한 정신적 평안과 지혜를 누립니다.',
-        en: 'Pierces through all secrets of the universe with light, reaching a state of enlightenment where fear of death vanishes.',
-        zh: '用光穿透并洞察超越人类感知极限的宇宙和世间所有秘密，达到连死亡恐惧都消失的开悟状态。',
-        ja: '人間の知覚の限界を超え、宇宙と世界のあらゆる秘密を光で貫き見通します。死の恐怖さえも消える悟りの境地へと導きます.',
-        es: 'Atraviesa todos los secretos del universo con luz, alcanzando un estado de iluminación donde el miedo a la muerte desaparece.',
+        ko: '복잡한 세상 이면의 패턴을 꿰뚫어 보는 지적 통찰력을 주어 혼란 속에서도 명확한 최선의 해답을 찾게 합니다.',
+        en: 'Grants intellectual insight to see through complex patterns, finding the clearest and best solutions amidst confusion.',
+        zh: '赋予洞察复杂模式的智力见解，在混乱中找到最清晰、最好的解决方案。',
+        ja: '複雑な世界の裏側にあるパターンを見抜く知的な洞察力を与え、混乱の中でも明快な最善の解を見つけ出します。',
+        es: 'Brinda una visión intelectual para discernir patrones complejos, encontrando las mejores soluciones en la confusión.',
       },
       element: 'light' as Element,
     },
@@ -2212,21 +2212,21 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
       es: 'Eclipse de Mala Suerte',
     },
     magicPower: {
-      title: '행운의 포식자',
+      title: '위기 연금술사',
       titles: {
-        ko: '행운의 포식자',
-        en: 'Fortune Devourer',
-        zh: '命运吞噬者',
-        ja: '幸運の捕食者',
-        es: 'Devorador de Fortuna',
+        ko: '위기 연금술사',
+        en: 'Risk Alchemist',
+        zh: '风险炼金术师',
+        ja: 'リスクの錬金術師',
+        es: 'Alquimista de Riesgos',
       },
-      description: '자신에게 다가올 불운을 강제로 집어삼켜 무효화합니다. 사고가 날 운명이나 사기당할 운명을 어둠의 공간으로 격리하고, 대신 타인의 행운을 끌어당겨 자신의 것으로 흡수하는 냉혹한 운을 부여합니다.',
+      description: '다가올 리스크를 사전에 감지하고 관리하여 위기를 성장의 기회로 반전시키는 강력한 위기 관리 능력을 부여합니다.',
       descriptions: {
-        ko: '자신에게 다가올 불운을 강제로 집어삼켜 무효화합니다. 사고가 날 운명이나 사기당할 운명을 어둠의 공간으로 격리하고, 대신 타인의 행운을 끌어당겨 자신의 것으로 흡수하는 냉혹한 운을 부여합니다.',
-        en: 'Forcibly swallow and nullify misfortune, changing the fate of accidents or scams into \'non-existent events.\'',
-        zh: '强制吞噬并消除向自己袭来的霉运，预先将发生事故或被诈骗的命运改变为‘从未发生过的事’。',
-        ja: '自分に降りかかる不運を強制的に飲み込み無効化します。事故や詐欺に遭う運命を、事前に「なかったこと」に変えてしまいます。',
-        es: 'Traga y anula por la fuerza la mala suerte, transformando el destino de accidentes o estafas en "eventos inexistentes".',
+        ko: '다가올 리스크를 사전에 감지하고 관리하여 위기를 성장의 기회로 반전시키는 강력한 위기 관리 능력을 부여합니다.',
+        en: 'Detects and manages potential risks in advance, transforming challenges into strategic growth opportunities.',
+        zh: '预先发现并管理潜在风险，将挑战转化为战略性增长机会。',
+        ja: '迫りくるリスクを事前に感知して管理し、危機を成長の機会へと反転させる強力なリスク管理能力を付여します。',
+        es: 'Detecta y gestiona riesgos potenciales de antemano, transformando desafíos en oportunidades estratégicas.',
       },
       element: 'darkness' as Element,
     },
@@ -2242,21 +2242,21 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
       es: 'Agujero Negro de Influencia',
     },
     magicPower: {
-      title: '절대적 중력',
+      title: '매혹적 존재감',
       titles: {
-        ko: '절대적 중력',
-        en: 'Absolute Gravity',
-        zh: '绝对引力',
-        ja: '絶対的な重力',
-        es: 'Gravedad Absoluta',
+        ko: '매혹적 존재감',
+        en: 'Captivating Presence',
+        zh: '迷人的存在感',
+        ja: '魅惑的な存在感',
+        es: 'Presencia Cautivadora',
       },
-      description: '말 한마디 없이 존재감만으로 좌중을 압도하고 모든 시선을 빨아들입니다. 거부할 수 없는 강력한 매력과 신비주의를 통해 사람들이 스스로 소지자의 추종자가 되어 어둠의 군단을 형성하게 합니다.',
+      description: '존재감만으로 좌중의 시선을 사로잡으며, 소지자의 비전에 공감하는 사람들이 자연스럽게 모이게 하는 매력을 줍니다.',
       descriptions: {
-        ko: '말 한마디 없이 존재감만으로 좌중을 압도하고 모든 시선을 빨아들입니다. 거부할 수 없는 강력한 매력과 신비주의를 통해 사람들이 스스로 소지자의 추종자가 되어 어둠의 군단을 형성하게 합니다.',
-        en: 'Overwhelm the audience with presence alone without a word, granting a charisma that makes everyone submit.',
-        zh: '无需一言一语，仅凭存在感就压倒全场并吸引所有目光，赋予让人自发臣服的强大魅力。',
-        ja: '言葉一つ発さずとも、その圧倒的な存在感だけで座中を支配し、誰もが自発的に屈服する強力なカリスマを与えます。',
-        es: 'Abruma a la audiencia solo con su presencia sin decir una palabra, otorgando un carisma que hace que todos se sometan.',
+        ko: '존재감만으로 좌중의 시선을 사로잡으며, 소지자의 비전에 공감하는 사람들이 자연스럽게 모이게 하는 매력을 줍니다.',
+        en: 'Captivates audiences with a strong presence, naturally attracting people who resonate with the holder\'s vision.',
+        zh: '以强大的存在感吸引观众，自然地吸引与持有者愿景产生共鸣的人。',
+        ja: 'その圧倒的な存在感だけで周囲を惹きつけ、持ち主のビジョンに共感する人々が自然と集まるような魅力を与えます。',
+        es: 'Cautiva a las audiencias con una fuerte presencia, atrayendo naturalmente a quienes resuenan con su visión.',
       },
       element: 'darkness' as Element,
     },
@@ -2272,21 +2272,21 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
       es: 'Corona del Rey Fantasma',
     },
     magicPower: {
-      title: '그림자 통치',
+      title: '그림자의 자문역',
       titles: {
-        ko: '그림자 통치',
-        en: 'Shadow Governance',
-        zh: '影之统治',
-        ja: '影の統治',
-        es: 'Gobernanza de las Sombras',
+        ko: '그림자의 자문역',
+        en: 'Global Advisory',
+        zh: '全球顾问',
+        ja: '影の助言者',
+        es: 'Asesoría Global',
       },
-      description: '전 세계의 지하 경제와 정보 조직을 지배하는 그림자의 황제가 됩니다. 공식적인 직함은 없으나 국가 원수들조차 소지자의 눈치를 보게 만들며, 보이지 않는 곳에서 인류의 향방을 결정합니다.',
+      description: '전 세계의 핵심 정보를 조망하고 조율하여 보이지 않는 곳에서 세상의 긍정적인 흐름을 이끄는 조력자가 되게 합니다.',
       descriptions: {
-        ko: '전 세계의 지하 경제와 정보 조직을 지배하는 그림자의 황제가 됩니다. 공식적인 직함은 없으나 국가 원수들조차 소지자의 눈치를 보게 만들며, 보이지 않는 곳에서 인류의 향방을 결정합니다.',
-        en: 'Become the shadow emperor ruling the world\'s underground economy and intelligence organizations from behind the scenes.',
-        zh: '成为统治全球地下经济和情报组织的影子皇帝，在幕后行使移动世界的绝对权力。',
-        ja: '全世界の地下経済と情報組織を支配する影の皇帝となります。公式な肩書きなしに、世界を動かす絶対的な権力を行使します。',
-        es: 'Se convierte en el emperador de las sombras que gobierna la economía subterránea y las organizaciones de inteligencia del mundo.',
+        ko: '전 세계의 핵심 정보를 조망하고 조율하여 보이지 않는 곳에서 세상의 긍정적인 흐름을 이끄는 조력자가 되게 합니다.',
+        en: 'Oversees and coordinates global information from behind the scenes, driving positive world trends as a key advisor.',
+        zh: '在幕后监督并协调全球信息，作为关键顾问推动积极的世界潮流。',
+        ja: '世界中の核心情報を俯瞰して調整し、見えない場所から世界の肯定的な流れを導く助言者となります。',
+        es: 'Supervisa y coordina la información global tras bambalinas, impulsando tendencias mundiales positivas como asesor.',
       },
       element: 'darkness' as Element,
     },
@@ -2332,21 +2332,21 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
       es: 'Dios del Vacío',
     },
     magicPower: {
-      title: '존재의 숙달',
+      title: '환경 적응력',
       titles: {
-        ko: '존재의 숙달',
-        en: 'Existential Mastery',
-        zh: '存在之掌控',
-        ja: '存在の習熟',
-        es: 'Maestría Existencial',
+        ko: '환경 적응력',
+        en: 'Environmental Mastery',
+        zh: '环境掌控',
+        ja: '環境適応能力',
+        es: 'Maestría Ambiental',
       },
-      description: '존재와 비존재의 경계를 자유자재로 넘나듭니다. 물리적 형태를 초월하여 우주 그 자체가 되거나 티끌이 될 수 있으며, 삶과 죽음의 굴레에서 완전히 벗어나 영원한 고독의 정점에서 세상을 관조합니다.',
+      description: '어떤 낯선 환경에서도 빠르게 적응하여 자신의 역량을 100% 발휘하며 삶과 시간의 제약을 유연하게 넘어섭니다.',
       descriptions: {
-        ko: '존재와 비존재의 경계를 자유자재로 넘나듭니다. 물리적 형태를 초월하여 우주 그 자체가 되거나 티끌이 될 수 있으며, 삶과 죽음의 굴레에서 완전히 벗어나 영원한 고독의 정점에서 세상을 관조합니다.',
-        en: 'Freely cross the boundary between existence and non-existence, transcending physical form to become the universe.',
-        zh: '自由穿梭于存在与非存在的边界，超越物理形态成为宇宙本身或拥有不灭的灵魂。',
-        ja: '存在と非存在の境界を自由自在に行き来します。物理的な形態を超越し、宇宙そのものや不滅の精神を所有します。',
-        es: 'Cruza libremente el límite entre la existencia y la no existencia, trascendiendo la forma física para ser el universo mismo.',
+        ko: '어떤 낯선 환경에서도 빠르게 적응하여 자신의 역량을 100% 발휘하며 삶과 시간의 제약을 유연하게 넘어섭니다.',
+        en: 'Swiftly adapts to any environment, fully realizing one\'s potential and flexibly overcoming physical or temporal constraints.',
+        zh: '迅速适应任何环境，充分发挥自身潜力，灵活克服物理或时间限制。',
+        ja: 'いかなる不慣れな環境にも素早く適応して自身の能力を100%発揮し、生と時間の制約を柔軟に乗り越えます。',
+        es: 'Se adapta rápidamente a cualquier entorno, realizando plenamente su potencial y superando limitaciones físicas.',
       },
       element: 'darkness' as Element,
     },
@@ -2358,25 +2358,25 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
       ko: '조상의 구슬',
       en: 'Ancestral Bead',
       zh: '祖先之珠',
-      ja: '祖先の珠',
+      ja: '先祖の珠',
       es: 'Cuenta Ancestral',
     },
     magicPower: {
-      title: '혈통의 인도',
+      title: '지혜의 유산',
       titles: {
-        ko: '혈통의 인도',
-        en: 'Lineage Guidance',
-        zh: '血脉指引',
-        ja: '血統の導き',
-        es: 'Guía del Linaje',
+        ko: '지혜의 유산',
+        en: 'Legacy Wisdom',
+        zh: '智慧传承',
+        ja: '知恵の遺産',
+        es: 'Sabiduría del Legado',
       },
-      description: '고비마다 조상들의 지혜가 담긴 꿈이나 직감을 통해 올바른 길을 안내받습니다. 가문의 수호령이 소지자를 지켜주어 사소한 사고나 질병으로부터 항시 보호받는 가호의 행운입니다.',
+      description: '역사와 경험 속에 녹아있는 지혜를 활용하여 중요한 순간마다 올바른 결정을 내리고 사고를 예방하는 가호를 얻습니다.',
       descriptions: {
-        ko: '고비마다 조상들의 지혜가 담긴 꿈이나 직감을 통해 올바른 길을 안내받습니다. 가문의 수호령이 소지자를 지켜주어 사소한 사고나 질병으로부터 항시 보호받는 가호의 행운입니다.',
-        en: 'Receive guidance through dreams or intuition containing ancestral wisdom, ensuring failure-free choices.',
-        zh: '在每个关头通过蕴含祖先智慧的梦境或直觉引导正确道路，获得家族守护灵的庇佑，做出完美的决策。',
-        ja: '節目ごとに先祖の知恵が込められた夢や直感を通じて正しい道へと案内され、一族の守護霊の助けで失敗のない選択をします。',
-        es: 'Recibe guía a través de sueños o intuición con sabiduría ancestral, asegurando elecciones perfectas y protección espiritual.',
+        ko: '역사와 경험 속에 녹아있는 지혜를 활용하여 중요한 순간마다 올바른 결정을 내리고 사고를 예방하는 가호를 얻습니다.',
+        en: 'Leverages historical wisdom and experience to make sound decisions and stay protected at critical moments.',
+        zh: '利用历史智慧和经验，在关键时刻做出明智决定并获得保护。',
+        ja: '歴史と経験の中に溶け込んだ知恵を活用し、重要な瞬間ごとに正しい決정을下して事故を未然に防ぐ加護を得ます。',
+        es: 'Aprovecha la sabiduría histórica para tomar decisiones acertadas y mantenerse protegido en momentos críticos.',
       },
       element: 'spirit' as Element,
     },
@@ -2722,21 +2722,21 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
       es: 'Diamante de Alma Única',
     },
     magicPower: {
-      title: '절대적 통합',
+      title: '공감의 조화',
       titles: {
-        ko: '절대적 통합',
-        en: 'Absolute Unity',
-        zh: '绝对统一',
-        ja: '絶対的な統合',
-        es: 'Unidad Absoluta',
+        ko: '공감의 조화',
+        en: 'Empathetic Harmony',
+        zh: '共情和谐',
+        ja: '共感の調和',
+        es: 'Armonía Empática',
       },
-      description: '모든 존재와 영적으로 하나가 됩니다. 타인의 고통과 기쁨을 내 것처럼 조절하며, 온 인류의 의식을 연결하여 평화롭고 진화된 새로운 차원의 문명을 창조하는 신의 권능을 행사합니다.',
+      description: '타인과 깊은 정서적 유대를 형성하고 갈등을 평화롭게 해결하여 새로운 차원의 협력과 평화로운 문명을 창조하게 돕습니다.',
       descriptions: {
-        ko: '모든 존재와 영적으로 하나가 됩니다. 타인의 고통과 기쁨을 내 것처럼 조절하며, 온 인류의 의식을 연결하여 평화롭고 진화된 새로운 차원의 문명을 창조하는 신의 권능을 행사합니다.',
-        en: 'Become spiritually one with all beings, regulating the pain and joy of others to create a peaceful new civilization.',
-        zh: '与所有存在在精神上合而为一，像感受自己一样调节他人的痛苦与快乐，创造和平的新文明。',
-        ja: 'あらゆる存在と霊的に一つになります。他人の苦しみや喜びを自分のことのように調節し、平和な新文明を創造します。',
-        es: 'Se vuelve espiritualmente uno con todos los seres, regulando el dolor y la alegría ajena para crear una nueva civilización de paz.',
+        ko: '타인과 깊은 정서적 유대를 형성하고 갈등을 평화롭게 해결하여 새로운 차원의 협력과 평화로운 문명을 창조하게 돕습니다.',
+        en: 'Fosters deep emotional bonds and peaceful conflict resolution, enabling high-level collaboration for a better world.',
+        zh: '培养深层的情感联系与和平的冲突解决，实现高水平的协作以创造更好的世界。',
+        ja: '他者と深い情緒的連帯を築き、葛등を平和的に解決して、新しい次元の協力と平和な文明の創造を助けます。',
+        es: 'Fomenta vínculos emocionales profundos y la resolución pacífica de conflictos, permitiendo una colaboración de alto nivel.',
       },
       element: 'spirit' as Element,
     },
@@ -3138,116 +3138,44 @@ export const SAMPLE_GEM_TEMPLATES: SampleGemTemplate[] = [
  * Color palettes by element for random generation
  */
 export const ELEMENT_COLORS: Record<Element, string[]> = {
-  // Fire: 백열하는 불꽃에서 식어가는 잉벌까지 (폭발적인 에너지)
+  // Fire: From blazing flames to cooling embers
   fire: [
-    '#FF0000', // Crimson High
-    '#FF4500', // Orange Red
-    '#DB2303', // Blazing Scarlet
-    '#D74B00', // Deep Amber
-    '#FF2F2F', // Vivid Red
-    '#A30000', // Dark Garnet
-    '#E25822', // Flame
-    '#B22222', // Firebrick
-    '#8B0000', // Blood Core
-    '#CA0000'  // Intense Ruby
+    '#FF2400', '#FF4500', '#FF8C00', '#FFD700', '#E25822', '#B22222', '#3D0C02'
   ],
 
-  // Water: 청명한 산호초에서 빛이 닿지 않는 심해까지 (유동적 신비)
+  // Water: From shallow coral seas to deep ocean darkness
   water: [
-    '#00FFFF', // Cyan Neon
-    '#00CED1', // Dark Turquoise
-    '#40E0D0', // Crystal Turquoise
-    '#1E90FF', // Dodger Blue
-    '#00BFFF', // Deep Sky
-    '#4169E1', // Royal Blue
-    '#0000CD', // Medium Blue
-    '#0047AB', // Cobalt
-    '#191970', // Midnight Navy
-    '#0A192F'  // Abyssal Azure
+    '#E0FFFF', '#7FFFD4', '#00BFFF', '#1E90FF', '#4169E1', '#000080', '#081827'
   ],
 
-  // Earth: 울창한 수풀의 생명력과 견고한 대륙의 광물 (대지의 무게)
+  // Earth: Lush forests, solid rocks, and minerals
   earth: [
-    '#32CD32', // Lime Vitality
-    '#228B22', // Forest Core
-    '#006400', // Ancient Green
-    '#556B2F', // Dark Olive
-    '#8B4513', // Saddle Brown
-    '#A0522D', // Sienna Soil
-    '#D4AF37', // Metallic Gold
-    '#B8860B', // Goldenrod
-    '#CD7F32', // Bronze
-    '#3E2723'  // Deep Crust
+    '#2E8B57', '#556B2F', '#8B4513', '#A0522D', '#D2691E', '#B8860B', '#3C2F2F'
   ],
 
-  // Wind: 폭풍 전야의 대기와 투명한 하늘의 명료함 (해방된 속도)
+  // Wind: Invisible air, storms, and atmospheric clarity
   wind: [
-    '#FFFFFF', // Pure Atmosphere
-    '#F0FFFF', // Azure Mist
-    '#E0F7FA', // Pale Cyan
-    '#B2EBF2', // Minty Air
-    '#87CEEB', // Sky Blue
-    '#ADD8E6', // Light Blue
-    '#B0C4DE', // Light Steel
-    '#708090', // Stormy Slate
-    '#455A64', // Blue Gray
-    '#263238'  // Hurricane Shadow
+    '#FFFFFF', '#F5F5F5', '#AFEEEE', '#87CEEB', '#B0C4DE', '#708090', '#2F4F4F'
   ],
 
-  // Light: 성스러운 광휘와 찬란한 천상의 축복 (신성한 권능)
+  // Light: Radiant glory and divine sanctity
   light: [
-    '#FFFFFF', // Divine White
-    '#FFFDE7', // Cream Glow
-    '#FFF9C4', // Soft Primrose
-    '#FFF59D', // Lemon Chiffon
-    '#FFECB3', // Amber Light
-    '#FFE082', // Warm Sun
-    '#FFD54F', // Radiant Gold
-    '#E6E6FA', // Sacred Lavender
-    '#F3E5F5', // Pearlescent
-    '#FFF3E0'  // Champagne Aura
+    '#FFFFFF', '#FFFAF0', '#F0E68C', '#FFFACD', '#FFD700', '#E6E6FA', '#FAFAD2'
   ],
 
-  // Darkness: 빛을 삼키는 보랏빛 공허와 자주색 심연 (금기된 신비)
+  // Darkness: The void that swallows light and purple abyss
   darkness: [
-    '#240046', // Deepest Violet
-    '#3C096C', // Royal Purple
-    '#5A189A', // Imperial Purple
-    '#7B2CBF', // Amethyst Power
-    '#4C1D70', // Shadow Violet
-    '#511845', // Dark Mulberry
-    '#631131', // Deep Magenta
-    '#581845', // Plum Shadow
-    '#301934', // Void Purple
-    '#1A0033'  // Midnight Abyss
+    '#000000', '#0D0D1A', '#1C1C3D', '#2F1B41', '#4A235A', '#191970', '#2C3E50'
   ],
 
-  // Spirit: 비물질적인 영적 형광과 몽환적인 신비 (영적 주파수)
+  // Spirit: Ghostly fluorescence and soul mysticism
   spirit: [
-    '#ADFF2F', // Neon Green
-    '#7FFF00', // Chartreuse Spark
-    '#00FF7F', // Spring Spirit
-    '#50C878', // Emerald Ghost
-    '#00FA9A', // Medium Spring
-    '#E0B0FF', // Mauve Soul
-    '#DA70D6', // Orchid Mist
-    '#BA55D3', // Medium Orchid
-    '#9370DB', // Mystic Purple
-    '#483D8B'  // Dark Spiritual
+    '#ADFF2F', '#00FA9A', '#7FFFD4', '#E0B0FF', '#DA70D6', '#9370DB', '#483D8B'
   ],
 
-  // Mind: 사이킥 에너지의 폭발과 초월적 지능의 박동 (신경의 빛)
+  // Mind: Neural glow and psychic focus
   mind: [
-    '#00E5FF', // Electric Cyan
-    '#00B0FF', // Vivid Azure
-    '#2962FF', // Hyper Blue
-    '#6200EA', // Psychic Indigo
-    '#AA00FF', // Neural Purple
-    '#D500F9', // Neon Magenta
-    '#FF00FF', // Pure Fuchsia
-    '#FF4081', // Pink Focus
-    '#1DE9B6', // Telepathic Teal
-    '#120A8F'  // Ultramarine
+    '#00FFFF', '#7DF9FF', '#120A8F', '#4B0082', '#6A5ACD', '#8A2BE2', '#E6E6FA'
   ],
 };
 

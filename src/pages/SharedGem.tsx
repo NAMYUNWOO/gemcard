@@ -26,11 +26,18 @@ import { useBackEvent, useLocale } from '../hooks';
 import { useTranslation } from '../i18n';
 import styles from './SharedGem.module.css';
 
-export function SharedGem() {
-  const { data } = useParams<{ data: string }>();
+interface SharedGemProps {
+  gemData?: string; // From query param (Toss deep link)
+}
+
+export function SharedGem({ gemData }: SharedGemProps) {
+  const { data: routeData } = useParams<{ data: string }>();
   const navigate = useNavigate();
   const locale = useLocale();
   const t = useTranslation();
+
+  // Use gemData prop (from query param) or route param
+  const data = gemData || routeData;
 
   // Handle back button in apps-in-toss WebView
   useBackEvent();
@@ -38,7 +45,11 @@ export function SharedGem() {
   // Decode gem from URL
   const gem = useMemo(() => {
     if (!data) return null;
-    return decodeGemFromUrl(data);
+    try {
+      return decodeGemFromUrl(data);
+    } catch {
+      return null;
+    }
   }, [data]);
 
   // Error state
@@ -181,7 +192,13 @@ export function SharedGem() {
 
         {/* Actions */}
         <div className={styles.actions}>
-          <MagicButton onClick={() => navigate('/')} size="md">
+          <MagicButton
+            onClick={() => {
+              // query param 제거하고 홈으로 이동
+              window.location.href = window.location.pathname;
+            }}
+            size="md"
+          >
             {t.summonYourOwn}
           </MagicButton>
         </div>

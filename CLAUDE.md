@@ -105,12 +105,16 @@ scripts/
 ## State Management
 
 ### `useGemStore` (Zustand with localStorage persistence)
-- **Storage key:** `'arcane-gems-collection'` (version 2)
+- **Storage key:** `'arcane-gems-collection'` (version 5)
 - **State:**
-  - `currentGem: MagicGem | null` - User's single gem
+  - `gems: Record<number, MagicGem>` - Multi-slot gem storage
+  - `activeSlot: number` - Currently selected slot
+  - `maxSlots: number` - Maximum slots (1-10, increased via referrals)
+  - `referralCount: number` - Number of successful referrals
+  - `currentGem: MagicGem | null` - Computed from activeSlot
   - `lastUserInfo: UserInfo | null` - Cached form data for pre-fill
   - `powerDescRevealed: boolean` - Spoiler reveal state
-- **Migration:** Automatic v1 (array) → v2 (single gem) migration
+- **Migration:** Automatic v1 → v2 → v3 → v4 → v5 migrations supported
 
 ### `useCardStore` (React hook with localStorage)
 - **Storage key:** `'gemcard:cards'`
@@ -137,9 +141,11 @@ setShowSummonModal(true);
 
 ## Core Systems
 
-### Single-Gem System
-- User can only own ONE gem at a time
-- New summon replaces existing gem (with confirmation dialog)
+### Multi-Slot Gem System
+- User starts with 1 slot, can expand to 10 slots via friend referrals
+- Each slot can hold one gem
+- Empty slots: click to summon a new gem
+- Filled slots: click to view, can replace gem (requires watching ad)
 - At least one personal info field required before summoning:
   - Name (optional)
   - Gender: male, female, other, prefer-not-to-say (optional)
@@ -222,6 +228,53 @@ MagicGem → encodeGemToUrl() → CompactGemData (JSON)
   → Unishox2 compress → URL-safe Base64 → /share/{data}
 ```
 
+### Toss 딥링크 공유 (중요)
+
+**핵심 규칙:** Toss 딥링크는 URL path를 보존하지 않음. 오직 query param만 전달됨.
+
+**딥링크 형식:**
+| 환경 | 딥링크 형식 |
+|------|------------|
+| 테스트 | `intoss-private://gemcard?_deploymentId={id}&gem={data}` |
+| 프로덕션 | `intoss://gemcard?gem={data}` |
+
+**⚠️ 주의:** 딥링크 host는 앱의 scheme name (예: `gemcard`)을 사용함. `appsintoss`가 아님!
+```
+❌ intoss-private://appsintoss/share/xxx  (잘못된 형식)
+✅ intoss-private://gemcard?gem=xxx       (올바른 형식)
+```
+
+**deploymentId 획득 방법:**
+```typescript
+import * as env from '@apps-in-toss/env';
+
+// 런타임에서 deploymentId 가져오기 (테스트 환경에서만 값 존재)
+const deploymentId = env.getDeploymentId();
+```
+
+- `env.getDeploymentId()`는 런타임 API로, 테스트 환경에서만 값 반환
+- 프로덕션에서는 `null` 반환 → query param에서 `_deploymentId` 생략
+
+**App.tsx 라우팅 패턴:**
+```typescript
+// 딥링크는 path를 보존하지 않으므로 query param으로 감지
+const urlParams = new URLSearchParams(window.location.search);
+const gemParam = urlParams.get('gem');
+if (gemParam) {
+  // gem query param이 있으면 SharedGem 페이지로 라우팅
+  return <SharedGem />;
+}
+```
+
+**SharedGem 홈 이동 시 주의:**
+```typescript
+// ❌ 잘못됨 - React Router navigate는 query param을 유지함
+navigate('/');
+
+// ✅ 올바름 - 완전히 새로운 URL로 이동
+window.location.href = window.location.origin;
+```
+
 ## Localization
 
 Supported locales: `ko` (default), `en`, `zh`, `ja`, `es`
@@ -301,21 +354,48 @@ Magic power descriptions support multiple languages via `LocalizedDescriptions` 
 VITE_USE_FIREBASE=true npm run dev
 ```
 
-### Payment Model (Toss IAP)
-| 상태 | 슬롯 수 | 가격 |
-|------|---------|------|
+### Referral System (Toss contactsViral)
+| 상태 | 슬롯 수 | 획득 방법 |
+|------|---------|----------|
 | 기본 | 1개 | 무료 |
-| 1회 구매 | 4개 (+3) | ₩1,000 |
-| 2회 구매 | 7개 (+3) | ₩1,000 |
-| 3회 구매 | 10개 (+3) | ₩1,000 |
+| 공유 1회 | 2개 (+1) | 친구 초대 |
+| 공유 2회 | 3개 (+1) | 친구 초대 |
+| ... | ... | ... |
+| 공유 9회 | 10개 (최대) | 친구 초대 |
 
-- gem 교체: 슬롯 내 gem 삭제 후 새로 소환 → **보상형 광고 시청 필수**
+**contactsViral API 사용:**
+```typescript
+import { contactsViral } from '@apps-in-toss/web-framework';
+
+referralService.openInviteFriends(
+  'gemcard-invite',  // moduleId (콘솔에서 설정)
+  (amount, unit) => incrementReferralCount(),  // 공유 성공 시
+  (totalSent) => console.log('Total:', totalSent)  // 모듈 종료 시
+);
+```
+
+- **공유 리워드**: 친구에게 공유 성공 시 슬롯 +1
+- **Toss WebView 전용**: 비토스 환경에서는 초대 버튼 미노출
+- **콘솔 설정 필요**: 토스 개발자 콘솔에서 리워드 단위/수량 설정
+
+### gem 교체 규칙
+- gem 교체: 슬롯 내 gem 삭제 후 새로 소환 → **전면 광고 시청 필수**
 - gem 캐시 한도: 슬롯 수와 동일 (1~10)
 
 ### Ads Integration (Toss Ads)
 | 광고 유형 | 사용 시점 | 테스트 ID |
 |----------|----------|----------|
-| 보상형 광고 | gem 교체 | `ait-ad-test-rewarded-id` |
+| 전면형 광고 | gem 교체 | `ait-ad-test-interstitial-id` |
+
+**전면 광고 플로우:**
+```
+다시 뽑기 요청 → 전면 광고 시청 → 뽑기 진행
+```
+
+**주의사항:**
+- 개발 테스트 시 반드시 테스트용 ID 사용 (실제 ID 사용 시 제재 가능)
+- 광고 로드 완료 후 show 호출 (`load → show → 다음 load`)
+- 프로덕션 배포 전 콘솔에서 전면 광고 그룹 생성 필요
 
 ### Extended Directory Structure
 
@@ -334,16 +414,15 @@ src/
 │   ├── auth/
 │   │   └── TossAuthService.ts   # Toss 토큰 → Firebase Custom Auth
 │   │
-│   ├── premium/
-│   │   └── PremiumService.ts    # Toss IAP 결제 처리
+│   ├── referral/
+│   │   └── ReferralService.ts   # Toss contactsViral 친구 초대 연동
 │   │
 │   └── ads/
 │       └── AdService.ts         # Toss 보상형 광고 연동
 │
 ├── hooks/
 │   ├── useStorageService.ts     # Storage 서비스 React hook
-│   ├── useAuth.ts               # 인증 상태 관리 hook
-│   └── usePremium.ts            # 프리미엄 상태 관리 hook
+│   └── useAuth.ts               # 인증 상태 관리 hook
 │
 └── utils/
     └── environment.ts           # App in Toss 환경 감지
@@ -355,9 +434,93 @@ src/
 | `src/config/firebase.ts` | Firebase 초기화 |
 | `src/services/storage/` | Storage 추상화 레이어 |
 | `src/services/auth/TossAuthService.ts` | Toss 인증 연동 |
-| `src/services/premium/PremiumService.ts` | IAP 결제 처리 |
+| `src/services/referral/ReferralService.ts` | contactsViral 친구 초대 |
 | `src/services/ads/AdService.ts` | 보상형 광고 연동 |
 | `src/utils/environment.ts` | App in Toss 감지 |
+
+## 🚀 프로덕션 배포 체크리스트
+
+앱 정식 출시 시 아래 항목들을 반드시 수정해야 합니다.
+
+### 1. 공유 딥링크 (Share Deep Link)
+
+**변경 사항 없음** - 런타임 API 사용
+
+공유 딥링크는 `@apps-in-toss/env`의 `getDeploymentId()` 런타임 API를 사용합니다.
+별도의 환경변수 설정이나 프로덕션 배포 시 변경이 필요하지 않습니다.
+
+**동작 원리** (`src/utils/gemShare.ts`):
+```typescript
+import * as env from '@apps-in-toss/env';
+const deploymentId = env.getDeploymentId();
+```
+
+| 환경 | `getDeploymentId()` 반환값 | 생성되는 딥링크 |
+|------|---------------------------|----------------|
+| 테스트 | `{deploymentId}` | `intoss-private://gemcard?_deploymentId={id}&gem={data}` |
+| 프로덕션 | `null` | `intoss://gemcard?gem={data}` |
+
+**⚠️ 중요:** Toss 딥링크는 URL path를 보존하지 않으므로, gem 데이터는 query param(`?gem=`)으로 전달됩니다.
+
+---
+
+### 2. 광고 (Ads)
+
+**파일**: `src/services/ads/AdService.ts`
+
+| 항목 | 테스트 ID | 프로덕션 |
+|------|----------|----------|
+| 전면 광고 ID | `ait-ad-test-interstitial-id` | 토스 개발자 콘솔에서 발급받은 실제 ID |
+
+**변경 방법:**
+```typescript
+// src/services/ads/AdService.ts
+// 테스트 ID를 실제 ID로 교체
+const INTERSTITIAL_AD_ID = 'your-production-interstitial-ad-id';
+```
+
+**⚠️ 주의:**
+- 테스트 환경에서 실제 ID 사용 시 제재 가능
+- 프로덕션 배포 전 토스 개발자 콘솔에서 전면 광고 그룹 생성 필요
+
+---
+
+### 3. 리퍼럴 (Referral / contactsViral)
+
+**파일**: `src/services/referral/ReferralService.ts`
+
+| 항목 | 현재 | 프로덕션 |
+|------|------|----------|
+| `moduleId` | `gemcard-invite` (또는 테스트용) | 토스 개발자 콘솔에서 설정한 실제 moduleId |
+
+**변경 방법:**
+```typescript
+// src/services/referral/ReferralService.ts
+// contactsViral 호출 시 moduleId 확인
+contactsViral.open({
+  moduleId: 'your-production-module-id',  // 콘솔에서 설정한 ID
+  // ...
+});
+```
+
+**콘솔 설정 필요:**
+- 토스 개발자 콘솔 → contactsViral → 리워드 단위/수량 설정
+- 공유 성공 시 지급할 리워드 정의
+
+---
+
+### 배포 전 최종 확인
+
+```bash
+# 1. 환경변수 확인
+cat .env | grep -v "^#" | grep -v "^$"
+
+# 2. 빌드 테스트
+npm run build
+
+# 3. 테스트 ID가 남아있는지 확인
+grep -r "ait-ad-test" src/services/ads/
+```
 
 ## Notes for AI Assistants
 

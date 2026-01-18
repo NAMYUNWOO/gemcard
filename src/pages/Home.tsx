@@ -2,7 +2,8 @@
  * Home Page
  *
  * Main page that displays the user's gem storage with multi-slot support.
- * Shows all gems in a grid, allows slot purchase, and gem selection.
+ * Shows all gems in a grid and allows gem selection.
+ * Slot expansion is achieved through the referral system.
  */
 
 import { useState, useEffect, useRef } from 'react';
@@ -15,10 +16,15 @@ import { SummonModal } from '../components/SummonModal';
 import { ParticleSpoiler } from '../components/ParticleSpoiler';
 import { useGemStore } from '../stores/gemStore';
 import { ELEMENT_ICONS, getElementLabel, getLocalizedDescription, getLocalizedName, getLocalizedTitle, type Element } from '../types/gem';
-import { useBackEvent, useLocale, usePremium } from '../hooks';
+import { useBackEvent, useLocale } from '../hooks';
 import { useTranslation } from '../i18n';
 import { STORAGE_CONSTANTS } from '../services/storage/types';
+import { referralService } from '../services/referral/ReferralService';
+import { isInTossWebView } from '../utils/environment';
 import styles from './Home.module.css';
+
+// Module ID for Toss contactsViral (공유 리워드)
+const CONTACTS_VIRAL_MODULE_ID = 'ccc81274-9b1b-43c1-bd5a-4291ed45104f';
 
 // Preview gem for empty state - enticing users to summon
 const PREVIEW_GEM_PARAMS = {
@@ -33,7 +39,7 @@ const PREVIEW_GEM_PARAMS = {
 export function Home() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { currentGem, gems, maxSlots, activeSlot, setActiveSlot, getAllGems, powerDescRevealed, setPowerDescRevealed } = useGemStore();
+  const { currentGem, gems, maxSlots, activeSlot, setActiveSlot, getAllGems, powerDescRevealed, setPowerDescRevealed, incrementReferralCount } = useGemStore();
 
   // Handle back button in apps-in-toss WebView
   useBackEvent();
@@ -45,16 +51,10 @@ export function Home() {
   const gemDetailSectionRef = useRef<HTMLDivElement>(null);
   const locale = useLocale();
   const t = useTranslation();
-  const { canBuyPack, buySlotPack, purchasing, refresh: refreshPremium } = usePremium();
 
   // Get all gems as array with slot info
   const allGems = getAllGems();
   const gemCount = allGems.length;
-
-  // Sync with store changes
-  useEffect(() => {
-    refreshPremium();
-  }, [gems, maxSlots, refreshPremium]);
 
   // Handle navigation state (e.g., from GemDetail "다시 뽑기" button)
   useEffect(() => {
@@ -104,13 +104,19 @@ export function Home() {
     }, 100);  // Delay for modal close animation
   };
 
-  const handleBuySlots = async () => {
-    if (purchasing) return;
-    const success = await buySlotPack();
-    if (success) {
-      // Refresh premium status
-      await refreshPremium();
-    }
+  // Handle friend invitation via Toss contactsViral
+  const handleInviteFriends = () => {
+    referralService.openInviteFriends(
+      CONTACTS_VIRAL_MODULE_ID,
+      () => {
+        // Reward earned: increment slot count
+        incrementReferralCount();
+        console.log('[Home] Slot earned from referral');
+      },
+      (totalSent) => {
+        console.log(`[Home] Invite module closed. Total invites sent: ${totalSent}`);
+      }
+    );
   };
 
   // If no gems exist, show empty state with summon prompt
@@ -244,21 +250,14 @@ export function Home() {
               );
             })}
 
-            {/* Buy more slots button */}
-            {canBuyPack && maxSlots < STORAGE_CONSTANTS.MAX_SLOTS && (
+            {/* Invite friends button for slot expansion (Toss WebView only) */}
+            {maxSlots < STORAGE_CONSTANTS.MAX_SLOTS && isInTossWebView() && (
               <button
-                className={styles.buySlotButton}
-                onClick={handleBuySlots}
-                disabled={purchasing}
+                className={styles.inviteButton}
+                onClick={handleInviteFriends}
               >
-                {purchasing ? (
-                  <span className={styles.purchasingText}>{t.purchasing}</span>
-                ) : (
-                  <>
-                    <span className={styles.buySlotPlus}>{t.buyMoreSlots}</span>
-                    <span className={styles.buySlotPrice}>{t.slotPackPrice}</span>
-                  </>
-                )}
+                <span className={styles.inviteIcon}>👥</span>
+                <span className={styles.inviteText}>친구 초대하고 슬롯 받기</span>
               </button>
             )}
           </div>

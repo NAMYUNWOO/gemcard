@@ -305,6 +305,7 @@ export function decodeGemFromUrl(encoded: string): Partial<MagicGem> | null {
 
 /**
  * Generate full share URL (web)
+ * @param gem - The gem to share
  */
 export function generateShareUrl(gem: MagicGem): string {
   const encoded = encodeGemToUrl(gem);
@@ -314,11 +315,23 @@ export function generateShareUrl(gem: MagicGem): string {
 
 /**
  * Generate Toss deep link for sharing
- * Format: intoss://gemcard/share/{encoded_gem_data}
+ *
+ * 딥링크 형식:
+ * - 출시 전 (테스트): intoss-private://gemcard/path?_deploymentId=xxx
+ * - 출시 후 (프로덕션): intoss://gemcard/path
+ *
+ * @param gem - The gem to share
+ * @param deploymentId - Optional deploymentId for test environment
  */
-export function generateTossDeepLink(gem: MagicGem): string {
+export function generateTossDeepLink(gem: MagicGem, deploymentId?: string): string {
   const encoded = encodeGemToUrl(gem);
-  return `intoss://gemcard/share/${encoded}`;
+  const path = `share/${encoded}`;
+
+  if (deploymentId) {
+    return `intoss-private://gemcard/${path}?_deploymentId=${deploymentId}`;
+  }
+
+  return `intoss://gemcard/${path}`;
 }
 
 /**
@@ -336,18 +349,23 @@ export async function shareGemInToss(
   ogImageUrl?: string
 ): Promise<boolean> {
   try {
-    // Dynamic import to avoid issues in different environments
-    const { share, getTossShareLink } = await import('@apps-in-toss/web-framework');
+    const { share, getTossShareLink, env } = await import('@apps-in-toss/web-framework');
 
-    const deepLink = generateTossDeepLink(gem);
-
-    // Generate Toss share link with optional OG image
-    const tossLink = await getTossShareLink(deepLink, ogImageUrl);
-
-    // Get localized gem name for the share message
+    const deploymentId = env.getDeploymentId();
+    const encoded = encodeGemToUrl(gem);
     const gemName = getLocalizedName(gem, locale);
 
-    // Open native share sheet with the link
+    let deepLink: string;
+
+    // 테스트 환경: query parameter로 gem 데이터 전달 (path는 보존 안 됨)
+    if (deploymentId) {
+      deepLink = `intoss-private://gemcard?_deploymentId=${deploymentId}&gem=${encoded}`;
+    } else {
+      // 프로덕션: query parameter로 gem 데이터 전달
+      deepLink = `intoss://gemcard?gem=${encoded}`;
+    }
+
+    const tossLink = await getTossShareLink(deepLink, ogImageUrl);
     await share({ message: `${gemName}\n${tossLink}` });
 
     return true;
@@ -366,7 +384,10 @@ export async function shareGemInToss(
  * @param locale - Current locale for gem name (used in Toss share)
  * @returns true if sharing succeeded
  */
-export async function copyShareUrl(gem: MagicGem, locale: SupportedLocale = 'ko'): Promise<boolean> {
+export async function copyShareUrl(
+  gem: MagicGem,
+  locale: SupportedLocale = 'ko'
+): Promise<boolean> {
   // Use Toss native share when in Toss WebView
   if (isInTossWebView()) {
     return shareGemInToss(gem, locale);

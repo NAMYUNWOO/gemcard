@@ -10,15 +10,16 @@ import type { GemStorageService } from './types';
 import { STORAGE_CONSTANTS } from './types';
 
 /** Storage keys */
-const STORAGE_KEY = 'arcane-gems-storage-v3';
+const STORAGE_KEY = 'arcane-gems-storage-v4';
 
 /** Internal storage structure */
 interface StorageData {
-  version: 3;
+  version: 4;
   gems: Record<number, MagicGem>; // slot -> gem
   activeSlot: number;
   maxSlots: number;
-  packsPurchased: number;
+  referralCount: number;
+  referredBy: string | null;
   lastUserInfo: UserInfo | null;
   powerDescRevealed: boolean;
 }
@@ -28,11 +29,12 @@ interface StorageData {
  */
 function createDefaultData(): StorageData {
   return {
-    version: 3,
+    version: 4,
     gems: {},
     activeSlot: 0,
     maxSlots: STORAGE_CONSTANTS.BASE_SLOTS,
-    packsPurchased: 0,
+    referralCount: 0,
+    referredBy: null,
     lastUserInfo: null,
     powerDescRevealed: false,
   };
@@ -74,25 +76,30 @@ export class LocalStorageService implements GemStorageService {
    * Migrate from older versions if needed
    */
   private migrateIfNeeded(data: unknown): StorageData {
-    const d = data as Partial<StorageData> & { version?: number };
+    const d = data as { version?: number; packsPurchased?: number } & Partial<Omit<StorageData, 'version'>>;
 
     if (!d.version || d.version < 3) {
       return this.migrateFromV2(data);
     }
 
+    if (d.version === 3) {
+      return this.migrateFromV3(data);
+    }
+
     return {
-      version: 3,
+      version: 4,
       gems: d.gems ?? {},
       activeSlot: d.activeSlot ?? 0,
       maxSlots: d.maxSlots ?? STORAGE_CONSTANTS.BASE_SLOTS,
-      packsPurchased: d.packsPurchased ?? 0,
+      referralCount: d.referralCount ?? 0,
+      referredBy: d.referredBy ?? null,
       lastUserInfo: d.lastUserInfo ?? null,
       powerDescRevealed: d.powerDescRevealed ?? false,
     };
   }
 
   /**
-   * Migrate from v2 (single gem) to v3 (multi-slot)
+   * Migrate from v2 (single gem) to v4 (referral-based)
    */
   private migrateFromV2(oldData: unknown): StorageData {
     const old = oldData as {
@@ -103,7 +110,7 @@ export class LocalStorageService implements GemStorageService {
       };
     };
 
-    console.log('[LocalStorageService] Migrating from v2 to v3');
+    console.log('[LocalStorageService] Migrating from v2 to v4');
 
     const newData = createDefaultData();
 
@@ -123,6 +130,37 @@ export class LocalStorageService implements GemStorageService {
     }
 
     return newData;
+  }
+
+  /**
+   * Migrate from v3 (IAP-based) to v4 (referral-based)
+   */
+  private migrateFromV3(oldData: unknown): StorageData {
+    const old = oldData as {
+      gems?: Record<number, MagicGem>;
+      activeSlot?: number;
+      maxSlots?: number;
+      packsPurchased?: number;
+      lastUserInfo?: UserInfo | null;
+      powerDescRevealed?: boolean;
+    };
+
+    console.log('[LocalStorageService] Migrating from v3 to v4');
+
+    // Preserve existing maxSlots from IAP purchases
+    const existingMaxSlots = old.maxSlots ?? STORAGE_CONSTANTS.BASE_SLOTS;
+    const referralEquivalent = existingMaxSlots - STORAGE_CONSTANTS.BASE_SLOTS;
+
+    return {
+      version: 4,
+      gems: old.gems ?? {},
+      activeSlot: old.activeSlot ?? 0,
+      maxSlots: existingMaxSlots,
+      referralCount: referralEquivalent,
+      referredBy: null,
+      lastUserInfo: old.lastUserInfo ?? null,
+      powerDescRevealed: old.powerDescRevealed ?? false,
+    };
   }
 
   /**
@@ -212,19 +250,31 @@ export class LocalStorageService implements GemStorageService {
   }
 
   // =============================================================================
-  // Purchase Tracking
+  // Referral Tracking
   // =============================================================================
 
-  async getPacksPurchased(): Promise<number> {
-    return this.data.packsPurchased;
+  async getReferralCount(): Promise<number> {
+    return this.data.referralCount;
   }
 
-  async setPacksPurchased(count: number): Promise<void> {
-    this.data.packsPurchased = Math.min(
+  async setReferralCount(count: number): Promise<void> {
+    this.data.referralCount = Math.min(
       Math.max(count, 0),
-      STORAGE_CONSTANTS.MAX_PACK_PURCHASES
+      STORAGE_CONSTANTS.MAX_REFERRALS
     );
     this.persist();
+  }
+
+  async getReferredBy(): Promise<string | null> {
+    return this.data.referredBy;
+  }
+
+  async setReferredBy(referrerId: string): Promise<void> {
+    // Only set if not already referred (one-time)
+    if (!this.data.referredBy) {
+      this.data.referredBy = referrerId;
+      this.persist();
+    }
   }
 
   // =============================================================================

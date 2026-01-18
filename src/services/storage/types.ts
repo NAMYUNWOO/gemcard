@@ -88,18 +88,28 @@ export interface GemStorageService {
   getAvailableSlot(): Promise<number | null>;
 
   // =============================================================================
-  // Purchase Tracking
+  // Referral Tracking
   // =============================================================================
 
   /**
-   * Get number of slot packs purchased (0-3)
+   * Get number of successful referrals
    */
-  getPacksPurchased(): Promise<number>;
+  getReferralCount(): Promise<number>;
 
   /**
-   * Set number of slot packs purchased
+   * Set number of successful referrals
    */
-  setPacksPurchased(count: number): Promise<void>;
+  setReferralCount(count: number): Promise<void>;
+
+  /**
+   * Get the user ID who referred this user (one-time)
+   */
+  getReferredBy(): Promise<string | null>;
+
+  /**
+   * Set the referrer user ID (one-time)
+   */
+  setReferredBy(referrerId: string): Promise<void>;
 
   // =============================================================================
   // User Info
@@ -136,10 +146,10 @@ export interface GemStorageService {
 export const STORAGE_CONSTANTS = {
   /** Base number of slots (free tier) */
   BASE_SLOTS: 1,
-  /** Slots added per pack purchase */
-  SLOTS_PER_PACK: 3,
-  /** Maximum pack purchases allowed */
-  MAX_PACK_PURCHASES: 3,
-  /** Maximum total slots (1 + 3*3 = 10) */
+  /** Slots added per successful referral */
+  SLOTS_PER_REFERRAL: 1,
+  /** Maximum total referrals allowed (9 referrals = 10 total slots) */
+  MAX_REFERRALS: 9,
+  /** Maximum total slots (1 + 9 = 10) */
   MAX_SLOTS: 10,
 } as const;

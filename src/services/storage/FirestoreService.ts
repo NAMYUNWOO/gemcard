@@ -6,8 +6,10 @@
  *
  * Firestore Structure:
  * users/{uid}/
- *   - profile: { maxSlots, packsPurchased, activeSlot, lastUserInfo, powerDescRevealed }
+ *   - profile: { maxSlots, referralCount, referredBy, activeSlot, lastUserInfo, powerDescRevealed }
  *   - gems/{gemId}: { ...MagicGem, slot, magicCircleId }
+ *   - referrals_received/{referrerId}: { referrerId, timestamp }
+ *   - referrals_given/{newUserId}: { newUserId, timestamp }
  */
 
 import {
@@ -30,7 +32,8 @@ import { STORAGE_CONSTANTS } from './types';
  */
 interface ProfileDoc {
   maxSlots: number;
-  packsPurchased: number;
+  referralCount: number;
+  referredBy: string | null;
   activeSlot: number;
   lastUserInfo: UserInfo | null;
   powerDescRevealed: boolean;
@@ -162,15 +165,25 @@ export class FirestoreService implements GemStorageService {
     const profileSnap = await getDoc(profileRef);
 
     if (profileSnap.exists()) {
-      this.profile = profileSnap.data() as ProfileDoc;
-      // Update last login
-      this.profile.lastLoginAt = Date.now();
+      const data = profileSnap.data();
+      // Handle migration from packsPurchased to referralCount
+      this.profile = {
+        maxSlots: data.maxSlots ?? STORAGE_CONSTANTS.BASE_SLOTS,
+        referralCount: data.referralCount ?? (data.maxSlots ? data.maxSlots - STORAGE_CONSTANTS.BASE_SLOTS : 0),
+        referredBy: data.referredBy ?? null,
+        activeSlot: data.activeSlot ?? 0,
+        lastUserInfo: data.lastUserInfo ?? null,
+        powerDescRevealed: data.powerDescRevealed ?? false,
+        createdAt: data.createdAt ?? Date.now(),
+        lastLoginAt: Date.now(),
+      };
       await setDoc(profileRef, this.profile, { merge: true });
     } else {
       // Create new profile
       this.profile = {
         maxSlots: STORAGE_CONSTANTS.BASE_SLOTS,
-        packsPurchased: 0,
+        referralCount: 0,
+        referredBy: null,
         activeSlot: 0,
         lastUserInfo: null,
         powerDescRevealed: false,
@@ -318,21 +331,35 @@ export class FirestoreService implements GemStorageService {
   }
 
   // =============================================================================
-  // Purchase Tracking
+  // Referral Tracking
   // =============================================================================
 
-  async getPacksPurchased(): Promise<number> {
-    return this.profile?.packsPurchased ?? 0;
+  async getReferralCount(): Promise<number> {
+    return this.profile?.referralCount ?? 0;
   }
 
-  async setPacksPurchased(count: number): Promise<void> {
+  async setReferralCount(count: number): Promise<void> {
     if (!this.profile) throw new Error('Not initialized');
 
-    this.profile.packsPurchased = Math.min(
+    this.profile.referralCount = Math.min(
       Math.max(count, 0),
-      STORAGE_CONSTANTS.MAX_PACK_PURCHASES
+      STORAGE_CONSTANTS.MAX_REFERRALS
     );
     await this.persistProfile();
+  }
+
+  async getReferredBy(): Promise<string | null> {
+    return this.profile?.referredBy ?? null;
+  }
+
+  async setReferredBy(referrerId: string): Promise<void> {
+    if (!this.profile) throw new Error('Not initialized');
+
+    // Only set if not already referred (one-time)
+    if (!this.profile.referredBy) {
+      this.profile.referredBy = referrerId;
+      await this.persistProfile();
+    }
   }
 
   // =============================================================================

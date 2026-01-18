@@ -1,44 +1,52 @@
 /**
  * Ad Service
  *
- * Manages rewarded ads for gem replacement using Toss Ads (Google AdMob).
- * Users must watch a rewarded ad before replacing a gem in an occupied slot.
+ * Manages interstitial ads for gem replacement using Toss Ads (Google AdMob).
+ * Users must watch an interstitial ad before replacing a gem in an occupied slot.
+ *
+ * Flow: 다시 뽑기 요청 → 전면 광고 시청 → 뽑기 진행
  */
 
-import { isInTossWebView, isDevelopment } from '../../utils/environment';
-
-/**
- * Ad Unit IDs
- * - Test ID: For development and testing (provided by Toss)
- * - Production ID: Registered in Toss Ads Console
- */
-// const TEST_REWARDED_AD_ID = 'ca-app-pub-3940256099942544/5224354917'; // Google AdMob test ID
-const TEST_REWARDED_AD_ID = 'ait-ad-test-rewarded-id'; // 앱인토스 테스트 ID
-const PROD_REWARDED_AD_ID = 'gemcard-rewarded-replace'; // Replace after creating in console
+import { isInTossWebView } from '../../utils/environment';
 
 /**
- * Get the appropriate ad ID based on environment
+ * Ad Group IDs
+ * - 전면형 광고: ait-ad-test-interstitial-id (테스트)
+ * - 보상형 광고: ait-ad-test-rewarded-id (사용 안 함)
  */
-function getRewardedAdId(): string {
-  // Use test ID in development or when not in Toss
-  if (isDevelopment() || !isInTossWebView()) {
-    return TEST_REWARDED_AD_ID;
-  }
-  return PROD_REWARDED_AD_ID;
+const TEST_AD_GROUP_ID = 'ait-ad-test-interstitial-id';
+// const PROD_AD_GROUP_ID = 'YOUR_PRODUCTION_AD_GROUP_ID'; // TODO: 콘솔에서 발급받은 전면 광고 그룹 ID로 교체
+
+/**
+ * Get ad group ID based on environment
+ */
+function getAdGroupId(): string {
+  // TODO: 프로덕션 광고 등록 후 조건부 로직 활성화
+  // try {
+  //   const env = getOperationalEnvironment();
+  //   if (env === 'toss') {
+  //     return PROD_AD_GROUP_ID;
+  //   }
+  // } catch {
+  //   // Framework not available
+  // }
+  return TEST_AD_GROUP_ID;
 }
 
+const AD_GROUP_ID = getAdGroupId();
+
 /**
- * Ad Service for managing rewarded ads
+ * Ad Service for managing interstitial ads
  */
 export class AdService {
   private adLoaded = false;
   private loadingPromise: Promise<void> | null = null;
 
   /**
-   * Preload rewarded ad for faster display
+   * Preload interstitial ad for faster display
    * Call this when entering a page where ad might be needed
    */
-  async preloadRewardedAd(): Promise<void> {
+  async preloadAd(): Promise<void> {
     if (!isInTossWebView()) {
       console.log('[AdService] Not in Toss WebView, skipping ad preload');
       return;
@@ -72,20 +80,20 @@ export class AdService {
       const { GoogleAdMob } = await import('@apps-in-toss/web-framework');
 
       // Check if supported
-      if (GoogleAdMob.loadAdMobRewardedAd.isSupported && !GoogleAdMob.loadAdMobRewardedAd.isSupported()) {
-        console.log('[AdService] Rewarded ads not supported in this environment');
+      if (GoogleAdMob.loadAppsInTossAdMob?.isSupported && !GoogleAdMob.loadAppsInTossAdMob.isSupported()) {
+        console.log('[AdService] Interstitial ads not supported in this environment');
         return;
       }
 
       await new Promise<void>((resolve, reject) => {
-        GoogleAdMob.loadAdMobRewardedAd({
+        GoogleAdMob.loadAppsInTossAdMob({
           options: {
-            adUnitId: getRewardedAdId(),
+            adGroupId: AD_GROUP_ID,
           },
           onEvent: (event) => {
             if (event.type === 'loaded') {
               this.adLoaded = true;
-              console.log('[AdService] Rewarded ad preloaded successfully');
+              console.log('[AdService] Interstitial ad preloaded successfully');
               resolve();
             }
           },
@@ -103,10 +111,11 @@ export class AdService {
   }
 
   /**
-   * Show rewarded ad for gem replacement
-   * @returns true if ad was watched successfully (or skipped in non-Toss), false if canceled/failed
+   * Show interstitial ad for gem replacement
+   * 전면 광고는 시청 완료 여부와 관계없이 닫히면 진행 허용
+   * @returns true if ad was shown (or skipped in non-Toss), false if failed to show
    */
-  async showRewardedAd(): Promise<boolean> {
+  async showInterstitialAd(): Promise<boolean> {
     if (!isInTossWebView()) {
       // In non-Toss environment, allow action without ad
       console.log('[AdService] Not in Toss WebView, skipping ad requirement');
@@ -115,7 +124,7 @@ export class AdService {
 
     // If ad not loaded, try to load it first
     if (!this.adLoaded) {
-      await this.preloadRewardedAd();
+      await this.preloadAd();
 
       if (!this.adLoaded) {
         // Ad failed to load, allow action anyway for better UX
@@ -128,29 +137,30 @@ export class AdService {
       const { GoogleAdMob } = await import('@apps-in-toss/web-framework');
 
       // Check if supported
-      if (GoogleAdMob.showAdMobRewardedAd.isSupported && !GoogleAdMob.showAdMobRewardedAd.isSupported()) {
-        console.log('[AdService] Showing rewarded ads not supported');
+      if (GoogleAdMob.showAppsInTossAdMob?.isSupported && !GoogleAdMob.showAppsInTossAdMob.isSupported()) {
+        console.log('[AdService] Showing interstitial ads not supported');
         return true;
       }
 
       const result = await new Promise<boolean>((resolve) => {
-        let rewarded = false;
-
-        GoogleAdMob.showAdMobRewardedAd({
+        GoogleAdMob.showAppsInTossAdMob({
           options: {
-            adUnitId: getRewardedAdId(),
+            adGroupId: AD_GROUP_ID,
           },
           onEvent: (event) => {
-            if (event.type === 'rewarded') {
-              rewarded = true;
+            console.log('[AdService] showAppsInTossAdMob event:', event.type);
+            if (event.type === 'show') {
+              console.log('[AdService] Interstitial ad shown');
             }
-            if (event.type === 'closed') {
-              resolve(rewarded);
+            if (event.type === 'dismissed') {
+              // 전면 광고는 닫히면 바로 진행 허용
+              console.log('[AdService] Ad dismissed, proceeding with action');
+              resolve(true);
             }
           },
           onError: (error) => {
             console.error('[AdService] Failed to show ad:', error);
-            resolve(true); // Allow action on error
+            resolve(true); // Allow action on error for better UX
           },
         });
       });
@@ -159,13 +169,7 @@ export class AdService {
       this.adLoaded = false;
 
       // Preload next ad in background
-      this.preloadRewardedAd();
-
-      if (result) {
-        console.log('[AdService] Ad watched successfully, reward earned');
-      } else {
-        console.log('[AdService] Ad closed without earning reward');
-      }
+      this.preloadAd();
 
       return result;
     } catch (error) {
@@ -175,6 +179,20 @@ export class AdService {
       // On error, allow action for better UX
       return true;
     }
+  }
+
+  /**
+   * @deprecated Use showInterstitialAd instead
+   */
+  async showRewardedAd(): Promise<boolean> {
+    return this.showInterstitialAd();
+  }
+
+  /**
+   * @deprecated Use preloadAd instead
+   */
+  async preloadRewardedAd(): Promise<void> {
+    return this.preloadAd();
   }
 
   /**

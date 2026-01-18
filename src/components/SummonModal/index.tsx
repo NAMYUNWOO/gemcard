@@ -19,6 +19,78 @@ import { adService } from '../../services/ads/AdService';
 import { isInTossWebView } from '../../utils/environment';
 import styles from './SummonModal.module.css';
 
+// =============================================================================
+// Input Validation & Sanitization
+// =============================================================================
+
+const MAX_NAME_LENGTH = 50;
+
+/**
+ * Sanitize name input - remove dangerous characters, limit length
+ * Allows: letters (any language), numbers, spaces, hyphens, apostrophes
+ */
+function sanitizeName(input: string): string {
+  return input
+    .slice(0, MAX_NAME_LENGTH)
+    // Remove HTML tags
+    .replace(/<[^>]*>/g, '')
+    // Remove script-like patterns
+    .replace(/javascript:/gi, '')
+    .replace(/on\w+=/gi, '')
+    // Keep only safe characters: letters, numbers, spaces, common punctuation
+    .replace(/[^\p{L}\p{N}\s\-'·]/gu, '')
+    .trim();
+}
+
+/**
+ * Validate and clamp numeric input within range
+ */
+function clampNumber(value: string, min: number, max: number): string {
+  if (value === '') return '';
+  const num = parseInt(value, 10);
+  if (isNaN(num)) return '';
+  if (num < min) return String(min);
+  if (num > max) return String(max);
+  return String(num);
+}
+
+/**
+ * Validate year is reasonable (1900-current year)
+ */
+function validateYear(value: string): string {
+  if (value === '') return '';
+  const currentYear = new Date().getFullYear();
+  return clampNumber(value, 1900, currentYear);
+}
+
+/**
+ * Validate month (1-12)
+ */
+function validateMonth(value: string): string {
+  return clampNumber(value, 1, 12);
+}
+
+/**
+ * Validate day (1-31)
+ */
+function validateDay(value: string): string {
+  return clampNumber(value, 1, 31);
+}
+
+/**
+ * Validate hour (0-23)
+ */
+function validateHour(value: string): string {
+  return clampNumber(value, 0, 23);
+}
+
+/**
+ * Validate minute/second (0-59)
+ */
+function validateMinuteSecond(value: string): string {
+  return clampNumber(value, 0, 59);
+}
+
 type SummonState = 'form' | 'confirm-replace' | 'watching-ad' | 'summoning';
 
 interface SummonModalProps {
@@ -48,16 +120,13 @@ export function SummonModal({ isOpen, onClose, targetSlot, isReplacing, onSummon
   // Form state
   const [name, setName] = useState('');
   const [gender, setGender] = useState<Gender | ''>('');
-  const [birthDate, setBirthDate] = useState(''); // YYYY-MM-DD format
+  const [birthYear, setBirthYear] = useState('');
+  const [birthMonth, setBirthMonth] = useState('');
+  const [birthDay, setBirthDay] = useState('');
   const [birthHour, setBirthHour] = useState<string>('');
   const [birthMinute, setBirthMinute] = useState<string>('');
   const [birthSecond, setBirthSecond] = useState<string>('');
   const [formError, setFormError] = useState('');
-
-  // Separate state for UI inputs (no padding while typing)
-  const [birthYear, setBirthYear] = useState('');
-  const [birthMonth, setBirthMonth] = useState('');
-  const [birthDay, setBirthDay] = useState('');
 
   const allGems = getAllGems();
   const gemCount = allGems.length;
@@ -86,18 +155,6 @@ export function SummonModal({ isOpen, onClose, targetSlot, isReplacing, onSummon
     }
   }, [state, t.summoningMessages.length]);
 
-  // Sync birthDate when year/month/day change (with padding for storage)
-  useEffect(() => {
-    if (birthYear && birthMonth && birthDay) {
-      const y = birthYear.padStart(4, '0');
-      const m = birthMonth.padStart(2, '0');
-      const d = birthDay.padStart(2, '0');
-      setBirthDate(`${y}-${m}-${d}`);
-    } else {
-      setBirthDate('');
-    }
-  }, [birthYear, birthMonth, birthDay]);
-
   // Pre-fill form with last user info
   useEffect(() => {
     if (lastUserInfo) {
@@ -121,23 +178,30 @@ export function SummonModal({ isOpen, onClose, targetSlot, isReplacing, onSummon
     }
   }, [lastUserInfo]);
 
-  // Build UserInfo from form
+  // Build UserInfo from form (with final sanitization)
   const buildUserInfo = useCallback((): UserInfo => {
-    const birthdate: BirthDateTime | undefined = birthDate
+    const sanitizedName = sanitizeName(name);
+
+    // Validate date components
+    const validYear = validateYear(birthYear);
+    const validMonth = validateMonth(birthMonth);
+    const validDay = validateDay(birthDay);
+
+    const birthdate: BirthDateTime | undefined = (validYear && validMonth && validDay)
       ? {
-          date: birthDate,
-          ...(birthHour !== '' && { hour: parseInt(birthHour, 10) }),
-          ...(birthMinute !== '' && { minute: parseInt(birthMinute, 10) }),
-          ...(birthSecond !== '' && { second: parseInt(birthSecond, 10) }),
+          date: `${validYear.padStart(4, '0')}-${validMonth.padStart(2, '0')}-${validDay.padStart(2, '0')}`,
+          ...(birthHour !== '' && { hour: parseInt(validateHour(birthHour) || '0', 10) }),
+          ...(birthMinute !== '' && { minute: parseInt(validateMinuteSecond(birthMinute) || '0', 10) }),
+          ...(birthSecond !== '' && { second: parseInt(validateMinuteSecond(birthSecond) || '0', 10) }),
         }
       : undefined;
 
     return {
-      ...(name.trim() && { name: name.trim() }),
+      ...(sanitizedName && { name: sanitizedName }),
       ...(gender && { gender }),
       ...(birthdate && { birthdate }),
     };
-  }, [name, gender, birthDate, birthHour, birthMinute, birthSecond]);
+  }, [name, gender, birthYear, birthMonth, birthDay, birthHour, birthMinute, birthSecond]);
 
   // Validate form
   const validateForm = useCallback((): boolean => {
@@ -171,11 +235,22 @@ export function SummonModal({ isOpen, onClose, targetSlot, isReplacing, onSummon
     // Delay for animation
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    // Save gem to slot and notify completion
+    // Save gem to slot
     setGemAtSlot(gem, targetSlot);
+
+    // Notify completion
     onClose();
     onSummonComplete?.();
-  }, [buildUserInfo, setLastUserInfo, setPowerDescRevealed, setGemAtSlot, allGems, targetSlot, onClose, onSummonComplete]);
+  }, [
+    buildUserInfo,
+    setLastUserInfo,
+    setPowerDescRevealed,
+    setGemAtSlot,
+    allGems,
+    targetSlot,
+    onClose,
+    onSummonComplete,
+  ]);
 
   // Handle form submission
   const handleFormSubmit = useCallback(() => {
@@ -199,22 +274,17 @@ export function SummonModal({ isOpen, onClose, targetSlot, isReplacing, onSummon
     }
   }, [isReplacing, onClose]);
 
-  // Confirm replacement (with ad for Toss environment)
+  // Confirm replacement (with interstitial ad for Toss environment)
   const handleConfirmReplace = useCallback(async () => {
-    // If replacing a gem, show ad first (in Toss environment)
+    // If replacing a gem, show interstitial ad first (in Toss environment)
     if (isReplacing && isInTossWebView()) {
       setState('watching-ad');
 
-      const adWatched = await adService.showRewardedAd();
-
-      if (!adWatched) {
-        // User canceled or ad failed - go back to confirmation
-        setState('confirm-replace');
-        return;
-      }
+      // 전면 광고 시청 후 진행
+      await adService.showInterstitialAd();
     }
 
-    // Ad watched or not required - proceed with summoning
+    // Ad shown or not required - proceed with summoning
     startSummoning();
   }, [isReplacing, startSummoning]);
 
@@ -255,8 +325,10 @@ export function SummonModal({ isOpen, onClose, targetSlot, isReplacing, onSummon
                   type="text"
                   className={styles.input}
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => setName(sanitizeName(e.target.value))}
                   placeholder={t.formNamePlaceholder}
+                  maxLength={MAX_NAME_LENGTH}
+                  autoComplete="off"
                 />
               </div>
 
@@ -286,9 +358,11 @@ export function SummonModal({ isOpen, onClose, targetSlot, isReplacing, onSummon
                     className={styles.dateInput}
                     value={birthYear}
                     onChange={(e) => setBirthYear(e.target.value.slice(0, 4))}
+                    onBlur={(e) => setBirthYear(validateYear(e.target.value))}
                     placeholder={t.formYear}
                     min="1900"
-                    max="2100"
+                    max={new Date().getFullYear()}
+                    inputMode="numeric"
                   />
                   <span className={styles.dateSeparator}>/</span>
                   <input
@@ -296,9 +370,11 @@ export function SummonModal({ isOpen, onClose, targetSlot, isReplacing, onSummon
                     className={styles.dateInputSmall}
                     value={birthMonth}
                     onChange={(e) => setBirthMonth(e.target.value.slice(0, 2))}
+                    onBlur={(e) => setBirthMonth(validateMonth(e.target.value))}
                     placeholder={t.formMonth}
                     min="1"
                     max="12"
+                    inputMode="numeric"
                   />
                   <span className={styles.dateSeparator}>/</span>
                   <input
@@ -306,9 +382,11 @@ export function SummonModal({ isOpen, onClose, targetSlot, isReplacing, onSummon
                     className={styles.dateInputSmall}
                     value={birthDay}
                     onChange={(e) => setBirthDay(e.target.value.slice(0, 2))}
+                    onBlur={(e) => setBirthDay(validateDay(e.target.value))}
                     placeholder={t.formDay}
                     min="1"
                     max="31"
+                    inputMode="numeric"
                   />
                 </div>
               </div>
@@ -321,30 +399,36 @@ export function SummonModal({ isOpen, onClose, targetSlot, isReplacing, onSummon
                     type="number"
                     className={styles.timeInput}
                     value={birthHour}
-                    onChange={(e) => setBirthHour(e.target.value)}
+                    onChange={(e) => setBirthHour(e.target.value.slice(0, 2))}
+                    onBlur={(e) => setBirthHour(validateHour(e.target.value))}
                     placeholder={t.formHour}
                     min="0"
                     max="23"
+                    inputMode="numeric"
                   />
                   <span className={styles.timeSeparator}>:</span>
                   <input
                     type="number"
                     className={styles.timeInput}
                     value={birthMinute}
-                    onChange={(e) => setBirthMinute(e.target.value)}
+                    onChange={(e) => setBirthMinute(e.target.value.slice(0, 2))}
+                    onBlur={(e) => setBirthMinute(validateMinuteSecond(e.target.value))}
                     placeholder={t.formMinute}
                     min="0"
                     max="59"
+                    inputMode="numeric"
                   />
                   <span className={styles.timeSeparator}>:</span>
                   <input
                     type="number"
                     className={styles.timeInput}
                     value={birthSecond}
-                    onChange={(e) => setBirthSecond(e.target.value)}
+                    onChange={(e) => setBirthSecond(e.target.value.slice(0, 2))}
+                    onBlur={(e) => setBirthSecond(validateMinuteSecond(e.target.value))}
                     placeholder={t.formSecond}
                     min="0"
                     max="59"
+                    inputMode="numeric"
                   />
                 </div>
               </div>

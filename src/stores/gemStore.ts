@@ -1,13 +1,15 @@
 /**
- * Arcane Gems - Multi-Slot Gem Store (v3)
+ * Arcane Gems - Multi-Slot Gem Store (v5)
  *
  * Zustand store for managing multiple gem slots.
- * Users can have multiple gems (based on purchased slots).
- * Free tier: 1 slot, Premium: up to 10 slots.
+ * Users can have multiple gems (based on Toss contactsViral rewards).
+ * Free tier: 1 slot, Referral bonus: +1 slot per successful share (up to 10 total).
  *
  * Persisted to localStorage with migration from:
- * - v1 (collection array) → v3 (multi-slot)
- * - v2 (single gem) → v3 (multi-slot)
+ * - v1 (collection array) → v5 (contactsViral-based)
+ * - v2 (single gem) → v5 (contactsViral-based)
+ * - v3 (IAP-based) → v5 (contactsViral-based)
+ * - v4 (custom referral) → v5 (contactsViral-based, removed referredBy/isFirstSummon)
  */
 
 import { create } from 'zustand';
@@ -24,7 +26,10 @@ interface GemStoreState {
   gems: Record<number, MagicGem>; // slot -> gem
   activeSlot: number;
   maxSlots: number;
-  packsPurchased: number;
+
+  // Referral tracking (used by Toss contactsViral)
+  userId: string | null; // Unique user ID
+  referralCount: number; // Number of successful referrals (each adds +1 slot)
 
   // Backward compatibility alias (computed from activeSlot)
   currentGem: MagicGem | null;
@@ -54,7 +59,10 @@ interface GemStoreActions {
 
   // Slot management
   setMaxSlots: (slots: number) => void;
-  setPacksPurchased: (count: number) => void;
+
+  // Referral system (Toss contactsViral)
+  setUserId: (userId: string) => void;
+  incrementReferralCount: () => void; // Adds +1 slot when user shares via contactsViral
 
   // User info persistence
   setLastUserInfo: (info: UserInfo) => void;
@@ -82,6 +90,29 @@ interface LegacyV2State {
   powerDescRevealed?: boolean;
 }
 
+interface LegacyV3State {
+  gems?: Record<number, MagicGem>;
+  activeSlot?: number;
+  maxSlots?: number;
+  packsPurchased?: number;
+  currentGem?: MagicGem | null;
+  lastUserInfo?: UserInfo | null;
+  powerDescRevealed?: boolean;
+}
+
+interface LegacyV4State {
+  gems?: Record<number, MagicGem>;
+  activeSlot?: number;
+  maxSlots?: number;
+  userId?: string | null;
+  referralCount?: number;
+  referredBy?: string | null;  // Deprecated, removed in v5
+  isFirstSummon?: boolean;     // Deprecated, removed in v5
+  currentGem?: MagicGem | null;
+  lastUserInfo?: UserInfo | null;
+  powerDescRevealed?: boolean;
+}
+
 // =============================================================================
 // Helper Functions
 // =============================================================================
@@ -104,7 +135,8 @@ export const useGemStore = create<GemStore>()(
       gems: {},
       activeSlot: 0,
       maxSlots: STORAGE_CONSTANTS.BASE_SLOTS,
-      packsPurchased: 0,
+      userId: null,
+      referralCount: 0,
       currentGem: null,
       lastUserInfo: null,
       powerDescRevealed: false,
@@ -225,12 +257,24 @@ export const useGemStore = create<GemStore>()(
         });
       },
 
-      setPacksPurchased: (count) => {
+      // =============================================================================
+      // Referral System (Toss contactsViral)
+      // =============================================================================
+
+      setUserId: (userId) => {
+        set({ userId });
+      },
+
+      incrementReferralCount: () => {
+        const state = get();
+        const newCount = state.referralCount + 1;
+        const newMaxSlots = Math.min(
+          STORAGE_CONSTANTS.BASE_SLOTS + newCount,
+          STORAGE_CONSTANTS.MAX_SLOTS
+        );
         set({
-          packsPurchased: Math.min(
-            Math.max(count, 0),
-            STORAGE_CONSTANTS.MAX_PACK_PURCHASES
-          ),
+          referralCount: newCount,
+          maxSlots: newMaxSlots,
         });
       },
 
@@ -250,15 +294,15 @@ export const useGemStore = create<GemStore>()(
     }),
     {
       name: 'arcane-gems-collection',
-      version: 3,
+      version: 5,
       migrate: (persistedState: unknown, version: number) => {
         if (version === 1) {
-          // Migration from v1 (collection array) to v3 (multi-slot)
+          // Migration from v1 (collection array) to v5 (contactsViral-based)
           const old = persistedState as LegacyV1State;
           const firstGem = old.gems?.[0] ?? null;
 
           console.log(
-            `[GemStore] Migrating from v1 to v3. Preserving ${firstGem ? 'first gem' : 'no gem'}.`
+            `[GemStore] Migrating from v1 to v5. Preserving ${firstGem ? 'first gem' : 'no gem'}.`
           );
 
           const gems: Record<number, MagicGem> = {};
@@ -270,7 +314,8 @@ export const useGemStore = create<GemStore>()(
             gems,
             activeSlot: 0,
             maxSlots: STORAGE_CONSTANTS.BASE_SLOTS,
-            packsPurchased: 0,
+            userId: null,
+            referralCount: 0,
             currentGem: firstGem,
             lastUserInfo: null,
             powerDescRevealed: false,
@@ -278,11 +323,11 @@ export const useGemStore = create<GemStore>()(
         }
 
         if (version === 2) {
-          // Migration from v2 (single gem) to v3 (multi-slot)
+          // Migration from v2 (single gem) to v5 (contactsViral-based)
           const old = persistedState as LegacyV2State;
 
           console.log(
-            `[GemStore] Migrating from v2 to v3. Preserving ${old.currentGem ? 'current gem' : 'no gem'}.`
+            `[GemStore] Migrating from v2 to v5. Preserving ${old.currentGem ? 'current gem' : 'no gem'}.`
           );
 
           const gems: Record<number, MagicGem> = {};
@@ -294,14 +339,61 @@ export const useGemStore = create<GemStore>()(
             gems,
             activeSlot: 0,
             maxSlots: STORAGE_CONSTANTS.BASE_SLOTS,
-            packsPurchased: 0,
+            userId: null,
+            referralCount: 0,
             currentGem: old.currentGem ?? null,
             lastUserInfo: old.lastUserInfo ?? null,
             powerDescRevealed: old.powerDescRevealed ?? false,
           } as GemStoreState;
         }
 
-        // v3 or newer - ensure currentGem is computed correctly
+        if (version === 3) {
+          // Migration from v3 (IAP-based) to v5 (contactsViral-based)
+          const old = persistedState as LegacyV3State;
+
+          console.log(
+            `[GemStore] Migrating from v3 to v5. Converting IAP to contactsViral-based slots.`
+          );
+
+          // Convert packsPurchased to equivalent referral count
+          // Preserve existing maxSlots from previous purchases
+          const existingMaxSlots = old.maxSlots ?? STORAGE_CONSTANTS.BASE_SLOTS;
+          const referralEquivalent = existingMaxSlots - STORAGE_CONSTANTS.BASE_SLOTS;
+
+          return {
+            gems: old.gems ?? {},
+            activeSlot: old.activeSlot ?? 0,
+            maxSlots: existingMaxSlots,
+            userId: null,
+            referralCount: referralEquivalent,
+            currentGem: getCurrentGem(old.gems ?? {}, old.activeSlot ?? 0),
+            lastUserInfo: old.lastUserInfo ?? null,
+            powerDescRevealed: old.powerDescRevealed ?? false,
+          } as GemStoreState;
+        }
+
+        if (version === 4) {
+          // Migration from v4 (custom referral) to v5 (contactsViral-based)
+          // Remove deprecated fields: referredBy, isFirstSummon
+          const old = persistedState as LegacyV4State;
+
+          console.log(
+            `[GemStore] Migrating from v4 to v5. Removing deprecated referral fields.`
+          );
+
+          return {
+            gems: old.gems ?? {},
+            activeSlot: old.activeSlot ?? 0,
+            maxSlots: old.maxSlots ?? STORAGE_CONSTANTS.BASE_SLOTS,
+            userId: old.userId ?? null,
+            referralCount: old.referralCount ?? 0,
+            currentGem: getCurrentGem(old.gems ?? {}, old.activeSlot ?? 0),
+            lastUserInfo: old.lastUserInfo ?? null,
+            powerDescRevealed: old.powerDescRevealed ?? false,
+          } as GemStoreState;
+        }
+
+        // v5 or newer - ensure currentGem is computed correctly
         const state = persistedState as GemStoreState;
         return {
           ...state,
